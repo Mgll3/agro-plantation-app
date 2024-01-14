@@ -71,13 +71,13 @@ public class UserService {
             throw new OurException("el nombre no puede ser nulo o estar vacio");
         }
         if (lastname.isEmpty() || lastname == null) {
-            throw new OurException("el nombre no puede ser nulo o estar vacio");
+            throw new OurException("el apellido no puede ser nulo o estar vacio");
         }
         if (email.isEmpty() || email == null) {
             throw new OurException("el email no puede ser nulo o estar vacio");
         }
         if (address.isEmpty() || address == null) {
-            throw new OurException("el email no puede ser nulo o estar vacio");
+            throw new OurException("el direccion no puede ser nulo o estar vacio");
         }
         if (password.isEmpty() || password == null || password.length() <= 5) {
             throw new OurException("la password no puede ser vacioa ,ni nula y debe ser mayor a 5 caracteres");
