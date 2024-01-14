@@ -8,6 +8,10 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 
 @Service
 public class UserService {
@@ -30,6 +34,37 @@ public class UserService {
 
         userRepository.save(user);
     }
+
+    public User getOne(String id) {
+        return userRepository.getOne(id);
+    }
+
+    @Transactional
+    public List<User> listusers() {
+        List<User> users = new ArrayList();
+        users= userRepository.findAll();
+        return users;
+    }
+
+
+    @Transactional
+    public void changeRole(String id) {
+        Optional<User> answer = userRepository.findById(id);
+
+        if (answer.isPresent()) {
+
+            User user = answer.get();
+
+        if (user.getUsertype().equals(Usertype.USER)) {
+
+                user.setUsertype(Usertype.PRODUCER);
+
+            } else if (user.getUsertype().equals(Usertype.PRODUCER)) {
+                user.setUsertype(Usertype.USER);
+            }
+        }
+    }
+
 
     public void validate(String name,String lastname,String email,String address,String password ) throws OurException {
         if (name.isEmpty() || name == null) {
