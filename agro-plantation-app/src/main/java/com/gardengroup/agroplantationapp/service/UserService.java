@@ -35,8 +35,8 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public User getOne(String id) {
-        //return userRepository.getOne(id);
+    public User getOne(Long id) {
+        return userRepository.getOne(id);
     }
 
     @Transactional
@@ -49,7 +49,7 @@ public class UserService {
 
 
     @Transactional
-    public void changeRole(String id) {
+    public void changeRole(Long id) {
         Optional<User> answer = userRepository.findById(id);
 
         if (answer.isPresent()) {
