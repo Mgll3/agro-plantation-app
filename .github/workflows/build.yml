@@ -28,7 +28,7 @@ jobs:
   #       uses: actions/cache@v2
   #       with:
   #         path: ~/.m2
-  #         key: ${{ runner.os }}-m2-${{ hashFiles('agro-plantation-app/**/pom.xml') }}
+  #         key: ${{ runner.os }}-m2-${{ hashFiles('agro-plantation-app/pom.xml') }}
   #         restore-keys: ${{ runner.os }}-m2
   #     #Run Tests
   #     - name: Run Tests
@@ -50,8 +50,6 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: '17'
-      - name: Change to project directory
-        run: cd agro-plantation-app
       #Set up SonarCloud cache
       - name: Cache SonarCloud packages
         #This action allows caching dependencies and build outputs to improve workflow execution time.
@@ -66,7 +64,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('agro-plantation-app/**/pom.xml') }}
+          key: ${{ runner.os }}-m2-${{ hashFiles('agro-plantation-app/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
       #Analyze project with SonarCloud
       - name: Analyze with SonarCloud
@@ -95,7 +93,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('agro-plantation-app/**/pom.xml') }}
+          key: ${{ runner.os }}-m2-${{ hashFiles('agro-plantation-app/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
       #Build the application using Maven
       - name: Build with Maven
