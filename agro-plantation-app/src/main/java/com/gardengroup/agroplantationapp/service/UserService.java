@@ -36,7 +36,7 @@ public class UserService {
     }
 
     public User getOne(String id) {
-        return userRepository.getOne(id);
+        //return userRepository.getOne(id);
     }
 
     @Transactional
@@ -44,6 +44,7 @@ public class UserService {
         List<User> users = new ArrayList();
         users= userRepository.findAll();
         return users;
+        
     }
 
 
@@ -83,6 +84,20 @@ public class UserService {
             throw new OurException("la password no puede ser vacioa ,ni nula y debe ser mayor a 5 caracteres");
         }
 
+    }
+
+
+
+    @Transactional
+    public User authorization(String email) {
+        Optional<User> userFound = userRepository.findByEmail(email);
+        
+        if ( userFound.isEmpty() ) {
+            return null;
+        }       
+        userFound.get().setTotalAuthorization(true);
+        userRepository.save(userFound.get());
+        return userFound.get();
     }
 
 }
