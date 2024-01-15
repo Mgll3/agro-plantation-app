@@ -28,7 +28,7 @@ jobs:
   #       uses: actions/cache@v2
   #       with:
   #         path: ~/.m2
-  #         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+  #         key: ${{ runner.os }}-m2-${{ hashFiles('agro-plantation-app/**/pom.xml') }}
   #         restore-keys: ${{ runner.os }}-m2
   #     #Run Tests
   #     - name: Run Tests
@@ -66,7 +66,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          key: ${{ runner.os }}-m2-${{ hashFiles('agro-plantation-app/**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
       #Analyze project with SonarCloud
       - name: Analyze with SonarCloud
@@ -95,7 +95,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          key: ${{ runner.os }}-m2-${{ hashFiles('agro-plantation-app/**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
       #Build the application using Maven
       - name: Build with Maven
