@@ -68,7 +68,7 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
       #Analyze project with SonarCloud
       - name: Analyze with SonarCloud
-        run: mvn -B verify sonar:sonar -Dsonar.projectKey=Mgll3_agro-plantation-app  -Dsonar.organization=Mgll3 -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN --file agro-plantation-app/pom.xml
+        run: mvn -B verify sonar:sonar -Dsonar.projectKey=Mgll3_agro-plantation-app  -Dsonar.organization=mgll3 -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN --file agro-plantation-app/pom.xml
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
