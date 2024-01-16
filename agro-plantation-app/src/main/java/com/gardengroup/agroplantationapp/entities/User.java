@@ -23,14 +23,15 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 public class User {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private Long id;
     private String name;
     private String lastname;
     private String email;
     private String address;
     private String password;
+    private Boolean totalAuthorization;
 
     @Enumerated(EnumType.STRING)
     private Usertype usertype;

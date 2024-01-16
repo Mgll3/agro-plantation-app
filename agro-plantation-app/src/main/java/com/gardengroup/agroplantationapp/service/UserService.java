@@ -29,13 +29,14 @@ public class UserService {
         user.setEmail(email);
         user.setAddress(address);
         user.setPassword(password);
+        user.setTotalAuthorization(false);
 
         user.setUsertype(Usertype.USER);
 
         userRepository.save(user);
     }
 
-    public User getOne(String id) {
+    public User getOne(Long id) {
         return userRepository.getOne(id);
     }
 
@@ -48,7 +49,7 @@ public class UserService {
 
 
     @Transactional
-    public void changeRole(String id) {
+    public void changeRole(Long id) {
         Optional<User> answer = userRepository.findById(id);
 
         if (answer.isPresent()) {
