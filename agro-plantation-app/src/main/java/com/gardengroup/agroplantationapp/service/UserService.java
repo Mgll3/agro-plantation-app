@@ -94,7 +94,8 @@ public class UserService {
         
         if ( userFound.isEmpty() ) {
             return null;
-        }       
+        }
+
         userFound.get().setTotalAuthorization(true);
         userRepository.save(userFound.get());
         return userFound.get();
