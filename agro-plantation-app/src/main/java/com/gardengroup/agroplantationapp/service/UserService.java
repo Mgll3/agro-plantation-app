@@ -19,7 +19,7 @@ public class UserService {
     private UserRepository userRepository;
 
     @Transactional
-    public void createUser( String name,String lastname,String email,String address,String password ) throws OurException {
+    public User newUser( String name,String lastname,String email,String address,String password ) throws OurException {
        validate(name,lastname,email,address,password);
 
         User user = new User();
@@ -29,11 +29,14 @@ public class UserService {
         user.setEmail(email);
         user.setAddress(address);
         user.setPassword(password);
-        user.setTotalAuthorization(false);
 
-        user.setUsertype(Usertype.USER);
+        return user;
+    }
 
-        userRepository.save(user);
+    @Transactional
+    public User createUser(User user) throws OurException {
+
+        return userRepository.save(user);
     }
 
     public User getOne(Long id) {

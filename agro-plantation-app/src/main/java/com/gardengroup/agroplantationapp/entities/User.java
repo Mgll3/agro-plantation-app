@@ -32,10 +32,10 @@ public class User {
     private String email;
     private String address;
     private String password;
-    private Boolean totalAuthorization;
+    private boolean totalAuthorization = false;
 
     @Enumerated(EnumType.STRING)
-    private Usertype usertype;
+    private Usertype usertype = Usertype.USER;
 
 
 }

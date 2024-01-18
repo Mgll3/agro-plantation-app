@@ -1,15 +1,13 @@
 package com.gardengroup.agroplantationapp.controller;
 
+import com.gardengroup.agroplantationapp.entities.User;
 import com.gardengroup.agroplantationapp.exceptions.OurException;
 import com.gardengroup.agroplantationapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/")
@@ -29,10 +27,10 @@ public class ControllerPortal {
     }
 
     @PostMapping("/registro")
-    public ResponseEntity<?> record(@RequestParam String name, @RequestParam String lastname, @RequestParam String email, @RequestParam String address, @RequestParam String password) {
+    public ResponseEntity<?> record(@RequestBody User user) {
 
         try {
-            userService.createUser(name, lastname, email, address, password);
+            userService.createUser(user);
 
             // Creación exitosa, devuelve una respuesta con HttpStatus.CREATED
             return new ResponseEntity<>("Usuario registrado correctamente!", HttpStatus.CREATED);

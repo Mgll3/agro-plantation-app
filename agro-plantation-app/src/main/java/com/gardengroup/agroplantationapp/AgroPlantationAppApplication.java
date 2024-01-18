@@ -18,13 +18,7 @@ public class AgroPlantationAppApplication {
 
 
 	}
-	public void run(String... args) throws Exception {
-		try {
-			userService.createUser("Nombre", "Apellido", "correo@example.com", "Dirección", "Contraseña");
-		} catch (OurException e) {
-			System.err.println("Error al crear usuario: " + e.getMessage());
-		}
-	}
+
 
 
 
