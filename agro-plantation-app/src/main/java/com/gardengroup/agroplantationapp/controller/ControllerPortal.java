@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,11 +25,12 @@ public class ControllerPortal {
     @GetMapping("/registrar")
     public String registrar() {
         return "registro.html";
+
     }
 
     @PostMapping("/registro")
     public ResponseEntity<?> record(@RequestParam String name, @RequestParam String lastname, @RequestParam String email, @RequestParam String address, @RequestParam String password) {
-        System.out.println("error hola");
+        System.out.println("hola");
         try {
             userService.createUser(name, lastname, email, address, password);
 

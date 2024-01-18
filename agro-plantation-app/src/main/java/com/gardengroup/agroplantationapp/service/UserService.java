@@ -19,7 +19,7 @@ public class UserService {
     private UserRepository userRepository;
 
     @Transactional
-    public void createUser(String name,String lastname,String email,String address,String password ) throws OurException {
+    public void createUser( String name,String lastname,String email,String address,String password ) throws OurException {
        validate(name,lastname,email,address,password);
 
         User user = new User();
@@ -67,23 +67,24 @@ public class UserService {
     }
 
 
-    public void validate(String name,String lastname,String email,String address,String password ) throws OurException {
-        if (name.isEmpty() || name == null) {
-            throw new OurException("el nombre no puede ser nulo o estar vacio");
-        }
-        if (lastname.isEmpty() || lastname == null) {
-            throw new OurException("el apellido no puede ser nulo o estar vacio");
-        }
-        if (email.isEmpty() || email == null) {
-            throw new OurException("el email no puede ser nulo o estar vacio");
-        }
-        if (address.isEmpty() || address == null) {
-            throw new OurException("el direccion no puede ser nulo o estar vacio");
-        }
-        if (password.isEmpty() || password == null || password.length() <= 5) {
-            throw new OurException("la password no puede ser vacioa ,ni nula y debe ser mayor a 5 caracteres");
-        }
+    public void validate(String name, String lastname, String email, String address, String password) throws OurException {
 
+        if (name == null || name.isEmpty()) {
+            throw new OurException("El nombre no puede ser nulo o estar vacío");
+        }
+        if (lastname == null || lastname.isEmpty()) {
+            throw new OurException("El apellido no puede ser nulo o estar vacío");
+        }
+        if (email == null || email.isEmpty()) {
+            throw new OurException("El correo electrónico no puede ser nulo o estar vacío");
+        }
+        if (address == null || address.isEmpty()) {
+            throw new OurException("La dirección no puede ser nula o estar vacía");
+        }
+        if (password == null || password.isEmpty() || password.length() <= 5) {
+            throw new OurException("La contraseña no puede ser vacía, ni nula y debe tener más de 5 caracteres");
+        }
     }
+
 
 }
