@@ -30,7 +30,7 @@ public class ControllerPortal {
 
     @PostMapping("/registro")
     public ResponseEntity<?> record(@RequestParam String name, @RequestParam String lastname, @RequestParam String email, @RequestParam String address, @RequestParam String password) {
-        System.out.println("hola");
+
         try {
             userService.createUser(name, lastname, email, address, password);
 
