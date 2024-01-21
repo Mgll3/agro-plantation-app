@@ -8,13 +8,14 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 
 @Service
-public class UserService {
+public class UserService  {
     @Autowired
     private UserRepository userRepository;
 
@@ -88,6 +89,9 @@ public class UserService {
             throw new OurException("La contraseña no puede ser vacía, ni nula y debe tener más de 5 caracteres");
         }
     }
+
+
+
 
 
 }

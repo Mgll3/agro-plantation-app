@@ -5,6 +5,7 @@
  */
 package com.gardengroup.agroplantationapp.entities;
 
+import com.gardengroup.agroplantationapp.enumerations.StateRequest;
 import com.gardengroup.agroplantationapp.enumerations.Usertype;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
@@ -32,10 +33,13 @@ public class User {
     private String email;
     private String address;
     private String password;
-    private boolean totalAuthorization = false;
+
 
     @Enumerated(EnumType.STRING)
     private Usertype usertype = Usertype.USER;
+
+    @Enumerated(EnumType.STRING)
+    private StateRequest  stateRequest;
 
 
 }
