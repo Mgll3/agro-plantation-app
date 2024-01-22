@@ -39,16 +39,7 @@ public class ControllerPortal {
             return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(ex.getMessage());
         }
     }
-    @GetMapping("/login")
-    public ResponseEntity<String> login(@RequestParam(required = false) String error) {
-        if (error != null) {
-            // En caso de error, devuelve una respuesta con HttpStatus.BAD_REQUEST
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Usuario o Contraseña invalidos!");
-        }
-
-        // Si no hay error, devuelve una respuesta con HttpStatus.OK
-        return ResponseEntity.ok("Bienvenido a la página de inicio de sesión");
-    }
+ 
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody User user) {
