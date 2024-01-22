@@ -91,7 +91,9 @@ public class UserService  {
     }
 
 
-
+    public User findByUserEmail(String email) {
+        return userRepository.searchEmail(email);
+    }
 
 
 }

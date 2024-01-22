@@ -50,5 +50,16 @@ public class ControllerPortal {
         return ResponseEntity.ok("Bienvenido a la página de inicio de sesión");
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody User user) {
+        User userNew = userService.findByUserEmail(user.getEmail());
+
+        if (userNew != null && userNew.getPassword().equals(user.getPassword())) {
+            return new ResponseEntity<>("Login exitoso", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Credenciales incorrectas", HttpStatus.UNAUTHORIZED);
+        }
+    }
+
 
 }
