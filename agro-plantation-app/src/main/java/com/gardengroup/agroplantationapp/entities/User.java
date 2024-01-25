@@ -5,8 +5,7 @@
  */
 package com.gardengroup.agroplantationapp.entities;
 
-import com.gardengroup.agroplantationapp.enumerations.StateRequest;
-import com.gardengroup.agroplantationapp.enumerations.Usertype;
+
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -34,12 +33,8 @@ public class User {
     private String address;
     private String password;
 
-
-    @Enumerated(EnumType.STRING)
-    private Usertype usertype = Usertype.USER;
-
-    @Enumerated(EnumType.STRING)
-    private StateRequest  stateRequest;
+    @ManyToOne
+    private UserType usertype;
 
 
 }

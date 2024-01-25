@@ -1,7 +1,6 @@
 package com.gardengroup.agroplantationapp.service;
 
 import com.gardengroup.agroplantationapp.entities.User;
-import com.gardengroup.agroplantationapp.enumerations.Usertype;
 import com.gardengroup.agroplantationapp.exceptions.OurException;
 import com.gardengroup.agroplantationapp.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -11,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+
 
 
 @Service
@@ -52,23 +51,8 @@ public class UserService  {
     }
 
 
-    @Transactional
-    public void changeRole(Long id) {
-        Optional<User> answer = userRepository.findById(id);
 
-        if (answer.isPresent()) {
 
-            User user = answer.get();
-
-        if (user.getUsertype().equals(Usertype.USER)) {
-
-                user.setUsertype(Usertype.PRODUCER);
-
-            } else if (user.getUsertype().equals(Usertype.PRODUCER)) {
-                user.setUsertype(Usertype.USER);
-            }
-        }
-    }
 
 
     public void validate(String name, String lastname, String email, String address, String password) throws OurException {

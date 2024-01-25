@@ -15,16 +15,7 @@ public class ControllerPortal {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/")//localhost:8080/
-    public String index() {
 
-        return "index.html";
-    }
-    @GetMapping("/registrar")
-    public String registrar() {
-        return "registro.html";
-
-    }
 
     @PostMapping("/registro")
     public ResponseEntity<?> record(@RequestBody User user) {
@@ -39,7 +30,7 @@ public class ControllerPortal {
             return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(ex.getMessage());
         }
     }
- 
+
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody User user) {
