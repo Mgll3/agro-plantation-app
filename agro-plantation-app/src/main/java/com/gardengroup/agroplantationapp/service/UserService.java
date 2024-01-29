@@ -1,6 +1,7 @@
 package com.gardengroup.agroplantationapp.service;
 
 import com.gardengroup.agroplantationapp.entities.User;
+import com.gardengroup.agroplantationapp.entities.UserType;
 import com.gardengroup.agroplantationapp.exceptions.OurException;
 import com.gardengroup.agroplantationapp.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -29,6 +30,11 @@ public class UserService  {
         user.setEmail(email);
         user.setAddress(address);
         user.setPassword(password);
+
+        UserType userType = new UserType();
+        userType.setType("USER");
+        user.setUserType(userType);
+
 
         return user;
     }

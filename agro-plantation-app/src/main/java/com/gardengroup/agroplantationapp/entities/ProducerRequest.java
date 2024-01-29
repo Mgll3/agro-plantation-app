@@ -23,6 +23,7 @@ public class ProducerRequest {
     private User user;
 
     private Date date;
+
     @ManyToOne
-    private StateRequest stateRequest;
+    private StateRequest staterequest;
 }

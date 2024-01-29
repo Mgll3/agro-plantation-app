@@ -16,7 +16,6 @@ public class ControllerPortal {
     private UserService userService;
 
 
-
     @PostMapping("/registro")
     public ResponseEntity<?> record(@RequestBody User user) {
 

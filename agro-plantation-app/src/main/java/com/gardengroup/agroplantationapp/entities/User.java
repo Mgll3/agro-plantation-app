@@ -16,6 +16,7 @@ import lombok.ToString;
  *
  * @author sofia
  */
+//lombok genera un constructor sin elementos
 @Entity
 @Table(name ="user")
 @Getter
@@ -34,7 +35,7 @@ public class User {
     private String password;
 
     @ManyToOne
-    private UserType usertype;
+    private UserType userType;
 
 
 }
