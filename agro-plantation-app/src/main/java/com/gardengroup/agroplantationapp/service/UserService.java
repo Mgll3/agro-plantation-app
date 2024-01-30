@@ -1,5 +1,6 @@
 package com.gardengroup.agroplantationapp.service;
 
+import com.gardengroup.agroplantationapp.dtos.DtoRegistrer;
 import com.gardengroup.agroplantationapp.entities.User;
 import com.gardengroup.agroplantationapp.entities.UserType;
 import com.gardengroup.agroplantationapp.exceptions.OurException;
@@ -13,15 +14,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
 @Service
-public class UserService  {
+public class UserService {
     @Autowired
     private UserRepository userRepository;
 
     @Transactional
-    public User newUser( String name,String lastname,String email,String address,String password ) throws OurException {
-       validate(name,lastname,email,address,password);
+    public User newUser(String name, String lastname, String email, String address, String password) throws OurException {
+        validate(name, lastname, email, address, password);
 
         User user = new User();
 
@@ -52,13 +52,20 @@ public class UserService  {
     @Transactional
     public List<User> listusers() {
         List<User> users = new ArrayList();
-        users= userRepository.findAll();
+        users = userRepository.findAll();
         return users;
     }
 
 
+    public Boolean existsEmail(String email) {
+        DtoRegistrer dtoRegistrer = new DtoRegistrer();
+        String emailDto= dtoRegistrer.getEmail();
 
-
+        if (userRepository.existsByUseremail(emailDto)) {
+            return true;
+        }
+        return false;
+    }
 
 
     public void validate(String name, String lastname, String email, String address, String password) throws OurException {
