@@ -41,6 +41,7 @@ public class UserService {
 
     @Transactional
     public List<User> listusers() {
+        
         List<User> users = new ArrayList();
         users= userRepository.findAll();
         return users;
