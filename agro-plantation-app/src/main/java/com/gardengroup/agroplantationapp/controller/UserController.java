@@ -1,5 +1,8 @@
 package com.gardengroup.agroplantationapp.controller;
 
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -10,6 +13,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.gardengroup.agroplantationapp.entities.User;
 import com.gardengroup.agroplantationapp.service.UserService;
+
+@Controller
+@RequestMapping("/usuario")
+public class UserController {
+}
+
+
 
 @RestController
 @RequestMapping ("/user")
@@ -31,4 +41,5 @@ public class UserController {
     }
 
 }
+
 

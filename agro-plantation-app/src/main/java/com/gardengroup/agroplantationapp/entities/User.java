@@ -5,7 +5,7 @@
  */
 package com.gardengroup.agroplantationapp.entities;
 
-import com.gardengroup.agroplantationapp.enumerations.Usertype;
+
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -16,6 +16,7 @@ import lombok.ToString;
  *
  * @author sofia
  */
+//lombok genera un constructor sin elementos
 @Entity
 @Table(name ="user")
 @Getter
@@ -23,6 +24,7 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -33,7 +35,8 @@ public class User {
     private String password;
     private Boolean totalAuthorization;
 
-    @Enumerated(EnumType.STRING)
-    private Usertype usertype;
-    
+    @ManyToOne
+    private UserType userType;
+
+
 }
