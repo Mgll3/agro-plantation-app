@@ -51,15 +51,24 @@ public class UserService {
 
     @Transactional
     public List<User> listusers() {
+        
         List<User> users = new ArrayList();
         users = userRepository.findAll();
         return users;
+        
     }
 
 
+<<<<<<< HEAD
     public Boolean existsEmail(String email) {
         DtoRegistrer dtoRegistrer = new DtoRegistrer();
         String emailDto= dtoRegistrer.getEmail();
+=======
+    @Transactional
+    public void changeRole(Long id) {
+        Optional<User> answer = userRepository.findById(id);
+
+>>>>>>> 0bdb2caf81ebebbdb0df50e90c59a58067bb07d4
 
         if (userRepository.existsByUseremail(emailDto)) {
             return true;
@@ -92,5 +101,18 @@ public class UserService {
         return userRepository.searchEmail(email);
     }
 
+
+    @Transactional
+    public User authorization(String email) {
+        Optional<User> userFound = userRepository.findByEmail(email);
+        
+        if ( userFound.isEmpty() ) {
+            return null;
+        }
+
+        userFound.get().setTotalAuthorization(true);
+        userRepository.save(userFound.get());
+        return userFound.get();
+    }
 
 }
