@@ -51,11 +51,17 @@ public class UserService  {
 
     @Transactional
     public List<User> listusers() {
+        
         List<User> users = new ArrayList();
         users= userRepository.findAll();
         return users;
+        
     }
 
+
+    @Transactional
+    public void changeRole(Long id) {
+        Optional<User> answer = userRepository.findById(id);
 
 
 
@@ -85,5 +91,18 @@ public class UserService  {
         return userRepository.searchEmail(email);
     }
 
+
+    @Transactional
+    public User authorization(String email) {
+        Optional<User> userFound = userRepository.findByEmail(email);
+        
+        if ( userFound.isEmpty() ) {
+            return null;
+        }
+
+        userFound.get().setTotalAuthorization(true);
+        userRepository.save(userFound.get());
+        return userFound.get();
+    }
 
 }
