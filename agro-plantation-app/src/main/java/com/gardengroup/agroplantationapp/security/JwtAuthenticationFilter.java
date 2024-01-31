@@ -25,6 +25,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
 
+   // Extrae el token JWT de la cabecera "Authorization" de la solicitud HTTP.
     private String getRequestToken(HttpServletRequest httpServletRequest) {
         String bearerToken = httpServletRequest.getHeader("Authorization");
 
@@ -36,7 +37,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         return null;
     }
 
-
+    //Filtro interno que maneja la autenticación basada en tokens JWT.
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,

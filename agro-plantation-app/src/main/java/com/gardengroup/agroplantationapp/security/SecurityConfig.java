@@ -29,6 +29,7 @@ public class SecurityConfig {
     // Configuración del codificador de contraseñas (BCryptPasswordEncoder)
     @Bean
     PasswordEncoder passwordEncoder() {
+
         return new BCryptPasswordEncoder();
     }
 

@@ -32,6 +32,8 @@ public class CustomUsersDetailsService implements UserDetailsService {
         return Collections.singletonList(new SimpleGrantedAuthority(userType.getType()));
     }
 
+
+
     // Implementación del método de la interfaz UserDetailsService para cargar usuarios por su correo electrónico
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
