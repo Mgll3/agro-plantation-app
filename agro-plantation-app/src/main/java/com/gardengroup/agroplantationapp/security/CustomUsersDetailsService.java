@@ -16,7 +16,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 
-@Service
+@Service//ya que se va necesitar trabajar con la base de datos
 public class CustomUsersDetailsService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;

@@ -52,6 +52,9 @@ public class SecurityConfig {
                 .and()
                 .authorizeHttpRequests()
                 .requestMatchers("/", "/registro", "/login").permitAll() // Permite acceso sin autenticación a las páginas de inicio, registro y login
+                .requestMatchers("/publicaciones", "/foro").hasAnyAuthority("USER", "PRODUCER","ADMINISTRATOR")  // Permite acceso a /publicaciones y /foro para usuarios y productores
+                .requestMatchers("/mipublicacion").hasAuthority("PRODUCER")  // Permite acceso a /mipublicacion solo para productores//hasAuthority en vez de hasAnyRole y hasRole.
+                .requestMatchers("/configuracion").hasAuthority("ADMINISTRATOR")
                 .anyRequest().authenticated()  // Requiere autenticación para cualquier otra solicitud
                 .and()
                 .httpBasic();  // Configura la autenticación básica HTTP
