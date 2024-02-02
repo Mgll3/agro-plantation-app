@@ -1,12 +1,20 @@
 package com.gardengroup.agroplantationapp.service;
 
+import com.gardengroup.agroplantationapp.dtos.DtoLogin;
 import com.gardengroup.agroplantationapp.dtos.DtoRegistrer;
 import com.gardengroup.agroplantationapp.entities.User;
 import com.gardengroup.agroplantationapp.entities.UserType;
 import com.gardengroup.agroplantationapp.exceptions.OurException;
 import com.gardengroup.agroplantationapp.repository.UserRepository;
+import com.gardengroup.agroplantationapp.repository.UserTypeRepository;
+import com.gardengroup.agroplantationapp.security.JwtTokenProvider;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
@@ -18,78 +26,41 @@ import java.util.List;
 public class UserService {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private UserTypeRepository userTypeRepository;
+
 
     @Transactional
-    public User newUser(String name, String lastname, String email, String address, String password) throws OurException {
-        validate(name, lastname, email, address, password);
-
-        User user = new User();
-
-        user.setName(name);
-        user.setLastname(lastname);
-        user.setEmail(email);
-        user.setAddress(address);
-        user.setPassword(password);
-
+    public User createUser(DtoRegistrer dtoRegistrer) throws OurException {
+        // UserType
         UserType userType = new UserType();
         userType.setType("USER");
-        user.setUserType(userType);
+        userTypeRepository.save(userType); // Guarda UserType antes de asociarlo con User
 
-
-        return user;
-    }
-
-    @Transactional
-    public User createUser(User user) throws OurException {
-
+        // User
+        User user = new User();
+        user.setEmail(dtoRegistrer.getEmail());
+        user.setPassword(dtoRegistrer.getPassword());
+        user.setName(dtoRegistrer.getName());
+        user.setLastname(dtoRegistrer.getLastname());
+        user.setAddress(dtoRegistrer.getAddress());
+        user.setUserType(userType); // Asigna UserType después de haberlo guardado
+        user.setTotalAuthorization(false);
         return userRepository.save(user);
+
+
     }
+
 
     public User getOne(Long id) {
         return userRepository.getOne(id);
     }
 
-    @Transactional
-    public List<User> listusers() {
-        List<User> users = new ArrayList();
-        users = userRepository.findAll();
-        return users;
-    }
-
 
     public Boolean existsEmail(String email) {
-        DtoRegistrer dtoRegistrer = new DtoRegistrer();
-        String emailDto= dtoRegistrer.getEmail();
-
-        if (userRepository.existsByUseremail(emailDto)) {
-            return true;
-        }
-        return false;
-    }
-
-
-    public void validate(String name, String lastname, String email, String address, String password) throws OurException {
-
-        if (name == null || name.isEmpty()) {
-            throw new OurException("El nombre no puede ser nulo o estar vacío");
-        }
-        if (lastname == null || lastname.isEmpty()) {
-            throw new OurException("El apellido no puede ser nulo o estar vacío");
-        }
-        if (email == null || email.isEmpty()) {
-            throw new OurException("El correo electrónico no puede ser nulo o estar vacío");
-        }
-        if (address == null || address.isEmpty()) {
-            throw new OurException("La dirección no puede ser nula o estar vacía");
-        }
-        if (password == null || password.isEmpty() || password.length() <= 5) {
-            throw new OurException("La contraseña no puede ser vacía, ni nula y debe tener más de 5 caracteres");
-        }
-    }
-
-
-    public User findByUserEmail(String email) {
-        return userRepository.searchEmail(email);
+        return userRepository.existsByUseremail(email);
     }
 
 
