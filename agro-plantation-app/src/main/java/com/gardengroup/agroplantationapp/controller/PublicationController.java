@@ -1,5 +1,6 @@
 package com.gardengroup.agroplantationapp.controller;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,18 +13,22 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.gardengroup.agroplantationapp.entities.Publication;
+import com.gardengroup.agroplantationapp.service.CloudinaryService;
 import com.gardengroup.agroplantationapp.service.PublicationService;
 
 @RestController
-@RequestMapping ("/publication")
-@CrossOrigin(origins = "*")
+@RequestMapping ("/v1/publication")
 public class PublicationController {
     
     @Autowired
     private PublicationService publicationService;
+    @Autowired
+    private CloudinaryService cloudinaryService;
 
     @PostMapping("/save")
     public ResponseEntity<?> savePublication(@RequestBody Publication publication) {
@@ -81,6 +86,16 @@ public class PublicationController {
             } else {
                 return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
             }
+        }
+    }
+
+    @PostMapping("/upload")
+    public ResponseEntity<Map> upload(@RequestParam("image") MultipartFile file, @RequestParam("folder") String folder) {
+        try {
+            Map result = cloudinaryService.upload(file, folder);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
         }
     }
 

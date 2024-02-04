@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
-@Table(name ="state_request")
 @Data
 public class StateRequest {
     @Id

@@ -81,13 +81,11 @@ public class PublicationService {
     public void deletePublication(Long id) {
         if (publicationRepository.existsById(id)) {
             publicationRepository.deleteById(id);
+            
         } else {
             throw new DataAccessException("Publication not found") {
             };
         }
     }
-    
-
-
 
 }
