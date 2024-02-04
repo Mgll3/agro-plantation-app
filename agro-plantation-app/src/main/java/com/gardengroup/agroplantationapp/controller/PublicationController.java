@@ -27,7 +27,6 @@ public class PublicationController {
 
     @PostMapping("/save")
     public ResponseEntity<?> savePublication(@RequestBody Publication publication) {
-        System.out.println(publication.toString());
         try {
             Publication publicationSaved = publicationService.savePublication(publication);
             return new ResponseEntity<>(publicationSaved, HttpStatus.CREATED);
@@ -36,17 +35,17 @@ public class PublicationController {
         }
     }
 
-    @GetMapping()
+    @GetMapping("/{id}")
     public ResponseEntity<?> getPublication(@PathVariable Long id){
         try {
             Publication publication = publicationService.getPublication(id);
             return new ResponseEntity<>(publication, HttpStatus.OK);
         } catch (Exception e) {
+            //responder con un mensaje de error recibido del services
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
-    //TODO: Mejor nombre que "email"
     @GetMapping("/email/{email}")
     public ResponseEntity<?> PublicationsByEmail(@PathVariable String email) {
         try {
@@ -66,7 +65,7 @@ public class PublicationController {
             if (e.getMessage().equals("Publication not found")) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             } else {
-                return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
+                return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_MODIFIED);
             }
         }
     }

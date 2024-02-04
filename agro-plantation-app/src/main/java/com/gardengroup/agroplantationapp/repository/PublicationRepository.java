@@ -12,6 +12,8 @@ import com.gardengroup.agroplantationapp.entities.Publication;
 @Repository
 public interface PublicationRepository  extends JpaRepository<Publication,Long>{
     
+    
+
     List<Publication> findByAuthorId(Long id);
 
     @Query("SELECT p FROM Publication p WHERE p.author.email = :email")

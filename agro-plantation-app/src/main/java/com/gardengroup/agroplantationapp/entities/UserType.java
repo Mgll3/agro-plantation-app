@@ -1,21 +1,15 @@
 package com.gardengroup.agroplantationapp.entities;
 
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-
+import lombok.Data;
 @Entity
-@Table(name ="user-type")
-@Getter
-@Setter
-@ToString
-@EqualsAndHashCode
+@Table(name ="user_type")
+@Data
 public class UserType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false, length = 15)
     private String type;
 }

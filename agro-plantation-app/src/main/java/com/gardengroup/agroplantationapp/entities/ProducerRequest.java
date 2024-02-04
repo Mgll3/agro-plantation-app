@@ -9,7 +9,7 @@ import lombok.ToString;
 import java.util.Date;
 
 @Entity
-@Table(name ="producer-request")
+@Table(name ="producer_request")
 @Getter
 @Setter
 @ToString

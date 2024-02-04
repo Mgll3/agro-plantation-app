@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 
@@ -62,10 +63,7 @@ public class UserService  {
     @Transactional
     public void changeRole(Long id) {
         Optional<User> answer = userRepository.findById(id);
-
-
-
-
+    }
 
     public void validate(String name, String lastname, String email, String address, String password) throws OurException {
 

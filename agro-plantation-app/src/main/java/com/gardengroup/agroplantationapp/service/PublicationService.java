@@ -5,11 +5,12 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.gardengroup.agroplantationapp.entities.Publication;
-import com.gardengroup.agroplantationapp.enumerations.AuthorizationType;
+import com.gardengroup.agroplantationapp.entities.StateRequest;
 import com.gardengroup.agroplantationapp.repository.PlantationRepository;
 import com.gardengroup.agroplantationapp.repository.PublicationRepository;
 import jakarta.transaction.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,12 +24,11 @@ public class PublicationService {
 
     @Transactional
     public Publication savePublication(Publication publication) {
-        // Modifications for put all new creations with a standar base
+        // Modifications to put all new creations with a default values
         publication.setVisibility(false);
         publication.setScore(0);
-        publication.setAuthorizationStatus(AuthorizationType.PENDING);
-        publication.setPublicationDate(new java.sql.Date(System.currentTimeMillis()));
-        
+        publication.setAuthorizationStatus(new StateRequest(1L));
+        publication.setPublicationDate(LocalDateTime.now());
         publication.setPlantation(plantationRepository.save(publication.getPlantation()));
         return publicationRepository.save(publication);
     }
@@ -68,9 +68,13 @@ public class PublicationService {
             throw new DataAccessException("Publication not found") {
             };
         }   else {
-            return publicationRepository.save(publication);
-        }
+            Publication saved = publicationRepository.findById(publication.getId()).get();
+            //TODO: Cómo hacerlo? poniendo set a todo dependiendo de si es null o no?
 
+            saved.setTitle(publication.getTitle());
+            
+            return publicationRepository.save(saved);
+        }
     }
 
     @Transactional
