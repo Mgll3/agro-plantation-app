@@ -5,6 +5,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,9 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
 import com.gardengroup.agroplantationapp.entities.Publication;
-import com.gardengroup.agroplantationapp.service.CloudinaryService;
 import com.gardengroup.agroplantationapp.service.PublicationService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -27,23 +26,21 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 @RestController
 @RequestMapping ("/v1/publication")
+@CrossOrigin(origins = "*")
 public class PublicationController {
     
     @Autowired
     private PublicationService publicationService;
-    @Autowired
-    private CloudinaryService cloudinaryService;
-
 
     @Operation(summary = "Guardar publicación", 
         description = "End Point para guardar una nueva publicación en base de datos", tags = {"Publication"})
-    @Parameter(name = "Publication", description = "Objeto Publication que se guardará en base de datos", required = true)
+    @Parameter(name = "Publication", description = "Objeto Publication que se guardará en base de datos")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Publicación guardada exitosamente"),
         @ApiResponse(responseCode = "501", description = "Error al guardar la publicación")
     })
     @PostMapping("/save")
-    public ResponseEntity<?> savePublication(@RequestBody Publication publication) {
+    public ResponseEntity<Publication> savePublication(@RequestBody Publication publication) {
         try {
             Publication publicationSaved = publicationService.savePublication(publication);
             return new ResponseEntity<>(publicationSaved, HttpStatus.CREATED);
@@ -52,9 +49,26 @@ public class PublicationController {
         }
     }
 
+    @PostMapping("/saveImages")
+    public ResponseEntity<?> saveImages(
+        @RequestParam("images") List<MultipartFile> files,
+        @RequestParam("publicationId") Long publicationId,
+        @RequestParam("mainImage") MultipartFile mainFile) {
+        try {
+            
+            publicationService.saveImages(mainFile, files, publicationId);
+            
+            return new ResponseEntity<>(HttpStatus.OK);
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+        }
+    }
+
     @Operation(summary = "Obtener una publicación",
         description = "End Point para obtener una publicación por su id", tags = {"Publication"})
-    @Parameter(name = "id", description = "Id de la publicación que se desea obtener", required = true)
+    @Parameter(name = "id", description = "Id de la publicación que se desea obtener")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Publicación obtenida exitosamente"),
         @ApiResponse(responseCode = "404", description = "Publicación no encontrada"),
@@ -77,8 +91,7 @@ public class PublicationController {
     @Operation(summary = "Obtener publicaciones por email",
         description = "End Point para obtener todas las publicaciones asociadas a un email del usuario", 
         tags = {"Publication"})
-    @Parameter(name = "email", description = "Email del usuario que se desea obtener sus publicaciones", 
-        required = true)
+    @Parameter(name = "email", description = "Email del usuario que se desea obtener sus publicaciones")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Publicaciones obtenidas exitosamente"),
         @ApiResponse(responseCode = "404", description = "Publicaciones no encontradas"),
@@ -101,7 +114,7 @@ public class PublicationController {
     @Operation(summary = "Actualizar Publicación existente", 
         description = "Modificar los datos de una publicación ya existente", tags = "Publication")
     @Parameter(name = "Publication", 
-        description = "Publicación que va ser actualizada, unicamente se actualizan los campos title, plantation y visibility", required = true)
+        description = "Publicación que va ser actualizada, unicamente se actualizan los campos title, plantation y visibility")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Publicación actualizada exitosamente"),
         @ApiResponse(responseCode = "404", description = "Publicación no encontrada"),
@@ -123,7 +136,7 @@ public class PublicationController {
 
     @Operation(summary = "Eliminar Publicacion", 
         description = "Eliminar todos los datos de una Publicación por su Id", tags = "Publication")
-    @Parameter(name = "id", description = "Id de la publicación que se desea eliminar", required = true)
+    @Parameter(name = "id", description = "Id de la publicación que se desea eliminar")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Publicación eliminada exitosamente"),
         @ApiResponse(responseCode = "404", description = "Publicación no encontrada"),
@@ -143,14 +156,6 @@ public class PublicationController {
         }
     }
 
-    @PostMapping("/upload")
-    public ResponseEntity<Map> upload(@RequestParam("image") MultipartFile file, @RequestParam("folder") String folder) {
-        try {
-            Map result = cloudinaryService.upload(file, folder);
-            return new ResponseEntity<>(result, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-        }
-    }
+    
 
 }

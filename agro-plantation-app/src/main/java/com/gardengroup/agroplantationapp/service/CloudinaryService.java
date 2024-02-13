@@ -18,8 +18,7 @@ public class CloudinaryService {
 
     public Map upload(MultipartFile file, String folder) {
         try {
-            Map result = cloudinary.uploader()
-                .upload(file.getBytes(), ObjectUtils.asMap("folder", folder));
+            Map result = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.asMap("folder", folder));
             return result;
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -27,5 +26,13 @@ public class CloudinaryService {
         }
     }
 
+    public Map delete(String id) {
+        try {
+            Map result = cloudinary.uploader().destroy(id, ObjectUtils.emptyMap());
+            return result;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }
