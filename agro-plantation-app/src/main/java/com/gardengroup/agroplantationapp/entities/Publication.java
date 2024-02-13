@@ -40,4 +40,19 @@ public class Publication {
     @ManyToOne
     @JoinColumn(nullable = false)
     private StateRequest authorizationStatus;
+
+    //Actualizar unicamenete la información que no esta ya guardada en la publicación
+    public void updateInfo(Publication publication){
+
+        if(this.title != publication.title && publication.title != null){
+            this.setTitle(publication.title);
+        }
+        if(!this.plantation.equals(publication.plantation) && publication.plantation != null){
+            this.setPlantation(publication.plantation);
+        }
+        if(this.visibility != publication.visibility && publication.visibility != null){
+            this.setVisibility(publication.visibility);
+        }
+        
+    }
 }

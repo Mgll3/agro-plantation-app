@@ -11,7 +11,7 @@ package com.gardengroup.agroplantationapp.dto;
 //     private User author;
 //     private LocalDateTime publicationDate;
 //     private Boolean visibility;
-//     //private Image mainImage; TODO: 
+//     //private Image mainImage; 
 //     //private List<Image> images;
 //     //private List<Comment> comments;
 //     private Integer score;

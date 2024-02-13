@@ -68,20 +68,17 @@ public class PublicationService {
             throw new DataAccessException("Publication not found") {
             };
         }   else {
-            Publication saved = publicationRepository.findById(publication.getId()).get();
-            //TODO: Cómo hacerlo? poniendo set a todo dependiendo de si es null o no?
-
-            saved.setTitle(publication.getTitle());
-            
-            return publicationRepository.save(saved);
+            Publication PublicationSaved = publicationRepository.findById(publication.getId()).get();
+            PublicationSaved.updateInfo(publication);
+            return publicationRepository.save(PublicationSaved);
         }
     }
 
     @Transactional
     public void deletePublication(Long id) {
+        
         if (publicationRepository.existsById(id)) {
             publicationRepository.deleteById(id);
-            
         } else {
             throw new DataAccessException("Publication not found") {
             };
