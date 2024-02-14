@@ -1,45 +1,53 @@
 
 type ButtonProps = {
 	text: string,
-	size: "small" | "medium" | "big",
-	color: "blue" | "green" | "grey"
+	type: "nav" | "register" | "action",
+	buttonColor: "yellow" | "green" | "grey"
 }
 
-function Button({ text, size, color }: ButtonProps) {
+function Button({ text, type, buttonColor }: ButtonProps) {
 
-	const buttonStyles = {
-		size: "",
-		color: ""
-	};
+	let color: string = "";
+	let width: string = "";
+	let paddingVertical: string = "";
+	let fontSize: string = "";
+	const boxShadow = "shadow-md";
 
-	switch (size) {
-		case "small":
-			buttonStyles.size = "w-20";
+
+	switch (type) {
+		case "nav":
+			width = "w-53";
+			paddingVertical = "py-2.5";
+			fontSize = "text-lg";
 			break;
 
-		case "medium":
-			buttonStyles.size = "w-28";
+		case "register":
+			width = "w-44";
+			paddingVertical = "py-4";
+			fontSize = "text-lg";
 			break;
 
-		case "big":
-			buttonStyles.size = "w-36";
+		case "action":
+			width = "w-52";
+			paddingVertical = "py-4";
+			fontSize = "text-2xl";
 			break;
 
 		default:
 			break;
 	}
 
-	switch (color) {
-		case "blue":
-			buttonStyles.color = "bg-blue-500";
+	switch (buttonColor) {
+		case "yellow":
+			color = "bg-brandingYellow";
 			break;
 
 		case "green":
-			buttonStyles.color = "bg-green-600";
+			color = "bg-green-600";
 			break;
 
 		case "grey":
-			buttonStyles.color = "bg-gray-500";
+			color = "bg-gray-500";
 			break;
 
 		default:
@@ -47,7 +55,7 @@ function Button({ text, size, color }: ButtonProps) {
 	}
 
 	return (
-		<button className={`${buttonStyles.size} ${buttonStyles.color} border text-white px-2 py-1 rounded-md font-mono cursor-pointer text-lg font-semibold`}>
+		<button className={`${boxShadow} ${width} ${paddingVertical} ${fontSize} ${color} text-black rounded-lg font-mono cursor-pointer font-bold`}>
 			{text}
 		</button>
 	);
