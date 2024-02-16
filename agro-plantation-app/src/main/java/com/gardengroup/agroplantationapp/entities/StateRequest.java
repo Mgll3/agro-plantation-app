@@ -7,7 +7,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name ="staterequest")
+@Table(name ="state_request")
 @Getter
 @Setter
 @ToString
@@ -17,4 +17,13 @@ public class StateRequest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String state;
+
+    public StateRequest() {
+    }
+
+    public StateRequest(Long id) {
+        this.id = id;
+    }
+
+
 }

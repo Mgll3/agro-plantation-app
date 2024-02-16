@@ -56,6 +56,8 @@ public class JwtTokenProvider {
             // Si el parsing es exitoso, el token es válido
             return true;
         } catch (Exception e) {
+            // Agregar logs para ver más detalles sobre la excepción
+            System.out.println("Error al validar el token: " + e.getMessage());
             // Si ocurre una excepción durante el parsing, el token no es válido
             throw new AuthenticationCredentialsNotFoundException("JWT ha expirado o está incorrecto");
         }

@@ -55,11 +55,18 @@ public class UserService {
 
 
     public User getOne(Long id) {
+
         return userRepository.getOne(id);
+    }
+    public User findByname(String name) {
+
+        return userRepository.searchName(name);
     }
 
 
+
     public Boolean existsEmail(String email) {
+
         return userRepository.existsByUseremail(email);
     }
 

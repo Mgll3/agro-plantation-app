@@ -7,7 +7,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name ="usertype")
+@Table(name ="user_type")
 @Getter
 @Setter
 @ToString
@@ -17,5 +17,6 @@ public class UserType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(length = 15 , nullable = false)
     private String type;
 }

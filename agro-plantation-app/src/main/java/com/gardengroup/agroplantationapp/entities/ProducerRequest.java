@@ -9,7 +9,7 @@ import lombok.ToString;
 import java.util.Date;
 
 @Entity
-@Table(name ="producerrequest")
+@Table(name ="producer_request")
 @Getter
 @Setter
 @ToString
@@ -20,10 +20,12 @@ public class ProducerRequest {
     private Long id;
 
     @ManyToOne
+    @JoinColumn(nullable = false)
     private User user;
-
+    @Column(columnDefinition = "DATETIME")
     private Date date;
 
     @ManyToOne
+    @JoinColumn(nullable = false)
     private StateRequest staterequest;
 }

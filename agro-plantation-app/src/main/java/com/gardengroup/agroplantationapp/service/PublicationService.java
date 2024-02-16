@@ -1,57 +1,73 @@
 package com.gardengroup.agroplantationapp.service;
 
+import com.gardengroup.agroplantationapp.entities.StateRequest;
+import com.gardengroup.agroplantationapp.entities.User;
+import com.gardengroup.agroplantationapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.gardengroup.agroplantationapp.entities.Publication;
-import com.gardengroup.agroplantationapp.enumerations.AuthorizationType;
+
 import com.gardengroup.agroplantationapp.repository.PlantationRepository;
 import com.gardengroup.agroplantationapp.repository.PublicationRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class PublicationService {
-    
+
     @Autowired
     private PublicationRepository publicationRepository;
     @Autowired
     private PlantationRepository plantationRepository;
+    @Autowired
+    private CloudinaryService cloudinaryService;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private UserRepository userRepository;
+
 
     @Transactional
-    public Publication savePublication(Publication publication) {
-        // Modifications for put all new creations with a standar base
+    public Publication savePublication(Publication publication, String email) {
+        User user = userRepository.searchEmail(email);
+        publication.setAuthor(user);
+
         publication.setVisibility(false);
         publication.setScore(0);
-        publication.setAuthorizationStatus(AuthorizationType.PENDING);
-        publication.setPublicationDate(new java.sql.Date(System.currentTimeMillis()));
-        
-        publication.setPlantation(plantationRepository.save(publication.getPlantation()));
+        publication.setAuthorizationStatus(new StateRequest(1L));
+        publication.setPublicationDate(LocalDateTime.now());
+        publication.setPlantation(publication.getPlantation());
+
+
         return publicationRepository.save(publication);
     }
 
+
     @Transactional
     public Publication getPublication(Long id) {
-        
+
         Optional<Publication> publication = publicationRepository.findById(id);
-        
+
         if (publication.isPresent()) {
             return publication.get();
         } else {
             throw new DataAccessException("Publications not found") {
             };
         }
-        
+
     }
 
     @Transactional
     public List<Publication> publicationsByEmail(String email) {
 
         final List<Publication> publication = publicationRepository.publicationsByEmail(email);
-        
+
         if (publication.size() > 0) {
             return publication;
         } else {
@@ -60,14 +76,14 @@ public class PublicationService {
         }
     }
 
-    
+
     @Transactional
-    public Publication updatePublication(Publication publication){
-        
+    public Publication updatePublication(Publication publication) {
+
         if (!publicationRepository.existsById(publication.getId())) {
             throw new DataAccessException("Publication not found") {
             };
-        }   else {
+        } else {
             return publicationRepository.save(publication);
         }
 
@@ -82,8 +98,6 @@ public class PublicationService {
             };
         }
     }
-    
-
 
 
 }

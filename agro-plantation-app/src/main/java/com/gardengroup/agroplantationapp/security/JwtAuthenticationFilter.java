@@ -1,7 +1,6 @@
 package com.gardengroup.agroplantationapp.security;
 
-import com.gardengroup.agroplantationapp.entities.User;
-import com.gardengroup.agroplantationapp.entities.UserType;
+
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,69 +16,59 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.util.Collection;
-import java.util.List;
 
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
+
     @Autowired
     private CustomUsersDetailsService customUsersDetailsService;
+
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
 
-   // Extrae el token JWT de la cabecera "Authorization" de la solicitud HTTP.
-    private String getRequestToken(HttpServletRequest httpServletRequest) {
-        String bearerToken = httpServletRequest.getHeader("Authorization");
-
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
-            // Agrega un espacio después de "Bearer" para asegurarte de que el token se extraiga correctamente
-            return bearerToken.substring(7, bearerToken.length());
-        }
-
-        return null;
-    }
-
-    //Filtro interno que maneja la autenticación basada en tokens JWT.
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
 
-        // Obtiene el token de la solicitud
         String token = getRequestToken(request);
 
-        // Verifica si el token no está vacío y es válido
-        if (StringUtils.hasText(token) && jwtTokenProvider.validateToken(token)) {
+        try {
+            if (StringUtils.hasText(token) && jwtTokenProvider.validateToken(token)) {
+                String email = jwtTokenProvider.getJwtUser(token);
 
-            // Obtiene el email del usuario a partir del token
-            String email = jwtTokenProvider.getJwtUser(token);
+                UserDetails userDetails = customUsersDetailsService.loadUserByUsername(email);
 
-            // Carga los detalles del usuario utilizando el servicio de detalles personalizado
-            UserDetails userDetails = customUsersDetailsService.loadUserByUsername(email);
-            User user = (User) userDetails;
+                if (userDetails != null) {
+                    Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
 
-            // Obtiene las autoridades (roles) del usuario
-            Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
+                    // Puedes verificar si el usuario tiene las autoridades necesarias aquí
+                    // authorities.contains(new SimpleGrantedAuthority("ROLE_USER"))
 
+                    UsernamePasswordAuthenticationToken authentication =
+                            new UsernamePasswordAuthenticationToken(userDetails, null, authorities);
 
-            // Obtiene el tipo de usuario directamente desde el objeto User
-            UserType userType = user.getUserType();
+                    authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
-            // Verifica si el tipo de usuario es "USER" o "PRODUCER"
-            if ("USER".equals(userType.getType()) || "PRODUCER".equals(userType.getType())) {
-
-                // Crea un token de autenticación
-                UsernamePasswordAuthenticationToken authenticationToken =
-                        new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-
-                // Establece los detalles de la autenticación basados en la solicitud
-                authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-
-                // Establece la autenticación en el contexto de seguridad de Spring
-                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                }
             }
+        } catch (Exception e) {
+            // Manejar errores de validación de token, por ejemplo, token expirado
+            // Puedes devolver un código de estado HTTP específico o un mensaje de error
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token inválido o expirado");
+            return;
         }
 
-        // Continúa con la cadena de filtros
         filterChain.doFilter(request, response);
     }
 
+    public String getRequestToken(HttpServletRequest httpServletRequest) {
+        String bearerToken = httpServletRequest.getHeader("Authorization");
+
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
+            return bearerToken.substring(7);
+        }
+
+        return null;
+    }
 }

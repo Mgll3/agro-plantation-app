@@ -10,4 +10,10 @@ public class DtoRegistrer {
     private String lastname;
     private String address;
 
+
+    public DtoRegistrer(String email, String name) {
+        this.email = email;
+
+        this.name = name;
+    }
 }
