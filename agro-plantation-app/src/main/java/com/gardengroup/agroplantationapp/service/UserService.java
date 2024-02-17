@@ -34,20 +34,26 @@ public class UserService {
 
     @Transactional
     public User createUser(DtoRegistrer dtoRegistrer) throws OurException {
-        // UserType
-        UserType userType = new UserType();
-        userType.setType("USER");
-        userTypeRepository.save(userType); // Guarda UserType antes de asociarlo con User
-
-        // User
         User user = new User();
         user.setEmail(dtoRegistrer.getEmail());
         user.setPassword(passwordEncoder.encode(dtoRegistrer.getPassword()));
         user.setName(dtoRegistrer.getName());
         user.setLastname(dtoRegistrer.getLastname());
         user.setAddress(dtoRegistrer.getAddress());
-        user.setUserType(userType); // Asigna UserType después de haberlo guardado
+
+        // Asignar el tipo de usuario como "USER" para todos los usuarios
+        UserType userType = userTypeRepository.findByType("USER");
+
+        // Verificar si el tipo de usuario ya existe en la base de datos
+        if (userType == null) {
+            throw new OurException("Error: Tipo de usuario 'USER' no encontrado en la base de datos.");
+            // O puedes manejar esto de alguna manera que tenga sentido para tu aplicación
+        }
+
+        user.setUserType(userType);
         user.setTotalAuthorization(false);
+
+        // Guardar el usuario en la base de datos
         return userRepository.save(user);
 
 
@@ -58,11 +64,11 @@ public class UserService {
 
         return userRepository.getOne(id);
     }
+
     public User findByname(String name) {
 
         return userRepository.searchName(name);
     }
-
 
 
     public Boolean existsEmail(String email) {

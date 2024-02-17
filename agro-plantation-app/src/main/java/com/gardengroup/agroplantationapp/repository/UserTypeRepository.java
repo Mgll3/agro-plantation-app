@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserTypeRepository extends JpaRepository<UserType,Long> {
 
-    @Query("SELECT u FROM  UserType u WHERE u.type =:type")
-    public User finByType(@Param("type") String type);
+    @Query("SELECT u FROM UserType u WHERE u.type = :type")
+    public UserType findByType(@Param("type") String type);
+
 }

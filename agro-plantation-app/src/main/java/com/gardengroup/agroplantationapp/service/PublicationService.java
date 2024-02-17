@@ -36,16 +36,22 @@ public class PublicationService {
     @Transactional
     public Publication savePublication(Publication publication, String email) {
         User user = userRepository.searchEmail(email);
-        publication.setAuthor(user);
 
-        publication.setVisibility(false);
-        publication.setScore(0);
-        publication.setAuthorizationStatus(new StateRequest(1L));
-        publication.setPublicationDate(LocalDateTime.now());
-        publication.setPlantation(publication.getPlantation());
+        // Verificar si el usuario es de tipo "PRODUCER"
+        if ("PRODUCER".equals(user.getUserType().getType())) {
+            publication.setAuthor(user);
 
+            publication.setVisibility(false);
+            publication.setScore(0);
+            publication.setAuthorizationStatus(new StateRequest(1L));
+            publication.setPublicationDate(LocalDateTime.now());
+            publication.setPlantation(publication.getPlantation());
 
-        return publicationRepository.save(publication);
+            return publicationRepository.save(publication);
+        } else {
+            System.out.println("No es producter");
+            return null;
+        }
     }
 
 
