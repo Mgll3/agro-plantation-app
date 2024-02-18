@@ -28,4 +28,5 @@ public class ProducerRequest {
     @ManyToOne
     @JoinColumn(nullable = false)
     private StateRequest staterequest;
+    //crea usuarios que queiren ser productores en estado pendiente
 }

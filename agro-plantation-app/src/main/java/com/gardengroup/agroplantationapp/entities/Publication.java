@@ -1,15 +1,11 @@
 package com.gardengroup.agroplantationapp.entities;
 
 
-import com.gardengroup.agroplantationapp.enumerations.AuthorizationType;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.sql.Date;
 import java.time.LocalDateTime;
 
 @Entity
@@ -36,9 +32,7 @@ public class Publication {
     private LocalDateTime publicationDate;
     @Column(columnDefinition = "BOOLEAN DEFAULT 0")
     private Boolean visibility;
-    //private Image mainImage; TODO:
-    //private List<Image> images;
-    //private List<Comment> comments;
+
     @Column(columnDefinition = "INTEGER DEFAULT 0")
     private Integer score;
     @ManyToOne

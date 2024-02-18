@@ -57,34 +57,17 @@ public class ControllerPortal {
     @PostMapping("/login")
     public ResponseEntity<DtoAthAnswer> login(@RequestBody DtoLogin dtoLogin) {
 
-        Authentication authentication = authenticationManager.authenticate( new UsernamePasswordAuthenticationToken(
-                dtoLogin.getEmail(),dtoLogin.getPassword()
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                dtoLogin.getEmail(), dtoLogin.getPassword()
         ));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token = jwtTokenProvider.generateToken(authentication);
 
 
-        return new ResponseEntity<>(new DtoAthAnswer(token),HttpStatus.OK);
+        return new ResponseEntity<>(new DtoAthAnswer(token), HttpStatus.OK);
 
 
     }
-
-
-        @GetMapping("/user")
-        public ResponseEntity<DtoRegistrer> getUserInfo(Authentication authentication) {
-            // Obtén el nombre de usuario del objeto Authentication
-            String username = authentication.getName();
-
-            // Luego, utiliza el nombre de usuario para obtener la información completa del usuario
-            User user = userService.findByname(username);
-
-            // Convierte la información del usuario en un DTO (Data Transfer Object) si es necesario
-            DtoRegistrer userDto = new DtoRegistrer( user.getName(), user.getEmail());
-
-            return ResponseEntity.ok(userDto);
-        }
-
-
 
 
 }

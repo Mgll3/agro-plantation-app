@@ -1,25 +1,21 @@
 package com.gardengroup.agroplantationapp.service;
 
-import com.gardengroup.agroplantationapp.dtos.DtoLogin;
+
 import com.gardengroup.agroplantationapp.dtos.DtoRegistrer;
+import com.gardengroup.agroplantationapp.entities.ProducerRequest;
+import com.gardengroup.agroplantationapp.entities.StateRequest;
 import com.gardengroup.agroplantationapp.entities.User;
 import com.gardengroup.agroplantationapp.entities.UserType;
 import com.gardengroup.agroplantationapp.exceptions.OurException;
+import com.gardengroup.agroplantationapp.repository.ProducerRequestRepository;
+import com.gardengroup.agroplantationapp.repository.StateRequestRepository;
 import com.gardengroup.agroplantationapp.repository.UserRepository;
 import com.gardengroup.agroplantationapp.repository.UserTypeRepository;
-import com.gardengroup.agroplantationapp.security.JwtTokenProvider;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 
 
 @Service
@@ -30,6 +26,10 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private UserTypeRepository userTypeRepository;
+    @Autowired
+    private StateRequestRepository stateRequestRepository;
+    @Autowired
+    ProducerRequestRepository producerRequestRepository;
 
 
     @Transactional
@@ -56,9 +56,7 @@ public class UserService {
         // Guardar el usuario en la base de datos
         return userRepository.save(user);
 
-
     }
-
 
     public User getOne(Long id) {
 
@@ -74,6 +72,34 @@ public class UserService {
     public Boolean existsEmail(String email) {
 
         return userRepository.existsByUseremail(email);
+    }
+
+    @Transactional
+    public void sendProducerRequest(String userEmail) throws OurException {
+        // Obtener el usuario por su correo electrónico
+        User user = userRepository.searchEmail(userEmail);
+
+        // Verificar si el usuario existe
+        if (user == null) {
+            throw new OurException("Usuario no encontrado");
+        }
+
+        // Buscar el estado 'PENDING' en la tabla state_request
+        StateRequest pendingState = stateRequestRepository.findByState("PENDING");
+
+        // Verificar que el estado pendiente no sea nulo
+        if (pendingState == null) {
+            throw new OurException("Estado 'PENDING' no encontrado");
+        }
+
+        // Crear la solicitud del productor
+        ProducerRequest producerRequest = new ProducerRequest();
+        producerRequest.setUser(user);
+        producerRequest.setDate(new Date());
+        producerRequest.setStaterequest(pendingState);
+
+        // Guardar la solicitud del productor
+        producerRequestRepository.save(producerRequest);
     }
 
 

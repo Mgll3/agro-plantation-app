@@ -4,7 +4,7 @@ package com.gardengroup.agroplantationapp.controller;
 import java.util.List;
 import java.util.Map;
 
-import com.gardengroup.agroplantationapp.entities.User;
+
 import com.gardengroup.agroplantationapp.repository.PlantationRepository;
 import com.gardengroup.agroplantationapp.security.JwtAuthenticationFilter;
 import com.gardengroup.agroplantationapp.security.JwtTokenProvider;
@@ -42,7 +42,7 @@ public class PublicationController {
         String email = jwtTokenProvider.getJwtUser(Token);
 
         try {
-            Publication publicationSaved = publicationService.savePublication(publication,email);
+            Publication publicationSaved = publicationService.savePublication(publication, email);
             return new ResponseEntity<>(publicationSaved, HttpStatus.CREATED);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();

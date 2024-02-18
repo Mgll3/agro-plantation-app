@@ -12,8 +12,6 @@ import com.gardengroup.agroplantationapp.entities.Publication;
 import com.gardengroup.agroplantationapp.repository.PlantationRepository;
 import com.gardengroup.agroplantationapp.repository.PublicationRepository;
 import jakarta.transaction.Transactional;
-import org.springframework.web.multipart.MultipartFile;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;

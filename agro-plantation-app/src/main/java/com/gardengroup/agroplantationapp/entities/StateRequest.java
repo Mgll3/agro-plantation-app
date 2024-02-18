@@ -7,7 +7,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name ="state_request")
+@Table(name = "state_request")
 @Getter
 @Setter
 @ToString
@@ -25,5 +25,5 @@ public class StateRequest {
         this.id = id;
     }
 
-
+// ('PENDING'), ('ACCEPTED'), ('DECLINED')
 }
