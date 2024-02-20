@@ -52,6 +52,28 @@ public class PublicationService {
         }
     }
 
+    @Transactional
+    public Publication updateVisibility(Long publicationId, String email) {
+        User user = userRepository.searchEmail(email);
+        Optional<Publication> optionalPublication = publicationRepository.findById(publicationId);
+
+        if (optionalPublication.isPresent()) {
+            Publication publication = optionalPublication.get();
+
+            // Verificar si el usuario es el autor de la publicación
+            if (user.equals(publication.getAuthor())) {
+                publication.setVisibility(true);
+                return publicationRepository.save(publication);
+            } else {
+                System.out.println("No es el autor de la publicación");
+                return null;
+            }
+        } else {
+            System.out.println("Publicación no encontrada");
+            return null;
+        }
+    }
+
 
     @Transactional
     public Publication getPublication(Long id) {

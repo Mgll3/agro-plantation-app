@@ -99,6 +99,25 @@ public class PublicationController {
         }
     }
 
+    @PutMapping("/updateVisibility/{publicationId}")
+    public ResponseEntity<?> updateVisibility(@PathVariable Long publicationId,  HttpServletRequest request) {
+        String token = jwtAuthenticationFilter.getRequestToken(request);
+        String email = jwtTokenProvider.getJwtUser(token);
+
+        try {
+            Publication updatedPublication = publicationService.updateVisibility(publicationId, email);
+
+            if (updatedPublication != null) {
+                return new ResponseEntity<>(updatedPublication, HttpStatus.OK);
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
+        }
+    }
+
+
 
 }
 
