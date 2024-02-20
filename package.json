@@ -11,6 +11,9 @@
     "start": "rimraf dist && npm run build && npm run preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.3",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.15.10",
     "axios": "^1.6.7",
     "formik": "^2.4.5",
     "react": "^18.2.0",

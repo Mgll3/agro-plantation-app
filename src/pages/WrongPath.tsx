@@ -17,7 +17,7 @@ function WrongPath() {
 
 	return (
 		<main>
-			<h1>La página indica no existe. Redirigiendo a Home...</h1>
+			<h1>La página indicada no existe. Redirigiendo a Home...</h1>
 		</main>
 	);
 }

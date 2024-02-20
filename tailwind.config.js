@@ -4,10 +4,16 @@ export default {
 	theme: {
 		extend: {
 			colors: {
-				brandingYellow: "#F6C915"
+				brandingYellow: "#F6C915",
+				brandingDarkGreen: "#1B7E25",
+				brandingLightGreen: "#94B447"
 			},
 			spacing: {
 				"53": "13.25rem"
+			},
+			backgroundImage: {
+				"headerBg": "url('@/images/header_background.avif')",
+				"huerta": "url('@/images/huertas.jpg')",
 			}
 		},
 	},
