@@ -117,6 +117,11 @@ public class PublicationController {
         }
     }
 
+    @GetMapping("/publications/top")
+    public ResponseEntity<List<Publication>> getTopPublications() {
+        List<Publication> topPublications = publicationService.getTopPublications();
+        return new ResponseEntity<>(topPublications, HttpStatus.OK);
+    }
 
 
 }

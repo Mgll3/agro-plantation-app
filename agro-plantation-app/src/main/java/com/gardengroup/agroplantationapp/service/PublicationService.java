@@ -15,6 +15,7 @@ import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class PublicationService {
@@ -72,6 +73,11 @@ public class PublicationService {
             System.out.println("Publicación no encontrada");
             return null;
         }
+    }
+    public List<Publication> getTopPublications() {
+        List<Publication> allPublications = publicationRepository.findTop6ByOrderByScoreDesc();
+        // Limitar la cantidad de publicaciones devueltas a exactamente 6
+        return allPublications.stream().limit(6).collect(Collectors.toList());
     }
 
 

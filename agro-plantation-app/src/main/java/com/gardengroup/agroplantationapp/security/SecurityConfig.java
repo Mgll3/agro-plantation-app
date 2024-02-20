@@ -51,7 +51,7 @@ public class SecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)  // Configura la política de creación de sesiones como STATELESS (sin sesiones)
                 .and()
                 .authorizeHttpRequests()
-                .requestMatchers("/", "/registro", "/login").permitAll() // Permite acceso sin autenticación a las páginas de inicio, registro y login
+                .requestMatchers("/", "/registro", "/login","/publication/publications/top").permitAll() // Permite acceso sin autenticación a las páginas de inicio, registro y login
                 .requestMatchers("/publication","/publication/save", "/foro").hasAnyAuthority( "PRODUCER","ADMINISTRATOR")  // Permite acceso a /publicaciones y /foro para usuarios y productores
                 .requestMatchers("/mipublicacion").hasAuthority("PRODUCER")  // Permite acceso a /mipublicacion solo para productores//hasAuthority en vez de hasAnyRole y hasRole.
                 .requestMatchers("/configuracion").hasAuthority("ADMINISTRATOR")
