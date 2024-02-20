@@ -21,7 +21,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-
     @PostMapping("/authorization")
     public ResponseEntity<User> authorization(@RequestBody User user) {
         User userAuth = userService.authorization(user.getEmail());

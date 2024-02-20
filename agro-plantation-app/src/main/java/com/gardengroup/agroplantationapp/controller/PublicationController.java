@@ -49,6 +49,11 @@ public class PublicationController {
         }
     }
 
+    @Operation(summary= "Guardar las imágenes de una publicacion ya creada", 
+        description = "End Point para subir imagenes a la nube", tags = {"Publication"})
+    @Parameter(name = "mainFile", description = "Imagen principal que se va a guardar")
+    @Parameter(name = "images", description = "Lista de imagenes secundarias que se van a guardar")
+    @Parameter(name = "publicationId", description = "Id de la publicación a la que se le van a asociar las imagenes")
     @PostMapping("/saveImages")
     public ResponseEntity<?> saveImages(
         @RequestParam("images") List<MultipartFile> files,
@@ -155,7 +160,5 @@ public class PublicationController {
             }
         }
     }
-
-    
 
 }

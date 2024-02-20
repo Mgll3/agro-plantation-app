@@ -30,7 +30,6 @@ public class ControllerPortal {
         }
     }
 
-
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody User user) {
         User userNew = userService.findByUserEmail(user.getEmail());
