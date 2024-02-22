@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import Login from "../components/forms/Login";
-import Header from "../components/header/Header";
+//import Header from "../components/header/Header";
 import { useUserRoleContext } from "../context/UserRoleContext";
 import { useNavigate } from "react-router-dom";
 import { logInUser } from "../interfaces/logInUser";
@@ -10,8 +10,8 @@ import { UserDataType } from "./Home";
 export type LoginStateType = "init" | "loading" | "error" | "logged";
 
 function LoginPage() {
-	const bgImageTailwind = "bg-headerBg";
-	const logoSrc = "images/logo-plant-in.png";
+//	const bgImageTailwind = "bg-headerBg";
+//	const logoSrc = "images/logo-plant-in.png";
 
 	const { setUserRole } = useUserRoleContext();
 	const [loginState, setLoginState] = useState<LoginStateType>("init");
@@ -59,9 +59,9 @@ function LoginPage() {
 
 	return (
 		<>
-			<div className="w-full" >
+			{/*<div className="w-full" >
 				<Header bgImageTailwind={bgImageTailwind} logoSrc={logoSrc} />
-			</div>
+			</div>*/}
 
 			<main className="flex items-center justify-center overflow-hidden">
 				<Login handleSubmit={sendForm} loginState={loginState} />

@@ -31,7 +31,7 @@ function Button({ buttonColor, buttonFontSize, buttonWidth, buttonPaddingY, butt
 			<button
 				type="button"
 				onClick={buttonFuncionality.handleClick}
-				className={`${buttonWidth} ${buttonPaddingY} ${buttonFontSize} ${color} ${textColor} shadow-md rounded-lg font-mono cursor-pointer font-bold`}
+				className={`${buttonWidth} ${buttonPaddingY} ${buttonFontSize} ${color} ${textColor} shadow-md rounded-lg font-loginFont cursor-pointer font-bold tracking-widest`}
 			>
 				{buttonFuncionality.actionText}
 			</button>
@@ -40,7 +40,7 @@ function Button({ buttonColor, buttonFontSize, buttonWidth, buttonPaddingY, butt
 		return (
 			<button
 				type="submit"
-				className={`${buttonWidth} ${buttonPaddingY} ${buttonFontSize} ${color} ${textColor} shadow-md rounded-lg font-mono cursor-pointer font-bold`}
+				className={`${buttonWidth} ${buttonPaddingY} ${buttonFontSize} ${color} ${textColor} shadow-md rounded-lg font-loginFont cursor-pointer font-bold tracking-widest`}
 			>
 				{buttonFuncionality.submitText}
 			</button>
@@ -49,7 +49,7 @@ function Button({ buttonColor, buttonFontSize, buttonWidth, buttonPaddingY, butt
 		return (
 			<Link to={buttonFuncionality.linkUrl} className="">
 				<button
-					className={`${buttonWidth} ${buttonPaddingY} ${buttonFontSize} ${color} ${textColor} shadow-md rounded-lg font-mono cursor-pointer font-bold`}
+					className={`${buttonWidth} ${buttonPaddingY} ${buttonFontSize} ${color} ${textColor} shadow-md rounded-lg font-loginFont cursor-pointer font-bold tracking-widest`}
 				>
 
 					{buttonFuncionality.linkText}

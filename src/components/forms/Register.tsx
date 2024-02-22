@@ -57,108 +57,123 @@ export default function Register({ handleSubmit, registerState, errorText }: Reg
 			{
 				registerState === "init" || registerState === "loading"
 					? (
-						<div className="flex justify-center items-center bg-huerta rounded-2xl p-6 w-[max-content] h-[max-content]">
+						<div className="w-[100vw] font-loginFont flex h-[100%] rounded-2xl text-[#eaefd4f2] bg-[#EAE3C0]">
 
-							<Formik initialValues={initialValues} validationSchema={registerSchema} onSubmit={handleSubmit}>
-								<Form name="registerForm" action="" encType="multipart/form-data" className="w-[350px] h-[max-content] text-center bg-[#86b155d6] p-4 rounded-2xl text-[#eaefd4f2] overflow-hidden">
+							<aside className="w-[35vw] h-[100vh] ">
 
-									<div className="flex flex-col gap-6 pb-2">
-										<div className="flex justify-center items-center">
-											<img src="./images/huertas-logo.png" alt="ecohuertas" className="w-[70px] h-[70px] rounded-full shadow-[0_0_12px] shadow-[#7edb15d6]" />
+								<div className="bg-[url('./public/images/inicio_y_registro.jpg')] w-[100%] h-[100%] bg-center bg-cover bg-no-repeat flex justify-end items-center">
+									<h2 className="bg-[#EAE3C0] text-black font-semibold text-2xl font-loginFont p-[1rem_4rem] rounded-2xl translate-x-[14px] translate-y-[30px]">Registro</h2>
+								</div>
 
-											<h2 className=" text-3xl font-light p-[0_2rem]">Regístrate</h2>
+							</aside>
+
+							<div>
+								<div className="flex flex-col justify-center items-center gap-1 rounded-2xl text-2xl text-black font-sans mt-[4rem]">
+									<h1>Bienvenido a</h1>
+									<img src="images/logo-plant-in.png" alt="logo"
+										className=" bg-[transparent] w-[100px] h-[140px]" />
+									<h2>Por favor, completa el formulario</h2>
+								</div>
+								<Formik initialValues={initialValues} validationSchema={registerSchema} onSubmit={handleSubmit}>
+
+
+									<Form name="registerForm" action="" encType="multipart/form-data" className="w-[65vw] h-[100%] border-solid text-center justify-around items-center bg-[#EAE3C0] text-black p-[1rem_6rem_2rem] font-loginFont">
+
+										<div className="flex flex-col pb-2">
+
+
+											<div className="grid grid-cols-form auto-cols-[repeat] gap-5 items-start text-base text-left">
+												<div className="">
+													<label htmlFor="userName"><Field type="text" id="userName" name="userName" placeholder="Nombres" className="bg-[#00000011] outline-none  border-b-[2px] rounded-sm border-b-[#00000038] p-[0_12px] w-[300px]" /></label>
+													<ErrorMessage name="userName" >
+														{errorMsg => <p className=" text-xs text-red-600 mt-2">{errorMsg}</p>}
+													</ErrorMessage>
+												</div>
+
+
+
+
+												<div className="">
+													<label htmlFor="userLastName"><Field type="text" id="userLastName" name="userLastName" placeholder="Apellido" className="bg-[#00000011] outline-none  border-b-[2px] rounded-sm border-b-[#00000038] p-[0_12px] w-[300px]" /></label>
+													<ErrorMessage name="userLastName" >
+														{errorMsg => <p className=" text-xs text-red-700 mt-2">{errorMsg}</p>}
+													</ErrorMessage>
+												</div>
+
+
+
+												<div className="grid-span-2">
+													<label htmlFor="userEmail"><Field type="email" id="userEmail" name="userEmail" placeholder="Correo Electrónico" className="bg-[#00000011] outline-none  border-b-[2px] rounded-sm border-b-[#00000038] p-[0_12px] w-[300px]" /></label>
+													<ErrorMessage name="userEmail" >
+														{errorMsg => <p className=" text-xs text-red-700 mt-2">{errorMsg}</p>}
+													</ErrorMessage>
+
+												</div>
+
+
+
+												<div className="">
+													<label htmlFor="userAddressStreet"><Field type="text" id="userAddressStreet" name="userAddressStreet" placeholder="Numero de telefono" className="bg-[#00000011] outline-none  border-b-[2px] rounded-sm border-b-[#00000038] p-[0_12px] w-[300px]" /></label>
+													<ErrorMessage name="userAddressStreet" >
+														{errorMsg => <p className=" text-xs text-red-700 mt-2">{errorMsg}</p>}
+													</ErrorMessage>
+												</div>
+
+
+
+												<div className="">
+													<label htmlFor="userAddressCity"><Field type="text" id="userAddressCity" name="userAddressCity" placeholder="Ciudad" className="bg-[#00000011] outline-none  border-b-[2px] rounded-sm border-b-[#00000038] p-[0_12px] w-[300px]" /></label>
+													<ErrorMessage name="userAddressCity" >
+														{errorMsg => <p className=" text-xs text-red-700 mt-2">{errorMsg}</p>}
+													</ErrorMessage>
+												</div>
+
+
+
+												<div className="">
+													<label htmlFor="userAddressCountry"><Field type="text" id="userAddressCountry" name="userAddressCountry" placeholder="Provincia" className="bg-[#00000011] outline-none  border-b-[2px] rounded-sm border-b-[#00000038] p-[0_12px] w-[300px]" /></label>
+													<ErrorMessage name="userAddressCountry" >
+														{errorMsg => <p className=" text-xs text-red-700 mt-2">{errorMsg}</p>}
+													</ErrorMessage>
+												</div>
+
+
+
+												<div className="">
+													<label htmlFor="userPassword"><Field type="password" id="userPassword" name="userPassword" placeholder="Contraseña" className="bg-[#00000011] outline-none  border-b-[2px] rounded-sm border-b-[#00000038] p-[0_12px] w-[300px]" /></label>
+													<ErrorMessage name="userPassword" >
+														{errorMsg => <p className=" text-xs text-red-700 mt-2">{errorMsg}</p>}
+													</ErrorMessage>
+												</div>
+
+
+
+												<div className="">
+													<label htmlFor="userPasswordConfirm"><Field type="password" id="userPasswordConfirm" name="userPasswordConfirm" placeholder="Confirmar contraseña" className="bg-[#00000011] outline-none  border-b-[2px] rounded-sm border-b-[#00000038] p-[0_12px] w-[300px]" /></label>
+													<ErrorMessage name="userPasswordConfirm" >
+														{errorMsg => <p className=" text-xs text-red-700 mt-2">{errorMsg}</p>}
+													</ErrorMessage>
+												</div>
+
+
+											</div>
+
+											{registerState === "loading" && <CircularProgress color="success" />}
+
+											<Button
+												buttonColor="green"
+												buttonFontSize="text-base"
+												buttonWidth="w-[94%] m-[3rem_auto_3rem_0]"
+												buttonPaddingY="py-2.5"
+												buttonFuncionality={{ submitText: "Regístrate" }}
+											/>
+
+											<p>Si ya estás registrado, por favor <Link to="/login" className="text-brandingLightGreen mt-2" >INICIA SESIÓN</Link></p>
+
 										</div>
-
-										<div className="flex flex-col gap-1 items-start text-base">
-											<div className="">
-												<label htmlFor="userName">Nombre: </label>
-												<Field type="text" id="userName" name="userName" placeholder=". . ." className="placeholder-[#b3e59ec3]" />
-											</div>
-
-											<ErrorMessage name="userName" >
-												{errorMsg => <p className=" text-xs text-red-700">{errorMsg}</p>}
-											</ErrorMessage>
-
-
-											<div className="">
-												<label htmlFor="userLastName">Apellidos: </label>
-												<Field type="text" id="userLastName" name="userLastName" placeholder=". . ." className="placeholder-[#b3e59ec3]" />
-											</div>
-
-											<ErrorMessage name="userLastName" >
-												{errorMsg => <p className=" text-xs text-red-700">{errorMsg}</p>}
-											</ErrorMessage>
-
-											<div className="">
-												<label htmlFor="userEmail">Email: </label>
-												<Field type="email" id="userEmail" name="userEmail" placeholder=". . ." className="placeholder-[#b3e59ec3]" />
-											</div>
-
-											<ErrorMessage name="userEmail" >
-												{errorMsg => <p className=" text-xs text-red-700">{errorMsg}</p>}
-											</ErrorMessage>
-
-											<div className="">
-												<label htmlFor="userAddressStreet">Calle / Vía: </label>
-												<Field type="text" id="userAddressStreet" name="userAddressStreet" placeholder=". . ." className="placeholder-[#b3e59ec3]" />
-											</div>
-
-											<ErrorMessage name="userAddressStreet" >
-												{errorMsg => <p className=" text-xs text-red-700">{errorMsg}</p>}
-											</ErrorMessage>
-
-											<div className="">
-												<label htmlFor="userAddressCity">Localidad: </label>
-												<Field type="text" id="userAddressCity" name="userAddressCity" placeholder=". . ." className="placeholder-[#b3e59ec3]" />
-											</div>
-
-											<ErrorMessage name="userAddressCity" >
-												{errorMsg => <p className=" text-xs text-red-700">{errorMsg}</p>}
-											</ErrorMessage>
-
-											<div className="">
-												<label htmlFor="userAddressCountry">País: </label>
-												<Field type="text" id="userAddressCountry" name="userAddressCountry" placeholder=". . ." className="placeholder-[#b3e59ec3]" />
-											</div>
-
-											<ErrorMessage name="userAddressCountry" >
-												{errorMsg => <p className=" text-xs text-red-700">{errorMsg}</p>}
-											</ErrorMessage>
-
-											<div className="">
-												<label htmlFor="userPassword">Contraseña: </label>
-												<Field type="password" id="userPassword" name="userPassword" placeholder=". . ." className="placeholder-[#b3e59ec3]" />
-											</div>
-
-											<ErrorMessage name="userPassword" >
-												{errorMsg => <p className=" text-xs text-red-700">{errorMsg}</p>}
-											</ErrorMessage>
-
-											<div className="">
-												<label htmlFor="userPasswordConfirm">Confirmar: </label>
-												<Field type="password" id="userPasswordConfirm" name="userPasswordConfirm" placeholder=". . ." className="placeholder-[#b3e59ec3]" />
-											</div>
-
-											<ErrorMessage name="userPasswordConfirm" >
-												{errorMsg => <p className=" text-xs text-red-700">{errorMsg}</p>}
-											</ErrorMessage>
-										</div>
-
-										{registerState === "loading" && <CircularProgress color="success" />}
-
-										<Button
-											buttonColor="green"
-											buttonFontSize="text-base"
-											buttonWidth="w-full"
-											buttonPaddingY="py-2.5"
-											buttonFuncionality={{ submitText: "Regístrate" }}
-										/>
-
-										<p>Si ya estás registrado, por favor <Link to="/login" className="text-brandingLightGreen" >INICIA SESIÓN</Link></p>
-
-									</div>
-								</Form>
-							</Formik>
+									</Form>
+								</Formik>
+							</div>
 
 						</div>
 					)

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import Register from "../components/forms/Register";
-import Header from "../components/header/Header";
+//import Header from "../components/header/Header";
 import { useUserRoleContext } from "../context/UserRoleContext";
 import { useNavigate } from "react-router-dom";
 import { registerUser } from "../interfaces/registerUser";
@@ -11,8 +11,8 @@ import { RegisterFormValuesType } from "../components/forms/formsTypes";
 export type RegisterStateType = "init" | "loading" | "error" | "logged";
 
 function RegisterPage() {
-	const bgImageTailwind = "bg-headerBg";
-	const logoSrc = "images/logo-plant-in.png";
+	//const bgImageTailwind = "bg-headerBg";
+	//const logoSrc = "images/logo-plant-in.png";
 
 	const { setUserRole } = useUserRoleContext();
 	const [registerState, setRegisterState] = useState<RegisterStateType>("init");
@@ -79,11 +79,11 @@ function RegisterPage() {
 
 	return (
 		<div className="overflow-hidden">
-			<div className="w-full" >
+			{/*<div className="w-full" >
 				<Header bgImageTailwind={bgImageTailwind} logoSrc={logoSrc} />
-			</div>
+	</div>*/}
 
-			<main className="w-[90%] h-[100%] flex justify-center items-center overflow-hidden">
+			<main className="w-[100%] h-[100%] flex justify-center items-center">
 				<Register handleSubmit={submitForm} registerState={registerState} errorText={errorMessage.current} />
 			</main>
 		</div>
