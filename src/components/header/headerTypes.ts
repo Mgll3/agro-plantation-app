@@ -1,0 +1,1 @@
+export type userProfileStateType = "init" | "loading" | "logout"

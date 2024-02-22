@@ -1,4 +1,4 @@
 export const user = {
 	name: "",
-	role: ""
+	role: "visitor"
 };

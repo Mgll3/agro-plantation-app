@@ -40,7 +40,7 @@ function Button({ buttonColor, buttonFontSize, buttonWidth, buttonPaddingY, butt
 		return (
 			<button
 				type="submit"
-				className={`${buttonWidth} ${buttonPaddingY} ${buttonFontSize} ${color} ${textColor} shadow-md rounded-lg font-mono cursor-pointer font-bold`}
+				className={`${buttonWidth} ${buttonPaddingY} ${buttonFontSize} ${color} ${textColor} shadow-md rounded-lg font-mono cursor-pointer font-bold hover:opacity-80`}
 			>
 				{buttonFuncionality.submitText}
 			</button>
@@ -49,7 +49,7 @@ function Button({ buttonColor, buttonFontSize, buttonWidth, buttonPaddingY, butt
 		return (
 			<Link to={buttonFuncionality.linkUrl} className="">
 				<button
-					className={`${buttonWidth} ${buttonPaddingY} ${buttonFontSize} ${color} ${textColor} shadow-md rounded-lg font-mono cursor-pointer font-bold`}
+					className={`${buttonWidth} ${buttonPaddingY} ${buttonFontSize} ${color} ${textColor} shadow-md rounded-lg font-mono cursor-pointer font-bold hover:opacity-80`}
 				>
 
 					{buttonFuncionality.linkText}
