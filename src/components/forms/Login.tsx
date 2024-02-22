@@ -24,7 +24,7 @@ export default function Login({ handleSubmit, loginState }: LoginProps) {
 					id="login"
 					encType="multipart/form-data"
 					onSubmit={handleSubmit}
-					className="w-[65vw] h-[100vh] border-solid text-center flex flex-col justify-around items-center bg-[#EAE3C0] p-4"
+					className="w-[65vw] h-[100vh] border-solid text-center flex flex-col justify-around items-center bg-[#EAE3C0] p-4 "
 				>
 
 					<div className="flex justify-center items-center gap-4 rounded-2xl text-2xl">
@@ -34,11 +34,11 @@ export default function Login({ handleSubmit, loginState }: LoginProps) {
 
 					<div className="flex flex-col justify-center items-center p-[1rem_0]">
 						<label htmlFor="loginEmail"><input type="email" id="loginEmail" name="userEmail" required placeholder="Correo Electrónico"
-							className="bg-[transparent] outline-none  border-b-[1px] border-b-[#00000038] mb-6 p-[0_12px] w-[250px]"
+							className="bg-[transparent] outline-none  border-b-[1px] border-b-[#00000038] mb-6 p-[0_12px] w-[250px] text-black"
 						></input></label>
 						
 
-						<label htmlFor="loginPassword"><input type="password" id="loginPassword" name="userPassword" required placeholder="Contraseña" className="bg-[transparent] outline-none  border-b-[1px] border-b-[#00000038] p-[0_12px] w-[250px]"></input></label>
+						<label htmlFor="loginPassword"><input type="password" id="loginPassword" name="userPassword" required placeholder="Contraseña" className="bg-[transparent] outline-none  border-b-[1px] border-b-[#00000038] p-[0_12px] w-[250px] text-black"></input></label>
 						
 					</div>
 

@@ -113,7 +113,7 @@ export default function Register({ handleSubmit, registerState, errorText }: Reg
 
 
 												<div className="">
-													<label htmlFor="userAddressStreet"><Field type="text" id="userAddressStreet" name="userAddressStreet" placeholder="Numero de telefono" className="bg-[#00000011] outline-none  border-b-[2px] rounded-sm border-b-[#00000038] p-[0_12px] w-[300px]" /></label>
+													<label htmlFor="userAddressStreet"><Field type="text" id="userAddressStreet" name="userAddressStreet" placeholder="Dirección" className="bg-[#00000011] outline-none  border-b-[2px] rounded-sm border-b-[#00000038] p-[0_12px] w-[300px]" /></label>
 													<ErrorMessage name="userAddressStreet" >
 														{errorMsg => <p className=" text-xs text-red-700 mt-2">{errorMsg}</p>}
 													</ErrorMessage>
