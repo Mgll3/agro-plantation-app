@@ -1,8 +1,7 @@
 package com.gardengroup.agroplantationapp.controller;
 
 import com.gardengroup.agroplantationapp.exceptions.OurException;
-import com.gardengroup.agroplantationapp.security.JwtAuthenticationFilter;
-import com.gardengroup.agroplantationapp.security.JwtTokenProvider;
+import com.gardengroup.agroplantationapp.service.SecurityService;
 import com.gardengroup.agroplantationapp.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,19 +16,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class UserController {
     @Autowired
     private UserService userService;
-
     @Autowired
-    private JwtAuthenticationFilter jwtAuthenticationFilter;
-
-    @Autowired
-    private JwtTokenProvider jwtTokenProvider;
+    private SecurityService securityService;
 
     @PostMapping("/request-producer")
     public ResponseEntity<?> requestToBecomeProducer(HttpServletRequest request) {
-        String token = jwtAuthenticationFilter.getRequestToken(request);
-        String email = jwtTokenProvider.getJwtUser(token);
 
         try {
+            String email = securityService.getEmail(request);
             userService.sendProducerRequest(email);
             return ResponseEntity.ok("Solicitud para convertirse en productor creada con éxito.");
         } catch (OurException e) {

@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.gardengroup.agroplantationapp.entities.Publication;
+import com.gardengroup.agroplantationapp.entity.Publication;
 
 @Repository
 public interface PublicationRepository  extends JpaRepository<Publication,Long>{

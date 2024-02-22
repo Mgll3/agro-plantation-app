@@ -1,19 +1,22 @@
 package com.gardengroup.agroplantationapp.service;
 
-import com.gardengroup.agroplantationapp.entities.StateRequest;
-import com.gardengroup.agroplantationapp.entities.User;
 import com.gardengroup.agroplantationapp.repository.UserRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
-import com.gardengroup.agroplantationapp.entities.Publication;
-
-import com.gardengroup.agroplantationapp.repository.PlantationRepository;
+import com.gardengroup.agroplantationapp.entity.Image;
+import com.gardengroup.agroplantationapp.entity.Publication;
+import com.gardengroup.agroplantationapp.entity.StateRequest;
+import com.gardengroup.agroplantationapp.entity.User;
 import com.gardengroup.agroplantationapp.repository.PublicationRepository;
 import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -23,34 +26,52 @@ public class PublicationService {
     @Autowired
     private PublicationRepository publicationRepository;
     @Autowired
-    private PlantationRepository plantationRepository;
-    @Autowired
     private CloudinaryService cloudinaryService;
-    @Autowired
-    private UserService userService;
     @Autowired
     private UserRepository userRepository;
 
 
     @Transactional
     public Publication savePublication(Publication publication, String email) {
+        
         User user = userRepository.searchEmail(email);
+        publication.setAuthor(user);
 
-        // Verificar si el usuario es de tipo "PRODUCER"
-        if ("PRODUCER".equals(user.getUserType().getType())) {
-            publication.setAuthor(user);
+        publication.setVisibility(false);
+        publication.setScore(0);
+        publication.setAuthorizationStatus(new StateRequest(1L));
+        publication.setPublicationDate(LocalDateTime.now());
+        publication.setPlantation(publication.getPlantation());
 
-            publication.setVisibility(false);
-            publication.setScore(0);
-            publication.setAuthorizationStatus(new StateRequest(1L));
-            publication.setPublicationDate(LocalDateTime.now());
-            publication.setPlantation(publication.getPlantation());
+        return publicationRepository.save(publication);
+    }
 
-            return publicationRepository.save(publication);
-        } else {
-            System.out.println("No es producter");
-            return null;
+    @Transactional
+    public void saveImages(MultipartFile mainFile, List<MultipartFile> files, Long publicationId) {
+        String folder = "publications";
+        
+        //Montaje imagenes en Cloudinary
+        Map result = cloudinaryService.upload(mainFile, folder);
+        Image mainImage = new Image(result.get("public_id").toString(), 
+            result.get("secure_url").toString());
+
+        List<Image> images = new ArrayList<Image>();
+        for (MultipartFile file : files) {
+            //Posible montaje simultaneo de imagenes para mayor velocidad
+            result = cloudinaryService.upload(file, folder);
+            Image image = new Image(result.get("public_id").toString(), 
+                result.get("secure_url").toString());
+            images.add(image);
         }
+
+        //Busqueda de publicacion que vamos a modificar
+        Publication publication = publicationRepository.findById(publicationId).orElseThrow(() -> new DataAccessException("Publication not found") {
+        });
+
+        //Asignar imagenes a la publicacion
+        publication.setMainImage(mainImage);
+        publication.setImages(images);
+        publicationRepository.save(publication);
     }
 
     @Transactional
@@ -123,13 +144,15 @@ public class PublicationService {
 
     @Transactional
     public void deletePublication(Long id) {
-        if (publicationRepository.existsById(id)) {
-            publicationRepository.deleteById(id);
-        } else {
-            throw new DataAccessException("Publication not found") {
-            };
+        Publication publicationSaved = publicationRepository.findById(id).orElseThrow(() -> new DataAccessException("Publication not found") {
+        });
+        
+        cloudinaryService.delete(publicationSaved.getMainImage().getId());
+        for (Image image : publicationSaved.getImages()) {
+            cloudinaryService.delete(image.getId());
         }
+        publicationRepository.deleteById(id);
+        
     }
-
 
 }

@@ -3,20 +3,16 @@ package com.gardengroup.agroplantationapp.controller;
 import com.gardengroup.agroplantationapp.dtos.DtoAthAnswer;
 import com.gardengroup.agroplantationapp.dtos.DtoLogin;
 import com.gardengroup.agroplantationapp.dtos.DtoRegistrer;
-
-import com.gardengroup.agroplantationapp.entities.User;
+import com.gardengroup.agroplantationapp.entity.User;
 import com.gardengroup.agroplantationapp.exceptions.OurException;
 
 import com.gardengroup.agroplantationapp.security.JwtTokenProvider;
+import com.gardengroup.agroplantationapp.service.SecurityService;
 import com.gardengroup.agroplantationapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,10 +25,8 @@ public class ControllerPortal {
     @Autowired
     private UserService userService;
     @Autowired
-    private JwtTokenProvider jwtTokenProvider;// Proveedor de tokens JWT encargado de generar y validar tokens de autenticación
-    @Autowired
-    private AuthenticationManager authenticationManager;// Gestor de autenticación para verificar las credenciales enviadas durante el inicio de sesión
-
+    private SecurityService securityService;
+    
     @PostMapping("/registro")
     public ResponseEntity<String> record(@RequestBody DtoRegistrer dtoRegistrer) {
         try {
@@ -49,6 +43,7 @@ public class ControllerPortal {
             return ResponseEntity.status(HttpStatus.CREATED).body("Usuario registrado correctamente!");
         } catch (OurException ex) {
             // En caso de otros errores, devuelve una respuesta con HttpStatus.NOT_IMPLEMENTED
+            System.out.println(ex.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(ex.getMessage());
         }
     }
@@ -56,17 +51,13 @@ public class ControllerPortal {
 
     @PostMapping("/login")
     public ResponseEntity<DtoAthAnswer> login(@RequestBody DtoLogin dtoLogin) {
-
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                dtoLogin.getEmail(), dtoLogin.getPassword()
-        ));
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String token = jwtTokenProvider.generateToken(authentication);
-
-
-        return new ResponseEntity<>(new DtoAthAnswer(token), HttpStatus.OK);
-
-
+        try {
+            String token = securityService.authenticate(dtoLogin);
+            return new ResponseEntity<>(new DtoAthAnswer(token), HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return new ResponseEntity<>(new DtoAthAnswer("Error al autenticar"), HttpStatus.UNAUTHORIZED);
+        }
     }
 
 

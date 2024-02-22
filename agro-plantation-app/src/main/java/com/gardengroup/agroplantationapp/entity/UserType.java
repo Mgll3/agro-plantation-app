@@ -1,17 +1,11 @@
-package com.gardengroup.agroplantationapp.entities;
+package com.gardengroup.agroplantationapp.entity;
 
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 
 @Entity
 @Table(name ="user_type")
-@Getter
-@Setter
-@ToString
-@EqualsAndHashCode
+@Data
 public class UserType {
 
     @Id
@@ -19,4 +13,11 @@ public class UserType {
     private Long id;
     @Column(length = 15 , nullable = false)
     private String type;
+
+    public UserType() {
+    }
+
+    public UserType(Long id){
+        this.id = id;
+    }
 }
