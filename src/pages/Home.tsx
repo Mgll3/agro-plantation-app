@@ -38,6 +38,7 @@ export default function Home() {
 	const logoSrc = "images/logo-plant-in.png";
 
 
+
 	useEffect(() => {
 		axiosController.current = new AbortController();
 

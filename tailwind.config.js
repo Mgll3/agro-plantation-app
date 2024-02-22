@@ -9,8 +9,10 @@ export default {
 			},
 			colors: {
 				brandingYellow: "#F6C915",
+				brandingLightYellow: "#EAE3C0",
 				brandingDarkGreen: "#1B7E25",
-				brandingLightGreen: "#94B447"
+				brandingLightGreen: "#94B447",
+				brandingLightBlue: "#B5B3B3",
 			},
 			spacing: {
 				"53": "13.25rem"
