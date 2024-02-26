@@ -52,10 +52,9 @@ public class SecurityConfig {
                 .and()
                 .authorizeHttpRequests()
 
-                .requestMatchers("/", "/registro", "/login", "/publication/publications/top", "v1/publication/**", "/swagger-ui/", "/swagger-ui.html/", "/v3/api-docs/**").permitAll() // Permite acceso sin autenticación a las páginas de inicio, registro y login
-                .requestMatchers("/v1/publication", "/v1/publication/save", "/foro").hasAnyAuthority("PRODUCER", "ADMINISTRATOR")  // Permite acceso a /publicaciones y /foro para usuarios y productores
+                .requestMatchers("/", "/registro", "/login","/publication/publications/top","v1/publication/","/swagger-ui/", "/swagger-ui.html/", "/v3/api-docs/").permitAll() // Permite acceso sin autenticación a las páginas de inicio, registro y login
+                .requestMatchers("/v1/publication","/v1/publication/save", "/foro").hasAnyAuthority( "PRODUCER","ADMINISTRATOR")  // Permite acceso a /publicaciones y /foro para usuarios y productores
 
-              
                 .requestMatchers("/mipublicacion").hasAuthority("PRODUCER")  // Permite acceso a /mipublicacion solo para productores//hasAuthority en vez de hasAnyRole y hasRole.
                 .requestMatchers("/configuracion").hasAuthority("ADMINISTRATOR")
                 .anyRequest().authenticated()  // Requiere autenticación para cualquier otra solicitud
