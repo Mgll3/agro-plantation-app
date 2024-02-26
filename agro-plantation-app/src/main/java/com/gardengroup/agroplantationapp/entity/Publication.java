@@ -62,7 +62,7 @@ public class Publication {
         this.plantation = publicationDTO.getPlantation();
         this.visibility = publicationDTO.isVisibility();
         this.score = publicationDTO.getScore();
-        this.author = publicationDTO.getAuthor();
+        
     }
 
     public Publication(PublicationUpdDTO publicationDTO){
