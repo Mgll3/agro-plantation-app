@@ -16,6 +16,9 @@ export default {
 			backgroundImage: {
 				"headerBg": "url('@/images/header_background.avif')",
 				"huerta": "url('@/images/huertas.jpg')",
+			},
+			fontFamily: {
+				"sans": ["Sora", "sans-serif"],
 			}
 		},
 	},
