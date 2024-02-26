@@ -1,9 +1,9 @@
-package com.gardengroup.agroplantationapp.dtos;
+package com.gardengroup.agroplantationapp.dto;
 
 import lombok.Data;
 
 @Data
-public class DtoRegistrer {
+public class RegisterDTO {
     private String email;
     private String password;
     private String name;
@@ -11,7 +11,7 @@ public class DtoRegistrer {
     private String address;
 
 
-    public DtoRegistrer(String email, String name) {
+    public RegisterDTO(String email, String name) {
         this.email = email;
 
         this.name = name;

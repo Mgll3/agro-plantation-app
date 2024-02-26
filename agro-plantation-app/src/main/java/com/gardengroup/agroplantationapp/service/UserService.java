@@ -1,7 +1,7 @@
 package com.gardengroup.agroplantationapp.service;
 
 
-import com.gardengroup.agroplantationapp.dtos.DtoRegistrer;
+import com.gardengroup.agroplantationapp.dto.RegisterDTO;
 import com.gardengroup.agroplantationapp.entity.ProducerRequest;
 import com.gardengroup.agroplantationapp.entity.StateRequest;
 import com.gardengroup.agroplantationapp.entity.User;
@@ -31,7 +31,7 @@ public class UserService {
     private ProducerRequestRepository producerRequestRepository;
     
     @Transactional
-    public User createUser(DtoRegistrer dtoRegistrer) throws OurException {
+    public User createUser(RegisterDTO dtoRegistrer) throws OurException {
         User user = new User();
         user.setEmail(dtoRegistrer.getEmail());
         user.setPassword(securityService.passwordEncoder(dtoRegistrer.getPassword()));

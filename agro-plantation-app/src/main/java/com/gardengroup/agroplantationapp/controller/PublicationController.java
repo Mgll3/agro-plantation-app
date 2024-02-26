@@ -2,6 +2,8 @@ package com.gardengroup.agroplantationapp.controller;
 
 import java.util.List;
 
+import com.gardengroup.agroplantationapp.dto.PublicationSaveDTO;
+import com.gardengroup.agroplantationapp.dto.PublicationUpdDTO;
 import com.gardengroup.agroplantationapp.entity.Publication;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +23,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 @RestController
 @RequestMapping("/v1/publication")
-
 public class PublicationController {
     @Autowired
     private PublicationService publicationService;
@@ -36,8 +37,7 @@ public class PublicationController {
         @ApiResponse(responseCode = "501", description = "Error al guardar la publicación")
     })
     @PostMapping("/save")
-    public ResponseEntity<?> savePublication(@RequestBody Publication publication, HttpServletRequest request) {
-
+    public ResponseEntity<?> savePublication(@RequestBody PublicationSaveDTO publication, HttpServletRequest request) {
         try {
             String email = securityService.getEmail(request);
             Publication publicationSaved = publicationService.savePublication(publication, email);
@@ -125,10 +125,10 @@ public class PublicationController {
         @ApiResponse(responseCode = "304", description = "Error al actualizar la publicación, No se modificó ningún campo")
     })
     @PutMapping()
-    public ResponseEntity<?> updatePublication(@RequestBody Publication publication) {
+    public ResponseEntity<?> updatePublication(@RequestBody PublicationUpdDTO publicationUpdDTO) {
         try {
-            Publication publicationSaved = publicationService.updatePublication(publication);
-            return new ResponseEntity<>(publicationSaved, HttpStatus.OK);
+            publicationService.updatePublication(publicationUpdDTO);
+            return ResponseEntity.status(HttpStatus.OK).build();
         } catch (Exception e) {
             if (e.getMessage().equals("Publication not found")) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
