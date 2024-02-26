@@ -1,106 +1,89 @@
 package com.gardengroup.agroplantationapp.service;
 
-import com.gardengroup.agroplantationapp.entities.User;
-import com.gardengroup.agroplantationapp.entities.UserType;
+
+import com.gardengroup.agroplantationapp.dto.RegisterDTO;
+import com.gardengroup.agroplantationapp.entity.ProducerRequest;
+import com.gardengroup.agroplantationapp.entity.StateRequest;
+import com.gardengroup.agroplantationapp.entity.User;
+import com.gardengroup.agroplantationapp.entity.UserType;
 import com.gardengroup.agroplantationapp.exceptions.OurException;
+import com.gardengroup.agroplantationapp.repository.ProducerRequestRepository;
+import com.gardengroup.agroplantationapp.repository.StateRequestRepository;
 import com.gardengroup.agroplantationapp.repository.UserRepository;
+import com.gardengroup.agroplantationapp.repository.UserTypeRepository;
+import com.gardengroup.agroplantationapp.security.JwtAuthenticationFilter;
+import com.gardengroup.agroplantationapp.security.JwtTokenProvider;
+
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
+import java.util.Date;
 
 
 @Service
-public class UserService  {
+public class UserService {
     @Autowired
     private UserRepository userRepository;
-
+    @Autowired
+    private SecurityService securityService;
+    @Autowired
+    private ProducerRequestRepository producerRequestRepository;
+    
     @Transactional
-    public User newUser( String name,String lastname,String email,String address,String password ) throws OurException {
-       validate(name,lastname,email,address,password);
-
+    public User createUser(RegisterDTO dtoRegistrer) throws OurException {
         User user = new User();
+        user.setEmail(dtoRegistrer.getEmail());
+        user.setPassword(securityService.passwordEncoder(dtoRegistrer.getPassword()));
+        user.setName(dtoRegistrer.getName());
+        user.setLastname(dtoRegistrer.getLastname());
+        user.setAddress(dtoRegistrer.getAddress());
 
-        user.setName(name);
-        user.setLastname(lastname);
-        user.setEmail(email);
-        user.setAddress(address);
-        user.setPassword(password);
+        // Asignar el tipo de usuario 1 en base de datos osea "USER"
+        user.setUserType(new UserType(1L));
+        user.setTotalAuthorization(false);
 
-        UserType userType = new UserType();
-        userType.setType("USER");
-        user.setUserType(userType);
-
-
-        return user;
-    }
-
-    @Transactional
-    public User createUser(User user) throws OurException {
-
+        // Guardar el usuario en la base de datos
         return userRepository.save(user);
+
     }
 
     public User getOne(Long id) {
+
         return userRepository.getOne(id);
     }
 
-    @Transactional
-    public List<User> listusers() {
-        
-        List<User> users = new ArrayList();
-        users= userRepository.findAll();
-        return users;
-        
+    public User findByname(String name) {
+
+        return userRepository.searchName(name);
     }
 
 
-    @Transactional
-    public void changeRole(Long id) {
-        Optional<User> answer = userRepository.findById(id);
+    public Boolean existsEmail(String email) {
+
+        return userRepository.existsByUseremail(email);
     }
-
-    public void validate(String name, String lastname, String email, String address, String password) throws OurException {
-
-        if (name == null || name.isEmpty()) {
-            throw new OurException("El nombre no puede ser nulo o estar vacío");
-        }
-        if (lastname == null || lastname.isEmpty()) {
-            throw new OurException("El apellido no puede ser nulo o estar vacío");
-        }
-        if (email == null || email.isEmpty()) {
-            throw new OurException("El correo electrónico no puede ser nulo o estar vacío");
-        }
-        if (address == null || address.isEmpty()) {
-            throw new OurException("La dirección no puede ser nula o estar vacía");
-        }
-        if (password == null || password.isEmpty() || password.length() <= 5) {
-            throw new OurException("La contraseña no puede ser vacía, ni nula y debe tener más de 5 caracteres");
-        }
-    }
-
-
-    public User findByUserEmail(String email) {
-        return userRepository.searchEmail(email);
-    }
-
 
     @Transactional
-    public User authorization(String email) {
-        Optional<User> userFound = userRepository.findByEmail(email);
-        
-        if ( userFound.isEmpty() ) {
-            return null;
+    public void sendProducerRequest(String userEmail) throws OurException {
+        // Obtener el usuario por su correo electrónico
+        User user = userRepository.searchEmail(userEmail);
+
+        // Verificar si el usuario existe
+        if (user == null) {
+            throw new OurException("Usuario no encontrado");
         }
 
-        userFound.get().setTotalAuthorization(true);
-        userRepository.save(userFound.get());
-        return userFound.get();
+        // Crear la solicitud del productor
+        ProducerRequest producerRequest = new ProducerRequest();
+        producerRequest.setUser(user);
+        producerRequest.setDate(new Date());
+        producerRequest.setStaterequest(new StateRequest(1L));
+
+        // Guardar la solicitud del productor
+        producerRequestRepository.save(producerRequest);
     }
+
+
 
 }

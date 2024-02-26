@@ -1,21 +1,29 @@
-package com.gardengroup.agroplantationapp.entities;
+package com.gardengroup.agroplantationapp.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 @Entity
-@Data
+@Table(name = "state_request")
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode
 public class StateRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false, length = 10)
     private String state;
 
     public StateRequest() {
     }
-    
+
     public StateRequest(Long id) {
         this.id = id;
     }
+
+// ('PENDING'), ('ACCEPTED'), ('DECLINED')
 }

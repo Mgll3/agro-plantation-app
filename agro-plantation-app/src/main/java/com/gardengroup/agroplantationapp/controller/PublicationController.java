@@ -1,36 +1,33 @@
 package com.gardengroup.agroplantationapp.controller;
-import java.util.List;
-import java.util.Map;
 
+import java.util.List;
+
+import com.gardengroup.agroplantationapp.dto.PublicationSaveDTO;
+import com.gardengroup.agroplantationapp.dto.PublicationUpdDTO;
+import com.gardengroup.agroplantationapp.entity.Publication;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import com.gardengroup.agroplantationapp.entities.Publication;
+
 import com.gardengroup.agroplantationapp.service.PublicationService;
+import com.gardengroup.agroplantationapp.service.SecurityService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
+
 @RestController
-@RequestMapping ("/v1/publication")
-@CrossOrigin(origins = "*")
+@RequestMapping("/v1/publication")
 public class PublicationController {
-    
     @Autowired
     private PublicationService publicationService;
+    @Autowired
+    private SecurityService securityService;
 
     @Operation(summary = "Guardar publicación", 
         description = "End Point para guardar una nueva publicación en base de datos", tags = {"Publication"})
@@ -40,11 +37,12 @@ public class PublicationController {
         @ApiResponse(responseCode = "501", description = "Error al guardar la publicación")
     })
     @PostMapping("/save")
-    public ResponseEntity<Publication> savePublication(@RequestBody Publication publication) {
+    public ResponseEntity<?> savePublication(@RequestBody PublicationSaveDTO publication, HttpServletRequest request) {
         try {
-            Publication publicationSaved = publicationService.savePublication(publication);
+            String email = securityService.getEmail(request);
+            Publication publicationSaved = publicationService.savePublication(publication, email);
             return new ResponseEntity<>(publicationSaved, HttpStatus.CREATED);
-        }catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
         }
     }
@@ -93,8 +91,9 @@ public class PublicationController {
         }
     }
 
+
     @Operation(summary = "Obtener publicaciones por email",
-        description = "End Point para obtener todas las publicaciones asociadas a un email del usuario", 
+        description = "End Point para obtener todas las publicaciones asociadas a un email de usuario", 
         tags = {"Publication"})
     @Parameter(name = "email", description = "Email del usuario que se desea obtener sus publicaciones")
     @ApiResponses(value = {
@@ -126,15 +125,15 @@ public class PublicationController {
         @ApiResponse(responseCode = "304", description = "Error al actualizar la publicación, No se modificó ningún campo")
     })
     @PutMapping()
-    public ResponseEntity<?> updatePublication(@RequestBody Publication publication) {
+    public ResponseEntity<?> updatePublication(@RequestBody PublicationUpdDTO publicationUpdDTO) {
         try {
-            Publication publicationSaved = publicationService.updatePublication(publication);
-            return new ResponseEntity<>(publicationSaved, HttpStatus.OK);
-        }catch (Exception e){
+            publicationService.updatePublication(publicationUpdDTO);
+            return ResponseEntity.status(HttpStatus.OK).build();
+        } catch (Exception e) {
             if (e.getMessage().equals("Publication not found")) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             } else {
-                return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_MODIFIED);
+                return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
             }
         }
     }
@@ -152,7 +151,7 @@ public class PublicationController {
         try {
             publicationService.deletePublication(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }catch (Exception e){
+        } catch (Exception e) {
             if (e.getMessage().equals("Publication not found")) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             } else {
@@ -161,4 +160,32 @@ public class PublicationController {
         }
     }
 
+    @PutMapping("/updateVisibility/{publicationId}")
+    public ResponseEntity<?> updateVisibility(@PathVariable Long publicationId,  HttpServletRequest request) {
+        
+        try {
+            String email = securityService.getEmail(request);
+            Publication updatedPublication = publicationService.updateVisibility(publicationId, email);
+
+            if (updatedPublication != null) {
+                return new ResponseEntity<>(updatedPublication, HttpStatus.OK);
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
+        }
+    }
+
+    @GetMapping("publications/top")
+    public ResponseEntity<List<Publication>> getTopPublications() {
+        List<Publication> topPublications = publicationService.getTopPublications();
+        return new ResponseEntity<>(topPublications, HttpStatus.OK);
+    }
+
+
 }
+
+
+
+

@@ -7,4 +7,5 @@ INSERT INTO user_type (type) VALUES ('USER'), ('ADMIN'), ('PRODUCER'), ('PRODUCE
 INSERT INTO state_request (state) VALUES ('PENDING'), ('ACCEPTED'), ('DECLINED');
 --REVOKE INSERT, UPDATE, DELETE ON state_request FROM 'username'@'hostname';
 
-INSERT INTO user (email, password) VALUES ('admin@gmail.com', '1234');
+INSERT INTO user (email, password, userType) VALUES ('admin@gmail.com', '1234', 2);
+

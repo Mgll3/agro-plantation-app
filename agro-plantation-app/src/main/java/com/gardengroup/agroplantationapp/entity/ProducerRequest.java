@@ -1,4 +1,4 @@
-package com.gardengroup.agroplantationapp.entities;
+package com.gardengroup.agroplantationapp.entity;
 
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
@@ -20,10 +20,13 @@ public class ProducerRequest {
     private Long id;
 
     @ManyToOne
+    @JoinColumn(nullable = false)
     private User user;
-
+    @Column(columnDefinition = "DATETIME")
     private Date date;
 
     @ManyToOne
+    @JoinColumn(nullable = false)
     private StateRequest staterequest;
+    //crea usuarios que queiren ser productores en estado pendiente
 }

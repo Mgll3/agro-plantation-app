@@ -1,4 +1,4 @@
-package com.gardengroup.agroplantationapp.entities;
+package com.gardengroup.agroplantationapp.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

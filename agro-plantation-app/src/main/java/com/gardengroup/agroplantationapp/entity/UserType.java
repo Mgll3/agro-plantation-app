@@ -1,7 +1,8 @@
-package com.gardengroup.agroplantationapp.entities;
+package com.gardengroup.agroplantationapp.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+
 @Entity
 @Table(name ="user_type")
 @Data
@@ -10,6 +11,13 @@ public class UserType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false, length = 15)
+    @Column(length = 15 , nullable = false)
     private String type;
+
+    public UserType() {
+    }
+
+    public UserType(Long id){
+        this.id = id;
+    }
 }

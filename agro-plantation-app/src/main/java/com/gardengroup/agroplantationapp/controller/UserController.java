@@ -1,36 +1,34 @@
 package com.gardengroup.agroplantationapp.controller;
 
-
-
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.gardengroup.agroplantationapp.entities.User;
+import com.gardengroup.agroplantationapp.exceptions.OurException;
+import com.gardengroup.agroplantationapp.service.SecurityService;
 import com.gardengroup.agroplantationapp.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-@RestController
-@RequestMapping ("/user")
-@CrossOrigin(origins = "*")
+@Controller
+@RequestMapping("/user")
 public class UserController {
-
     @Autowired
     private UserService userService;
+    @Autowired
+    private SecurityService securityService;
 
-    @PostMapping("/authorization")
-    public ResponseEntity<User> authorization(@RequestBody User user) {
-        User userAuth = userService.authorization(user.getEmail());
-        if (userAuth != null) {
-            return ResponseEntity.ok(userAuth);
-        } else {
-            return ResponseEntity.notFound().build();
+    @PostMapping("/request-producer")
+    public ResponseEntity<?> requestToBecomeProducer(HttpServletRequest request) {
+
+        try {
+            String email = securityService.getEmail(request);
+            userService.sendProducerRequest(email);
+            return ResponseEntity.ok("Solicitud para convertirse en productor creada con éxito.");
+        } catch (OurException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error al crear la solicitud: " + e.getMessage());
         }
     }
-
 }
-
 

@@ -7,14 +7,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.gardengroup.agroplantationapp.entities.Publication;
+import com.gardengroup.agroplantationapp.entity.Publication;
 
 @Repository
 public interface PublicationRepository  extends JpaRepository<Publication,Long>{
     
-    
-    
     List<Publication> findByAuthorId(Long id);
+    List<Publication> findTop6ByOrderByScoreDesc();
 
     @Query("SELECT p FROM Publication p WHERE p.author.email = :email")
     List<Publication> publicationsByEmail(@Param("email") String email);
