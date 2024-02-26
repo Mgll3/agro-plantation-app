@@ -8,7 +8,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import com.gardengroup.agroplantationapp.dtos.DtoLogin;
+
+import com.gardengroup.agroplantationapp.dto.LoginDTO;
 import com.gardengroup.agroplantationapp.security.JwtAuthenticationFilter;
 import com.gardengroup.agroplantationapp.security.JwtTokenProvider;
 
@@ -36,7 +37,7 @@ public class SecurityService {
         return passwordEncoder.encode(password);
     }
 
-    public String authenticate(DtoLogin dtoLogin) { 
+    public String authenticate(LoginDTO dtoLogin) { 
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(dtoLogin.getEmail(), dtoLogin.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token = jwtTokenProvider.generateToken(authentication);

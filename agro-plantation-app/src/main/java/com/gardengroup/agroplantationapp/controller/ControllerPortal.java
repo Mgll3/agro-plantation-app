@@ -1,12 +1,10 @@
 package com.gardengroup.agroplantationapp.controller;
 
-import com.gardengroup.agroplantationapp.dtos.DtoAthAnswer;
-import com.gardengroup.agroplantationapp.dtos.DtoLogin;
-import com.gardengroup.agroplantationapp.dtos.DtoRegistrer;
-import com.gardengroup.agroplantationapp.entity.User;
+import com.gardengroup.agroplantationapp.dto.AthAnswerDTO;
+import com.gardengroup.agroplantationapp.dto.LoginDTO;
+import com.gardengroup.agroplantationapp.dto.RegisterDTO;
 import com.gardengroup.agroplantationapp.exceptions.OurException;
 
-import com.gardengroup.agroplantationapp.security.JwtTokenProvider;
 import com.gardengroup.agroplantationapp.service.SecurityService;
 import com.gardengroup.agroplantationapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +26,7 @@ public class ControllerPortal {
     private SecurityService securityService;
     
     @PostMapping("/registro")
-    public ResponseEntity<String> record(@RequestBody DtoRegistrer dtoRegistrer) {
+    public ResponseEntity<String> record(@RequestBody RegisterDTO dtoRegistrer) {
         try {
             // Verifica si el correo electrónico ya existe
             if (userService.existsEmail(dtoRegistrer.getEmail())) {
@@ -50,13 +48,13 @@ public class ControllerPortal {
 
 
     @PostMapping("/login")
-    public ResponseEntity<DtoAthAnswer> login(@RequestBody DtoLogin dtoLogin) {
+    public ResponseEntity<AthAnswerDTO> login(@RequestBody LoginDTO dtoLogin) {
         try {
             String token = securityService.authenticate(dtoLogin);
-            return new ResponseEntity<>(new DtoAthAnswer(token), HttpStatus.OK);
+            return new ResponseEntity<>(new AthAnswerDTO(token), HttpStatus.OK);
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            return new ResponseEntity<>(new DtoAthAnswer("Error al autenticar"), HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(new AthAnswerDTO("Error al autenticar"), HttpStatus.UNAUTHORIZED);
         }
     }
 
