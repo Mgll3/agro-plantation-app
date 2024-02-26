@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/")
-@CrossOrigin(origins = "*")
 public class ControllerPortal {
 
 

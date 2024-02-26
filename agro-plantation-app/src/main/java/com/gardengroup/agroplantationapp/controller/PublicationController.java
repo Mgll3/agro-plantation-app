@@ -23,7 +23,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 @RestController
 @RequestMapping("/v1/publication")
-@CrossOrigin(origins = "*")
 public class PublicationController {
     @Autowired
     private PublicationService publicationService;
