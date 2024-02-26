@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 
 import com.gardengroup.agroplantationapp.entity.StateRequest;
 
-import java.util.Optional;
 
 @Repository
 public interface StateRequestRepository extends JpaRepository<StateRequest, Long> {

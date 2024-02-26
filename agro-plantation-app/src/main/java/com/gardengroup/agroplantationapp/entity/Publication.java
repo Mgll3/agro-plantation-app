@@ -6,6 +6,9 @@ import lombok.Data;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.gardengroup.agroplantationapp.dto.PublicationSaveDTO;
+import com.gardengroup.agroplantationapp.dto.PublicationUpdDTO;
+
 @Entity
 @Data
 public class Publication {
@@ -50,4 +53,23 @@ public class Publication {
         }
         
     }
+
+    public Publication() {
+    }
+
+    public Publication(PublicationSaveDTO publicationDTO){
+        this.title = publicationDTO.getTitle();
+        this.plantation = publicationDTO.getPlantation();
+        this.visibility = publicationDTO.isVisibility();
+        this.score = publicationDTO.getScore();
+        this.author = publicationDTO.getAuthor();
+    }
+
+    public Publication(PublicationUpdDTO publicationDTO){
+        this.id = publicationDTO.getId();
+        this.title = publicationDTO.getTitle();
+        this.plantation = publicationDTO.getPlantation();
+        this.visibility = publicationDTO.getVisibility();
+    }
+    
 }

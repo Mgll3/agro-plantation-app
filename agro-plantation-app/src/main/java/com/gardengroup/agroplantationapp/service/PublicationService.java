@@ -7,6 +7,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.gardengroup.agroplantationapp.dto.PublicationSaveDTO;
+import com.gardengroup.agroplantationapp.dto.PublicationUpdDTO;
 import com.gardengroup.agroplantationapp.entity.Image;
 import com.gardengroup.agroplantationapp.entity.Publication;
 import com.gardengroup.agroplantationapp.entity.StateRequest;
@@ -32,11 +34,14 @@ public class PublicationService {
 
 
     @Transactional
-    public Publication savePublication(Publication publication, String email) {
+    public Publication savePublication(PublicationSaveDTO publicationDTO, String email) {
         
+        Publication publication = new Publication(publicationDTO);
+
         User user = userRepository.searchEmail(email);
         publication.setAuthor(user);
 
+        //Asignaciones de parametros default
         publication.setVisibility(false);
         publication.setScore(0);
         publication.setAuthorizationStatus(new StateRequest(1L));
@@ -131,13 +136,17 @@ public class PublicationService {
 
 
     @Transactional
-    public Publication updatePublication(Publication publication) {
+    public void updatePublication(PublicationUpdDTO publicationUpdDTO) {
+
+        Publication publication = new Publication(publicationUpdDTO);
 
         if (!publicationRepository.existsById(publication.getId())) {
             throw new DataAccessException("Publication not found") {
             };
-        } else {
-            return publicationRepository.save(publication);
+        }   else {
+            Publication PublicationSaved = publicationRepository.findById(publication.getId()).get();
+            PublicationSaved.updateInfo(publication);
+            publicationRepository.save(PublicationSaved);
         }
 
     }
