@@ -15,7 +15,7 @@ export default function Login({ handleSubmit, loginState }: LoginProps) {
 		<div className="w-[100%] font-loginFont flex h-[100vh] items-center justify-center rounded-2xl text-[#eaefd4f2]">
 			<aside className="w-[35vw] h-[100vh] ">
 				<div className="bg-[url('./public/images/inicio_y_registro.jpg')] w-[100%] h-[100%] bg-center bg-cover bg-no-repeat flex justify-end items-center">
-					<h2 className="bg-[#EAE3C0] text-black font-semibold text-2xl font-sans p-[1rem_5rem] rounded-2xl translate-x-[14px] translate-y-[-20px]">Inicio</h2>
+					<h1 className="bg-[#EAE3C0] text-black font-semibold text-2xl font-sans p-[1rem_5rem] rounded-2xl translate-x-[14px] translate-y-[-20px]">Inicio</h1>
 				</div>
 			</aside>
 			<div>
