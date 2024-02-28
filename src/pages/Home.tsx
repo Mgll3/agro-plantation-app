@@ -3,16 +3,12 @@ import Header from "../components/header/Header";
 import { user } from "../data/userData";
 import { UserRoleType, useUserRoleContext } from "../context/UserRoleContext";
 import { checkOpenSession } from "../interfaces/checkOpenSession";
-// import PublicationsPreviewList from "../components/publicationsList/PublicationsPreviewList";
-// import { PublicationPreviewType } from "../components/publicationsList/publicationsListTypes";
-// import ChartBar from "../components/charts/ChartBar";
-// import { BarChartDataType, LineChartDataType, MapChartDataType } from "../components/charts/ChartBarTypes";
-// import ChartLine from "../components/charts/ChartLine";
-// import { getChartsData } from "../services/huertas_server/getChartsData";
-// import ChartMap from "../components/charts/ChartMap";
+import { PublicationPreviewType } from "../components/publicationsList/publicationsListTypes";
+import { getBestPublications } from "../interfaces/getBestPublications";
+import PublicationsPreviewList from "../components/publicationsList/PublicationsPreviewList";
 
 
-// type LoadingStateType = "loading" | "loaded" | "error";
+type LoadingStateType = "loading" | "loaded" | "error";
 
 export type UserDataType = {
 	userName: string,
@@ -27,10 +23,10 @@ export type UserDataType = {
 
 export default function Home() {
 	const { setUserRole } = useUserRoleContext();
-	// const [publicationsState, setPublicationsState] = useState<LoadingStateType>("loading");
+	const [publicationsState, setPublicationsState] = useState<LoadingStateType>("loading");
 	// const [dashboardState, setDashboardState] = useState<LoadingStateType>("loading");
 
-	// const bestPublicationsArray = useRef<PublicationPreviewType[]>([]);
+	const bestPublicationsArray = useRef<PublicationPreviewType[]>([]);
 	// const chartsData = useRef<ChartsDataType>();
 	const axiosController = useRef<AbortController>();
 
@@ -52,14 +48,14 @@ export default function Home() {
 				setUserRole("visitor");
 			});
 
-		// getBestPublications(axiosController.current)
-		// 	.then((bestPublicationsList: PublicationPreviewType[]) => {
-		// 		bestPublicationsArray.current = bestPublicationsList;
-		// 		setPublicationsState("loaded");
-		// 	})
-		// 	.catch(() => {
-		// 		setPublicationsState("error");
-		// 	});
+		getBestPublications(axiosController.current)
+			.then((bestPublicationsList: PublicationPreviewType[]) => {
+				bestPublicationsArray.current = bestPublicationsList;
+				setPublicationsState("loaded");
+			})
+			.catch(() => {
+				setPublicationsState("error");
+			});
 
 		// getChartsData(axiosController.current)
 		// 	.then((chartsDataResponse: ChartsDataType) => {
@@ -82,30 +78,30 @@ export default function Home() {
 			</div>
 
 			<main>
-				{/* {
+				{
 					publicationsState === "loading" && (
-						<div className={styles.pubListLoadingContainer}>
-							<img alt="Cargando..." src="icons/loading.gif" className={styles.loadingIcon} />
+						<div className="">
+							<img alt="Cargando..." src="icons/loading.gif" className="" />
 						</div>
 					)
 				}
 
 				{
 					publicationsState === "error" && (
-						<div className={styles.pubListErrorContainer}>
-							<p className={styles.pubListErrorFirstParagraph}>No se han podido cargar las publicaciones.</p>
-							<p className={styles.pubListErrorSecondParagraph}>Por favor, compruebe su conexión y refresque la página.</p>
+						<div className="">
+							<p className="">No se han podido cargar las publicaciones.</p>
+							<p className="">Por favor, compruebe su conexión y refresque la página.</p>
 						</div>
 					)
 				}
 
 				{
 					publicationsState === "loaded" && (
-						<div className={styles.pubListCompContainer}>
+						<div className="">
 							<PublicationsPreviewList bestPublicationsArray={bestPublicationsArray.current} />
 						</div>
 					)
-				} */}
+				}
 
 				{/* <div className={styles.dashboardContainer}>
 					{

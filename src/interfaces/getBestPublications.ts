@@ -1,10 +1,11 @@
 import axios from "axios";
-import { axiosConfig } from "../../lib/axios/axios.config";
+import { axiosConfig } from "../lib/axios/axios.config";
+
 
 export async function getBestPublications ( axiosControler: AbortController ) {
 
 	try{
-		const response = await axiosConfig.get("/publications/best", {
+		const response = await axiosConfig.get("/v1/publication/publications/top", {
 			signal: axiosControler.signal
 		});
 		const userData = response.data;
