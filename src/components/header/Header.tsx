@@ -10,10 +10,11 @@ import { useNavigate } from "react-router-dom";
 
 type HeaderProps = {
 	bgImageTailwind: string,
-	logoSrc: string
+	logoSrc: string,
+	handleOpenMustLoginWarning?: () => void
 }
 
-function Header({ bgImageTailwind, logoSrc }: HeaderProps) {
+function Header({ bgImageTailwind, logoSrc, handleOpenMustLoginWarning }: HeaderProps) {
 
 	const { userRole, setUserRole } = useUserRoleContext();
 	const [userProfileState, setUserProfileState] = useState<userProfileStateType>("init");
@@ -67,7 +68,12 @@ function Header({ bgImageTailwind, logoSrc }: HeaderProps) {
 				</div>
 
 				<div className="flex justify-center bg-brandingLightGreen py-4">
-					<MainNav />
+					{
+						handleOpenMustLoginWarning
+							? <MainNav handleOpenMustLoginWarning={handleOpenMustLoginWarning} />
+							: <MainNav />
+					}
+
 				</div>
 			</header>
 		</>

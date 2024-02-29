@@ -5,6 +5,7 @@ import ProtectedRouteUser from "./components/protectRoutes/ProtectedRouteUser";
 import Home from "./pages/Home";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
+import PublicationsPage from "./pages/PublicationsPage";
 
 
 function App() {
@@ -17,11 +18,11 @@ function App() {
 				<Route path="/login" element={<LoginPage />} />
 				<Route path="/register" element={<RegisterPage />} />
 
-				{/* PROTECTED ROUTES */}
-				{/* <Route element={<ProtectedRouteUser />}>
+				PROTECTED ROUTES
+				<Route element={<ProtectedRouteUser />} >
 					<Route path="/publications" element={<PublicationsPage />} />
-					<Route path="/publications/:id" element={<PublicationPage />} />
-				</Route> */}
+					{/* <Route path="/publications/:id" element={<PublicationsPage />} /> */}
+				</Route>
 			</Routes >
 		</>
 	);

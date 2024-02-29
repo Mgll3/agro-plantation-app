@@ -6,9 +6,11 @@ import { checkOpenSession } from "../interfaces/checkOpenSession";
 import { PublicationPreviewType } from "../components/publicationsList/publicationsListTypes";
 import { getBestPublications } from "../interfaces/getBestPublications";
 import PublicationsPreviewList from "../components/publicationsList/PublicationsPreviewList";
+import MustLoginWarning from "../components/header/MustLoginWarning";
 
 
 type LoadingStateType = "loading" | "loaded" | "error";
+type MustLoginWarningStateType = "visible" | "hidden";
 
 export type UserDataType = {
 	userName: string,
@@ -23,6 +25,7 @@ export type UserDataType = {
 
 export default function Home() {
 	const { setUserRole } = useUserRoleContext();
+	const [mustLoginWarningState, setMustLoginWarningState] = useState<MustLoginWarningStateType>("hidden");
 	const [publicationsState, setPublicationsState] = useState<LoadingStateType>("loading");
 	// const [dashboardState, setDashboardState] = useState<LoadingStateType>("loading");
 
@@ -33,7 +36,13 @@ export default function Home() {
 	const bgImageTailwind = "bg-headerBg";
 	const logoSrc = "images/logo-plant-in.png";
 
+	function handleOpenMustLoginWarning() {
+		setMustLoginWarningState("visible");
+	}
 
+	function handleCloseMustLoginWarning() {
+		setMustLoginWarningState("hidden");
+	}
 
 	useEffect(() => {
 		axiosController.current = new AbortController();
@@ -74,8 +83,14 @@ export default function Home() {
 	return (
 		<>
 			<div className="w-full" >
-				<Header bgImageTailwind={bgImageTailwind} logoSrc={logoSrc} />
+				<Header bgImageTailwind={bgImageTailwind} logoSrc={logoSrc} handleOpenMustLoginWarning={handleOpenMustLoginWarning} />
 			</div>
+
+			{
+				mustLoginWarningState === "visible"
+				&& <MustLoginWarning handleCloseMustLoginWarning={handleCloseMustLoginWarning} />
+			}
+
 
 			<main>
 				{

@@ -1,0 +1,1 @@
+export type isAuthorizedType = "loading" | "authorized" | "notAuthorized";
