@@ -3,9 +3,8 @@ import "./App.css";
 import WrongPath from "./pages/WrongPath";
 import ProtectedRouteUser from "./components/protectRoutes/ProtectedRouteUser";
 import Home from "./pages/Home";
-import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/RegisterPage";
 import PublicationsPage from "./pages/PublicationsPage";
+import LoginRegisterPage from "./pages/LoginRegisterPage";
 
 
 function App() {
@@ -15,13 +14,13 @@ function App() {
 			<Routes>
 				<Route path="*" element={<WrongPath />} />
 				<Route path="/" element={<Home />} />
-				<Route path="/login" element={<LoginPage />} />
-				<Route path="/register" element={<RegisterPage />} />
+				<Route path="/login" element={<LoginRegisterPage focus="login" />} />
+				<Route path="/register" element={<LoginRegisterPage focus="register" />} />
 
 				PROTECTED ROUTES
 				<Route element={<ProtectedRouteUser />} >
 					<Route path="/publications" element={<PublicationsPage />} />
-					{/* <Route path="/publications/:id" element={<PublicationsPage />} /> */}
+					<Route path="/publications/:id" element={<PublicationsPage />} />
 				</Route>
 			</Routes >
 		</>

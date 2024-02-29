@@ -1,17 +1,17 @@
-import { Link } from "react-router-dom";
-import { LoginStateType } from "../../pages/LoginPage.tsx";
+import { LoginStateType } from "../../pages/LoginRegisterPage.tsx";
 import Button from "../button/Button.tsx";
 import { CircularProgress } from "@mui/material";
 
 type LoginProps = {
 	handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void,
+	handleRegisterClick: () => void,
 	loginState: LoginStateType
 }
 
-export default function Login({ handleSubmit, loginState }: LoginProps) {
+export default function Login({ handleSubmit, handleRegisterClick, loginState }: LoginProps) {
 
 	return (
-		<div className="w-[450px] h-[450px] bg-huerta flex items-center justify-center rounded-2xl text-[#eaefd4f2]">
+		<div className="w-screen h-[450px] bg-huerta flex items-center justify-center rounded-2xl text-[#eaefd4f2]">
 			<form
 				name="login"
 				id="login"
@@ -53,7 +53,7 @@ export default function Login({ handleSubmit, loginState }: LoginProps) {
 				/>
 
 
-				<p>Si no tienes una cuenta, por favor <Link to="/register" className="text-brandingLightGreen" >REGÍSTRATE</Link></p>
+				<p>Si no tienes una cuenta, por favor <span onClick={handleRegisterClick} className="text-brandingLightGreen" role="button" >REGÍSTRATE</span></p>
 			</form>
 		</div>
 	);

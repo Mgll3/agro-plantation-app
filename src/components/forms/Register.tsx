@@ -2,17 +2,18 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import *  as  Yup from "yup";
 import { RegisterFormValuesType } from "./formsTypes";
 import { CircularProgress } from "@mui/material";
-import { RegisterStateType } from "../../pages/RegisterPage";
 import Button from "../button/Button";
-import { Link } from "react-router-dom";
+import { RegisterStateType } from "../../pages/LoginRegisterPage";
+
 
 type RegisterProps = {
 	handleSubmit: (formValues: RegisterFormValuesType) => void,
+	handleLoginClick: () => void,
 	registerState: RegisterStateType,
 	errorText: string
 }
 
-export default function Register({ handleSubmit, registerState, errorText }: RegisterProps) {
+export default function Register({ handleSubmit, handleLoginClick, registerState, errorText }: RegisterProps) {
 	const lowerCaseRegex = /[a-z]/g;
 	const upperCaseRegex = /[A-Z]/g;
 	const numberRegex = /[0-9]/g;
@@ -57,7 +58,7 @@ export default function Register({ handleSubmit, registerState, errorText }: Reg
 			{
 				registerState === "init" || registerState === "loading"
 					? (
-						<div className="flex justify-center items-center bg-huerta rounded-2xl p-6 w-[max-content] h-[max-content]">
+						<div className="flex justify-center items-center bg-huerta rounded-2xl p-6 w-screen h-[max-content]">
 
 							<Formik initialValues={initialValues} validationSchema={registerSchema} onSubmit={handleSubmit}>
 								<Form name="registerForm" action="" encType="multipart/form-data" className="w-[350px] h-[max-content] text-center bg-[#86b155d6] p-4 rounded-2xl text-[#eaefd4f2] overflow-hidden">
@@ -154,7 +155,7 @@ export default function Register({ handleSubmit, registerState, errorText }: Reg
 											buttonFuncionality={{ submitText: "Regístrate" }}
 										/>
 
-										<p>Si ya estás registrado, por favor <Link to="/login" className="text-brandingLightGreen" >INICIA SESIÓN</Link></p>
+										<p>Si ya estás registrado, por favor <span onClick={handleLoginClick} className="text-brandingLightGreen" role="button" >INICIA SESIÓN</span></p>
 
 									</div>
 								</Form>
