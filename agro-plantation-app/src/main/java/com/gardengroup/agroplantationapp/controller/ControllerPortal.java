@@ -4,8 +4,6 @@ import com.gardengroup.agroplantationapp.dto.AthAnswerDTO;
 import com.gardengroup.agroplantationapp.dto.LoginDTO;
 import com.gardengroup.agroplantationapp.dto.RegisterDTO;
 import com.gardengroup.agroplantationapp.exceptions.OurException;
-
-import com.gardengroup.agroplantationapp.service.SecurityService;
 import com.gardengroup.agroplantationapp.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -21,14 +19,11 @@ import org.springframework.web.bind.annotation.*;
 
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/auth")
 public class ControllerPortal {
-
 
     @Autowired
     private UserService userService;
-    @Autowired
-    private SecurityService securityService;
 
     @Operation(summary = "Registrar usuario", description = "Endpoint para registrar un nuevo usuario")
     @ApiResponses(value = {
@@ -39,7 +34,6 @@ public class ControllerPortal {
             @ApiResponse(responseCode = "501", description = "Error al procesar la solicitud",
                     content = @Content(schema = @Schema(implementation = String.class)))
     })
-
     @PostMapping("/registro")
     public ResponseEntity<String> record(@RequestBody RegisterDTO dtoRegistrer) {
         try {
@@ -68,17 +62,18 @@ public class ControllerPortal {
             @ApiResponse(responseCode = "401", description = "No autorizado - Error al autenticar",
                     content = @Content(schema = @Schema(implementation = AthAnswerDTO.class)))
     })
-
     @PostMapping("/login")
-    public ResponseEntity<AthAnswerDTO> login(@RequestBody LoginDTO dtoLogin) {
+    public ResponseEntity<AthAnswerDTO> login(@RequestBody LoginDTO LoginDto) {
         try {
-            String token = securityService.authenticate(dtoLogin);
-            return new ResponseEntity<>(new AthAnswerDTO(token), HttpStatus.OK);
+            AthAnswerDTO answer = userService.authenticate(LoginDto);
+            return new ResponseEntity<>(answer, HttpStatus.OK);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return new ResponseEntity<>(new AthAnswerDTO("Error al autenticar"), HttpStatus.UNAUTHORIZED);
         }
     }
+
+    
 
 
 }

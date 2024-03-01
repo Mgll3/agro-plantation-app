@@ -1,5 +1,6 @@
 package com.gardengroup.agroplantationapp.controller;
 
+import com.gardengroup.agroplantationapp.dto.AthAnswerDTO;
 import com.gardengroup.agroplantationapp.exceptions.OurException;
 import com.gardengroup.agroplantationapp.service.SecurityService;
 import com.gardengroup.agroplantationapp.service.UserService;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -32,7 +34,6 @@ public class UserController {
     })
     @PostMapping("/request-producer")
     public ResponseEntity<?> requestToBecomeProducer(HttpServletRequest request) {
-
         try {
             String email = securityService.getEmail(request);
             userService.sendProducerRequest(email);
@@ -40,6 +41,19 @@ public class UserController {
         } catch (OurException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error al crear la solicitud: " + e.getMessage());
         }
+    }
+
+    @Operation(summary = "Obtener sesión de usuario", description = "Endpoint para obtener la sesión de usuario con el token de autenticación")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Sesión de usuario obtenida con éxito",
+                    content = @Content(schema = @Schema(implementation = AthAnswerDTO.class)))
+    })
+    @GetMapping("/userSession")
+    public ResponseEntity<?> userSession(HttpServletRequest request) {
+        
+        AthAnswerDTO answer = userService.getUserSession(request);
+        return ResponseEntity.ok(answer);
+        
     }
 }
 

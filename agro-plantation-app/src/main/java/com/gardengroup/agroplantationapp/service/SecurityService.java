@@ -17,6 +17,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 @Service
 public class SecurityService {
+    
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
     @Autowired
