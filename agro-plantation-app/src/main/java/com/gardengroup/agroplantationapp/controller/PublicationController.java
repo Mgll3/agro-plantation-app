@@ -163,7 +163,7 @@ public class PublicationController {
     }
 
     @Operation(summary = "Actualizar visibilidad de una publicación",
-            description = "Endpoint para actualizar la visibilidad de una publicación por su ID")
+            description = "Endpoint para actualizar la visibilidad de una publicación por su ID", tags = {"Publication"})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Visibilidad actualizada correctamente",
                     content = @Content(schema = @Schema(implementation = Publication.class))),
@@ -190,7 +190,7 @@ public class PublicationController {
     }
 
     @Operation(summary = "Obtener las publicaciones principales",
-            description = "Endpoint para obtener las publicaciones más populares o mejor valoradas")
+            description = "Endpoint para obtener las publicaciones más populares o mejor valoradas", tags = {"Publication"})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Éxito al obtener las publicaciones principales",
                     content = @Content(schema = @Schema(implementation = List.class))),

@@ -25,7 +25,7 @@ public class ControllerPortal {
     @Autowired
     private UserService userService;
 
-    @Operation(summary = "Registrar usuario", description = "Endpoint para registrar un nuevo usuario")
+    @Operation(summary = "Registrar usuario", description = "Endpoint para registrar un nuevo usuario", tags = {"Auth"})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Usuario registrado correctamente",
                     content = @Content(schema = @Schema(implementation = String.class))),
@@ -55,7 +55,7 @@ public class ControllerPortal {
         }
     }
 
-    @Operation(summary = "Iniciar sesión", description = "Endpoint para autenticar y obtener un token de acceso")
+    @Operation(summary = "Iniciar sesión", description = "Endpoint para autenticar y obtener un token de acceso", tags = {"Auth"})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Autenticación exitosa",
                     content = @Content(schema = @Schema(implementation = AthAnswerDTO.class))),

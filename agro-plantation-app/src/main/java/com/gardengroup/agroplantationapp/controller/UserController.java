@@ -19,13 +19,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/v1/user")
 public class UserController {
+    
     @Autowired
     private UserService userService;
     @Autowired
     private SecurityService securityService;
-    @Operation(summary = "Solicitar ser productor", description = "Endpoint para solicitar ser productor")
+
+    @Operation(summary = "Solicitar ser productor", description = "Endpoint para solicitar ser productor", tags = {"User"})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Solicitud creada con éxito",
                     content = @Content(schema = @Schema(implementation = String.class))),
@@ -43,7 +45,8 @@ public class UserController {
         }
     }
 
-    @Operation(summary = "Obtener sesión de usuario", description = "Endpoint para obtener la sesión de usuario con el token de autenticación")
+    @Operation(summary = "Obtener sesión de usuario", 
+    description = "Endpoint para obtener la sesión de usuario con el token de autenticación", tags = {"User"})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Sesión de usuario obtenida con éxito",
                     content = @Content(schema = @Schema(implementation = AthAnswerDTO.class)))
