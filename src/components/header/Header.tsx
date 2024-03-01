@@ -55,7 +55,7 @@ function Header({ bgImageTailwind, logoSrc, handleOpenMustLoginWarning }: Header
 		<>
 			<header className="overflow-hidden w-full">
 				<div className={`${bgImageTailwind} bg-cover relative flex justify-center items-center py-5`}>
-					<img src={logoSrc} alt="" className="w-1/12" />
+					<img src={logoSrc} alt="" className="w-1/5" />
 					<div className="absolute right-4 top-2">
 
 						{

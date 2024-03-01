@@ -3,6 +3,11 @@ export default {
 	content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
 	theme: {
 		extend: {
+			fontFamily: {
+				loginFont: "Macondo",
+				plantInFont: "sans-serif",
+				sans: ["Sora", "sans-serif"],
+			},
 			colors: {
 				brandingYellow: "#F6C915",
 				brandingLightYellow: "#EAE3C0",
@@ -17,10 +22,11 @@ export default {
 			backgroundImage: {
 				"headerBg": "url('@/images/header_background.avif')",
 				"huerta": "url('@/images/huertas.jpg')",
+				"login" : "url('@/images/inicio_y_registro.jpg)"
 			},
-			fontFamily: {
-				"sans": ["Sora", "sans-serif"],
-			}
+			gridTemplateColumns: {
+				"form" : "repeat(auto-fit, minmax(300px, 1fr))"
+			},
 		},
 	},
 	plugins: [],
