@@ -1,6 +1,5 @@
 package com.gardengroup.agroplantationapp.service;
 
-
 import com.gardengroup.agroplantationapp.dto.RegisterDTO;
 import com.gardengroup.agroplantationapp.entity.ProducerRequest;
 import com.gardengroup.agroplantationapp.entity.StateRequest;
@@ -8,16 +7,11 @@ import com.gardengroup.agroplantationapp.entity.User;
 import com.gardengroup.agroplantationapp.entity.UserType;
 import com.gardengroup.agroplantationapp.exceptions.OurException;
 import com.gardengroup.agroplantationapp.repository.ProducerRequestRepository;
-import com.gardengroup.agroplantationapp.repository.StateRequestRepository;
 import com.gardengroup.agroplantationapp.repository.UserRepository;
-import com.gardengroup.agroplantationapp.repository.UserTypeRepository;
-import com.gardengroup.agroplantationapp.security.JwtAuthenticationFilter;
-import com.gardengroup.agroplantationapp.security.JwtTokenProvider;
-
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.Date;
 
 
@@ -29,7 +23,7 @@ public class UserService {
     private SecurityService securityService;
     @Autowired
     private ProducerRequestRepository producerRequestRepository;
-    
+
     @Transactional
     public User createUser(RegisterDTO dtoRegistrer) throws OurException {
         User user = new User();
@@ -83,7 +77,6 @@ public class UserService {
         // Guardar la solicitud del productor
         producerRequestRepository.save(producerRequest);
     }
-
 
 
 }
