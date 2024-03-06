@@ -1,14 +1,14 @@
 // REGISTER
 
 export type RegisterFormValuesType = {
+	userEmail: string,
+	userPassword: string,
+	userPasswordConfirm: string,
 	userName: string,
 	userLastName: string,
-	userEmail: string,
-	userAddressStreet: string,
+	// userAddressStreet: string,
 	userAddressCity: string,
-	userAddressCountry: string,
-	userPassword: string,
-	userPasswordConfirm: string
+	userAddressProvince: string,
 }
 
 

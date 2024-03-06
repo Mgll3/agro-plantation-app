@@ -16,7 +16,7 @@ function MustLoginWarning({ handleCloseMustLoginWarning }: MustLoginWarningProps
 	return (
 		<div className="absolute top-0 flex justify-center items-center bg-screenDarkening w-screen h-screen">
 			<div className="relative bg-brandingLightYellow">
-				<div className="absolute -top-3 -right-3 flex justify-center items-center border border-black text-xl bg-white rounded-full w-8 h-8 cursor-pointer" onClick={handleCloseMustLoginWarning}>
+				<div title="Cerrar" className="absolute -top-3 -right-3 flex justify-center items-center border border-black text-xl bg-white rounded-full w-8 h-8 cursor-pointer" onClick={handleCloseMustLoginWarning}>
 					<CloseIcon fontSize="inherit" />
 				</div>
 

@@ -16,36 +16,81 @@ type RegisterProps = {
 export default function Register({ handleSubmit, handleLoginClick, registerState, errorText }: RegisterProps) {
 	const lowerCaseRegex = /[a-z]/g;
 	const upperCaseRegex = /[A-Z]/g;
+	const noSpaceAtStartRegex = /^\S/g;
+	const noSpaceEndingRegex = /\S$/g;
+	const noSpacesRegex = /^\S*$/g;
 	const numberRegex = /[0-9]/g;
+	const noNumberRegex = /^\D*$/g;
 	const specialCharacterRegex = /[!@#$%^&_*-]/g;
+	const noSpecialCharacterRegex = /^[a-zA-ZáéíóúñÑ\s0-9]*$/g;
 
 	const initialValues = {
 		userName: "",
 		userLastName: "",
 		userEmail: "",
-		userAddressStreet: "",
+		// userAddressStreet: "",
 		userAddressCity: "",
-		userAddressCountry: "",
+		userAddressProvince: "",
 		userPassword: "",
 		userPasswordConfirm: ""
 	};
 
 	const registerSchema = Yup.object({
-		userName: Yup.string().required("Debes completar este campo").max(30, "Máximo 30 caracteres"),
-		userLastName: Yup.string().required("Debes completar este campo").max(30, "Máximo 30 caracteres"),
-		userEmail: Yup.string().required("Debes completar este campo").email("El formato no coincide con un email").max(30, "Máximo 30 caracteres"),
-		userAddressStreet: Yup.string().required("Debes completar este campo"),
-		userAddressCity: Yup.string().required("Debes completar este campo"),
-		userAddressCountry: Yup.string().required("Debes completar este campo"),
+		userName: Yup.string()
+			.required("Debes completar este campo")
+			.max(30, "Máximo 30 caracteres")
+			.matches(noSpaceAtStartRegex, "No puede comenzar con un espacio")
+			.matches(noSpaceEndingRegex, "No puede terminar con un espacio")
+			.matches(noSpecialCharacterRegex, "No se admiten caracteres especiales")
+			.matches(noNumberRegex, "No se admiten números")
+			.min(2, "Al menos 2 caracteres"),
+
+		userLastName: Yup.string()
+			.required("Debes completar este campo")
+			.max(30, "Máximo 30 caracteres")
+			.matches(noSpaceAtStartRegex, "No puede comenzar con un espacio")
+			.matches(noSpaceEndingRegex, "No puede terminar con un espacio")
+			.matches(noSpecialCharacterRegex, "No se admiten caracteres especiales")
+			.matches(noNumberRegex, "No se admiten números")
+			.min(2, "Al menos 2 caracteres"),
+
+		userEmail: Yup.string()
+			.required("Debes completar este campo")
+			.email("El formato no coincide con un email")
+			.max(30, "Máximo 30 caracteres"),
+
+		// userAddressStreet: Yup.string()
+		// 	.required("Debes completar este campo")
+		// 	.matches(noSpaceAtStartRegex, "No puede comenzar con un espacio")
+		// 	.matches(noSpaceEndingRegex, "No puede terminar con un espacio")
+		// 	.matches(noSpecialCharacterRegex, "No se admiten caracteres especiales")
+		// 	.max(30, "Máximo 30 caracteres"),
+
+		userAddressCity: Yup.string()
+			.required("Debes completar este campo")
+			.matches(noSpaceAtStartRegex, "No puede comenzar con un espacio")
+			.matches(noSpaceEndingRegex, "No puede terminar con un espacio")
+			.matches(noSpecialCharacterRegex, "No se admiten caracteres especiales")
+			.matches(noNumberRegex, "No se admiten números")
+			.max(30, "Máximo 30 caracteres"),
+
+		userAddressProvince: Yup.string()
+			.required("Debes completar este campo")
+			.matches(noSpaceAtStartRegex, "No puede comenzar con un espacio")
+			.matches(noSpaceEndingRegex, "No puede terminar con un espacio")
+			.matches(noSpecialCharacterRegex, "No se admiten caracteres especiales")
+			.matches(noNumberRegex, "No se admiten números")
+			.max(30, "Máximo 30 caracteres"),
 
 		userPassword: Yup.string()
 			.required("Debes completar este campo")
-			.min(8, "Al menos 8 caracteres")
-			.max(12, "Máximo 12 caracteres")
+			.max(15, "Máximo 15 caracteres")
+			.matches(noSpacesRegex, "No se admiten espacios")
 			.matches(lowerCaseRegex, "Debe tener al menos una letra minúscula")
 			.matches(upperCaseRegex, "Debe tener al menos una letra mayúscula")
 			.matches(numberRegex, "Debe tener al menos un número")
-			.matches(specialCharacterRegex, "Debe tener al menos una carácter especial"),
+			.matches(specialCharacterRegex, "Debe tener al menos una carácter especial")
+			.min(8, "Al menos 8 caracteres"),
 
 		userPasswordConfirm: Yup.string()
 			.required("Debes confirmar tu contraseña")
@@ -85,7 +130,9 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 
 											<div className="grid grid-cols-form auto-cols-[repeat] gap-5 items-start text-base text-left">
 												<div className="">
-													<label htmlFor="userName"><Field type="text" id="userName" name="userName" placeholder="Nombres" className="bg-[#00000011] outline-none  border-b-[2px] rounded-sm border-b-[#00000038] p-[0_12px] w-[300px]" /></label>
+													<label htmlFor="userName">
+														<Field type="text" id="userName" name="userName" placeholder="Nombre" className="bg-[#00000011] outline-none  border-b-[2px] rounded-sm border-b-[#00000038] p-[0_12px] w-[300px]" />
+													</label>
 													<ErrorMessage name="userName" >
 														{errorMsg => <p className=" text-xs text-red-600 mt-2">{errorMsg}</p>}
 													</ErrorMessage>
@@ -95,7 +142,9 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 
 
 												<div className="">
-													<label htmlFor="userLastName"><Field type="text" id="userLastName" name="userLastName" placeholder="Apellido" className="bg-[#00000011] outline-none  border-b-[2px] rounded-sm border-b-[#00000038] p-[0_12px] w-[300px]" /></label>
+													<label htmlFor="userLastName">
+														<Field type="text" id="userLastName" name="userLastName" placeholder="Apellidos" className="bg-[#00000011] outline-none  border-b-[2px] rounded-sm border-b-[#00000038] p-[0_12px] w-[300px]" />
+													</label>
 													<ErrorMessage name="userLastName" >
 														{errorMsg => <p className=" text-xs text-red-700 mt-2">{errorMsg}</p>}
 													</ErrorMessage>
@@ -104,7 +153,9 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 
 
 												<div className="grid-span-2">
-													<label htmlFor="userEmail"><Field type="email" id="userEmail" name="userEmail" placeholder="Correo Electrónico" className="bg-[#00000011] outline-none  border-b-[2px] rounded-sm border-b-[#00000038] p-[0_12px] w-[300px]" /></label>
+													<label htmlFor="userEmail">
+														<Field type="email" id="userEmail" name="userEmail" placeholder="Correo Electrónico" className="bg-[#00000011] outline-none  border-b-[2px] rounded-sm border-b-[#00000038] p-[0_12px] w-[300px]" />
+													</label>
 													<ErrorMessage name="userEmail" >
 														{errorMsg => <p className=" text-xs text-red-700 mt-2">{errorMsg}</p>}
 													</ErrorMessage>
@@ -113,17 +164,21 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 
 
 
-												<div className="">
-													<label htmlFor="userAddressStreet"><Field type="text" id="userAddressStreet" name="userAddressStreet" placeholder="Dirección" className="bg-[#00000011] outline-none  border-b-[2px] rounded-sm border-b-[#00000038] p-[0_12px] w-[300px]" /></label>
+												{/* <div className="">
+													<label htmlFor="userAddressStreet">
+														<Field type="text" id="userAddressStreet" name="userAddressStreet" placeholder="Dirección" className="bg-[#00000011] outline-none  border-b-[2px] rounded-sm border-b-[#00000038] p-[0_12px] w-[300px]" />
+													</label>
 													<ErrorMessage name="userAddressStreet" >
 														{errorMsg => <p className=" text-xs text-red-700 mt-2">{errorMsg}</p>}
 													</ErrorMessage>
-												</div>
+												</div> */}
 
 
 
 												<div className="">
-													<label htmlFor="userAddressCity"><Field type="text" id="userAddressCity" name="userAddressCity" placeholder="Ciudad" className="bg-[#00000011] outline-none  border-b-[2px] rounded-sm border-b-[#00000038] p-[0_12px] w-[300px]" /></label>
+													<label htmlFor="userAddressCity">
+														<Field type="text" id="userAddressCity" name="userAddressCity" placeholder="Ciudad" className="bg-[#00000011] outline-none  border-b-[2px] rounded-sm border-b-[#00000038] p-[0_12px] w-[300px]" />
+													</label>
 													<ErrorMessage name="userAddressCity" >
 														{errorMsg => <p className=" text-xs text-red-700 mt-2">{errorMsg}</p>}
 													</ErrorMessage>
@@ -132,8 +187,10 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 
 
 												<div className="">
-													<label htmlFor="userAddressCountry"><Field type="text" id="userAddressCountry" name="userAddressCountry" placeholder="Provincia" className="bg-[#00000011] outline-none  border-b-[2px] rounded-sm border-b-[#00000038] p-[0_12px] w-[300px]" /></label>
-													<ErrorMessage name="userAddressCountry" >
+													<label htmlFor="userAddressProvince">
+														<Field type="text" id="userAddressProvince" name="userAddressProvince" placeholder="Provincia" className="bg-[#00000011] outline-none  border-b-[2px] rounded-sm border-b-[#00000038] p-[0_12px] w-[300px]" />
+													</label>
+													<ErrorMessage name="userAddressProvince" >
 														{errorMsg => <p className=" text-xs text-red-700 mt-2">{errorMsg}</p>}
 													</ErrorMessage>
 												</div>
@@ -141,7 +198,9 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 
 
 												<div className="">
-													<label htmlFor="userPassword"><Field type="password" id="userPassword" name="userPassword" placeholder="Contraseña" className="bg-[#00000011] outline-none  border-b-[2px] rounded-sm border-b-[#00000038] p-[0_12px] w-[300px]" /></label>
+													<label htmlFor="userPassword">
+														<Field type="password" id="userPassword" name="userPassword" placeholder="Contraseña" className="bg-[#00000011] outline-none  border-b-[2px] rounded-sm border-b-[#00000038] p-[0_12px] w-[300px]" />
+													</label>
 													<ErrorMessage name="userPassword" >
 														{errorMsg => <p className=" text-xs text-red-700 mt-2">{errorMsg}</p>}
 													</ErrorMessage>
@@ -150,7 +209,9 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 
 
 												<div className="">
-													<label htmlFor="userPasswordConfirm"><Field type="password" id="userPasswordConfirm" name="userPasswordConfirm" placeholder="Confirmar contraseña" className="bg-[#00000011] outline-none  border-b-[2px] rounded-sm border-b-[#00000038] p-[0_12px] w-[300px]" /></label>
+													<label htmlFor="userPasswordConfirm">
+														<Field type="password" id="userPasswordConfirm" name="userPasswordConfirm" placeholder="Confirmar contraseña" className="bg-[#00000011] outline-none  border-b-[2px] rounded-sm border-b-[#00000038] p-[0_12px] w-[300px]" />
+													</label>
 													<ErrorMessage name="userPasswordConfirm" >
 														{errorMsg => <p className=" text-xs text-red-700 mt-2">{errorMsg}</p>}
 													</ErrorMessage>
@@ -160,7 +221,7 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 											</div>
 
 											{registerState === "loading" && <CircularProgress color="success" />}
-
+												
 											<Button
 												buttonColor="green"
 												buttonFontSize="text-base"

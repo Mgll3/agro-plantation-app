@@ -49,13 +49,15 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 
 	const submitForm = (formValues: RegisterFormValuesType) => {
 		const formData = new FormData();
-		const formValuesArray = Object.keys(formValues);							// Dado que en este caso no tenemos un formulario HTML que asignar directamente a FormData habría que añadir uno a uno los campos al FormData con "append(key, value)". Para automatizarlo obtenemos un array con todas las keys del objeto "formValues" e iteramos con un .map()
-
-		formValuesArray.map((value) => {
-			if (value !== "userPasswordConfirm") {
-				formData.append(value, formValues[value as keyof typeof formValues]);
-			}
-		});
+		console.log("submit");
+		
+		const userFullAddress = `${formValues.userAddressCity}, ${formValues.userAddressProvince}`;			// Unimos en Front los campos de dirección del usuario.
+		
+		formData.append("email", formValues.userEmail);
+		formData.append("password", formValues.userPassword);
+		formData.append("name", formValues.userName);
+		formData.append("lastname", formValues.userLastName);
+		formData.append("address", userFullAddress);
 
 
 		setRegisterState("loading");
