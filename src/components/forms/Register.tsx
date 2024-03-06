@@ -60,32 +60,33 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 					? (
 						<div className="w-[100vw] font-loginFont flex h-[100%] rounded-2xl text-[#eaefd4f2] bg-[#EAE3C0]">
 
-							<aside className="w-[35vw] h-[100vh] ">
+							<aside className="w-[35vw] h-[100vh] relative">
 
-								<div className="bg-[url('./public/images/inicio_y_registro.jpg')] w-[100%] h-[100%] bg-center bg-cover bg-no-repeat flex justify-end items-center">
-									<h2 className="bg-[#EAE3C0] text-black font-semibold text-2xl font-loginFont p-[1rem_4rem] rounded-2xl translate-x-[14px] translate-y-[30px]">Registro</h2>
+								<div className="bg-[url('./public/images/inicio_y_registro.jpg')] w-[100%] h-[100%] bg-center bg-cover bg-no-repeat flex justify-end items-center font-sans">
+									<h2 className="bg-[#EAE3C0] text-black font-semibold text-2xl p-[1rem_4rem] rounded-2xl translate-x-[14px] translate-y-[30px]">Registro</h2>
+									<p className="absolute bottom-0 p-[4px_4px] m-[1rem] bg-[#94B447] text-[#1B7E25] text-center text-[15px] rounded-md">Todos los derechos reservados para Plant-In &copy; <small>Marzo 2024</small></p>
 								</div>
 
 							</aside>
 
-							<div>
-								<div className="flex flex-col justify-center items-center gap-1 rounded-2xl text-2xl text-black font-sans mt-[4rem]">
+							<div className=" max-h-[100vh] overflow-x-hidden ">
+								<div className="flex flex-col justify-center items-center gap-1 rounded-2xl text-2xl text-black font-sans mt-[2rem]">
 									<h1>Bienvenido a</h1>
-									<img src="images/logo-plant-in.png" alt="logo"
-										className=" bg-[transparent] w-[100px] h-[140px]" />
+									<img src="images/LogoVerde.png" alt="logo"
+										className=" w-[120px] h-[150px] mb-5" />
 									<h2>Por favor, completa el formulario</h2>
 								</div>
 								<Formik initialValues={initialValues} validationSchema={registerSchema} onSubmit={handleSubmit}>
 
 
-									<Form name="registerForm" action="" encType="multipart/form-data" className="w-[65vw] h-[100%] border-solid text-center justify-around items-center bg-[#EAE3C0] text-black p-[1rem_6rem_2rem] font-loginFont">
+									<Form name="registerForm" action="" encType="multipart/form-data" className="w-[65vw] max-h-[100vh] border-solid text-center justify-around items-center bg-[#EAE3C0] text-black p-[1rem_6rem_2rem] font-sans">
 
 										<div className="flex flex-col pb-2">
 
 
-											<div className="grid grid-cols-form auto-cols-[repeat] gap-5 items-start text-base text-left">
+											<div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start text-base text-left font-light width-[100%]">
 												<div className="">
-													<label htmlFor="userName"><Field type="text" id="userName" name="userName" placeholder="Nombres" className="bg-[#00000011] outline-none  border-b-[2px] rounded-sm border-b-[#00000038] p-[0_12px] w-[300px]" /></label>
+													<label htmlFor="userName"><Field type="text" id="userName" name="userName" placeholder="Nombres" className="bg-[#00000011] outline-none  border-b-[2px] rounded-md border-b-[#00000052] p-[8px_8px_4px] w-full placeholder-[#666]" /></label>
 													<ErrorMessage name="userName" >
 														{errorMsg => <p className=" text-xs text-red-600 mt-2">{errorMsg}</p>}
 													</ErrorMessage>
@@ -95,7 +96,7 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 
 
 												<div className="">
-													<label htmlFor="userLastName"><Field type="text" id="userLastName" name="userLastName" placeholder="Apellido" className="bg-[#00000011] outline-none  border-b-[2px] rounded-sm border-b-[#00000038] p-[0_12px] w-[300px]" /></label>
+													<label htmlFor="userLastName"><Field type="text" id="userLastName" name="userLastName" placeholder="Apellido" className="bg-[#00000011] outline-none  border-b-[2px] rounded-md border-b-[#00000052] w-full placeholder-[#666] p-[8px_8px_4px]" /></label>
 													<ErrorMessage name="userLastName" >
 														{errorMsg => <p className=" text-xs text-red-700 mt-2">{errorMsg}</p>}
 													</ErrorMessage>
@@ -103,8 +104,8 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 
 
 
-												<div className="grid-span-2">
-													<label htmlFor="userEmail"><Field type="email" id="userEmail" name="userEmail" placeholder="Correo Electrónico" className="bg-[#00000011] outline-none  border-b-[2px] rounded-sm border-b-[#00000038] p-[0_12px] w-[300px]" /></label>
+												<div className=" md:col-span-2">
+													<label htmlFor="userEmail"><Field type="email" id="userEmail" name="userEmail" placeholder="Correo Electrónico" className="bg-[#00000011] outline-none  border-b-[2px] rounded-md border-b-[#00000052] p-[8px_8px_4px] w-full placeholder-[#666]" /></label>
 													<ErrorMessage name="userEmail" >
 														{errorMsg => <p className=" text-xs text-red-700 mt-2">{errorMsg}</p>}
 													</ErrorMessage>
@@ -113,17 +114,17 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 
 
 
-												<div className="">
+												{/*<div className="">
 													<label htmlFor="userAddressStreet"><Field type="text" id="userAddressStreet" name="userAddressStreet" placeholder="Dirección" className="bg-[#00000011] outline-none  border-b-[2px] rounded-sm border-b-[#00000038] p-[0_12px] w-[300px]" /></label>
 													<ErrorMessage name="userAddressStreet" >
 														{errorMsg => <p className=" text-xs text-red-700 mt-2">{errorMsg}</p>}
 													</ErrorMessage>
-												</div>
+												</div>*/}
 
 
 
 												<div className="">
-													<label htmlFor="userAddressCity"><Field type="text" id="userAddressCity" name="userAddressCity" placeholder="Ciudad" className="bg-[#00000011] outline-none  border-b-[2px] rounded-sm border-b-[#00000038] p-[0_12px] w-[300px]" /></label>
+													<label htmlFor="userAddressCity"><Field type="text" id="userAddressCity" name="userAddressCity" placeholder="Ciudad" className="bg-[#00000011] outline-none  border-b-[2px] rounded-md border-b-[#00000052] p-[8px_8px_4px] w-full placeholder-[#666]" /></label>
 													<ErrorMessage name="userAddressCity" >
 														{errorMsg => <p className=" text-xs text-red-700 mt-2">{errorMsg}</p>}
 													</ErrorMessage>
@@ -132,7 +133,7 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 
 
 												<div className="">
-													<label htmlFor="userAddressCountry"><Field type="text" id="userAddressCountry" name="userAddressCountry" placeholder="Provincia" className="bg-[#00000011] outline-none  border-b-[2px] rounded-sm border-b-[#00000038] p-[0_12px] w-[300px]" /></label>
+													<label htmlFor="userAddressCountry"><Field type="text" id="userAddressCountry" name="userAddressCountry" placeholder="Provincia" className="bg-[#00000011] outline-none  border-b-[2px] rounded-md border-b-[#00000052] p-[8px_8px_4px] w-full placeholder-[#666]" /></label>
 													<ErrorMessage name="userAddressCountry" >
 														{errorMsg => <p className=" text-xs text-red-700 mt-2">{errorMsg}</p>}
 													</ErrorMessage>
@@ -141,7 +142,7 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 
 
 												<div className="">
-													<label htmlFor="userPassword"><Field type="password" id="userPassword" name="userPassword" placeholder="Contraseña" className="bg-[#00000011] outline-none  border-b-[2px] rounded-sm border-b-[#00000038] p-[0_12px] w-[300px]" /></label>
+													<label htmlFor="userPassword"><Field type="password" id="userPassword" name="userPassword" placeholder="Contraseña" className="bg-[#00000011] outline-none  border-b-[2px] rounded-md border-b-[#00000052] p-[8px_8px_4px] w-full placeholder-[#666]" /></label>
 													<ErrorMessage name="userPassword" >
 														{errorMsg => <p className=" text-xs text-red-700 mt-2">{errorMsg}</p>}
 													</ErrorMessage>
@@ -150,7 +151,7 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 
 
 												<div className="">
-													<label htmlFor="userPasswordConfirm"><Field type="password" id="userPasswordConfirm" name="userPasswordConfirm" placeholder="Confirmar contraseña" className="bg-[#00000011] outline-none  border-b-[2px] rounded-sm border-b-[#00000038] p-[0_12px] w-[300px]" /></label>
+													<label htmlFor="userPasswordConfirm"><Field type="password" id="userPasswordConfirm" name="userPasswordConfirm" placeholder="Confirmar contraseña" className="bg-[#00000011] outline-none  border-b-[2px] rounded-md border-b-[#00000052] p-[8px_8px_4px] w-full placeholder-[#666]" /></label>
 													<ErrorMessage name="userPasswordConfirm" >
 														{errorMsg => <p className=" text-xs text-red-700 mt-2">{errorMsg}</p>}
 													</ErrorMessage>
@@ -164,8 +165,9 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 											<Button
 												buttonColor="green"
 												buttonFontSize="text-base"
-												buttonWidth="w-[94%] m-[3rem_auto_3rem_0]"
+												buttonWidth="w-[94%]"
 												buttonPaddingY="py-2.5"
+												buttonMargin="m-[3rem_auto_3rem_0]"
 												buttonFuncionality={{ submitText: "Regístrate" }}
 											/>
 

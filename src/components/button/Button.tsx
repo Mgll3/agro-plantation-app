@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { ButtonProps } from "./buttonTypes";
 
-function Button({ buttonColor, buttonFontSize, buttonWidth, buttonPaddingY, buttonFuncionality }: ButtonProps) {
+function Button({ buttonColor, buttonFontSize, buttonWidth, buttonPaddingY, buttonFuncionality, buttonMargin }: ButtonProps) {
 
 	let color: string = "";
 	let textColor: string = "";
@@ -31,7 +31,7 @@ function Button({ buttonColor, buttonFontSize, buttonWidth, buttonPaddingY, butt
 			<button
 				type="button"
 				onClick={buttonFuncionality.handleClick}
-				className={`${buttonWidth} ${buttonPaddingY} ${buttonFontSize} ${color} ${textColor} shadow-md rounded-lg font-sans cursor-pointer font-bold tracking-widest hover:bg-brandingDarkGreen`}
+				className={`${buttonWidth} ${buttonPaddingY} ${buttonFontSize} ${buttonMargin} ${color} ${textColor} shadow-md rounded-lg font-sans cursor-pointer font-bold tracking-widest hover:bg-brandingDarkGreen transition-all`}
 			>
 				{buttonFuncionality.actionText}
 			</button>
@@ -40,7 +40,7 @@ function Button({ buttonColor, buttonFontSize, buttonWidth, buttonPaddingY, butt
 		return (
 			<button
 				type="submit"
-				className={`${buttonWidth} ${buttonPaddingY} ${buttonFontSize} ${color} ${textColor} shadow-md rounded-lg font-sans cursor-pointer font-bold hover:opacity-80`}
+				className={`${buttonWidth} ${buttonPaddingY} ${buttonFontSize} ${buttonMargin} ${color} ${textColor} shadow-md rounded-lg font-sans cursor-pointer font-bold hover:opacity-80 transition-all`}
 			>
 				{buttonFuncionality.submitText}
 			</button>
@@ -49,7 +49,7 @@ function Button({ buttonColor, buttonFontSize, buttonWidth, buttonPaddingY, butt
 		return (
 			<Link to={buttonFuncionality.linkUrl} className="">
 				<button
-					className={`${buttonWidth} ${buttonPaddingY} ${buttonFontSize} ${color} ${textColor} shadow-md rounded-lg font-sans cursor-pointer font-bold hover:bg-brandingDarkGreen`}
+					className={`${buttonWidth} ${buttonPaddingY} ${buttonFontSize} ${buttonMargin} ${color} ${textColor} shadow-md rounded-lg font-sans cursor-pointer font-bold hover:bg-brandingDarkGreen transition-all`}
 				>
 
 					{buttonFuncionality.linkText}
