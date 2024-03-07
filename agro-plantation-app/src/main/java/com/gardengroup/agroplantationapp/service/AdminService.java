@@ -31,10 +31,7 @@ public class AdminService {
 
     @Transactional(readOnly = true)
     public List<ProducerRequest> getPendingProducerRequests() {
-        // Obtener el estado pendiente directamente (sin Optional)
         StateRequest pendingState = stateRequestRepository.findByState("PENDING").orElse(null);
-
-        // Llamar al repositorio con el StateRequest
         return producerRequestRepository.findByStaterequest(pendingState);
     }
 
@@ -43,6 +40,9 @@ public class AdminService {
         // Obtener la solicitud del productor por ID
         ProducerRequest producerRequest = producerRequestRepository.findById(producerRequestId)
                 .orElseThrow(() -> new OurException("Solicitud del productor no encontrada"));
+        //La expresión .orElseThrow(() -> ...) es una variante del método orElse en Java que permite lanzar una excepción personalizada
+        // si el valor dentro del Optional no está presente. Básicamente, se utiliza para obtener el valor del Optional si está presente o
+        // lanzar una excepción si el Optional está vacío.
 
         // Verificar si la solicitud está en estado "PENDING"
         if ("PENDING".equals(producerRequest.getStaterequest().getState())) {
@@ -66,7 +66,6 @@ public class AdminService {
             producerRequestRepository.save(producerRequest);
             userRepository.save(user);
 
-            // Puedes realizar otras operaciones relacionadas con la aprobación aquí si es necesario
         } else {
             throw new OurException("La solicitud no está en estado 'PENDING'");
         }
@@ -92,8 +91,7 @@ public class AdminService {
                 // Guardar los cambios en la base de datos
                 producerRequestRepository.save(producerRequest);
             }
-
-            // Puedes realizar otras operaciones relacionadas con el rechazo aquí si es necesario
+            
         } else {
             throw new OurException("La solicitud no está en estado 'PENDING'");
         }
