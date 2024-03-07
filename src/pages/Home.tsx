@@ -34,7 +34,7 @@ export default function Home() {
 	const axiosController = useRef<AbortController>();
 
 	const bgImageTailwind = "bg-headerBg";
-	const logoSrc = "images/logo-plant-in.png";
+	const logoSrc = "images/Logo_fondo_verde.png";
 
 	function handleOpenMustLoginWarning() {
 		setMustLoginWarningState("visible");

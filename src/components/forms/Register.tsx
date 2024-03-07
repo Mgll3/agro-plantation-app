@@ -4,6 +4,7 @@ import { RegisterFormValuesType } from "./formsTypes";
 import { CircularProgress } from "@mui/material";
 import Button from "../button/Button";
 import { RegisterStateType } from "../../pages/LoginRegisterPage";
+import { useNavigate } from "react-router-dom";
 
 
 type RegisterProps = {
@@ -18,6 +19,7 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 	const upperCaseRegex = /[A-Z]/g;
 	const numberRegex = /[0-9]/g;
 	const specialCharacterRegex = /[!@#$%^&_*-]/g;
+	const navigate = useNavigate();
 
 	const initialValues = {
 		userName: "",
@@ -72,8 +74,8 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 							<div className=" max-h-[100vh] overflow-x-hidden ">
 								<div className="flex flex-col justify-center items-center gap-1 rounded-2xl text-2xl text-black font-sans mt-[2rem]">
 									<h1>Bienvenido a</h1>
-									<img src="images/LogoVerde.png" alt="logo"
-										className=" w-[120px] h-[150px] mb-5" />
+									<button onClick={() => navigate("/")}><img src="images/LogoVerde.png" alt="logo"
+										className=" w-[120px] h-[150px] mb-5" /></button>
 									<h2>Por favor, completa el formulario</h2>
 								</div>
 								<Formik initialValues={initialValues} validationSchema={registerSchema} onSubmit={handleSubmit}>
@@ -166,8 +168,7 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 												buttonColor="green"
 												buttonFontSize="text-base"
 												buttonWidth="w-[94%]"
-												buttonPaddingY="py-2.5"
-												buttonMargin="m-[3rem_auto_3rem_0]"
+												buttonPaddingY="py-2.5 m-[3rem_auto]"
 												buttonFuncionality={{ submitText: "Regístrate" }}
 											/>
 

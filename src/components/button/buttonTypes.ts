@@ -19,6 +19,5 @@ export type ButtonProps = {
 	buttonFontSize: string,
 	buttonWidth: string,
 	buttonPaddingY: string,
-	buttonMargin: string,
 	buttonFuncionality: ButtonActionType | ButtonLinkType | ButtonSubmitType;
 }
