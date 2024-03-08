@@ -33,12 +33,14 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 		setLoginState("loading");
 
 		const loginData: LoginFormValuesType = {
-			"email": formValues.email,
-			"password": formValues.password
+			email: formValues.email,
+			password: formValues.password
 		};
 
+		const loginDataJson = JSON.stringify(loginData);
 
-		logInUser(loginData, axiosController.current!)
+
+		logInUser(loginDataJson, axiosController.current!)
 			.then((UserDataResponse: UserDataType) => {
 				user.name = UserDataResponse.userName;
 				setUserRole(UserDataResponse.userRole);
