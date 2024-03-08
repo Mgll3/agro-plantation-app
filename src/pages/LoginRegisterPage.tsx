@@ -7,7 +7,7 @@ import { user } from "../data/userData";
 import Login from "../components/forms/Login";
 import { registerUser } from "../interfaces/registerUser";
 import Register from "../components/forms/Register";
-import { RegisterFormValuesType } from "../components/forms/formsTypes";
+import { LoginFormValuesType, RegiserFormFieldsToSendType, RegisterFormValuesType } from "../components/forms/formsTypes";
 
 
 export type LoginStateType = "init" | "loading" | "error" | "logged";
@@ -29,14 +29,16 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 	const navigate = useNavigate();
 
 
-	function sendForm(e: React.FormEvent<HTMLFormElement>) {
-		e.preventDefault();
+	function submitLoginForm(formValues: LoginFormValuesType) {
 		setLoginState("loading");
 
-		const loginForm = document.getElementById("login") as HTMLFormElement;
-		const formData = new FormData((loginForm));
+		const loginData: LoginFormValuesType = {
+			"email": formValues.email,
+			"password": formValues.password
+		};
 
-		logInUser(formData, axiosController.current!)
+
+		logInUser(loginData, axiosController.current!)
 			.then((UserDataResponse: UserDataType) => {
 				user.name = UserDataResponse.userName;
 				setUserRole(UserDataResponse.userRole);
@@ -47,22 +49,22 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 			});
 	}
 
-	const submitForm = (formValues: RegisterFormValuesType) => {
-		const formData = new FormData();
-		console.log("submit");
-		
-		const userFullAddress = `${formValues.userAddressCity}, ${formValues.userAddressProvince}`;			// Unimos en Front los campos de dirección del usuario.
-		
-		formData.append("email", formValues.userEmail);
-		formData.append("password", formValues.userPassword);
-		formData.append("name", formValues.userName);
-		formData.append("lastname", formValues.userLastName);
-		formData.append("address", userFullAddress);
-
-
+	const submitRegisterForm = (formValues: RegisterFormValuesType) => {
 		setRegisterState("loading");
+	
+		const userFullAddress = `${formValues.userAddressCity}, ${formValues.userAddressProvince}`;			// Unimos en Front los campos de dirección del usuario.
+	
+		const resgisterDataToSend: RegiserFormFieldsToSendType = {
+			email: formValues.userEmail,
+			password: formValues.userPassword,
+			name: formValues.userName,
+			lastname: formValues.userLastName,
+			address: userFullAddress
+		};
 
-		registerUser(formData, axiosController.current!)
+		const resgisterDataToSendJson = JSON.stringify(resgisterDataToSend);
+
+		registerUser(resgisterDataToSendJson, axiosController.current!)
 			.then((UserDataResponse: UserDataType) => {
 				user.name = UserDataResponse.userName;
 				setUserRole(UserDataResponse.userRole);
@@ -132,22 +134,22 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 						? (
 							<>
 								<div className="w-screen">
-									<Login handleSubmit={sendForm} handleRegisterClick={changeForm} loginState={loginState} />
+									<Login handleSubmit={submitLoginForm} handleRegisterClick={changeForm} loginState={loginState} />
 								</div>
 
 								<div className="w-screen ">
-									<Register handleSubmit={submitForm} handleLoginClick={changeForm} registerState={registerState} errorText={errorMessage.current} />
+									<Register handleSubmit={submitRegisterForm} handleLoginClick={changeForm} registerState={registerState} errorText={errorMessage.current} />
 								</div>
 							</>
 						)
 						: (
 							<>
 								<div className="w-screen">
-									<Register handleSubmit={submitForm} handleLoginClick={changeForm} registerState={registerState} errorText={errorMessage.current} />
+									<Register handleSubmit={submitRegisterForm} handleLoginClick={changeForm} registerState={registerState} errorText={errorMessage.current} />
 								</div>
 
 								<div className="w-screen">
-									<Login handleSubmit={sendForm} handleRegisterClick={changeForm} loginState={loginState} />
+									<Login handleSubmit={submitLoginForm} handleRegisterClick={changeForm} loginState={loginState} />
 								</div>
 							</>
 						)

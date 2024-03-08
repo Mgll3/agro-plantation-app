@@ -1,10 +1,11 @@
 import axios from "axios";
 import { axiosConfig } from "../lib/axios/axios.config";
+import { LoginFormValuesType } from "../components/forms/formsTypes";
 
-export async function logInUser ( formData: FormData, axiosController: AbortController ) {
+export async function logInUser ( formData: LoginFormValuesType, axiosController: AbortController ) {
 
 	try{
-		const response = await axiosConfig.post("/login", formData, {
+		const response = await axiosConfig.post("/auth/login", formData, {
 			signal: axiosController.signal
 		});
 		const userData = response.data;

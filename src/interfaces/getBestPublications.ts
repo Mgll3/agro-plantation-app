@@ -1,7 +1,6 @@
 import axios from "axios";
 import { axiosConfig } from "../lib/axios/axios.config";
 
-
 export async function getBestPublications ( axiosControler: AbortController ) {
 
 	try{

@@ -1,5 +1,6 @@
 import axios from "axios";
-import { axiosConfig } from "../../lib/axios/axios.config";
+import { axiosConfig } from "../lib/axios/axios.config";
+
 
 export async function getAllPublications ( axiosControler: AbortController ) {
 
