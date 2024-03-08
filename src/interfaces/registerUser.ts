@@ -4,7 +4,7 @@ import { axiosConfig } from "../lib/axios/axios.config";
 export async function registerUser ( formData: FormData, axiosController: AbortController ) {
 
 	try{
-		const response = await axiosConfig.post("/register", formData, {
+		const response = await axiosConfig.post("/auth/registro", formData, {
 			signal: axiosController.signal,
 		});
 		const newUserToken = response.data;

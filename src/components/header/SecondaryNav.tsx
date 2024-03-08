@@ -6,7 +6,7 @@ function SecondaryNav() {
 	const buttonColor: ButtonColorType = "yellow";
 	const buttonFontSize = "text-base";
 	const buttonWidth = "w-44";
-	const buttonPaddingY = "py-4";
+	const buttonPaddingY = "p-[2px_0]";
 
 	return (
 		<nav aria-label="Login y registro" className="">
