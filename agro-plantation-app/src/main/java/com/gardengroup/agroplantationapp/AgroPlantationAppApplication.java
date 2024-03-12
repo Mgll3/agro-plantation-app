@@ -8,12 +8,10 @@ public class AgroPlantationAppApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(AgroPlantationAppApplication.class, args);
 		/*
-		docker build -t agro-plantation:1.41 .
+		docker build -t agro-plantation:1.46 .
 		docker pull mysql:8.1
 		docker run --name mysql-standalone -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=agroplantationapp -e MYSQL_USER=dev -e MYSQL_PASSWORD=dev -p 3306:3306 -d mysql:8.1
-		docker run -d -p 8080:8080 --name agro-plantation --link mysql-standalone:mysql 496068da7067
-
-
+		docker run -d -p 8080:8080 --name agro-plantation --link mysql-standalone:mysql 8abe2b8f7a34
 
 
 
@@ -29,11 +27,11 @@ public class AgroPlantationAppApplication {
 		docker commit 36b6f8129087 mysql-standalone
 
 		docker tag nombre_de_la_imagen usuario_dockerhub/nombre_del_repositorio
-		docker tag agro-plantation:1.41 mgll3/agro-plantation-app:Api-v1.41
+		docker tag agro-plantation:1.46 mgll3/agro-plantation-app:Api-v1.46
 		docker tag mysql-standalone mgll3/agro-plantation-app:Mysql-v1.1
 		
-		docker push mgll3/agro-plantation-app:Api-v1.41
-		docker push mgll3/agro-plantation-app:Mysql-v1.1 
+		docker push mgll3/agro-plantation-app:Api-v1.46
+		docker push mgll3/agro-plantation-app:Mysql-v1.1
 		*/
 
 	}

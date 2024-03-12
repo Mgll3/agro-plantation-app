@@ -100,12 +100,12 @@ public class PublicationService {
             return null;
         }
     }
+
     public List<Publication> getTopPublications() {
         List<Publication> allPublications = publicationRepository.findTop6ByOrderByScoreDesc();
         // Limitar la cantidad de publicaciones devueltas a exactamente 6
         return allPublications.stream().limit(6).collect(Collectors.toList());
     }
-
 
     @Transactional
     public Publication getPublication(Long id) {

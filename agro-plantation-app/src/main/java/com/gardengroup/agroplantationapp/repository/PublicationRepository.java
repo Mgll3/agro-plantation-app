@@ -17,4 +17,5 @@ public interface PublicationRepository  extends JpaRepository<Publication,Long>{
 
     @Query("SELECT p FROM Publication p WHERE p.author.email = :email")
     List<Publication> publicationsByEmail(@Param("email") String email);
+    
 }

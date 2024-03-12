@@ -12,11 +12,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-/**
- *
- * @author sofia
- */
-//lombok genera un constructor sin elementos
+
 @Entity
 @Table(name ="user")
 @Getter

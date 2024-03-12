@@ -3,6 +3,8 @@ package com.gardengroup.agroplantationapp.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -11,6 +13,7 @@ import com.gardengroup.agroplantationapp.dto.PublicationUpdDTO;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class Publication {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,8 +57,7 @@ public class Publication {
         
     }
 
-    public Publication() {
-    }
+    
 
     public Publication(PublicationSaveDTO publicationDTO){
         this.title = publicationDTO.getTitle();
