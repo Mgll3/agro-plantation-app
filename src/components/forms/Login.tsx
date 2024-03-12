@@ -1,10 +1,10 @@
 import { LoginStateType } from "../../pages/LoginRegisterPage.tsx";
 import Button from "../button/Button.tsx";
-import { CircularProgress } from "@mui/material";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useNavigate } from "react-router-dom";
 import *  as  Yup from "yup";
 import { LoginFormValuesType } from "./formsTypes.ts";
+import Loading from "../loading/Loading.tsx";
 
 type LoginProps = {
 	handleSubmit: (formValues: LoginFormValuesType) => void,
@@ -91,7 +91,7 @@ export default function Login({ handleSubmit, handleRegisterClick, loginState }:
 						}
 
 						{
-							loginState === "loading" && <CircularProgress color="success" />
+							loginState === "loading" && <Loading />
 						}
 
 						<Button

@@ -19,7 +19,7 @@ type LoginRegisterPageProps = {
 
 function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 	const { setUserRole } = useUserRoleContext();
-	const [loginState, setLoginState] = useState<LoginStateType>("init");
+	const [loginState, setLoginState] = useState<LoginStateType>("loading");
 	const [registerState, setRegisterState] = useState<RegisterStateType>("init");
 
 	const axiosController = useRef<AbortController>();
@@ -102,20 +102,25 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 	}, [loginState]);
 
 	useEffect(() => {
-		let loggedTimeout: number;
+		let registerErrorTimeout: number;
+		let registeredTimeout: number;
 
 		if (registerState === "error") {
-			loggedTimeout = window.setTimeout(() => {
+			registerErrorTimeout = window.setTimeout(() => {
 				setRegisterState("init");
-			}, 3500);
+			}, 4000);
 		}
 
 		if (registerState === "logged") {
-			navigate("/");
+			registeredTimeout = window.setTimeout( () => {
+				setRegisterState("init");
+				changeForm();
+			}, 3000);
 		}
 
 		return () => {
-			clearTimeout(loggedTimeout);
+			clearTimeout(registerErrorTimeout);
+			clearTimeout(registeredTimeout);
 		};
 	}, [registerState]);
 
