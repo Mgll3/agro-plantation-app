@@ -5,7 +5,10 @@ export async function logInUser ( formData: string, axiosController: AbortContro
 
 	try{
 		const response = await axiosConfig.post("/auth/login", formData, {
-			signal: axiosController.signal
+			signal: axiosController.signal,
+			headers: {
+				"Content-Type": "application/json",
+			}
 		});
 		const userData = response.data;
 

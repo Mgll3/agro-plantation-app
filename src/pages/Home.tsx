@@ -1,21 +1,19 @@
 import { useEffect, useRef, useState } from "react"; {/*useState*/ }
 import Header from "../components/header/Header";
 import { user } from "../data/userData";
-import { UserRoleType, useUserRoleContext } from "../context/UserRoleContext";
+import { useUserRoleContext } from "../context/UserRoleContext";
 import { checkOpenSession } from "../interfaces/checkOpenSession";
 import { PublicationPreviewType } from "../components/publicationsList/publicationsListTypes";
 import { getBestPublications } from "../interfaces/getBestPublications";
 import PublicationsPreviewList from "../components/publicationsList/PublicationsPreviewList";
 import MustLoginWarning from "../components/header/MustLoginWarning";
+import { UserDataType } from "./commonTypes";
+import { getStoredToken } from "../utils/getStoredToken";
+import { storeToken } from "../utils/storeToken";
 
 
 type LoadingStateType = "loading" | "loaded" | "error";
 type MustLoginWarningStateType = "visible" | "hidden";
-
-export type UserDataType = {
-	userName: string,
-	userRole: UserRoleType
-}
 
 // type ChartsDataType = {
 // 	barChartData: BarChartDataType,
@@ -36,6 +34,7 @@ export default function Home() {
 	const bgImageTailwind = "bg-headerBg";
 	const logoSrc = "images/Logo_fondo_verde.png";
 
+
 	function handleOpenMustLoginWarning() {
 		setMustLoginWarningState("visible");
 	}
@@ -47,15 +46,21 @@ export default function Home() {
 	useEffect(() => {
 		axiosController.current = new AbortController();
 
-		checkOpenSession(axiosController.current)
-			.then((userData: UserDataType) => {
-				user.name = userData.userName;
-				setUserRole(userData.userRole);
-			})
-			.catch(() => {
-				user.name = "";
-				setUserRole("visitor");
-			});
+		const storedToken = getStoredToken();
+
+		if (storedToken) {
+			checkOpenSession(storedToken, axiosController.current)
+				.then((userData: UserDataType) => {
+					storeToken(userData.accessToken);
+
+					user.name = userData.name;
+					setUserRole(userData.userType);
+				})
+				.catch(() => {
+					user.name = "";
+					setUserRole("visitor");
+				});
+		}
 
 		getBestPublications(axiosController.current)
 			.then((bestPublicationsList: PublicationPreviewType[]) => {

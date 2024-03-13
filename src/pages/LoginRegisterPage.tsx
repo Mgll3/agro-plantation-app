@@ -1,13 +1,14 @@
 import { useNavigate } from "react-router-dom";
-import { useUserRoleContext } from "../context/UserRoleContext";
 import { useEffect, useRef, useState } from "react";
 import { logInUser } from "../interfaces/logInUser";
-import { UserDataType } from "./Home";
 import { user } from "../data/userData";
 import Login from "../components/forms/Login";
 import { registerUser } from "../interfaces/registerUser";
 import Register from "../components/forms/Register";
 import { LoginFormValuesType, RegiserFormFieldsToSendType, RegisterFormValuesType } from "../components/forms/formsTypes";
+import { UserDataType } from "./commonTypes";
+import { useUserRoleContext } from "../context/UserRoleContext";
+import { storeToken } from "../utils/storeToken";
 
 
 export type LoginStateType = "init" | "loading" | "error" | "logged";
@@ -19,7 +20,7 @@ type LoginRegisterPageProps = {
 
 function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 	const { setUserRole } = useUserRoleContext();
-	const [loginState, setLoginState] = useState<LoginStateType>("loading");
+	const [loginState, setLoginState] = useState<LoginStateType>("init");
 	const [registerState, setRegisterState] = useState<RegisterStateType>("init");
 
 	const axiosController = useRef<AbortController>();
@@ -27,7 +28,6 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 	const mainContainerElement = useRef(null);
 
 	const navigate = useNavigate();
-
 
 	function submitLoginForm(formValues: LoginFormValuesType) {
 		setLoginState("loading");
@@ -42,9 +42,14 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 
 		logInUser(loginDataJson, axiosController.current!)
 			.then((UserDataResponse: UserDataType) => {
-				user.name = UserDataResponse.userName;
-				setUserRole(UserDataResponse.userRole);
-				setLoginState("logged");
+				storeToken(UserDataResponse.accessToken);
+
+				user.name = `${UserDataResponse.name} ${UserDataResponse.lastname}`;
+				setUserRole(UserDataResponse.userType);
+				
+				setTimeout( () => {
+					setLoginState("logged");
+				}, 800);
 			})
 			.catch(() => {
 				setLoginState("error");
@@ -67,9 +72,7 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 		const resgisterDataToSendJson = JSON.stringify(resgisterDataToSend);
 
 		registerUser(resgisterDataToSendJson, axiosController.current!)
-			.then((UserDataResponse: UserDataType) => {
-				user.name = UserDataResponse.userName;
-				setUserRole(UserDataResponse.userRole);
+			.then(() => {
 				setRegisterState("logged");
 			})
 			.catch((err: Error) => {

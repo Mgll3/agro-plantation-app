@@ -6,6 +6,9 @@ export async function registerUser ( data: string, axiosController: AbortControl
 	try{
 		const response = await axiosConfig.post("/auth/registro", data, {
 			signal: axiosController.signal,
+			headers: {
+				"Content-Type": "application/json",
+			}
 		});
 		const newUserToken = response.data;
 

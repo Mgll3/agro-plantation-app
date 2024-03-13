@@ -49,7 +49,7 @@ export default function Login({ handleSubmit, handleRegisterClick, loginState }:
 					>
 
 						<div className="flex justify-center items-center gap-4 rounded-2xl text-2xl">
-							<button onClick={() => navigate("/")}>
+							<button type="button" onClick={() => navigate("/")}>
 								<img src="images/LogoVerde.png" alt="logo" className=" bg-[transparent] w-[120px] h-[160px]" />
 							</button>
 						</div>

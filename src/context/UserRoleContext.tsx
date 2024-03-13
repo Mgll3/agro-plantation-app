@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from "react";
 
-export type UserRoleType = "visitor" | "user" | "producer" | "admin"
+export type UserRoleType = "visitor" | "USER" | "producer" | "admin"
 
 type UserRoleDataType = {
 	userRole: UserRoleType,
