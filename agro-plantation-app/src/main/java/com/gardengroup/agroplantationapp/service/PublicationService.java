@@ -1,5 +1,9 @@
 package com.gardengroup.agroplantationapp.service;
 
+import com.gardengroup.agroplantationapp.entity.*;
+import com.gardengroup.agroplantationapp.exceptions.OurException;
+
+import com.gardengroup.agroplantationapp.repository.StateRequestRepository;
 import com.gardengroup.agroplantationapp.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,12 +13,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.gardengroup.agroplantationapp.dto.PublicationSaveDTO;
 import com.gardengroup.agroplantationapp.dto.PublicationUpdDTO;
-import com.gardengroup.agroplantationapp.entity.Image;
-import com.gardengroup.agroplantationapp.entity.Publication;
-import com.gardengroup.agroplantationapp.entity.StateRequest;
-import com.gardengroup.agroplantationapp.entity.User;
 import com.gardengroup.agroplantationapp.repository.PublicationRepository;
 import jakarta.transaction.Transactional;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,11 +32,14 @@ public class PublicationService {
     private CloudinaryService cloudinaryService;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    StateRequestRepository stateRequestRepository;
 
 
+//crea la publicacion y ya pone su estado de la autorizacion en pendiente
     @Transactional
     public Publication savePublication(PublicationSaveDTO publicationDTO, String email) {
-        
+
         Publication publication = new Publication(publicationDTO);
 
         User user = userRepository.searchEmail(email);
@@ -54,18 +58,18 @@ public class PublicationService {
     @Transactional
     public void saveImages(MultipartFile mainFile, List<MultipartFile> files, Long publicationId) {
         String folder = "publications";
-        
+
         //Montaje imagenes en Cloudinary
         Map result = cloudinaryService.upload(mainFile, folder);
-        Image mainImage = new Image(result.get("public_id").toString(), 
-            result.get("secure_url").toString());
+        Image mainImage = new Image(result.get("public_id").toString(),
+                result.get("secure_url").toString());
 
         List<Image> images = new ArrayList<Image>();
         for (MultipartFile file : files) {
             //Posible montaje simultaneo de imagenes para mayor velocidad
             result = cloudinaryService.upload(file, folder);
-            Image image = new Image(result.get("public_id").toString(), 
-                result.get("secure_url").toString());
+            Image image = new Image(result.get("public_id").toString(),
+                    result.get("secure_url").toString());
             images.add(image);
         }
 
@@ -100,6 +104,7 @@ public class PublicationService {
             return null;
         }
     }
+
     public List<Publication> getTopPublications() {
         List<Publication> allPublications = publicationRepository.findTop6ByOrderByScoreDesc();
         // Limitar la cantidad de publicaciones devueltas a exactamente 6
@@ -143,7 +148,7 @@ public class PublicationService {
         if (!publicationRepository.existsById(publication.getId())) {
             throw new DataAccessException("Publication not found") {
             };
-        }   else {
+        } else {
             Publication PublicationSaved = publicationRepository.findById(publication.getId()).get();
             PublicationSaved.updateInfo(publication);
             publicationRepository.save(PublicationSaved);
@@ -155,14 +160,88 @@ public class PublicationService {
     public void deletePublication(Long id) {
         Publication publicationSaved = publicationRepository.findById(id).orElseThrow(() -> new DataAccessException("Publication not found") {
         });
-        
+
         cloudinaryService.delete(publicationSaved.getMainImage().getId());
         for (Image image : publicationSaved.getImages()) {
             cloudinaryService.delete(image.getId());
         }
         publicationRepository.deleteById(id);
-        
+
     }
+
+
+
+    @Transactional
+    public List<Publication> pendingPublications() {
+        return publicationRepository.findAllPendingPublications();
+    }
+
+
+    @Transactional
+    public void approve(Long publicationId) {
+        try {
+            Optional<Publication> optionalPublication = publicationRepository.findById(publicationId);
+
+            if (optionalPublication.isPresent()) {
+                Publication publication = optionalPublication.get();
+
+                if ("PENDING".equals(publication.getAuthorizationStatus().getState())) {
+
+                    // Buscar el estado "ACCEPTED" en la tabla StateRequest
+                    StateRequest acceptedState = stateRequestRepository.findByState("ACCEPTED")
+                            .orElseThrow(() -> new OurException("Estado 'ACCEPTED' no encontrado"));
+
+                    // Asignar el estado "ACCEPTED" a la publicación
+                    publication.setAuthorizationStatus(acceptedState);
+
+
+                    publicationRepository.save(publication);
+                } else {
+                    throw new IllegalStateException("La publicación con ID " + publicationId + " no está en estado PENDIENTE");
+                }
+            } else {
+                throw new IllegalArgumentException("Publicación con ID " + publicationId + " no encontrada.");
+            }
+        } catch (OurException e) {
+
+            throw new IllegalStateException("Error al aprobar la publicación: " + e.getMessage());
+        }
+    }
+
+
+
+
+    @Transactional
+    public void reject(Long publicationId) {
+        try {
+            Optional<Publication> optionalPublication = publicationRepository.findById(publicationId);
+
+            if (optionalPublication.isPresent()) {
+                Publication publication = optionalPublication.get();
+
+                if ("PENDING".equals(publication.getAuthorizationStatus().getState())) {
+                    // Buscar el estado "DECLINED" en la tabla StateRequest
+                    StateRequest declinedState = stateRequestRepository.findByState("DECLINED")
+                            .orElseThrow(() -> new OurException("Estado 'DECLINED' no encontrado"));
+
+                    // Asignar el estado "DECLINED" a la publicación
+                    publication.setAuthorizationStatus(declinedState);
+
+                    // Guardar la publicación actualizada en la base de datos
+                    publicationRepository.save(publication);
+                } else {
+                    throw new IllegalStateException("La publicación con ID " + publicationId + " no está en estado PENDIENTE");
+                }
+            } else {
+                throw new IllegalArgumentException("Publicación con ID " + publicationId + " no encontrada.");
+            }
+        } catch (OurException e) {
+            throw new IllegalStateException("Error al rechazar la publicación: " + e.getMessage());
+        }
+    }
+
+
+
 
 
 

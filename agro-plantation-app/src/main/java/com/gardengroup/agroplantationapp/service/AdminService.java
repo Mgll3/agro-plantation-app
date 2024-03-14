@@ -36,7 +36,7 @@ public class AdminService {
     }
 
     @Transactional
-    public void approveProducerRequest(Long producerRequestId) throws OurException {
+    public void approve(Long producerRequestId) throws OurException {
         // Obtener la solicitud del productor por ID
         ProducerRequest producerRequest = producerRequestRepository.findById(producerRequestId)
                 .orElseThrow(() -> new OurException("Solicitud del productor no encontrada"));
@@ -73,7 +73,7 @@ public class AdminService {
 
 
     @Transactional
-    public void rejectProducerRequest(Long producerRequestId) throws OurException {
+    public void reject(Long producerRequestId) throws OurException {
         // Obtener la solicitud del productor por ID
         ProducerRequest producerRequest = producerRequestRepository.findById(producerRequestId)
                 .orElseThrow(() -> new OurException("Solicitud del productor no encontrada"));
@@ -91,7 +91,7 @@ public class AdminService {
                 // Guardar los cambios en la base de datos
                 producerRequestRepository.save(producerRequest);
             }
-            
+
         } else {
             throw new OurException("La solicitud no está en estado 'PENDING'");
         }

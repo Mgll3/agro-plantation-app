@@ -1,6 +1,8 @@
 package com.gardengroup.agroplantationapp.entity;
 
 
+import com.gardengroup.agroplantationapp.exceptions.OurException;
+import com.gardengroup.agroplantationapp.repository.Approvable;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.time.LocalDateTime;
@@ -11,7 +13,7 @@ import com.gardengroup.agroplantationapp.dto.PublicationUpdDTO;
 
 @Entity
 @Data
-public class Publication {
+public class Publication implements Approvable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -70,6 +72,17 @@ public class Publication {
         this.title = publicationDTO.getTitle();
         this.plantation = publicationDTO.getPlantation();
         this.visibility = publicationDTO.getVisibility();
+    }
+
+
+    @Override
+    public void approve(Long entityId) throws OurException {
+
+    }
+
+    @Override
+    public void reject(Long entityId) throws OurException {
+
     }
     
 }

@@ -43,6 +43,7 @@ public class AdminController {
         }
     }
 
+
     @Operation(
             summary = "Aprueba una solicitud de productor",
             description = "Este endpoint permite aprobar una solicitud de productor",
@@ -57,12 +58,13 @@ public class AdminController {
     @PostMapping("/approve-producer-request/{producerRequestId}")
     public ResponseEntity<?> approveProducerRequest(@PathVariable Long producerRequestId) {
         try {
-            adminService.approveProducerRequest(producerRequestId);
+            adminService.approve(producerRequestId);
             return ResponseEntity.ok("La solicitud del productor ha sido aprobada con éxito.");
         } catch (OurException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error al aprobar la solicitud del productor: " + e.getMessage());
         }
     }
+
 
     @Operation(
             summary = "Rechaza una solicitud de productor",
@@ -76,7 +78,7 @@ public class AdminController {
     @PostMapping("/reject-producer-request/{producerRequestId}")
     public ResponseEntity<?> rejectProducerRequest(@PathVariable Long producerRequestId) {
         try {
-            adminService.rejectProducerRequest(producerRequestId);
+            adminService.reject(producerRequestId);
             return ResponseEntity.ok("La solicitud del productor ha sido rechazada con éxito.");
         } catch (OurException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error al rechazar la solicitud del productor: " + e.getMessage());
