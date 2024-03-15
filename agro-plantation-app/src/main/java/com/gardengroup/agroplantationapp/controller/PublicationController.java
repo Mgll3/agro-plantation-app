@@ -207,33 +207,6 @@ public class PublicationController {
     }
 
 
-    @GetMapping("/pending-publications")
-    public ResponseEntity<List<Publication>> getPendingPublications() {
-        List<Publication> pendingPublications = publicationService.pendingPublications();
-        return ResponseEntity.ok(pendingPublications);
-    }
-
-    @PutMapping("/approvePublication/{publicationId}")
-    public ResponseEntity<?> approvePublication(@PathVariable Long publicationId) {
-        try {
-            publicationService.approve(publicationId);
-            return ResponseEntity.ok("La solicitud de publicación ha sido aprobada con éxito.");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("Error al aprobar la solicitud de publicación: " + e.getMessage());
-        }
-    }
-
-    @PutMapping("/rejectPublication/{publicationId}")
-    public ResponseEntity<?> rejectPublication(@PathVariable Long publicationId) {
-        try {
-            publicationService.reject(publicationId);
-            return ResponseEntity.ok("La solicitud de publicación ha sido rechazada con éxito.");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("Error al rechazar la solicitud de publicación: " + e.getMessage());
-        }
-    }
 
 
 

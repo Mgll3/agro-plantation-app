@@ -177,8 +177,7 @@ public class PublicationService {
     }
 
 
-    @Transactional
-    public void approve(Long publicationId) {
+    public void approve(Long publicationId) throws OurException {
         try {
             Optional<Publication> optionalPublication = publicationRepository.findById(publicationId);
 
@@ -194,7 +193,6 @@ public class PublicationService {
                     // Asignar el estado "ACCEPTED" a la publicación
                     publication.setAuthorizationStatus(acceptedState);
 
-
                     publicationRepository.save(publication);
                 } else {
                     throw new IllegalStateException("La publicación con ID " + publicationId + " no está en estado PENDIENTE");
@@ -203,16 +201,15 @@ public class PublicationService {
                 throw new IllegalArgumentException("Publicación con ID " + publicationId + " no encontrada.");
             }
         } catch (OurException e) {
-
-            throw new IllegalStateException("Error al aprobar la publicación: " + e.getMessage());
+            throw new OurException("Error al aprobar la publicación: " + e.getMessage());
         }
     }
 
 
 
 
-    @Transactional
-    public void reject(Long publicationId) {
+
+    public void reject(Long publicationId) throws OurException {
         try {
             Optional<Publication> optionalPublication = publicationRepository.findById(publicationId);
 
@@ -236,9 +233,10 @@ public class PublicationService {
                 throw new IllegalArgumentException("Publicación con ID " + publicationId + " no encontrada.");
             }
         } catch (OurException e) {
-            throw new IllegalStateException("Error al rechazar la publicación: " + e.getMessage());
+            throw new OurException("Error al rechazar la publicación: " + e.getMessage());
         }
     }
+
 
 
 
