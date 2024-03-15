@@ -93,8 +93,14 @@ public class PublicationService {
 
             // Verificar si el usuario es el autor de la publicación
             if (user.equals(publication.getAuthor())) {
-                publication.setVisibility(true);
-                return publicationRepository.save(publication);
+                // Verificar si la publicación está autorizada
+                if (publication.getAuthorizationStatus().getState().equals("ACCEPTED")) {
+                    publication.setVisibility(true);
+                    return publicationRepository.save(publication);
+                } else {
+                    System.out.println("La publicación no está autorizada");
+                    return null;
+                }
             } else {
                 System.out.println("No es el autor de la publicación");
                 return null;
@@ -104,6 +110,7 @@ public class PublicationService {
             return null;
         }
     }
+
 
     public List<Publication> getTopPublications() {
         List<Publication> allPublications = publicationRepository.findTop6ByOrderByScoreDesc();
