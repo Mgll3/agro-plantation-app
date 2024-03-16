@@ -184,31 +184,27 @@ public class PublicationService {
     }
 
 
-    public void approve(Long publicationId) throws OurException {
-        try {
-            Optional<Publication> optionalPublication = publicationRepository.findById(publicationId);
+    public void approve(Long publicationId) {
+        Optional<Publication> optionalPublication = publicationRepository.findById(publicationId);
 
-            if (optionalPublication.isPresent()) {
-                Publication publication = optionalPublication.get();
+        if (optionalPublication.isPresent()) {
+            Publication publication = optionalPublication.get();
 
-                if ("PENDING".equals(publication.getAuthorizationStatus().getState())) {
+            if ("PENDING".equals(publication.getAuthorizationStatus().getState())) {
 
-                    // Buscar el estado "ACCEPTED" en la tabla StateRequest
-                    StateRequest acceptedState = stateRequestRepository.findByState("ACCEPTED")
-                            .orElseThrow(() -> new OurException("Estado 'ACCEPTED' no encontrado"));
+                // Buscar el estado "ACCEPTED" en la tabla StateRequest
+                StateRequest acceptedState = stateRequestRepository.findByState("ACCEPTED")
+                        .orElseThrow(() -> new RuntimeException("Estado 'ACCEPTED' no encontrado"));
 
-                    // Asignar el estado "ACCEPTED" a la publicación
-                    publication.setAuthorizationStatus(acceptedState);
+                // Asignar el estado "ACCEPTED" a la publicación
+                publication.setAuthorizationStatus(acceptedState);
 
-                    publicationRepository.save(publication);
-                } else {
-                    throw new IllegalStateException("La publicación con ID " + publicationId + " no está en estado PENDIENTE");
-                }
+                publicationRepository.save(publication);
             } else {
-                throw new IllegalArgumentException("Publicación con ID " + publicationId + " no encontrada.");
+                throw new IllegalStateException("La publicación con ID " + publicationId + " no está en estado PENDIENTE");
             }
-        } catch (OurException e) {
-            throw new OurException("Error al aprobar la publicación: " + e.getMessage());
+        } else {
+            throw new IllegalArgumentException("Publicación con ID " + publicationId + " no encontrada.");
         }
     }
 
@@ -216,33 +212,31 @@ public class PublicationService {
 
 
 
-    public void reject(Long publicationId) throws OurException {
-        try {
-            Optional<Publication> optionalPublication = publicationRepository.findById(publicationId);
 
-            if (optionalPublication.isPresent()) {
-                Publication publication = optionalPublication.get();
+    public void reject(Long publicationId) {
+        Optional<Publication> optionalPublication = publicationRepository.findById(publicationId);
 
-                if ("PENDING".equals(publication.getAuthorizationStatus().getState())) {
-                    // Buscar el estado "DECLINED" en la tabla StateRequest
-                    StateRequest declinedState = stateRequestRepository.findByState("DECLINED")
-                            .orElseThrow(() -> new OurException("Estado 'DECLINED' no encontrado"));
+        if (optionalPublication.isPresent()) {
+            Publication publication = optionalPublication.get();
 
-                    // Asignar el estado "DECLINED" a la publicación
-                    publication.setAuthorizationStatus(declinedState);
+            if ("PENDING".equals(publication.getAuthorizationStatus().getState())) {
+                // Buscar el estado "DECLINED" en la tabla StateRequest
+                StateRequest declinedState = stateRequestRepository.findByState("DECLINED")
+                        .orElseThrow(() -> new RuntimeException("Estado 'DECLINED' no encontrado"));
 
-                    // Guardar la publicación actualizada en la base de datos
-                    publicationRepository.save(publication);
-                } else {
-                    throw new IllegalStateException("La publicación con ID " + publicationId + " no está en estado PENDIENTE");
-                }
+                // Asignar el estado "DECLINED" a la publicación
+                publication.setAuthorizationStatus(declinedState);
+
+                // Guardar la publicación actualizada en la base de datos
+                publicationRepository.save(publication);
             } else {
-                throw new IllegalArgumentException("Publicación con ID " + publicationId + " no encontrada.");
+                throw new IllegalStateException("La publicación con ID " + publicationId + " no está en estado PENDIENTE");
             }
-        } catch (OurException e) {
-            throw new OurException("Error al rechazar la publicación: " + e.getMessage());
+        } else {
+            throw new IllegalArgumentException("Publicación con ID " + publicationId + " no encontrada.");
         }
     }
+
 
 
 

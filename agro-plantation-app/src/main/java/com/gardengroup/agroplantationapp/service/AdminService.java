@@ -40,15 +40,15 @@ public class AdminService {
         // Obtener la solicitud del productor por ID
         ProducerRequest producerRequest = producerRequestRepository.findById(producerRequestId)
                 .orElseThrow(() -> new OurException("Solicitud del productor no encontrada"));
-        //La expresión .orElseThrow(() -> ...) es una variante del método orElse en Java que permite lanzar una excepción personalizada
-        // si el valor dentro del Optional no está presente. Básicamente, se utiliza para obtener el valor del Optional si está presente o
-        // lanzar una excepción si el Optional está vacío.
 
         // Verificar si la solicitud está en estado "PENDING"
         if ("PENDING".equals(producerRequest.getStaterequest().getState())) {
             // Obtener el estado "ACCEPTED" directamente
             StateRequest acceptedState = stateRequestRepository.findByState("ACCEPTED")
                     .orElseThrow(() -> new OurException("Estado 'ACCEPTED' no encontrado en la base de datos"));
+            //La expresión .orElseThrow(() -> ...) es una variante del método orElse en Java que permite lanzar una excepción personalizada
+            // si el valor dentro del Optional no está presente. Básicamente, se utiliza para obtener el valor del Optional si está presente o
+            // lanzar una excepción si el Optional está vacío.
 
             // Actualizar el estado de la solicitud a "ACCEPTED"
             producerRequest.setStaterequest(acceptedState);
@@ -72,6 +72,8 @@ public class AdminService {
     }
 
 
+
+
     @Transactional
     public void reject(Long producerRequestId) throws OurException {
         // Obtener la solicitud del productor por ID
@@ -90,10 +92,14 @@ public class AdminService {
 
                 // Guardar los cambios en la base de datos
                 producerRequestRepository.save(producerRequest);
+            } else {
+                throw new OurException("Estado 'DECLINED' no encontrado en la base de datos");
             }
 
         } else {
-            throw new OurException("La solicitud no está en estado 'PENDING'");
+            throw new IllegalStateException("La solicitud no está en estado 'PENDING'");
         }
     }
+
+
 }

@@ -76,12 +76,12 @@ public class Publication implements Approvable {
 
 
     @Override
-    public void approve(Long entityId) throws OurException {
+    public void approve(Long entityId){
 
     }
 
     @Override
-    public void reject(Long entityId) throws OurException {
+    public void reject(Long entityId){
 
     }
     
