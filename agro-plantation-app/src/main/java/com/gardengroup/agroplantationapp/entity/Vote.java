@@ -7,7 +7,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name ="vote")
+@Table(name = "vote")
 @Getter
 @Setter
 @ToString
@@ -22,7 +22,10 @@ public class Vote {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @OneToOne
-    @JoinColumn(name = "publication_id", nullable = false, unique = true)
+    @ManyToOne
+    @JoinColumn(name = "publication_id", nullable = false)
     private Publication publication;
+
+    @Column(columnDefinition = "BOOLEAN DEFAULT 0")
+    private boolean state;
 }

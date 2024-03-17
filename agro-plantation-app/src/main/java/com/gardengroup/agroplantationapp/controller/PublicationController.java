@@ -5,11 +5,13 @@ import java.util.List;
 import com.gardengroup.agroplantationapp.dto.PublicationSaveDTO;
 import com.gardengroup.agroplantationapp.dto.PublicationUpdDTO;
 import com.gardengroup.agroplantationapp.entity.Publication;
+import com.gardengroup.agroplantationapp.entity.Vote;
 import com.gardengroup.agroplantationapp.exceptions.OurException;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -207,6 +209,25 @@ public class PublicationController {
     }
 
 
+    @Operation(summary = "Alternar voto para una publicación",
+            description = "Endpoint para alternar el voto (me gusta/no me gusta) para una publicación específica")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Voto alternado exitosamente"),
+            @ApiResponse(responseCode = "400", description = "Solicitud incorrecta"),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor")
+    })
+    @PostMapping("/publications/{publicationId}/toggle-vote")
+    public ResponseEntity<?> toggleVote(@PathVariable Long publicationId, HttpServletRequest request) {
+        try {
+            String email = securityService.getEmail(request);
+            Vote vote = publicationService.toggleVote(publicationId, email);
+            return ResponseEntity.status(HttpStatus.CREATED).body(vote);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 
 
 

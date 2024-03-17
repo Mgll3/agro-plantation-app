@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -23,6 +24,7 @@ public class UserController {
     private UserService userService;
     @Autowired
     private SecurityService securityService;
+
     @Operation(summary = "Solicitar ser productor", description = "Endpoint para solicitar ser productor")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Solicitud creada con éxito",
@@ -41,5 +43,7 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error al crear la solicitud: " + e.getMessage());
         }
     }
+
+
 }
 

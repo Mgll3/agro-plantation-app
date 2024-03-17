@@ -6,8 +6,10 @@ import com.gardengroup.agroplantationapp.exceptions.OurException;
 import com.gardengroup.agroplantationapp.repository.StateRequestRepository;
 import com.gardengroup.agroplantationapp.repository.UserRepository;
 
+import com.gardengroup.agroplantationapp.repository.VoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,10 +19,7 @@ import com.gardengroup.agroplantationapp.repository.PublicationRepository;
 import jakarta.transaction.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,9 +33,11 @@ public class PublicationService {
     private UserRepository userRepository;
     @Autowired
     StateRequestRepository stateRequestRepository;
+    @Autowired
+    VoteRepository voteRepository;
 
 
-//crea la publicacion y ya pone su estado de la autorizacion en pendiente
+    //crea la publicacion y ya pone su estado de la autorizacion en pendiente
     @Transactional
     public Publication savePublication(PublicationSaveDTO publicationDTO, String email) {
 
@@ -177,7 +178,6 @@ public class PublicationService {
     }
 
 
-
     @Transactional
     public List<Publication> pendingPublications() {
         return publicationRepository.findAllPendingPublications();
@@ -209,10 +209,6 @@ public class PublicationService {
     }
 
 
-
-
-
-
     public void reject(Long publicationId) {
         Optional<Publication> optionalPublication = publicationRepository.findById(publicationId);
 
@@ -238,10 +234,51 @@ public class PublicationService {
     }
 
 
+    @Transactional
+    public Vote toggleVote(Long publicationId, String userEmail) {
 
+        Publication publication = publicationRepository.findById(publicationId)
+                .orElseThrow(() -> new IllegalArgumentException("Publicación no encontrada"));
 
+        // Verificar si el usuario ya ha votado en esta publicación
+        Vote existingVote = voteRepository.findByUserEmailAndPublicationId(userEmail, publicationId);
 
+        if (existingVote != null) {
+            // El usuario ya ha votado, cambiar el estado del voto
+            existingVote.setState(!existingVote.isState()); // Cambiar el estado del voto
 
+            // Actualizar el puntaje de la publicación en función del cambio de estado del voto
+            int scoreChange = existingVote.isState() ? 1 : -1; // Sumar 1 al puntaje si se vota positivamente, restar 1 si se quita el voto positivo
+            int newScore = publication.getScore() + scoreChange; // Calcular el nuevo puntaje
+            publication.setScore(newScore);
+
+            // Guardar el voto actualizado en la base de datos
+            voteRepository.save(existingVote);
+        } else {
+            // El usuario no ha votado antes, se crea un nuevo voto
+            User user = userRepository.searchEmail(userEmail);
+            if (user == null) {
+                throw new IllegalArgumentException("Usuario no encontrado");
+            }
+
+            Vote newVote = new Vote();
+            newVote.setUser(user);
+            newVote.setPublication(publication);
+            newVote.setState(true); // Indica que el usuario votó positivamente
+
+            // Actualizar el puntaje de la publicación sumando 1 al puntaje actual
+            int newScore = publication.getScore() + 1; // Sumar 1 al puntaje
+            publication.setScore(newScore);
+
+            // Guardar el nuevo voto en la base de datos
+            voteRepository.save(newVote);
+        }
+
+        // Guardar la publicación con el puntaje actualizado
+        publicationRepository.save(publication);
+
+        return existingVote; 
+    }
 
 
 }
