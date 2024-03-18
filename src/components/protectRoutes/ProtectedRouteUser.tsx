@@ -5,6 +5,7 @@ import { Outlet, useNavigate } from "react-router-dom";
 import { isAuthorizedType } from "./ProtectedRoutesTypes";
 import { user } from "../../data/userData";
 import { CircularProgress } from "@mui/material";
+import { getStoredToken } from "../../utils/getStoredToken";
 
 type UserDataType = {
 	userName: string,
@@ -22,18 +23,25 @@ function ProtectedRouteUser() {
 
 	useEffect(() => {
 		axiosController.current = new AbortController();
+		const storedToken = getStoredToken();
 
-		checkOpenSession(axiosController.current)
-			.then((userData: UserDataType) => {
-				user.name = userData.userName;
-				setUserRole(userData.userRole);
-				setIsAuthorized("authorized");
-			})
-			.catch(() => {
-				user.name = "";
-				setUserRole("visitor");
-				setIsAuthorized("notAuthorized");
-			});
+		if (storedToken) {
+			checkOpenSession(storedToken, axiosController.current)
+				.then((userData: UserDataType) => {
+					user.name = userData.userName;
+					setUserRole(userData.userRole);
+					setIsAuthorized("authorized");
+				})
+				.catch(() => {
+					user.name = "";
+					setUserRole("visitor");
+					setIsAuthorized("notAuthorized");
+				});
+		} else {
+			user.name = "";
+			setUserRole("visitor");
+			setIsAuthorized("notAuthorized");
+		}
 
 		if (isAuthorized === "notAuthorized") {
 			navigateTimer = window.setTimeout(() => {

@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { checkOpenSession } from "../../interfaces/checkOpenSession";
 import { UserRoleType } from "../../context/UserRoleContext";
 import { Navigate, Outlet } from "react-router-dom";
+import { getStoredToken } from "../../utils/getStoredToken";
 
 type UserDataType = {
 	userName: string,
@@ -13,19 +14,26 @@ function ProtectedRouteProducer() {
 
 	async function checkAuthorization() {
 		axiosController.current = new AbortController();
+		const storedToken = getStoredToken();
 
-		try {
-			const userData: UserDataType = await checkOpenSession(axiosController.current);
-
-			if (userData.userRole === "producer" || userData.userRole === "admin") {
-				return <Outlet />;
-			} else {
+		if (storedToken) {
+			try {
+				const userData: UserDataType = await checkOpenSession(storedToken, axiosController.current);
+	
+				if (userData.userRole === "PRODUCER" || userData.userRole === "ADMIN") {
+					return <Outlet />;
+				} else {
+					return (
+						<Navigate to="/login" replace />
+					);
+				}
+	
+			} catch {
 				return (
-					<Navigate to="/" replace />
+					<Navigate to="/login" replace />
 				);
 			}
-
-		} catch {
+		} else {
 			return (
 				<Navigate to="/login" replace />
 			);
