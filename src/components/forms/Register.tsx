@@ -7,13 +7,13 @@ import { useNavigate } from "react-router-dom";
 import RegisterOk from "./RegisterOk";
 import Loading from "../loading/Loading";
 import NetworkError from "../networkError/NetworkError";
+import RegisterKo from "./RegisterKo";
 
 
 type RegisterProps = {
 	handleSubmit: (formValues: RegisterFormValuesType) => void,
 	handleLoginClick: () => void,
 	registerState: RegisterStateType,
-	errorText: string
 }
 
 export default function Register({ handleSubmit, handleLoginClick, registerState }: RegisterProps) {
@@ -239,7 +239,9 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 
 				{registerState === "loading" && <Loading />}
 				{registerState === "logged" && <RegisterOk />}
-				{registerState === "error" && <NetworkError failedAction="hacer el registro"/>}
+				{registerState === "registerErrorEmailExists" && <RegisterKo errorText="El email introducido ya existe. Por favor, introduce otro." />}
+				{registerState === "registerErrorServerError" && <RegisterKo errorText="Error al procesar tu solicitud. Por favor, inténtalo más tarde." />}
+				{registerState === "networkError" && <NetworkError failedAction="hacer el registro"/>}
 
 			</div>
 		</>

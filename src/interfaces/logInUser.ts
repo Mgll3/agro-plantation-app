@@ -15,7 +15,11 @@ export async function logInUser ( formData: string, axiosController: AbortContro
 		return userData;
 	} catch (error) {
 		if ( axios.isAxiosError(error)) {
-			throw new Error(error.message);
+			if (error.response?.status === 401) {
+				throw new Error("401");
+			} else {
+				throw new Error(error.message);
+			}
 		}
 	}
 }

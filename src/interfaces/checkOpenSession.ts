@@ -8,7 +8,7 @@ export async function checkOpenSession ( token: string, axiosControler: AbortCon
 		const response = await axiosConfig.post("/v1/user/userSession", token, {
 			signal: axiosControler.signal,
 			headers: {
-				"Content-Type": "application/json",
+				"Authorization": `Bearer ${token}`,
 			}
 		});
 		const userData = response.data;

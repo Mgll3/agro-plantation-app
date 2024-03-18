@@ -15,7 +15,13 @@ export async function registerUser ( data: string, axiosController: AbortControl
 		return newUserToken;
 	} catch (error) {
 		if ( axios.isAxiosError(error)) {
-			throw new Error(error.message);
+			if (error.response?.status === 409) {
+				throw new Error("409");
+			} else if (error.response?.status === 501) {
+				throw new Error("501");
+			} else {
+				throw new Error(error.message);
+			}
 		}
 	}
 }

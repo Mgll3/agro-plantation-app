@@ -11,8 +11,8 @@ import { useUserRoleContext } from "../context/UserRoleContext";
 import { storeToken } from "../utils/storeToken";
 
 
-export type LoginStateType = "init" | "loading" | "error" | "logged";
-export type RegisterStateType = "init" | "loading" | "error" | "logged";
+export type LoginStateType = "init" | "loading" | "loginError" | "networkError" | "logged";
+export type RegisterStateType = "init" | "loading" | "registerErrorEmailExists" | "registerErrorServerError" | "networkError" | "logged";
 
 type LoginRegisterPageProps = {
 	focus: "login" | "register"
@@ -24,7 +24,6 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 	const [registerState, setRegisterState] = useState<RegisterStateType>("init");
 
 	const axiosController = useRef<AbortController>();
-	const errorMessage = useRef("");
 	const mainContainerElement = useRef(null);
 
 	const navigate = useNavigate();
@@ -51,8 +50,12 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 					setLoginState("logged");
 				}, 800);
 			})
-			.catch(() => {
-				setLoginState("error");
+			.catch((error: Error) => {
+				if (error.message === "401"){
+					setLoginState("loginError");
+				} else {
+					setLoginState("networkError");
+				}
 			});
 	}
 
@@ -75,10 +78,14 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 			.then(() => {
 				setRegisterState("logged");
 			})
-			.catch((err: Error) => {
-				console.log(err);
-				errorMessage.current = err.message;
-				setRegisterState("error");
+			.catch((error: Error) => {
+				if (error.message === "409"){
+					setRegisterState("registerErrorEmailExists");
+				} else if (error.message === "501") {
+					setRegisterState("registerErrorServerError");
+				} else {
+					setRegisterState("networkError");
+				}
 			});
 	};
 
@@ -96,22 +103,32 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 
 
 	useEffect(() => {
+		let loginNetworkErrorTimeout: number;
 
 		if (loginState === "logged") {
 			navigate("/");
 		}
 
+		if (loginState === "networkError") {
+			loginNetworkErrorTimeout = window.setTimeout( () => {
+				setLoginState("init");
+			}, 3500);
+		}
 
+		return () => {
+			clearTimeout(loginNetworkErrorTimeout);
+		};
 	}, [loginState]);
+
 
 	useEffect(() => {
 		let registerErrorTimeout: number;
 		let registeredTimeout: number;
 
-		if (registerState === "error") {
+		if (registerState === "networkError" || registerState === "registerErrorEmailExists" || registerState === "registerErrorServerError") {
 			registerErrorTimeout = window.setTimeout(() => {
 				setRegisterState("init");
-			}, 4000);
+			}, 3500);
 		}
 
 		if (registerState === "logged") {
@@ -126,6 +143,7 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 			clearTimeout(registeredTimeout);
 		};
 	}, [registerState]);
+
 
 	useEffect(() => {
 		axiosController.current = new AbortController();
@@ -148,14 +166,14 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 								</div>
 
 								<div className="w-screen ">
-									<Register handleSubmit={submitRegisterForm} handleLoginClick={changeForm} registerState={registerState} errorText={errorMessage.current} />
+									<Register handleSubmit={submitRegisterForm} handleLoginClick={changeForm} registerState={registerState} />
 								</div>
 							</>
 						)
 						: (
 							<>
 								<div className="w-screen">
-									<Register handleSubmit={submitRegisterForm} handleLoginClick={changeForm} registerState={registerState} errorText={errorMessage.current} />
+									<Register handleSubmit={submitRegisterForm} handleLoginClick={changeForm} registerState={registerState} />
 								</div>
 
 								<div className="w-screen">

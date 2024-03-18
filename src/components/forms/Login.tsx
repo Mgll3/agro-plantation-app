@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import *  as  Yup from "yup";
 import { LoginFormValuesType } from "./formsTypes.ts";
 import Loading from "../loading/Loading.tsx";
+import NetworkError from "../networkError/NetworkError.tsx";
 
 type LoginProps = {
 	handleSubmit: (formValues: LoginFormValuesType) => void,
@@ -87,7 +88,11 @@ export default function Login({ handleSubmit, handleRegisterClick, loginState }:
 						</div>
 
 						{
-							loginState === "error" && <p className=" text-red-500 p-2">Email / Clave Incorrectos</p>
+							loginState === "loginError" && <p className=" text-red-500 p-2">Email / Clave Incorrectos</p>
+						}
+
+						{
+							loginState === "networkError" && <NetworkError failedAction="realizar el login" />
 						}
 
 						{
