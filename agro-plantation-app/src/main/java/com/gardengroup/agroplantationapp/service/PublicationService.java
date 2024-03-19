@@ -277,7 +277,7 @@ public class PublicationService {
         // Guardar la publicación con el puntaje actualizado
         publicationRepository.save(publication);
 
-        return existingVote; 
+        return existingVote;
     }
 
 

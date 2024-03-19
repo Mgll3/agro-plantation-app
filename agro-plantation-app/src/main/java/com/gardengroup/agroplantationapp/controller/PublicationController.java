@@ -222,8 +222,7 @@ public class PublicationController {
             String email = securityService.getEmail(request);
             Vote vote = publicationService.toggleVote(publicationId, email);
             return ResponseEntity.status(HttpStatus.CREATED).body(vote);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
