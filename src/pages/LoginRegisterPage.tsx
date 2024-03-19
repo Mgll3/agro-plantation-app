@@ -148,6 +148,7 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 	useEffect(() => {
 		let registerErrorTimeout: number;
 		let registeredTimeout: number;
+		let registeredTimeout2: number;
 
 		if (registerState === "networkError" || registerState === "registerErrorEmailExists" || registerState === "registerErrorServerError") {
 			registerErrorTimeout = window.setTimeout(() => {
@@ -157,14 +158,18 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 
 		if (registerState === "logged") {
 			registeredTimeout = window.setTimeout( () => {
-				setRegisterState("init");
 				changeForm();
-			}, 3000);
+			}, 2500);
+
+			registeredTimeout2 = window.setTimeout( () => {
+				setRegisterState("init");
+			}, 3500);
 		}
 
 		return () => {
 			clearTimeout(registerErrorTimeout);
 			clearTimeout(registeredTimeout);
+			clearTimeout(registeredTimeout2);
 		};
 	}, [registerState]);
 

@@ -3,7 +3,7 @@ import { CircularProgress } from "@mui/material";
 function Loading() {
 	
 	return (
-		<div className="absolute flex justify-center items-center w-screen bg-screenDarkening h-screen">
+		<div className="fixed top-0 left-0 flex justify-center items-center w-screen bg-screenDarkening h-screen">
 			<div className="flex items-center flex-col bg-brandingLightYellow w-[30vw] h-[55vh] text-center text-black font-sans">
 
 				<h3 className="text-xl">ESPERANDO RESPUESTA

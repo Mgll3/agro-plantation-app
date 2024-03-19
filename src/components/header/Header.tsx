@@ -1,11 +1,11 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useUserRoleContext } from "../../context/UserRoleContext";
 import MainNav from "./MainNav";
 import SecondaryNav from "./SecondaryNav";
 import UserProfile from "./UserProfile";
 import { userProfileStateType } from "./headerTypes";
-import { logOutUser } from "../../interfaces/logOutUser";
 import { useNavigate } from "react-router-dom";
+import { eraseStoreToken } from "../../utils/eraseStoredToken";
 
 
 type HeaderProps = {
@@ -19,7 +19,7 @@ function Header({ bgImageTailwind, logoSrc, handleOpenMustLoginWarning }: Header
 	const { userRole, setUserRole } = useUserRoleContext();
 	const [userProfileState, setUserProfileState] = useState<userProfileStateType>("init");
 
-	const axiosController = useRef<AbortController>();
+	let logoutTimeout: number;
 
 	const navigate = useNavigate();
 
@@ -27,19 +27,17 @@ function Header({ bgImageTailwind, logoSrc, handleOpenMustLoginWarning }: Header
 	function handleLogoutClick() {
 		setUserProfileState("loading");
 
-		logOutUser(axiosController.current!)
-			.then(() => {
-				setUserRole("visitor");
-				setUserProfileState("logout");
-			})
-			.catch((err) => console.log(err));
+		logoutTimeout = window.setTimeout( () => {
+			eraseStoreToken();
+			setUserRole("visitor");
+			setUserProfileState("logout");
+		}, 1500);
 	}
 
 	useEffect(() => {
-		axiosController.current = new AbortController();
 
 		return () => {
-			axiosController.current?.abort();
+			clearTimeout(logoutTimeout);
 		};
 	}, []);
 
@@ -53,7 +51,7 @@ function Header({ bgImageTailwind, logoSrc, handleOpenMustLoginWarning }: Header
 
 	return (
 		<>
-			<header className="overflow-hidden w-full">
+			<header className="w-full">
 				<div className={`${bgImageTailwind} bg-cover bg-center bg-no-repeat relative flex justify-center items-center py-5`}>
 					<img src={logoSrc} alt="" className="w-1/12" />
 					<div className="absolute right-4 top-2">

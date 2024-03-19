@@ -9,7 +9,6 @@ import PublicationsPreviewList from "../components/publicationsList/Publications
 import MustLoginWarning from "../components/header/MustLoginWarning";
 import { UserDataType } from "./commonTypes";
 import { getStoredToken } from "../utils/getStoredToken";
-import { storeToken } from "../utils/storeToken";
 
 
 type LoadingStateType = "loading" | "loaded" | "error";
@@ -42,6 +41,7 @@ export default function Home() {
 	function handleCloseMustLoginWarning() {
 		setMustLoginWarningState("hidden");
 	}
+	
 
 	useEffect(() => {
 		axiosController.current = new AbortController();
@@ -51,8 +51,6 @@ export default function Home() {
 		if (storedToken) {
 			checkOpenSession(storedToken, axiosController.current)
 				.then((userData: UserDataType) => {
-					// storeToken(userData.accessToken);
-
 					user.name = `${userData.name} ${userData.lastname}`;
 					setUserRole(userData.userType);
 				})

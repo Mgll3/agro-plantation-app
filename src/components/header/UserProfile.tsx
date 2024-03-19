@@ -2,8 +2,8 @@ import { useRef } from "react";
 import { user } from "../../data/userData";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import { Link } from "react-router-dom";
-import { CircularProgress } from "@mui/material";
 import { userProfileStateType } from "./headerTypes";
+import Loading from "../loading/Loading";
 
 type UserProfileProps = {
 	userProfileState: userProfileStateType,
@@ -39,7 +39,7 @@ function UserProfile({ userProfileState, handleLogoutClick }: UserProfileProps) 
 			</div>
 
 			<nav aria-label="Navegación Secundaria" ref={userProfile}
-				className="opacity-0 duration-300 w-3/4 m-auto mt-4 bg-brandingLightYellow shadow-lg rounded-lg text-brandingDarkGreen overflow-hidden"
+				className="opacity-0 duration-300 w-3/4 m-auto mt-4 bg-brandingLightYellow shadow-lg rounded-lg text-brandingDarkGreen z-10 overflow-hidden"
 			>
 				<p className="text-2xl text-center py-3">
 					Mi Perfil
@@ -60,7 +60,7 @@ function UserProfile({ userProfileState, handleLogoutClick }: UserProfileProps) 
 				</p>
 
 				{
-					userProfileState === "loading" && <CircularProgress color="success" />
+					userProfileState === "loading" && <Loading />
 				}
 			</nav>
 		</div>
