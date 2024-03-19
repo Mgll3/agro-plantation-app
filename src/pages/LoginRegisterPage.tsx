@@ -27,7 +27,6 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 	const mainContainerElement = useRef(null);
 
 	let changeFormTimeout: number;
-	let changeFormTimeout2: number;
 	let loggedTimeout: number;
 
 	const url = useLocation();
@@ -98,6 +97,7 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 	// Activa la animación de transición entre "Register" y "Login"
 	function changeForm() {
 		(mainContainerElement.current! as HTMLDivElement).classList.remove("duration-0");
+		(mainContainerElement.current! as HTMLDivElement).classList.add("duration-1000");
 
 		if ((mainContainerElement.current! as HTMLDivElement).classList.contains("-left-full")) {
 			(mainContainerElement.current! as HTMLDivElement).classList.remove("-left-full");
@@ -117,6 +117,7 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 	}
 
 	useLayoutEffect( () => {
+		(mainContainerElement.current! as HTMLDivElement).classList.remove("duration-1000");
 		(mainContainerElement.current! as HTMLDivElement).classList.add("duration-0");
 		(mainContainerElement.current! as HTMLDivElement).classList.remove("-left-full");
 		(mainContainerElement.current! as HTMLDivElement).classList.add("left-0");
@@ -173,7 +174,7 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 
 		return () => {
 			if (axiosController.current) axiosController.current.abort();
-			// clearTimeout(changeFormTimeout);
+			clearTimeout(changeFormTimeout);
 		};
 	}, []);
 
