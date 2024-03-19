@@ -1,5 +1,5 @@
-import { useNavigate } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { logInUser } from "../interfaces/logInUser";
 import { user } from "../data/userData";
 import Login from "../components/forms/Login";
@@ -26,6 +26,12 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 	const axiosController = useRef<AbortController>();
 	const mainContainerElement = useRef(null);
 
+	let changeFormTimeout: number;
+	let changeFormTimeout2: number;
+	let loggedTimeout: number;
+
+	const url = useLocation();
+
 	const navigate = useNavigate();
 
 	function submitLoginForm(formValues: LoginFormValuesType) {
@@ -46,7 +52,7 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 				user.name = `${UserDataResponse.name} ${UserDataResponse.lastname}`;
 				setUserRole(UserDataResponse.userType);
 				
-				setTimeout( () => {
+				loggedTimeout = window.setTimeout( () => {
 					setLoginState("logged");
 				}, 800);
 			})
@@ -91,6 +97,8 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 
 	// Activa la animación de transición entre "Register" y "Login"
 	function changeForm() {
+		(mainContainerElement.current! as HTMLDivElement).classList.remove("duration-0");
+
 		if ((mainContainerElement.current! as HTMLDivElement).classList.contains("-left-full")) {
 			(mainContainerElement.current! as HTMLDivElement).classList.remove("-left-full");
 			(mainContainerElement.current! as HTMLDivElement).classList.add("left-0");
@@ -99,7 +107,20 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 			(mainContainerElement.current! as HTMLDivElement).classList.remove("left-0");
 		}
 
+		changeFormTimeout = window.setTimeout( () => {
+			if (url.pathname === "/login") {
+				navigate("/register");
+			} else {
+				navigate("/login");
+			}
+		}, 1001);
 	}
+
+	useLayoutEffect( () => {
+		(mainContainerElement.current! as HTMLDivElement).classList.add("duration-0");
+		(mainContainerElement.current! as HTMLDivElement).classList.remove("-left-full");
+		(mainContainerElement.current! as HTMLDivElement).classList.add("left-0");
+	});
 
 
 	useEffect(() => {
@@ -117,6 +138,8 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 
 		return () => {
 			clearTimeout(loginNetworkErrorTimeout);
+			// clearTimeout(changeFormTimeout);
+			clearTimeout(loggedTimeout);
 		};
 	}, [loginState]);
 
@@ -150,6 +173,7 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 
 		return () => {
 			if (axiosController.current) axiosController.current.abort();
+			// clearTimeout(changeFormTimeout);
 		};
 	}, []);
 

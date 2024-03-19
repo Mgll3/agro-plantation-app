@@ -51,9 +51,9 @@ export default function Home() {
 		if (storedToken) {
 			checkOpenSession(storedToken, axiosController.current)
 				.then((userData: UserDataType) => {
-					storeToken(userData.accessToken);
+					// storeToken(userData.accessToken);
 
-					user.name = userData.name;
+					user.name = `${userData.name} ${userData.lastname}`;
 					setUserRole(userData.userType);
 				})
 				.catch(() => {
