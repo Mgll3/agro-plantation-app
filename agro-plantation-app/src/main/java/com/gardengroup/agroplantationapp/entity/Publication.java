@@ -13,7 +13,7 @@ import com.gardengroup.agroplantationapp.dto.PublicationUpdDTO;
 
 @Entity
 @Data
-public class Publication implements Approvable {
+public class Publication  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -75,14 +75,6 @@ public class Publication implements Approvable {
     }
 
 
-    @Override
-    public void approve(Long entityId){
 
-    }
-
-    @Override
-    public void reject(Long entityId){
-
-    }
     
 }

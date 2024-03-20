@@ -19,7 +19,7 @@ import java.util.List;
 
 
 @Service
-public class AdminService {
+public class AdminService implements Approvable{
     @Autowired
     private ProducerRequestRepository producerRequestRepository;
     @Autowired
@@ -36,19 +36,16 @@ public class AdminService {
     }
 
     @Transactional
-    public void approve(Long producerRequestId) throws OurException {
+    public void approve(Long producerRequestId) {
         // Obtener la solicitud del productor por ID
         ProducerRequest producerRequest = producerRequestRepository.findById(producerRequestId)
-                .orElseThrow(() -> new OurException("Solicitud del productor no encontrada"));
+                .orElseThrow(() -> new RuntimeException("Solicitud del productor no encontrada"));
 
         // Verificar si la solicitud está en estado "PENDING"
         if ("PENDING".equals(producerRequest.getStaterequest().getState())) {
             // Obtener el estado "ACCEPTED" directamente
             StateRequest acceptedState = stateRequestRepository.findByState("ACCEPTED")
-                    .orElseThrow(() -> new OurException("Estado 'ACCEPTED' no encontrado en la base de datos"));
-            //La expresión .orElseThrow(() -> ...) es una variante del método orElse en Java que permite lanzar una excepción personalizada
-            // si el valor dentro del Optional no está presente. Básicamente, se utiliza para obtener el valor del Optional si está presente o
-            // lanzar una excepción si el Optional está vacío.
+                    .orElseThrow(() -> new RuntimeException("Estado 'ACCEPTED' no encontrado en la base de datos"));
 
             // Actualizar el estado de la solicitud a "ACCEPTED"
             producerRequest.setStaterequest(acceptedState);
@@ -57,7 +54,7 @@ public class AdminService {
 
             // Obtener el objeto UserType correspondiente al tipo "productor"
             UserType productorUserType = userTypeRepository.findByType("PRODUCER")
-                    .orElseThrow(() -> new OurException("Tipo de usuario 'productor' no encontrado en la base de datos"));
+                    .orElseThrow(() -> new RuntimeException("Tipo de usuario 'productor' no encontrado en la base de datos"));
 
             // Cambiar el tipo de usuario a "productor"
             user.setUserType(productorUserType);
@@ -67,18 +64,19 @@ public class AdminService {
             userRepository.save(user);
 
         } else {
-            throw new OurException("La solicitud no está en estado 'PENDING'");
+            throw new RuntimeException("La solicitud no está en estado 'PENDING'");
         }
     }
 
 
 
 
+
     @Transactional
-    public void reject(Long producerRequestId) throws OurException {
+    public void reject(Long producerRequestId) {
         // Obtener la solicitud del productor por ID
         ProducerRequest producerRequest = producerRequestRepository.findById(producerRequestId)
-                .orElseThrow(() -> new OurException("Solicitud del productor no encontrada"));
+                .orElseThrow(() -> new RuntimeException("Solicitud del productor no encontrada"));
 
         // Verificar si la solicitud está en estado "PENDING"
         if ("PENDING".equals(producerRequest.getStaterequest().getState())) {
@@ -93,13 +91,14 @@ public class AdminService {
                 // Guardar los cambios en la base de datos
                 producerRequestRepository.save(producerRequest);
             } else {
-                throw new OurException("Estado 'DECLINED' no encontrado en la base de datos");
+                throw new RuntimeException("Estado 'DECLINED' no encontrado en la base de datos");
             }
 
         } else {
             throw new IllegalStateException("La solicitud no está en estado 'PENDING'");
         }
     }
+
 
 
 }

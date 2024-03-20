@@ -23,7 +23,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-public class PublicationService {
+public class PublicationService implements Approvable {
 
     @Autowired
     private PublicationRepository publicationRepository;

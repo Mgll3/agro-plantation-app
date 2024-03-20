@@ -66,7 +66,7 @@ public class AdminController {
         try {
             adminService.approve(producerRequestId);
             return ResponseEntity.ok("La solicitud del productor ha sido aprobada con éxito.");
-        } catch (OurException e) {
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error al aprobar la solicitud del productor: " + e.getMessage());
         }
     }
@@ -86,7 +86,7 @@ public class AdminController {
         try {
             adminService.reject(producerRequestId);
             return ResponseEntity.ok("La solicitud del productor ha sido rechazada con éxito.");
-        } catch (OurException e) {
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error al rechazar la solicitud del productor: " + e.getMessage());
         }
     }
