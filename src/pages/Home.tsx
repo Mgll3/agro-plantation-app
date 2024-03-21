@@ -13,6 +13,8 @@ import Footer from "../components/footer/Footer";
 import PlantInBanner from "../components/homeElements/PlantInBanner";
 import CallToAction from "../components/homeElements/CallToAction";
 import SocialNetworks from "../components/homeElements/SocialNetworks";
+import { storeName } from "../utils/storeName";
+import { getStoredName } from "../utils/getStoredName";
 
 
 type LoadingStateType = "loading" | "loaded" | "error";
@@ -48,6 +50,20 @@ export default function Home() {
 	
 
 
+	useLayoutEffect( () => {
+		const userName = getStoredName();
+		const token = getStoredToken();
+
+		if (userName) {
+			user.name = userName;
+		}
+
+		if (token) {
+			setUserRole("USER");
+		}
+	});
+
+
 	useEffect(() => {
 		axiosController.current = new AbortController();
 
@@ -56,6 +72,7 @@ export default function Home() {
 		if (storedToken) {
 			checkOpenSession(storedToken, axiosController.current)
 				.then((userData: UserDataType) => {
+					storeName(`${userData.name} ${userData.lastname}`);
 					user.name = `${userData.name} ${userData.lastname}`;
 					setUserRole(userData.userType);
 				})
