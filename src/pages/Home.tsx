@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react"; {/*useState*/ }
+import { useEffect, useLayoutEffect, useRef, useState } from "react"; {/*useState*/ }
 import Header from "../components/header/Header";
 import { user } from "../data/userData";
 import { useUserRoleContext } from "../context/UserRoleContext";
@@ -12,6 +12,7 @@ import { getStoredToken } from "../utils/getStoredToken";
 import Footer from "../components/footer/Footer";
 import PlantInBanner from "../components/homeElements/PlantInBanner";
 import CallToAction from "../components/homeElements/CallToAction";
+import SocialNetworks from "../components/homeElements/SocialNetworks";
 
 
 type LoadingStateType = "loading" | "loaded" | "error";
@@ -45,6 +46,7 @@ export default function Home() {
 		setMustLoginWarningState("hidden");
 	}
 	
+
 
 	useEffect(() => {
 		axiosController.current = new AbortController();
@@ -124,7 +126,7 @@ export default function Home() {
 
 				{
 					publicationsState === "error" && (
-						<div className="px-[10vw] font-sans text-center">
+						<div className="px-[10vw] py-20 font-sans text-center text-2xl">
 							<p className="">No se han podido cargar las publicaciones.</p>
 							<p className="">Por favor, compruebe su conexión y refresque la página.</p>
 						</div>
@@ -177,8 +179,8 @@ export default function Home() {
 					}
 				</div> */}
 
-				<div className="px-[10vw]">
-
+				<div className="px-[10vw] mt-20 mb-0">
+					<SocialNetworks />
 				</div>
 
 			</main>

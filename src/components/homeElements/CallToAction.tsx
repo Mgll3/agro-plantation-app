@@ -9,7 +9,7 @@ function CallToAction() {
 
 	return (
 		<div className="flex items-center w-full px-[10vw] bg-brandingLightGreen">
-			<p className="font-niramit text-[32px]">Lo pensaste? Dale registrate a 
+			<p className="font-niramit text-[32px] text-semiTansparentBlack">Lo pensaste? Dale registrate a 
 				<span className="font-loginFont"> PLANT-IN </span>
 				y comparti tu huerta, tus cosechas tus logros . Solo tenes que completar el formulario y sos parte de esta familia!!!!
 			</p>
