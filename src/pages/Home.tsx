@@ -13,8 +13,9 @@ import Footer from "../components/footer/Footer";
 import PlantInBanner from "../components/homeElements/PlantInBanner";
 import CallToAction from "../components/homeElements/CallToAction";
 import SocialNetworks from "../components/homeElements/SocialNetworks";
-import { storeName } from "../utils/storeName";
 import { getStoredName } from "../utils/getStoredName";
+import { storeName } from "../utils/storeName";
+
 
 
 type LoadingStateType = "loading" | "loaded" | "error";
