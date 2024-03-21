@@ -39,7 +39,7 @@ function UserProfile({ userProfileState, handleLogoutClick }: UserProfileProps) 
 			</div>
 
 			<nav aria-label="Navegación Secundaria" ref={userProfile}
-				className="opacity-0 duration-300 w-3/4 m-auto mt-4 bg-brandingLightYellow shadow-lg rounded-lg text-brandingDarkGreen z-10 overflow-hidden"
+				className="min-w-[15vw] opacity-0 duration-300 w-3/4 m-auto mt-4 bg-brandingLightYellow shadow-lg rounded-lg text-brandingDarkGreen z-10 overflow-hidden"
 			>
 				<p className="text-2xl text-center py-3">
 					Mi Perfil

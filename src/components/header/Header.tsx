@@ -5,7 +5,7 @@ import SecondaryNav from "./SecondaryNav";
 import UserProfile from "./UserProfile";
 import { userProfileStateType } from "./headerTypes";
 import { useNavigate } from "react-router-dom";
-import { eraseStoreToken } from "../../utils/eraseStoredToken";
+import { eraseStoredToken } from "../../utils/eraseStoredToken";
 
 
 type HeaderProps = {
@@ -28,7 +28,7 @@ function Header({ bgImageTailwind, logoSrc, handleOpenMustLoginWarning }: Header
 		setUserProfileState("loading");
 
 		logoutTimeout = window.setTimeout( () => {
-			eraseStoreToken();
+			eraseStoredToken();
 			setUserRole("visitor");
 			setUserProfileState("logout");
 		}, 1500);

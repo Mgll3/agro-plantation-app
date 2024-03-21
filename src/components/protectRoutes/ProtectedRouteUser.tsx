@@ -6,6 +6,7 @@ import { isAuthorizedType } from "./ProtectedRoutesTypes";
 import { user } from "../../data/userData";
 import { CircularProgress } from "@mui/material";
 import { getStoredToken } from "../../utils/getStoredToken";
+import { eraseStoredToken } from "../../utils/eraseStoredToken";
 
 type UserDataType = {
 	userName: string,
@@ -34,6 +35,7 @@ function ProtectedRouteUser() {
 				})
 				.catch(() => {
 					user.name = "";
+					eraseStoredToken();
 					setUserRole("visitor");
 					setIsAuthorized("notAuthorized");
 				});
@@ -45,7 +47,7 @@ function ProtectedRouteUser() {
 
 		if (isAuthorized === "notAuthorized") {
 			navigateTimer = window.setTimeout(() => {
-				navigate("/");
+				navigate("/login", {replace: true});
 			}, 500);
 		}
 
