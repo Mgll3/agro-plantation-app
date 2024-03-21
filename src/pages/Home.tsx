@@ -9,6 +9,12 @@ import PublicationsPreviewList from "../components/publicationsList/Publications
 import MustLoginWarning from "../components/header/MustLoginWarning";
 import { UserDataType } from "./commonTypes";
 import { getStoredToken } from "../utils/getStoredToken";
+import Footer from "../components/footer/Footer";
+import PlantInBanner from "../components/homeElements/PlantInBanner";
+import CallToAction from "../components/homeElements/CallToAction";
+import SocialNetworks from "../components/homeElements/SocialNetworks";
+import { storeName } from "../utils/storeName";
+import { getStoredName } from "../utils/getStoredName";
 
 
 type LoadingStateType = "loading" | "loaded" | "error";
@@ -21,7 +27,7 @@ type MustLoginWarningStateType = "visible" | "hidden";
 // }
 
 export default function Home() {
-	const { setUserRole } = useUserRoleContext();
+	const { userRole, setUserRole } = useUserRoleContext();
 	const [mustLoginWarningState, setMustLoginWarningState] = useState<MustLoginWarningStateType>("hidden");
 	const [publicationsState, setPublicationsState] = useState<LoadingStateType>("loading");
 	// const [dashboardState, setDashboardState] = useState<LoadingStateType>("loading");
@@ -43,6 +49,21 @@ export default function Home() {
 	}
 	
 
+
+	useLayoutEffect( () => {
+		const userName = getStoredName();
+		const token = getStoredToken();
+
+		if (userName) {
+			user.name = userName;
+		}
+
+		if (token) {
+			setUserRole("USER");
+		}
+	});
+
+
 	useEffect(() => {
 		axiosController.current = new AbortController();
 
@@ -51,6 +72,7 @@ export default function Home() {
 		if (storedToken) {
 			checkOpenSession(storedToken, axiosController.current)
 				.then((userData: UserDataType) => {
+					storeName(`${userData.name} ${userData.lastname}`);
 					user.name = `${userData.name} ${userData.lastname}`;
 					setUserRole(userData.userType);
 				})
@@ -97,10 +119,23 @@ export default function Home() {
 			}
 
 
-			<main>
+			<main className="w-full py-8">
+
+				<div className="px-[10vw]">
+					<PlantInBanner />
+				</div>
+		
+				{
+					userRole === "visitor" && (
+						<div className="py-12">
+							<CallToAction />
+						</div>
+					)
+				}
+
 				{
 					publicationsState === "loading" && (
-						<div className="">
+						<div className="px-[10vw] text-center">
 							<img alt="Cargando..." src="icons/loading.gif" className="" />
 						</div>
 					)
@@ -108,7 +143,7 @@ export default function Home() {
 
 				{
 					publicationsState === "error" && (
-						<div className="">
+						<div className="px-[10vw] py-20 font-sans text-center text-2xl">
 							<p className="">No se han podido cargar las publicaciones.</p>
 							<p className="">Por favor, compruebe su conexión y refresque la página.</p>
 						</div>
@@ -117,11 +152,12 @@ export default function Home() {
 
 				{
 					publicationsState === "loaded" && (
-						<div className="">
+						<div className="px-[10vw]">
 							<PublicationsPreviewList bestPublicationsArray={bestPublicationsArray.current} />
 						</div>
 					)
 				}
+
 
 				{/* <div className={styles.dashboardContainer}>
 					{
@@ -160,7 +196,13 @@ export default function Home() {
 					}
 				</div> */}
 
+				<div className="px-[10vw] mt-20 mb-0">
+					<SocialNetworks />
+				</div>
+
 			</main>
+
+			<Footer />
 		</>
 	);
 }
