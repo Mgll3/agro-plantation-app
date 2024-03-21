@@ -6,7 +6,7 @@ import { RegisterStateType } from "../../pages/LoginRegisterPage";
 import { useNavigate } from "react-router-dom";
 import RegisterOk from "./RegisterOk";
 import Loading from "../loading/Loading";
-import NetworkError from "../networkError/NetworkError";
+import NetworkError  from "../networkError/NetworkError";
 import RegisterKo from "./RegisterKo";
 
 
