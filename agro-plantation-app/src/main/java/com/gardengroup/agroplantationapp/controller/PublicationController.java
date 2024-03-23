@@ -2,8 +2,8 @@ package com.gardengroup.agroplantationapp.controller;
 
 import java.util.List;
 
-import com.gardengroup.agroplantationapp.dto.PublicationSaveDTO;
-import com.gardengroup.agroplantationapp.dto.PublicationUpdDTO;
+import com.gardengroup.agroplantationapp.dto.publication.PublicationSaveDTO;
+import com.gardengroup.agroplantationapp.dto.publication.PublicationUpdDTO;
 import com.gardengroup.agroplantationapp.entity.Publication;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -67,7 +67,6 @@ public class PublicationController {
             return new ResponseEntity<>(HttpStatus.OK);
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
         }
     }

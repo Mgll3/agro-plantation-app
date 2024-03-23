@@ -31,7 +31,6 @@ public class User {
     @Column(length = 30 , nullable = false)
     private String lastname;
 
-
     @Column(length = 30, nullable = false)
     private String email;
 

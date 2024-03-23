@@ -7,8 +7,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.gardengroup.agroplantationapp.dto.PublicationSaveDTO;
-import com.gardengroup.agroplantationapp.dto.PublicationUpdDTO;
+import com.gardengroup.agroplantationapp.dto.publication.PublicationSaveDTO;
+import com.gardengroup.agroplantationapp.dto.publication.PublicationUpdDTO;
 import com.gardengroup.agroplantationapp.entity.Image;
 import com.gardengroup.agroplantationapp.entity.Publication;
 import com.gardengroup.agroplantationapp.entity.StateRequest;
@@ -54,28 +54,35 @@ public class PublicationService {
     @Transactional
     public void saveImages(MultipartFile mainFile, List<MultipartFile> files, Long publicationId) {
         String folder = "publications";
-        
-        //Montaje imagenes en Cloudinary
-        Map result = cloudinaryService.upload(mainFile, folder);
-        Image mainImage = new Image(result.get("public_id").toString(), 
-            result.get("secure_url").toString());
-
-        List<Image> images = new ArrayList<Image>();
-        for (MultipartFile file : files) {
-            //Posible montaje simultaneo de imagenes para mayor velocidad
-            result = cloudinaryService.upload(file, folder);
-            Image image = new Image(result.get("public_id").toString(), 
-                result.get("secure_url").toString());
-            images.add(image);
-        }
 
         //Busqueda de publicacion que vamos a modificar
         Publication publication = publicationRepository.findById(publicationId).orElseThrow(() -> new DataAccessException("Publication not found") {
         });
 
-        //Asignar imagenes a la publicacion
-        publication.setMainImage(mainImage);
-        publication.setImages(images);
+        //Revisar si hay imagen principal y luego guardarla
+        if (mainFile.getOriginalFilename() != ""){
+            Map result = cloudinaryService.upload(mainFile, folder);
+    
+            Image mainImage = new Image(result.get("public_id").toString(), 
+            result.get("secure_url").toString());
+            publication.setMainImage(mainImage);
+        } else{
+            throw new DataAccessException("Main image not found") {
+            };
+        }
+        List<Image> images = new ArrayList<Image>();
+        //Revisar si hay imagenes secundarias y luego guardarlas
+        if (files.get(0).getOriginalFilename() != "") {
+            for (MultipartFile file : files) {
+                //Posible montaje simultaneo de imagenes para mayor velocidad
+                Map resultC = cloudinaryService.upload(file, folder);
+                Image image = new Image(resultC.get("public_id").toString(), 
+                    resultC.get("secure_url").toString());
+                images.add(image);
+            }
+            publication.setImages(images);
+        } 
+        
         publicationRepository.save(publication);
     }
 

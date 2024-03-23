@@ -1,9 +1,9 @@
 package com.gardengroup.agroplantationapp.service;
 
 
-import com.gardengroup.agroplantationapp.dto.AthAnswerDTO;
-import com.gardengroup.agroplantationapp.dto.LoginDTO;
-import com.gardengroup.agroplantationapp.dto.RegisterDTO;
+import com.gardengroup.agroplantationapp.dto.user.AthAnswerDTO;
+import com.gardengroup.agroplantationapp.dto.user.LoginDTO;
+import com.gardengroup.agroplantationapp.dto.user.RegisterDTO;
 import com.gardengroup.agroplantationapp.entity.ProducerRequest;
 import com.gardengroup.agroplantationapp.entity.StateRequest;
 import com.gardengroup.agroplantationapp.entity.User;

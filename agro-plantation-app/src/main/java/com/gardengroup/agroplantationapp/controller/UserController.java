@@ -1,6 +1,6 @@
 package com.gardengroup.agroplantationapp.controller;
 
-import com.gardengroup.agroplantationapp.dto.AthAnswerDTO;
+import com.gardengroup.agroplantationapp.dto.user.AthAnswerDTO;
 import com.gardengroup.agroplantationapp.exceptions.OurException;
 import com.gardengroup.agroplantationapp.service.SecurityService;
 import com.gardengroup.agroplantationapp.service.UserService;

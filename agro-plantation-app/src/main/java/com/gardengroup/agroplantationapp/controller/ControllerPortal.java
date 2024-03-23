@@ -1,8 +1,8 @@
 package com.gardengroup.agroplantationapp.controller;
 
-import com.gardengroup.agroplantationapp.dto.AthAnswerDTO;
-import com.gardengroup.agroplantationapp.dto.LoginDTO;
-import com.gardengroup.agroplantationapp.dto.RegisterDTO;
+import com.gardengroup.agroplantationapp.dto.user.AthAnswerDTO;
+import com.gardengroup.agroplantationapp.dto.user.LoginDTO;
+import com.gardengroup.agroplantationapp.dto.user.RegisterDTO;
 import com.gardengroup.agroplantationapp.exceptions.OurException;
 import com.gardengroup.agroplantationapp.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;

@@ -1,4 +1,4 @@
-package com.gardengroup.agroplantationapp.dto;
+package com.gardengroup.agroplantationapp.dto.publication;
 
 import com.gardengroup.agroplantationapp.entity.Plantation;
 
