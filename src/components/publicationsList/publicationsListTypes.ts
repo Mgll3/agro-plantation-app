@@ -1,7 +1,17 @@
+type AuthorType = {
+	name: string,
+	lastname: string
+}
+
+type MainImage = {
+	id: string,
+	url: string
+}
+
 export type PublicationPreviewType = {
 	id: number,
-	author: string,
-	mainImage: string,
+	author: AuthorType,
+	mainImage: MainImage,
 	title: string,
 	mainText: string
 }

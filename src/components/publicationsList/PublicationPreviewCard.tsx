@@ -46,13 +46,13 @@ function PublicationPreviewCard({ id, mainImage, title, author, mainText }: Publ
 			<div className="" ref={cardContainer} key={id} >
 
 				<div className="">
-					<img alt="Publication Main Image" src={mainImage} className="" />
+					<img alt="Publication Main Image" src={mainImage.url} className="" />
 				</div>
 
 				<div className="">
 					<h3 className="">{title}</h3>
-					<p className="">{author}</p>
-					<p className="">{generatePreviewText()} <span> (...)</span></p>
+					<p className="">{`${author.name} ${author.lastname}`}</p>
+					{/* <p className="">{generatePreviewText()} <span> (...)</span></p> */}
 				</div>
 			</div>
 		</Link>

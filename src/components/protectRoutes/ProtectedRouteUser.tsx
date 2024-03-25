@@ -35,7 +35,6 @@ function ProtectedRouteUser() {
 				})
 				.catch(() => {
 					user.name = "";
-					eraseStoredToken();
 					setUserRole("visitor");
 					setIsAuthorized("notAuthorized");
 				});
@@ -57,6 +56,8 @@ function ProtectedRouteUser() {
 		};
 	}, [isAuthorized]);
 
+
+	
 	return (
 		<>
 			{
