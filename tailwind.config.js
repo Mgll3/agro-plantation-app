@@ -7,7 +7,8 @@ export default {
 				loginFont: "Macondo",
 				plantInFont: "sans-serif",
 				sans: ["Sora", "sans-serif"],
-				niramit: ["Niramit", "sans-serif"]
+				niramit: ["Niramit", "sans-serif"],
+				montserrat: ["Montserrat", "sans-serif"]
 			},
 			colors: {
 				brandingYellow: "#F6C915",

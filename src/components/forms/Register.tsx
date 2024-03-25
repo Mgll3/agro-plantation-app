@@ -3,7 +3,7 @@ import *  as  Yup from "yup";
 import { RegisterFormValuesType } from "./formsTypes";
 import Button from "../button/Button";
 import { RegisterStateType } from "../../pages/LoginRegisterPage";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import RegisterOk from "./RegisterOk";
 import Loading from "../loading/Loading";
 import NetworkError from "../networkError/NetworkError";
@@ -105,13 +105,16 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 
 	return (
 		<>
-			<div className="relative w-[100vw] font-loginFont flex h-[100%] rounded-2xl text-[#eaefd4f2] bg-[#EAE3C0]">
+			<div className="relative w-[100vw] font-loginFont flex h-[100%] text-[#eaefd4f2] bg-[#EAE3C0]">
 
 				<aside className="w-[35vw] h-[100vh] relative">
 
 					<div className="bg-[url('@/images/inicio_y_registro.jpg')] w-[100%] h-[100%] bg-center bg-cover bg-no-repeat flex justify-end items-center font-sans">
 						<h2 className="bg-[#EAE3C0] text-black font-semibold text-2xl p-[1rem_4rem] rounded-2xl translate-x-[14px] translate-y-[30px]">Registro</h2>
-						<p className="absolute bottom-0 p-[4px_4px] m-[1rem] bg-[#94B447] text-[#1B7E25] text-center text-[15px] rounded-md">Todos los derechos reservados para Plant-In &copy; <small>Marzo 2024</small></p>
+						<Link to="/copyright" className="absolute bottom-0 p-[4px_4px] m-[1rem] bg-[#94B447] text-[#1B7E25] text-center text-[15px] rounded-md">
+							Todos los derechos reservados para Plant-In &copy;
+							<small>Marzo 2024</small>
+						</Link>
 					</div>
 
 				</aside>
