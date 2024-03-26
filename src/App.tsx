@@ -9,6 +9,11 @@ import Copyright from "./components/placeholders/Copyright";
 import HelpDesk from "./components/placeholders/HelpDesk";
 import Community from "./components/placeholders/Community";
 import AboutUs from "./components/placeholders/AboutUs";
+import ProtectedRouteAdmin from "./components/protectRoutes/ProtectedRouteAdmin";
+import AdminPublications from "./pages/admin/AdminPublications";
+import AdminUsers from "./pages/admin/AdminUsers";
+import AdminForum from "./pages/admin/AdminForum";
+
 
 
 function App() {
@@ -29,6 +34,12 @@ function App() {
 				<Route element={<ProtectedRouteUser />} >
 					<Route path="/publications" element={<PublicationsPage />} />
 					<Route path="/publications/:id" element={<PublicationsPage />} />
+				</Route>
+
+				<Route element={<ProtectedRouteAdmin />} >
+					<Route path="/admin_publications" element={<AdminPublications />} />
+					<Route path="/admin_users" element={<AdminUsers />} />
+					<Route path="/admin_forum" element={<AdminForum />} />
 				</Route>
 			</Routes >
 		</>

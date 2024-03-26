@@ -122,7 +122,7 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 				<div className=" max-h-[100vh] overflow-x-hidden ">
 					<div className="flex flex-col justify-center items-center gap-1 rounded-2xl text-2xl text-black font-sans mt-[2rem]">
 						<h1>Bienvenido a</h1>
-						<button onClick={() => navigate("/")}>
+						<button type="button" onClick={() => navigate("/")}>
 							<img src="images/LogoVerde.png" alt="logo" className=" w-[120px] h-[150px] mb-5" />
 						</button>
 						<h2>Por favor, completa el formulario</h2>

@@ -12,7 +12,7 @@ function PublicationsPreviewList({ bestPublicationsArray }: PublicationsPreviewL
 			{
 				bestPublicationsArray.map((element) => {
 					return (
-						<div className="" key={generateUniqueId()}>
+						<div className="flex flex-wrap" key={generateUniqueId()}>
 							<PublicationPreviewCard 
 								id={element.id}
 								author={element.author}
