@@ -1,3 +1,4 @@
+import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
 
 function AdminPublications() {
@@ -10,15 +11,14 @@ function AdminPublications() {
 			<div className="w-full" >
 				<Header bgImageTailwind={bgImageTailwind} logoSrc={logoSrc} />
 			</div>
-
-			<nav>
-				HERRAMIENTAS DE ADMINISTRADOR
-			</nav>
 			
 			<main>
 				PUBLICACIONES
 			</main>
 
+			<div className="">
+				<Footer />
+			</div>
 		</>
 	);
 }
