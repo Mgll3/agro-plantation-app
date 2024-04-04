@@ -5,7 +5,8 @@ import SecondaryNav from "./SecondaryNav";
 import UserProfile from "./UserProfile";
 import { userProfileStateType } from "./headerTypes";
 import { useNavigate } from "react-router-dom";
-import { eraseStoreToken } from "../../utils/eraseStoredToken";
+import { eraseStoredToken } from "../../utils/eraseStoredToken";
+import AdminNav from "./AdminNav";
 
 
 type HeaderProps = {
@@ -28,7 +29,7 @@ function Header({ bgImageTailwind, logoSrc, handleOpenMustLoginWarning }: Header
 		setUserProfileState("loading");
 
 		logoutTimeout = window.setTimeout( () => {
-			eraseStoreToken();
+			eraseStoredToken();
 			setUserRole("visitor");
 			setUserProfileState("logout");
 		}, 1500);
@@ -57,19 +58,24 @@ function Header({ bgImageTailwind, logoSrc, handleOpenMustLoginWarning }: Header
 					<div className="absolute right-4 top-2">
 
 						{
-							userRole === "visitor"
-								? <SecondaryNav />
-								: <UserProfile userProfileState={userProfileState} handleLogoutClick={handleLogoutClick} />
+							userRole === "ADMIN"
+								?	null 
+								: userRole === "visitor"
+									?	<SecondaryNav />
+									:	<UserProfile userProfileState={userProfileState} handleLogoutClick={handleLogoutClick} />
 						}
 
 					</div>
 				</div>
 
 				<div className="flex justify-center bg-brandingLightGreen py-4">
+
 					{
-						handleOpenMustLoginWarning
-							? <MainNav handleOpenMustLoginWarning={handleOpenMustLoginWarning} />
-							: <MainNav />
+						userRole === "ADMIN"
+							? <AdminNav />
+							: handleOpenMustLoginWarning
+								? <MainNav handleOpenMustLoginWarning={handleOpenMustLoginWarning} />
+								: <MainNav />
 					}
 
 				</div>

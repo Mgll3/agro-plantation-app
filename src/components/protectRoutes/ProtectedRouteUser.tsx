@@ -1,16 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { checkOpenSession } from "../../interfaces/checkOpenSession";
-import { UserRoleType, useUserRoleContext } from "../../context/UserRoleContext";
+import { useUserRoleContext } from "../../context/UserRoleContext";
 import { Outlet, useNavigate } from "react-router-dom";
-import { isAuthorizedType } from "./ProtectedRoutesTypes";
+import { UserDataType, isAuthorizedType } from "./ProtectedRoutesTypes";
 import { user } from "../../data/userData";
 import { CircularProgress } from "@mui/material";
 import { getStoredToken } from "../../utils/getStoredToken";
 
-type UserDataType = {
-	userName: string,
-	userRole: UserRoleType
-}
+
 
 function ProtectedRouteUser() {
 	const { setUserRole } = useUserRoleContext();
@@ -28,8 +25,8 @@ function ProtectedRouteUser() {
 		if (storedToken) {
 			checkOpenSession(storedToken, axiosController.current)
 				.then((userData: UserDataType) => {
-					user.name = userData.userName;
-					setUserRole(userData.userRole);
+					user.name = `${userData.name} ${userData.lastname}`;
+					setUserRole(userData.userType);
 					setIsAuthorized("authorized");
 				})
 				.catch(() => {
@@ -45,7 +42,7 @@ function ProtectedRouteUser() {
 
 		if (isAuthorized === "notAuthorized") {
 			navigateTimer = window.setTimeout(() => {
-				navigate("/");
+				navigate("/login", {replace: true});
 			}, 500);
 		}
 
@@ -53,8 +50,10 @@ function ProtectedRouteUser() {
 			axiosController.current?.abort();
 			clearTimeout(navigateTimer);
 		};
-	}, [isAuthorized]);
+	}, []);
 
+
+	
 	return (
 		<>
 			{

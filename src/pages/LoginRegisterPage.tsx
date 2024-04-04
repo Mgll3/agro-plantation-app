@@ -9,6 +9,7 @@ import { LoginFormValuesType, RegiserFormFieldsToSendType, RegisterFormValuesTyp
 import { UserDataType } from "./commonTypes";
 import { useUserRoleContext } from "../context/UserRoleContext";
 import { storeToken } from "../utils/storeToken";
+import { storeName } from "../utils/storeName";
 
 
 export type LoginStateType = "init" | "loading" | "loginError" | "networkError" | "logged";
@@ -47,7 +48,7 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 		logInUser(loginDataJson, axiosController.current!)
 			.then((UserDataResponse: UserDataType) => {
 				storeToken(UserDataResponse.accessToken);
-
+				storeName(`${UserDataResponse.name} ${UserDataResponse.lastname}`);
 				user.name = `${UserDataResponse.name} ${UserDataResponse.lastname}`;
 				setUserRole(UserDataResponse.userType);
 				
@@ -128,7 +129,7 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 		let loginNetworkErrorTimeout: number;
 
 		if (loginState === "logged") {
-			navigate("/");
+			navigate("/", {replace: true});
 		}
 
 		if (loginState === "networkError") {

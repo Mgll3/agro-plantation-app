@@ -7,6 +7,8 @@ export default {
 				loginFont: "Macondo",
 				plantInFont: "sans-serif",
 				sans: ["Sora", "sans-serif"],
+				niramit: ["Niramit", "sans-serif"],
+				montserrat: ["Montserrat", "sans-serif"]
 			},
 			colors: {
 				brandingYellow: "#F6C915",
@@ -14,7 +16,8 @@ export default {
 				brandingDarkGreen: "#1B7E25",
 				brandingLightGreen: "#94B447",
 				brandingLightBlue: "#B5B3B3",
-				screenDarkening: "#00000070"
+				screenDarkening: "#00000070",
+				semiTansparentBlack: "#000000cc"
 			},
 			spacing: {
 				"53": "13.25rem"
@@ -26,6 +29,9 @@ export default {
 			},
 			gridTemplateColumns: {
 				"form" : "repeat(auto-fit, minmax(300px, 1fr))"
+			},
+			dropShadow: {
+				"custom": "0 3px 3px rgba(0, 0, 0, 0.55)",
 			},
 		},
 	},

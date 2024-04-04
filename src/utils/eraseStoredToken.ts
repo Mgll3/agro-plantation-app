@@ -1,3 +1,3 @@
-export function eraseStoreToken () {
+export function eraseStoredToken () {
 	localStorage.setItem("userId", "");
 }
