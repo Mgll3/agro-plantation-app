@@ -8,6 +8,17 @@ type MainImage = {
 	url: string
 }
 
+type ImagesType = {
+	id: string,
+	url: string
+}
+
+type AuthorizationStatusType = {
+	id: number,
+	state: string
+}
+
+
 export type PublicationPreviewType = {
 	id: number,
 	author: AuthorType,
@@ -30,14 +41,13 @@ type PublicationCommentType = {
 export type PublicationType = {
 	id: number,
 	title: string,
-	author: string,
-	publicationDate: string,
-	mainImage: string,
+	author: AuthorType,
+	publicationDate: Date,
+	visibility: boolean,
+	mainImage: MainImage,
+	images: ImagesType,
 	comments: PublicationCommentType,
 	score: number,
+	authorizationStatus: AuthorizationStatusType,
 	mainText: string
-}
-
-export type PublicationsListType = {
-	bestPublicationsArray: PublicationType[] 
 }
