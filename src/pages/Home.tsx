@@ -15,7 +15,6 @@ import CallToAction from "../components/homeElements/CallToAction";
 import SocialNetworks from "../components/homeElements/SocialNetworks";
 import { getStoredName } from "../utils/getStoredName";
 import { storeName } from "../utils/storeName";
-import AdminPublications from "./admin/AdminPublications";
 
 
 
@@ -205,8 +204,6 @@ export default function Home() {
 			</main>
 
 			<Footer />
-
-			<AdminPublications />
 		</>
 	);
 }
