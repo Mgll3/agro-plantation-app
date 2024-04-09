@@ -122,18 +122,10 @@ export default function Home() {
 
 			<main className="w-full py-8">
 
-				<div className="px-[10vw]">
+				<div className="px-[10vw] pt-[3vh]">
 					<PlantInBanner />
 				</div>
 		
-				{
-					userRole === "visitor" && (
-						<div className="py-12">
-							<CallToAction />
-						</div>
-					)
-				}
-
 				{
 					publicationsState === "loading" && (
 						<div className="px-[10vw] text-center">
@@ -153,8 +145,16 @@ export default function Home() {
 
 				{
 					publicationsState === "loaded" && (
-						<div className="w-full px-[10vw]">
+						<div className="w-full px-[10vw] py-[10vh]">
 							<PublicationsPreviewList bestPublicationsArray={bestPublicationsArray.current} />
+						</div>
+					)
+				}
+
+				{
+					userRole === "visitor" && (
+						<div className="py-12">
+							<CallToAction />
 						</div>
 					)
 				}
