@@ -61,35 +61,36 @@ export default function Login({ handleSubmit, handleRegisterClick, loginState }:
 						</div>
 
 						<div className="flex flex-col justify-center items-center p-[1rem_0]">
-							<label htmlFor="email">
+							<div className="relative">
 								<Field 
 									type="email"
 									id="loginEmail"
 									name="email"
 									placeholder="Correo Electrónico"
-									className="bg-[transparent] outline-none  border-b-[1px] border-b-[#00000038] mb-[5rem] p-[0_12px] w-[300px] text-black"
+									className="bg-[transparent] outline-none  border-b-[1px] border-b-[#00000038] mb-[0rem] p-[0_12px] w-[300px] text-black"
 								>
 								</Field>
-							</label>
-							<ErrorMessage name="email" >
-								{errorMsg => <p className=" text-xs text-red-700 mt-2">{errorMsg}</p>}
-							</ErrorMessage>
+
+								<ErrorMessage name="email" >
+									{errorMsg => <p className="absolute text-xs text-red-700 mt-2">{errorMsg}</p>}
+								</ErrorMessage>
+							</div>
 
 
-							<label htmlFor="password">
+							<div className="relative">
 								<Field
 									type="password"
 									id="loginPassword"
 									name="password"
 									placeholder="Contraseña"
-									className="bg-[transparent] outline-none  border-b-[1px] border-b-[#00000038] p-[0_12px] w-[300px] text-black"
+									className="bg-[transparent] outline-none  border-b-[1px] border-b-[#00000038] mt-[5rem] p-[0_12px] w-[300px] text-black"
 								>
 								</Field>
-							</label>
-							<ErrorMessage name="password" >
-								{errorMsg => <p className=" text-xs text-red-700 mt-2">{errorMsg}</p>}
-							</ErrorMessage>
-
+								
+								<ErrorMessage name="password" >
+									{errorMsg => <p className="absolute text-xs text-red-700 mt-2">{errorMsg}</p>}
+								</ErrorMessage>
+							</div>
 						</div>
 
 						{

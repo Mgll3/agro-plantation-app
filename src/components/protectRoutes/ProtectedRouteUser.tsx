@@ -40,6 +40,12 @@ function ProtectedRouteUser() {
 			setIsAuthorized("notAuthorized");
 		}
 
+		return () => {
+			axiosController.current?.abort();
+		};
+	}, []);
+
+	useEffect( () => {
 		if (isAuthorized === "notAuthorized") {
 			navigateTimer = window.setTimeout(() => {
 				navigate("/login", {replace: true});
@@ -47,12 +53,9 @@ function ProtectedRouteUser() {
 		}
 
 		return () => {
-			axiosController.current?.abort();
 			clearTimeout(navigateTimer);
 		};
-	}, []);
-
-
+	});
 	
 	return (
 		<>

@@ -152,92 +152,92 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 
 
 								<div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start text-base text-left font-light width-[100%]">
-									<div className="">
+									<div className="relative mb-4">
 										<label htmlFor="userName">
 											<Field type="text" id="userName" name="userName" placeholder="Nombre" className="bg-[#00000011] outline-none  border-b-[2px] rounded-md border-b-[#00000052] p-[8px_8px_4px] w-full placeholder-[#666]" />
 										</label>
 										<ErrorMessage name="userName" >
-											{errorMsg => <p className=" text-xs text-red-600 mt-2">{errorMsg}</p>}
+											{errorMsg => <p className="absolute text-xs text-red-600 ml-4">{errorMsg}</p>}
 										</ErrorMessage>
 									</div>
 
 
 
 
-									<div className="">
+									<div className="relative mb-4">
 										<label htmlFor="userLastName">
 											<Field type="text" id="userLastName" name="userLastName" placeholder="Apellidos" className="bg-[#00000011] outline-none  border-b-[2px] rounded-md border-b-[#00000052] w-full placeholder-[#666] p-[8px_8px_4px]" />
 										</label>
 										<ErrorMessage name="userLastName" >
-											{errorMsg => <p className=" text-xs text-red-700 mt-2">{errorMsg}</p>}
+											{errorMsg => <p className="absolute text-xs text-red-700 ml-4">{errorMsg}</p>}
 										</ErrorMessage>
 									</div>
 
 
 
-									<div className=" md:col-span-2">
+									<div className="relative mb-4 md:col-span-2">
 										<label htmlFor="userEmail">
 											<Field type="email" id="userEmail" name="userEmail" placeholder="Correo Electrónico" className="bg-[#00000011] outline-none  border-b-[2px] rounded-md border-b-[#00000052] p-[8px_8px_4px] w-full placeholder-[#666]" />
 										</label>
 										<ErrorMessage name="userEmail" >
-											{errorMsg => <p className=" text-xs text-red-700 mt-2">{errorMsg}</p>}
+											{errorMsg => <p className="absolute text-xs text-red-700 ml-4">{errorMsg}</p>}
 										</ErrorMessage>
 
 									</div>
 
 
 
-									{/* <div className="">
+									{/* <div className="relative mb-4">
 										<label htmlFor="userAddressStreet">
 											<Field type="text" id="userAddressStreet" name="userAddressStreet" placeholder="Dirección" className="bg-[#00000011] outline-none  border-b-[2px] rounded-sm border-b-[#00000038] p-[0_12px] w-[300px]" />
 										</label>
 										<ErrorMessage name="userAddressStreet" >
-											{errorMsg => <p className=" text-xs text-red-700 mt-2">{errorMsg}</p>}
+											{errorMsg => <p className="absolute text-xs text-red-700 ml-4">{errorMsg}</p>}
 										</ErrorMessage>
 									</div> */}
 
 
 
-									<div className="">
+									<div className="relative mb-4">
 										<label htmlFor="userAddressCity">
 											<Field type="text" id="userAddressCity" name="userAddressCity" placeholder="Ciudad" 
 												className="bg-[#00000011] outline-none  border-b-[2px] rounded-md border-b-[#00000052] p-[8px_8px_4px] w-full placeholder-[#666]" />
 										</label>
 										<ErrorMessage name="userAddressCity" >
-											{errorMsg => <p className=" text-xs text-red-700 mt-2">{errorMsg}</p>}
+											{errorMsg => <p className="absolute text-xs text-red-700 ml-4">{errorMsg}</p>}
 										</ErrorMessage>
 									</div>
 
 
 
-									<div className="">
+									<div className="relative mb-4">
 										<label htmlFor="userAddressProvince">
 											<Field type="text" id="userAddressProvince" name="userAddressProvince" placeholder="Provincia" className="bg-[#00000011] outline-none  border-b-[2px] rounded-md border-b-[#00000052] p-[8px_8px_4px] w-full placeholder-[#666]" />
 										</label>
 										<ErrorMessage name="userAddressProvince" >
-											{errorMsg => <p className=" text-xs text-red-700 mt-2">{errorMsg}</p>}
+											{errorMsg => <p className="absolute text-xs text-red-700 ml-4">{errorMsg}</p>}
 										</ErrorMessage>
 									</div>
 
 
 
-									<div className="">
+									<div className="relative mb-4">
 										<label htmlFor="userPassword">
 											<Field type="password" id="userPassword" name="userPassword" placeholder="Contraseña" className="bg-[#00000011] outline-none  border-b-[2px] rounded-md border-b-[#00000052] p-[8px_8px_4px] w-full placeholder-[#666]" />
 										</label>
 										<ErrorMessage name="userPassword" >
-											{errorMsg => <p className=" text-xs text-red-700 mt-2">{errorMsg}</p>}
+											{errorMsg => <p className="absolute text-xs text-red-700 ml-4">{errorMsg}</p>}
 										</ErrorMessage>
 									</div>
 
 
 
-									<div className="">
+									<div className="relative mb-4">
 										<label htmlFor="userPasswordConfirm">
 											<Field type="password" id="userPasswordConfirm" name="userPasswordConfirm" placeholder="Confirmar contraseña" className="bg-[#00000011] outline-none  border-b-[2px] rounded-md border-b-[#00000052] p-[8px_8px_4px] w-full placeholder-[#666]" />
 										</label>
 										<ErrorMessage name="userPasswordConfirm" >
-											{errorMsg => <p className=" text-xs text-red-700 mt-2">{errorMsg}</p>}
+											{errorMsg => <p className="absolute text-xs text-red-700 ml-4">{errorMsg}</p>}
 										</ErrorMessage>
 									</div>
 								</div>
