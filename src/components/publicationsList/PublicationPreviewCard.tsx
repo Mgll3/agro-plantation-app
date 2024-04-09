@@ -1,8 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { PublicationPreviewType } from "./publicationsListTypes";
 
-type PublicationPreviewCardProps = PublicationPreviewType;
+
+type PublicationPreviewCardProps = {
+	id: number,
+	author: string,
+	mainImage: string,
+	title: string,
+	mainText: string
+};
 
 function PublicationPreviewCard({ id, mainImage, title, author, mainText }: PublicationPreviewCardProps) {
 	const [maxChars, setMaxChars] = useState(0);
@@ -43,17 +49,28 @@ function PublicationPreviewCard({ id, mainImage, title, author, mainText }: Publ
 
 	return (
 		<Link to={linkUrl}>
-			<div className="" ref={cardContainer} key={id} >
+			<div className="flex flex-col w-[328px] h-[320] overflow-hidden border-2 border-black border-solid rounded-lg"
+				ref={cardContainer} key={id} >
 
-				<div className="">
-					<img alt="Publication Main Image" src={mainImage.url} className="" />
+				<div className="w-full h-[184px]">
+					<img alt="Publication Main Image" src={mainImage} className="w-full h-full" />
 				</div>
 
-				<div className="">
-					<h3 className="">{title}</h3>
-					<p className="">{`${author.name} ${author.lastname}`}</p>
-					{/* <p className="">{generatePreviewText()} <span> (...)</span></p> */}
+				<div className="w-full h-[136px] p-5">
+					<h3 className="text-[19.78px] font-bold">
+						{title}
+					</h3>
+
+					<p className="text-[12.22px] font-bold">
+						{author}
+					</p>
+
+					<p className="text-[12px] leading-relaxed pt-3">
+						{generatePreviewText()} 
+						<span> ...</span>
+					</p>
 				</div>
+
 			</div>
 		</Link>
 	);

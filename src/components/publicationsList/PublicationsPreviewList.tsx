@@ -7,23 +7,26 @@ function PublicationsPreviewList({ bestPublicationsArray }: PublicationsPreviewL
 
 	return (
 		<div className="">
-			<p className="my-[2em] text-center text-3xl font-sans">Publicaciones</p>
+			<h2 className="mt-[2.5rem] mb-[1.2rem] text-center text-3xl font-sans">Publicaciones</h2>
 
-			{
-				bestPublicationsArray.map((element) => {
-					return (
-						<div className="flex flex-wrap" key={generateUniqueId()}>
-							<PublicationPreviewCard 
-								id={element.id}
-								author={element.author}
-								mainImage={element.mainImage}
-								title={element.title}
-								mainText={element.mainText}
-							/>
-						</div>
-					);
-				})
-			}
+			<div className="flex flex-wrap justify-between gap-x-12 gap-y-12">
+				{
+					bestPublicationsArray.map((element) => {
+						return (
+							<div className="" key={generateUniqueId()}>
+								<PublicationPreviewCard 
+									id={element.id}
+									author={`${element.author.name} ${element.author.lastname}`}
+									mainImage={element.mainImage.url}
+									title={element.title}
+									mainText={element.plantation.details}
+								/>
+							</div>
+						);
+					})
+				}
+			</div>
+
 		</div>
 	);
 }

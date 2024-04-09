@@ -1,4 +1,4 @@
-import { ErrorMessage, Field, Form, Formik } from "formik";
+import { ErrorMessage, Field, Form, Formik, useFormik } from "formik";
 import *  as  Yup from "yup";
 import { RegisterFormValuesType } from "./formsTypes";
 import Button from "../button/Button";
@@ -103,6 +103,22 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 	});
 
 
+	const formik = useFormik({
+		initialValues: {
+			userName: "",
+			userLastName: "",
+			userEmail: "",
+			userAddressCity: "",
+			userAddressProvince: "",
+			userPassword: "",
+			userPasswordConfirm: ""
+		},
+		onSubmit: () => {
+			console.log("");
+		},
+
+	});
+
 	return (
 		<>
 			<div className="relative w-[100vw] font-loginFont flex h-[100%] text-[#eaefd4f2] bg-[#EAE3C0]">
@@ -184,7 +200,8 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 
 									<div className="">
 										<label htmlFor="userAddressCity">
-											<Field type="text" id="userAddressCity" name="userAddressCity" placeholder="Ciudad" className="bg-[#00000011] outline-none  border-b-[2px] rounded-md border-b-[#00000052] p-[8px_8px_4px] w-full placeholder-[#666]" />
+											<Field type="text" id="userAddressCity" name="userAddressCity" placeholder="Ciudad" 
+												className="bg-[#00000011] outline-none  border-b-[2px] rounded-md border-b-[#00000052] p-[8px_8px_4px] w-full placeholder-[#666]" />
 										</label>
 										<ErrorMessage name="userAddressCity" >
 											{errorMsg => <p className=" text-xs text-red-700 mt-2">{errorMsg}</p>}
