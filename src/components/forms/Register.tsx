@@ -241,14 +241,32 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 										</ErrorMessage>
 									</div>
 								</div>
-									
-								<Button
+								
+								{
+									formik.isValid === true
+										?	(
+											<button type="submit" 
+												className="w-[94%] text-base py-2.5 m-[3rem_auto] shadow-md rounded-lg font-sans text-brandingYellow cursor-pointer font-bold bg-brandingDarkGreen hover:bg-opacity-80 transition-all"
+											>
+												Regístrate
+											</button>
+										)
+										: (
+											<button type="submit" disabled
+												className="w-[94%] text-base py-2.5 m-[3rem_auto] shadow-md rounded-lg font-sans text-brandingYellow cursor-pointer font-bold bg-brandingDarkGreen hover:bg-opacity-80 transition-all"
+											>
+												Regístrate
+											</button>
+										)
+								}
+
+								{/* <Button
 									buttonColor="green"
 									buttonFontSize="text-base"
 									buttonWidth="w-[94%]"
 									buttonPaddingY="py-2.5 m-[3rem_auto]"
 									buttonFuncionality={{ submitText: "Regístrate" }}
-								/>
+								/> */}
 
 								<p>Si ya estás registrado, por favor <span onClick={handleLoginClick} className="text-brandingLightGreen mt-2" role="button" >INICIA SESIÓN</span></p>
 
