@@ -3,7 +3,6 @@ import Header from "../components/header/Header";
 import { user } from "../data/userData";
 import { useUserRoleContext } from "../context/UserRoleContext";
 import { checkOpenSession } from "../interfaces/checkOpenSession";
-import { PublicationPreviewType } from "../components/publicationsList/publicationsListTypes";
 import { getBestPublications } from "../interfaces/getBestPublications";
 import PublicationsPreviewList from "../components/publicationsList/PublicationsPreviewList";
 import MustLoginWarning from "../components/header/MustLoginWarning";
@@ -15,6 +14,7 @@ import CallToAction from "../components/homeElements/CallToAction";
 import SocialNetworks from "../components/homeElements/SocialNetworks";
 import { getStoredName } from "../utils/getStoredName";
 import { storeName } from "../utils/storeName";
+import { PublicationType } from "../components/publicationsList/publicationsListTypes";
 
 
 
@@ -33,7 +33,7 @@ export default function Home() {
 	const [publicationsState, setPublicationsState] = useState<LoadingStateType>("loading");
 	// const [dashboardState, setDashboardState] = useState<LoadingStateType>("loading");
 
-	const bestPublicationsArray = useRef<PublicationPreviewType[]>([]);
+	const bestPublicationsArray = useRef<PublicationType[]>([]);
 	// const chartsData = useRef<ChartsDataType>();
 	const axiosController = useRef<AbortController>();
 
@@ -84,7 +84,7 @@ export default function Home() {
 		}
 
 		getBestPublications(axiosController.current)
-			.then((bestPublicationsList: PublicationPreviewType[]) => {
+			.then((bestPublicationsList: PublicationType[]) => {
 				bestPublicationsArray.current = bestPublicationsList;
 				setPublicationsState("loaded");
 			})
@@ -153,7 +153,7 @@ export default function Home() {
 
 				{
 					publicationsState === "loaded" && (
-						<div className="px-[10vw]">
+						<div className="w-full px-[10vw]">
 							<PublicationsPreviewList bestPublicationsArray={bestPublicationsArray.current} />
 						</div>
 					)
