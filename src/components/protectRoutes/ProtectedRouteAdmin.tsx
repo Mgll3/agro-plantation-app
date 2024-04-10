@@ -57,7 +57,6 @@ function ProtectedRouteAdmin() {
 
 	useEffect( () => {
 		if (isAuthorized === "notAuthorized") {
-			console.log("PASA");
 			navigateTimer = window.setTimeout(() => {
 				navigate("/login", {replace: true});
 			}, 1500);

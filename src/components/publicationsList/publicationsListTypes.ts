@@ -8,18 +8,6 @@ type MainImage = {
 	url: string
 }
 
-export type PublicationPreviewType = {
-	id: number,
-	author: AuthorType,
-	mainImage: MainImage,
-	title: string,
-	mainText: string
-}
-
-export type PublicationsPreviewListProps = {
-	bestPublicationsArray: PublicationPreviewType[]
-}
-
 type PublicationCommentType = {
 	id: number,
 	author: string,
@@ -27,17 +15,24 @@ type PublicationCommentType = {
 	publicationDate: string
 }
 
+type PlantationType = {
+	id: number,
+	details: string
+}
+
+
+
 export type PublicationType = {
 	id: number,
 	title: string,
-	author: string,
-	publicationDate: string,
-	mainImage: string,
+	author: AuthorType,
+	publicationDate: Date,
+	mainImage: MainImage,
 	comments: PublicationCommentType,
 	score: number,
-	mainText: string
+	plantation: PlantationType
 }
 
-export type PublicationsListType = {
-	bestPublicationsArray: PublicationType[] 
+export type PublicationsPreviewListProps = {
+	bestPublicationsArray: PublicationType[]
 }

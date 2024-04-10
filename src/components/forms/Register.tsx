@@ -1,7 +1,6 @@
-import { ErrorMessage, Field, Form, Formik } from "formik";
+import { useFormik } from "formik";
 import *  as  Yup from "yup";
 import { RegisterFormValuesType } from "./formsTypes";
-import Button from "../button/Button";
 import { RegisterStateType } from "../../pages/LoginRegisterPage";
 import { Link, useNavigate } from "react-router-dom";
 import RegisterOk from "./RegisterOk";
@@ -40,7 +39,7 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 		userPasswordConfirm: ""
 	};
 
-	const registerSchema = Yup.object({
+	const validationSchema = Yup.object({
 		userName: Yup.string()
 			.required("Debes completar este campo")
 			.max(30, "Máximo 30 caracteres")
@@ -103,6 +102,14 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 	});
 
 
+	const formik = useFormik({
+		initialValues: initialValues,
+		onSubmit: handleSubmit,
+		validationSchema
+	});
+
+
+
 	return (
 		<>
 			<div className="relative w-[100vw] font-loginFont flex h-[100%] text-[#eaefd4f2] bg-[#EAE3C0]">
@@ -127,117 +134,154 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 						</button>
 						<h2>Por favor, completa el formulario</h2>
 					</div>
-					<Formik initialValues={initialValues} validationSchema={registerSchema} onSubmit={handleSubmit}>
+
+					<form name="registerForm" action="" encType="multipart/form-data" onSubmit={formik.handleSubmit}
+						className="w-[65vw] max-h-[100vh] border-solid text-center justify-around items-center bg-[#EAE3C0] text-black p-[1rem_6rem_2rem] font-sans">
+
+						<div className="flex flex-col pb-2">
 
 
-						<Form name="registerForm" action="" encType="multipart/form-data" className="w-[65vw] max-h-[100vh] border-solid text-center justify-around items-center bg-[#EAE3C0] text-black p-[1rem_6rem_2rem] font-sans">
+							<div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start text-base text-left font-light width-[100%]">
+								<div className="relative mb-4">
+									<label htmlFor="userName">
+										<input type="text" id="userName" placeholder="Nombre" { ...formik.getFieldProps("userName") }
+											className="bg-[#00000011] outline-none  border-b-[2px] rounded-md border-b-[#00000052] p-[8px_8px_4px] w-full placeholder-[#666]" />
+									</label>
 
-							<div className="flex flex-col pb-2">
-
-
-								<div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start text-base text-left font-light width-[100%]">
-									<div className="">
-										<label htmlFor="userName">
-											<Field type="text" id="userName" name="userName" placeholder="Nombre" className="bg-[#00000011] outline-none  border-b-[2px] rounded-md border-b-[#00000052] p-[8px_8px_4px] w-full placeholder-[#666]" />
-										</label>
-										<ErrorMessage name="userName" >
-											{errorMsg => <p className=" text-xs text-red-600 mt-2">{errorMsg}</p>}
-										</ErrorMessage>
-									</div>
-
-
-
-
-									<div className="">
-										<label htmlFor="userLastName">
-											<Field type="text" id="userLastName" name="userLastName" placeholder="Apellidos" className="bg-[#00000011] outline-none  border-b-[2px] rounded-md border-b-[#00000052] w-full placeholder-[#666] p-[8px_8px_4px]" />
-										</label>
-										<ErrorMessage name="userLastName" >
-											{errorMsg => <p className=" text-xs text-red-700 mt-2">{errorMsg}</p>}
-										</ErrorMessage>
-									</div>
+									{
+										formik.touched.userName && formik.errors.userName
+											? <p className="absolute text-xs text-red-600 ml-4">{formik.errors.userName}</p>
+											: null
+									}
+								</div>
 
 
 
-									<div className=" md:col-span-2">
-										<label htmlFor="userEmail">
-											<Field type="email" id="userEmail" name="userEmail" placeholder="Correo Electrónico" className="bg-[#00000011] outline-none  border-b-[2px] rounded-md border-b-[#00000052] p-[8px_8px_4px] w-full placeholder-[#666]" />
-										</label>
-										<ErrorMessage name="userEmail" >
-											{errorMsg => <p className=" text-xs text-red-700 mt-2">{errorMsg}</p>}
-										</ErrorMessage>
 
-									</div>
+								<div className="relative mb-4">
+									<label htmlFor="userLastName">
+										<input type="text" id="userLastName" placeholder="Apellidos" { ...formik.getFieldProps("userLastName") }
+											className="bg-[#00000011] outline-none  border-b-[2px] rounded-md border-b-[#00000052] w-full placeholder-[#666] p-[8px_8px_4px]" />
+									</label>
+									
+									{
+										formik.touched.userLastName && formik.errors.userLastName
+											? <p className="absolute text-xs text-red-600 ml-4">{formik.errors.userLastName}</p>
+											: null
+									}
+								</div>
 
 
 
-									{/* <div className="">
+								<div className="relative mb-4 md:col-span-2">
+									<label htmlFor="userEmail">
+										<input type="email" id="userEmail" placeholder="Correo Electrónico" { ...formik.getFieldProps("userEmail") }
+											className="bg-[#00000011] outline-none  border-b-[2px] rounded-md border-b-[#00000052] p-[8px_8px_4px] w-full placeholder-[#666]" />
+									</label>
+
+									{
+										formik.touched.userEmail && formik.errors.userEmail
+											? <p className="absolute text-xs text-red-600 ml-4">{formik.errors.userEmail}</p>
+											: null
+									}
+								</div>
+
+
+
+								{/* <div className="relative mb-4">
 										<label htmlFor="userAddressStreet">
-											<Field type="text" id="userAddressStreet" name="userAddressStreet" placeholder="Dirección" className="bg-[#00000011] outline-none  border-b-[2px] rounded-sm border-b-[#00000038] p-[0_12px] w-[300px]" />
+											<input type="text" id="userAddressStreet" name="userAddressStreet" placeholder="Dirección" { ...formik.getFieldProps("userAddressStreet") }
+												className="bg-[#00000011] outline-none  border-b-[2px] rounded-sm border-b-[#00000038] p-[0_12px] w-[300px]" />
 										</label>
 										<ErrorMessage name="userAddressStreet" >
-											{errorMsg => <p className=" text-xs text-red-700 mt-2">{errorMsg}</p>}
+											{errorMsg => <p className="absolute text-xs text-red-700 ml-4">{errorMsg}</p>}
 										</ErrorMessage>
 									</div> */}
 
 
 
-									<div className="">
-										<label htmlFor="userAddressCity">
-											<Field type="text" id="userAddressCity" name="userAddressCity" placeholder="Ciudad" className="bg-[#00000011] outline-none  border-b-[2px] rounded-md border-b-[#00000052] p-[8px_8px_4px] w-full placeholder-[#666]" />
-										</label>
-										<ErrorMessage name="userAddressCity" >
-											{errorMsg => <p className=" text-xs text-red-700 mt-2">{errorMsg}</p>}
-										</ErrorMessage>
-									</div>
+								<div className="relative mb-4">
+									<label htmlFor="userAddressCity">
+										<input type="text" id="userAddressCity" placeholder="Ciudad" { ...formik.getFieldProps("userAddressCity") }
+											className="bg-[#00000011] outline-none  border-b-[2px] rounded-md border-b-[#00000052] p-[8px_8px_4px] w-full placeholder-[#666]" />
+									</label>
 
-
-
-									<div className="">
-										<label htmlFor="userAddressProvince">
-											<Field type="text" id="userAddressProvince" name="userAddressProvince" placeholder="Provincia" className="bg-[#00000011] outline-none  border-b-[2px] rounded-md border-b-[#00000052] p-[8px_8px_4px] w-full placeholder-[#666]" />
-										</label>
-										<ErrorMessage name="userAddressProvince" >
-											{errorMsg => <p className=" text-xs text-red-700 mt-2">{errorMsg}</p>}
-										</ErrorMessage>
-									</div>
-
-
-
-									<div className="">
-										<label htmlFor="userPassword">
-											<Field type="password" id="userPassword" name="userPassword" placeholder="Contraseña" className="bg-[#00000011] outline-none  border-b-[2px] rounded-md border-b-[#00000052] p-[8px_8px_4px] w-full placeholder-[#666]" />
-										</label>
-										<ErrorMessage name="userPassword" >
-											{errorMsg => <p className=" text-xs text-red-700 mt-2">{errorMsg}</p>}
-										</ErrorMessage>
-									</div>
-
-
-
-									<div className="">
-										<label htmlFor="userPasswordConfirm">
-											<Field type="password" id="userPasswordConfirm" name="userPasswordConfirm" placeholder="Confirmar contraseña" className="bg-[#00000011] outline-none  border-b-[2px] rounded-md border-b-[#00000052] p-[8px_8px_4px] w-full placeholder-[#666]" />
-										</label>
-										<ErrorMessage name="userPasswordConfirm" >
-											{errorMsg => <p className=" text-xs text-red-700 mt-2">{errorMsg}</p>}
-										</ErrorMessage>
-									</div>
+									{
+										formik.touched.userAddressCity && formik.errors.userAddressCity
+											? <p className="absolute text-xs text-red-600 ml-4">{formik.errors.userAddressCity}</p>
+											: null
+									}
 								</div>
-									
-								<Button
-									buttonColor="green"
-									buttonFontSize="text-base"
-									buttonWidth="w-[94%]"
-									buttonPaddingY="py-2.5 m-[3rem_auto]"
-									buttonFuncionality={{ submitText: "Regístrate" }}
-								/>
 
-								<p>Si ya estás registrado, por favor <span onClick={handleLoginClick} className="text-brandingLightGreen mt-2" role="button" >INICIA SESIÓN</span></p>
 
+
+								<div className="relative mb-4">
+									<label htmlFor="userAddressProvince">
+										<input type="text" id="userAddressProvince" placeholder="Provincia" { ...formik.getFieldProps("userAddressProvince") }
+											className="bg-[#00000011] outline-none  border-b-[2px] rounded-md border-b-[#00000052] p-[8px_8px_4px] w-full placeholder-[#666]" />
+									</label>
+
+									{
+										formik.touched.userAddressProvince && formik.errors.userAddressProvince
+											? <p className="absolute text-xs text-red-600 ml-4">{formik.errors.userAddressProvince}</p>
+											: null
+									}
+								</div>
+
+
+
+								<div className="relative mb-4">
+									<label htmlFor="userPassword">
+										<input type="password" id="userPassword" placeholder="Contraseña" { ...formik.getFieldProps("userPassword") }
+											className="bg-[#00000011] outline-none  border-b-[2px] rounded-md border-b-[#00000052] p-[8px_8px_4px] w-full placeholder-[#666]" />
+									</label>
+
+									{
+										formik.touched.userPassword && formik.errors.userPassword
+											? <p className="absolute text-xs text-red-600 ml-4">{formik.errors.userPassword}</p>
+											: null
+									}
+								</div>
+
+
+
+								<div className="relative mb-4">
+									<label htmlFor="userPasswordConfirm">
+										<input type="password" id="userPasswordConfirm" placeholder="Confirmar contraseña" { ...formik.getFieldProps("userPasswordConfirm") }
+											className="bg-[#00000011] outline-none  border-b-[2px] rounded-md border-b-[#00000052] p-[8px_8px_4px] w-full placeholder-[#666]" />
+									</label>
+
+									{
+										formik.touched.userPasswordConfirm && formik.errors.userPasswordConfirm
+											? <p className="absolute text-xs text-red-600 ml-4">{formik.errors.userPasswordConfirm}</p>
+											: null
+									}
+								</div>
 							</div>
-						</Form>
-					</Formik>
+								
+							{
+								formik.isValid && formik.dirty
+									?	(
+										<button type="submit" 
+											className="w-[94%] text-base py-2.5 m-[3rem_auto] shadow-md rounded-lg font-sans text-brandingYellow cursor-pointer font-bold bg-brandingDarkGreen hover:bg-opacity-80 transition-all"
+										>
+												Regístrate
+										</button>
+									)
+									: (
+										<button type="submit" disabled
+											className="w-[94%] text-base py-2.5 m-[3rem_auto] shadow-md rounded-lg font-sans text-black cursor-pointer font-bold bg-brandingYellow hover:bg-opacity-80 transition-all"
+										>
+												Regístrate
+										</button>
+									)
+							}
+
+							<p>Si ya estás registrado, por favor <span onClick={handleLoginClick} className="text-brandingLightGreen mt-2" role="button" >INICIA SESIÓN</span></p>
+
+						</div>
+					</form>
+
 				</div>
 
 				{registerState === "loading" && <Loading />}
