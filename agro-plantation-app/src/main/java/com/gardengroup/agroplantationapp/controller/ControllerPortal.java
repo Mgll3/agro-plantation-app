@@ -3,6 +3,7 @@ package com.gardengroup.agroplantationapp.controller;
 import com.gardengroup.agroplantationapp.dto.user.AthAnswerDTO;
 import com.gardengroup.agroplantationapp.dto.user.LoginDTO;
 import com.gardengroup.agroplantationapp.dto.user.RegisterDTO;
+import com.gardengroup.agroplantationapp.entity.User;
 import com.gardengroup.agroplantationapp.exceptions.OurException;
 import com.gardengroup.agroplantationapp.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -36,20 +37,20 @@ public class ControllerPortal {
                     content = @Content(schema = @Schema(implementation = String.class)))
     })
     @PostMapping("/registro")
-    public ResponseEntity<String> record(@RequestBody RegisterDTO dtoRegistrer) {
+    public ResponseEntity<?> record(@RequestBody RegisterDTO registerDto) {
+        
         try {
             // Verifica si el correo electrónico ya existe
-            if (userService.existsEmail(dtoRegistrer.getEmail())) {
+            if (userService.existsEmail(registerDto.getEmail())) {
                 // Si el correo electrónico ya existe, devuelve un mensaje indicando que el usuario ya existe
                 return new ResponseEntity<>("Este correo electrónico ya está registrado.", HttpStatus.CONFLICT);
             }
 
             // Llama al método en el servicio para crear el usuario a partir del DTO
-            userService.createUser(dtoRegistrer);
+            User user =  userService.createUser(registerDto);
 
-            // Creación exitosa, devuelve una respuesta con HttpStatus.CREATED y el mensaje
-            return ResponseEntity.status(HttpStatus.CREATED).body("Usuario registrado correctamente!");
-        } catch (OurException ex) {
+            return new ResponseEntity<>(user, HttpStatus.CREATED);
+            } catch (OurException ex) {
             // En caso de otros errores, devuelve una respuesta con HttpStatus.NOT_IMPLEMENTED
             System.out.println(ex.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(ex.getMessage());

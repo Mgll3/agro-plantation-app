@@ -28,7 +28,7 @@ public class AgroPlantationAppApplication {
 		docker tag nombre_de_la_imagen usuario_dockerhub/nombre_del_repositorio
 		docker tag agro-plantation:1.47 mgll3/agro-plantation-app:Api-v1.47
 		docker tag mysql-standalone mgll3/agro-plantation-app:Mysql-v1.1
-		
+
 		docker push mgll3/agro-plantation-app:Api-v1.47
 		docker push mgll3/agro-plantation-app:Mysql-v1.1
 		*/

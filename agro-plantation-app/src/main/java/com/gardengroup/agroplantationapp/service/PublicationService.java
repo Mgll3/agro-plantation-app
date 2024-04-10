@@ -131,14 +131,15 @@ public class PublicationService {
     @Transactional
     public List<Publication> publicationsByEmail(String email) {
 
-        final List<Publication> publication = publicationRepository.publicationsByEmail(email);
+        final List<Publication> publications = publicationRepository.publicationsByEmail(email);
 
-        if (publication.size() > 0) {
-            return publication;
+        if (publications.size() > 0) {
+            return publications;
         } else {
             throw new DataAccessException("Publications not found") {
             };
         }
+
     }
 
 
@@ -169,6 +170,24 @@ public class PublicationService {
         }
         publicationRepository.deleteById(id);
         
+    }
+
+    @Transactional
+    public List<Publication> getPublicationsByLike(int pag){
+        
+        if (pag < 1) {
+            throw new IllegalArgumentException("Invalid page number");
+        }
+        pag = (pag-1) * 15;
+        int pagTop= pag + 15;
+        final List<Publication> publications = publicationRepository.publicationsBylike(pag, pagTop);
+
+        if (publications.size() > 0) {
+            return publications;
+        } else {
+            throw new DataAccessException("Publications not found") {
+            };
+        }
     }
 
 }
