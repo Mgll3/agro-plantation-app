@@ -1,9 +1,10 @@
 package com.gardengroup.agroplantationapp.security;
 
 
-import com.gardengroup.agroplantationapp.entity.User;
-import com.gardengroup.agroplantationapp.entity.UserType;
-import com.gardengroup.agroplantationapp.repository.UserRepository;
+import com.gardengroup.agroplantationapp.model.entity.User;
+import com.gardengroup.agroplantationapp.model.entity.UserType;
+import com.gardengroup.agroplantationapp.model.repository.UserRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

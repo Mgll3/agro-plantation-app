@@ -1,7 +1,9 @@
-package com.gardengroup.agroplantationapp.entity;
+package com.gardengroup.agroplantationapp.model.entity;
 
 
 import com.gardengroup.agroplantationapp.exceptions.OurException;
+import com.gardengroup.agroplantationapp.model.dto.publication.PublicationSaveDTO;
+import com.gardengroup.agroplantationapp.model.dto.publication.PublicationUpdDTO;
 import com.gardengroup.agroplantationapp.service.Approvable;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -9,9 +11,6 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
-import com.gardengroup.agroplantationapp.dto.publication.PublicationSaveDTO;
-import com.gardengroup.agroplantationapp.dto.publication.PublicationUpdDTO;
 
 @Entity
 @Data

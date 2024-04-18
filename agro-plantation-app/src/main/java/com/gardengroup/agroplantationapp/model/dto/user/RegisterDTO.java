@@ -1,4 +1,4 @@
-package com.gardengroup.agroplantationapp.dto.user;
+package com.gardengroup.agroplantationapp.model.dto.user;
 
 import lombok.Data;
 

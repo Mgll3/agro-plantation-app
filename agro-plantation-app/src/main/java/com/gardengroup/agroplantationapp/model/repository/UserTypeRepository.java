@@ -1,11 +1,11 @@
-package com.gardengroup.agroplantationapp.repository;
+package com.gardengroup.agroplantationapp.model.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.gardengroup.agroplantationapp.entity.UserType;
+import com.gardengroup.agroplantationapp.model.entity.UserType;
 
 import java.util.Optional;
 

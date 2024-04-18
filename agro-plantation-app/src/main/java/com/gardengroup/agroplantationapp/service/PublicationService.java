@@ -1,25 +1,20 @@
 package com.gardengroup.agroplantationapp.service;
 
-import com.gardengroup.agroplantationapp.entity.*;
 import com.gardengroup.agroplantationapp.exceptions.OurException;
+import com.gardengroup.agroplantationapp.model.dto.publication.PublicationSaveDTO;
+import com.gardengroup.agroplantationapp.model.dto.publication.PublicationUpdDTO;
+import com.gardengroup.agroplantationapp.model.entity.*;
+import com.gardengroup.agroplantationapp.model.repository.PublicationRepository;
+import com.gardengroup.agroplantationapp.model.repository.StateRequestRepository;
+import com.gardengroup.agroplantationapp.model.repository.UserRepository;
+import com.gardengroup.agroplantationapp.model.repository.VoteRepository;
 
-import com.gardengroup.agroplantationapp.repository.StateRequestRepository;
-import com.gardengroup.agroplantationapp.repository.UserRepository;
-
-import com.gardengroup.agroplantationapp.repository.VoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.gardengroup.agroplantationapp.dto.publication.PublicationSaveDTO;
-import com.gardengroup.agroplantationapp.dto.publication.PublicationUpdDTO;
-import com.gardengroup.agroplantationapp.entity.Image;
-import com.gardengroup.agroplantationapp.entity.Publication;
-import com.gardengroup.agroplantationapp.entity.StateRequest;
-import com.gardengroup.agroplantationapp.entity.User;
-import com.gardengroup.agroplantationapp.repository.PublicationRepository;
 import jakarta.transaction.Transactional;
 
 import java.time.LocalDateTime;

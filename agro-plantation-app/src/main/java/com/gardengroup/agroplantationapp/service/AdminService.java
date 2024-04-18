@@ -1,16 +1,15 @@
 package com.gardengroup.agroplantationapp.service;
 
-import com.gardengroup.agroplantationapp.entity.ProducerRequest;
-import com.gardengroup.agroplantationapp.entity.StateRequest;
-
-import com.gardengroup.agroplantationapp.entity.User;
-import com.gardengroup.agroplantationapp.entity.UserType;
 import com.gardengroup.agroplantationapp.exceptions.OurException;
-import com.gardengroup.agroplantationapp.repository.ProducerRequestRepository;
+import com.gardengroup.agroplantationapp.model.entity.ProducerRequest;
+import com.gardengroup.agroplantationapp.model.entity.StateRequest;
+import com.gardengroup.agroplantationapp.model.entity.User;
+import com.gardengroup.agroplantationapp.model.entity.UserType;
+import com.gardengroup.agroplantationapp.model.repository.ProducerRequestRepository;
+import com.gardengroup.agroplantationapp.model.repository.StateRequestRepository;
+import com.gardengroup.agroplantationapp.model.repository.UserRepository;
+import com.gardengroup.agroplantationapp.model.repository.UserTypeRepository;
 
-import com.gardengroup.agroplantationapp.repository.StateRequestRepository;
-import com.gardengroup.agroplantationapp.repository.UserRepository;
-import com.gardengroup.agroplantationapp.repository.UserTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

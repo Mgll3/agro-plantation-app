@@ -1,11 +1,11 @@
-package com.gardengroup.agroplantationapp.repository;
+package com.gardengroup.agroplantationapp.model.repository;
 
 
-import com.gardengroup.agroplantationapp.entity.StateRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.gardengroup.agroplantationapp.entity.ProducerRequest;
+import com.gardengroup.agroplantationapp.model.entity.ProducerRequest;
+import com.gardengroup.agroplantationapp.model.entity.StateRequest;
 
 import java.util.List;
 

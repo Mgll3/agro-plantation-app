@@ -1,6 +1,6 @@
-package com.gardengroup.agroplantationapp.dto.publication;
+package com.gardengroup.agroplantationapp.model.dto.publication;
 
-import com.gardengroup.agroplantationapp.entity.Plantation;
+import com.gardengroup.agroplantationapp.model.entity.Plantation;
 
 import lombok.Data;
 

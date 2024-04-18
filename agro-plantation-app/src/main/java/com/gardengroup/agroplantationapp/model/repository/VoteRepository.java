@@ -1,8 +1,9 @@
-package com.gardengroup.agroplantationapp.repository;
+package com.gardengroup.agroplantationapp.model.repository;
 
-import com.gardengroup.agroplantationapp.entity.Vote;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import com.gardengroup.agroplantationapp.model.entity.Vote;
 
 @Repository
 public interface VoteRepository extends JpaRepository<Vote,Long>  {

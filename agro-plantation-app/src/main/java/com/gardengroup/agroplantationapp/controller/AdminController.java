@@ -1,9 +1,8 @@
 package com.gardengroup.agroplantationapp.controller;
 
-import com.gardengroup.agroplantationapp.entity.ProducerRequest;
-
-import com.gardengroup.agroplantationapp.entity.Publication;
 import com.gardengroup.agroplantationapp.exceptions.OurException;
+import com.gardengroup.agroplantationapp.model.entity.ProducerRequest;
+import com.gardengroup.agroplantationapp.model.entity.Publication;
 import com.gardengroup.agroplantationapp.service.AdminService;
 
 import com.gardengroup.agroplantationapp.service.PublicationService;

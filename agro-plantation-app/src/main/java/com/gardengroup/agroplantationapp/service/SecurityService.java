@@ -8,7 +8,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import com.gardengroup.agroplantationapp.dto.user.LoginDTO;
+import com.gardengroup.agroplantationapp.model.dto.user.LoginDTO;
 import com.gardengroup.agroplantationapp.security.JwtAuthenticationFilter;
 import com.gardengroup.agroplantationapp.security.JwtTokenProvider;
 

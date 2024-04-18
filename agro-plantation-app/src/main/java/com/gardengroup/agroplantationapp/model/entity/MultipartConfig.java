@@ -1,4 +1,4 @@
-package com.gardengroup.agroplantationapp.entity;
+package com.gardengroup.agroplantationapp.model.entity;
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;

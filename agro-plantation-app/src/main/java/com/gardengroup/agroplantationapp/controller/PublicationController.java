@@ -2,11 +2,12 @@ package com.gardengroup.agroplantationapp.controller;
 
 import java.util.List;
 
-import com.gardengroup.agroplantationapp.dto.publication.PublicationSaveDTO;
-import com.gardengroup.agroplantationapp.dto.publication.PublicationUpdDTO;
-import com.gardengroup.agroplantationapp.entity.Publication;
-import com.gardengroup.agroplantationapp.entity.Vote;
 import com.gardengroup.agroplantationapp.exceptions.OurException;
+import com.gardengroup.agroplantationapp.model.dto.publication.PublicationSaveDTO;
+import com.gardengroup.agroplantationapp.model.dto.publication.PublicationUpdDTO;
+import com.gardengroup.agroplantationapp.model.entity.Publication;
+import com.gardengroup.agroplantationapp.model.entity.Vote;
+
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletRequest;

@@ -1,4 +1,4 @@
-package com.gardengroup.agroplantationapp.entity;
+package com.gardengroup.agroplantationapp.model.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;

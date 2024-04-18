@@ -1,10 +1,10 @@
 package com.gardengroup.agroplantationapp.controller;
 
-import com.gardengroup.agroplantationapp.dto.user.AthAnswerDTO;
-import com.gardengroup.agroplantationapp.dto.user.LoginDTO;
-import com.gardengroup.agroplantationapp.dto.user.RegisterDTO;
-import com.gardengroup.agroplantationapp.entity.User;
 import com.gardengroup.agroplantationapp.exceptions.OurException;
+import com.gardengroup.agroplantationapp.model.dto.user.AthAnswerDTO;
+import com.gardengroup.agroplantationapp.model.dto.user.LoginDTO;
+import com.gardengroup.agroplantationapp.model.dto.user.RegisterDTO;
+import com.gardengroup.agroplantationapp.model.entity.User;
 import com.gardengroup.agroplantationapp.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @Controller
-@RequestMapping("/auth")
+@RequestMapping("/v1/auth")
 @CrossOrigin(origins = "*")
 public class ControllerPortal {
 
