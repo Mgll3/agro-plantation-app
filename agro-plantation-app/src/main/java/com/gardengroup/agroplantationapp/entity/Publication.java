@@ -5,21 +5,24 @@ import com.gardengroup.agroplantationapp.exceptions.OurException;
 import com.gardengroup.agroplantationapp.service.Approvable;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.gardengroup.agroplantationapp.dto.PublicationSaveDTO;
-import com.gardengroup.agroplantationapp.dto.PublicationUpdDTO;
+import com.gardengroup.agroplantationapp.dto.publication.PublicationSaveDTO;
+import com.gardengroup.agroplantationapp.dto.publication.PublicationUpdDTO;
 
 @Entity
 @Data
-public class Publication  {
+@NoArgsConstructor
+public class Publication {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    //Hacer que el titulo tenga un tamaño de varchar(50) en base de datos:
     @Column(length = 50, nullable = false)
     private String title;
+    //CascadeType.ALL: Si se elimina la publicación, se elimina la plantación, igual para crearse
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(nullable = false)
     private Plantation plantation;
@@ -44,20 +47,19 @@ public class Publication  {
     //Actualizar unicamenete la información que no esta ya guardada en la publicación
     public void updateInfo(Publication publication){
 
-        if(this.title != publication.title && publication.title != null){
+        if(this.title.equals(publication.title) && publication.title != null){
             this.setTitle(publication.title);
         }
-        if(!this.plantation.equals(publication.plantation) && publication.plantation != null){
+        if(this.plantation.equals(publication.plantation) && publication.plantation != null){
             this.setPlantation(publication.plantation);
         }
-        if(this.visibility != publication.visibility && publication.visibility != null){
+        if(this.visibility.equals(publication.visibility) && publication.visibility != null){
             this.setVisibility(publication.visibility);
         }
         
     }
 
-    public Publication() {
-    }
+    
 
     public Publication(PublicationSaveDTO publicationDTO){
         this.title = publicationDTO.getTitle();

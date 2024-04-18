@@ -1,6 +1,8 @@
 package com.gardengroup.agroplantationapp.service;
 
-import com.gardengroup.agroplantationapp.dto.RegisterDTO;
+import com.gardengroup.agroplantationapp.dto.user.AthAnswerDTO;
+import com.gardengroup.agroplantationapp.dto.user.LoginDTO;
+import com.gardengroup.agroplantationapp.dto.user.RegisterDTO;
 import com.gardengroup.agroplantationapp.entity.ProducerRequest;
 import com.gardengroup.agroplantationapp.entity.StateRequest;
 import com.gardengroup.agroplantationapp.entity.User;
@@ -8,12 +10,14 @@ import com.gardengroup.agroplantationapp.entity.UserType;
 import com.gardengroup.agroplantationapp.exceptions.OurException;
 import com.gardengroup.agroplantationapp.repository.ProducerRequestRepository;
 import com.gardengroup.agroplantationapp.repository.UserRepository;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.Date;
-
 
 @Service
 public class UserService {
@@ -52,7 +56,6 @@ public class UserService {
         return userRepository.searchName(name);
     }
 
-
     public Boolean existsEmail(String email) {
 
         return userRepository.existsByUseremail(email);
@@ -78,5 +81,20 @@ public class UserService {
         producerRequestRepository.save(producerRequest);
     }
 
+    @Transactional
+    public AthAnswerDTO authenticate(LoginDTO LoginDTO) {
+        String token = securityService.authenticate(LoginDTO);
+        User user = userRepository.searchEmail(LoginDTO.getEmail());
+        return new AthAnswerDTO(token, user.getName(), user.getLastname(), user.getUserType().getType());
+    }
+
+    @Transactional
+    public AthAnswerDTO getUserSession(HttpServletRequest request) {
+        String email = securityService.getEmail(request);
+        
+        User user = userRepository.searchEmail(email);
+        AthAnswerDTO answer = new AthAnswerDTO(user.getName(), user.getLastname(), user.getUserType().getType());
+        return answer;
+    }
 
 }

@@ -15,6 +15,7 @@ import java.util.Date;
 @ToString
 @EqualsAndHashCode
 public class ProducerRequest {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

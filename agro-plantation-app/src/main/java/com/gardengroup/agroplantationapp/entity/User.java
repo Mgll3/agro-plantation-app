@@ -12,11 +12,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-/**
- *
- * @author sofia
- */
-//lombok genera un constructor sin elementos
+
 @Entity
 @Table(name ="user")
 @Getter
@@ -34,7 +30,6 @@ public class User {
 
     @Column(length = 30 , nullable = false)
     private String lastname;
-
 
     @Column(length = 30, nullable = false)
     private String email;

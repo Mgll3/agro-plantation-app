@@ -2,8 +2,8 @@ package com.gardengroup.agroplantationapp.controller;
 
 import java.util.List;
 
-import com.gardengroup.agroplantationapp.dto.PublicationSaveDTO;
-import com.gardengroup.agroplantationapp.dto.PublicationUpdDTO;
+import com.gardengroup.agroplantationapp.dto.publication.PublicationSaveDTO;
+import com.gardengroup.agroplantationapp.dto.publication.PublicationUpdDTO;
 import com.gardengroup.agroplantationapp.entity.Publication;
 import com.gardengroup.agroplantationapp.entity.Vote;
 import com.gardengroup.agroplantationapp.exceptions.OurException;
@@ -28,6 +28,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 @RestController
 @RequestMapping("/v1/publication")
+@CrossOrigin(origins = "*")
 public class PublicationController {
     @Autowired
     private PublicationService publicationService;
@@ -69,7 +70,6 @@ public class PublicationController {
             return new ResponseEntity<>(HttpStatus.OK);
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
         }
     }
@@ -120,6 +120,7 @@ public class PublicationController {
         }
     }
 
+
     @Operation(summary = "Actualizar Publicación existente",
             description = "Modificar los datos de una publicación ya existente", tags = "Publication")
     @Parameter(name = "Publication",
@@ -166,7 +167,7 @@ public class PublicationController {
     }
 
     @Operation(summary = "Actualizar visibilidad de una publicación",
-            description = "Endpoint para actualizar la visibilidad de una publicación por su ID")
+            description = "Endpoint para actualizar la visibilidad de una publicación por su ID", tags = {"Publication"})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Visibilidad actualizada correctamente",
                     content = @Content(schema = @Schema(implementation = Publication.class))),
@@ -193,7 +194,7 @@ public class PublicationController {
     }
 
     @Operation(summary = "Obtener las publicaciones principales",
-            description = "Endpoint para obtener las publicaciones más populares o mejor valoradas")
+            description = "Endpoint para obtener las publicaciones más populares o mejor valoradas", tags = {"Publication"})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Éxito al obtener las publicaciones principales",
                     content = @Content(schema = @Schema(implementation = List.class))),
@@ -201,11 +202,25 @@ public class PublicationController {
             @ApiResponse(responseCode = "501", description = "Error al procesar la solicitud",
                     content = @Content(schema = @Schema(implementation = String.class)))
     })
-
     @GetMapping("publications/top")
     public ResponseEntity<List<Publication>> getTopPublications() {
         List<Publication> topPublications = publicationService.getTopPublications();
         return new ResponseEntity<>(topPublications, HttpStatus.OK);
+    }
+
+    @GetMapping("/like/{pag}")
+    public ResponseEntity<List<Publication>> getPublicationsByLike(@PathVariable int pag) {
+        try {
+            List<Publication> publications = publicationService.getPublicationsByLike(pag);
+            return new ResponseEntity<>(publications, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            if (e.getMessage().equals("Publications not found")) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            }
+        }
     }
 
 

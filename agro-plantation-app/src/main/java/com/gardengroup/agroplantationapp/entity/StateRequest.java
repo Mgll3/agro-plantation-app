@@ -1,15 +1,17 @@
 package com.gardengroup.agroplantationapp.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+
+import lombok.NoArgsConstructor;
+
 import lombok.ToString;
 
 @Entity
 @Table(name = "state_request")
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
 @ToString
 @EqualsAndHashCode
 public class StateRequest {
@@ -17,9 +19,6 @@ public class StateRequest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String state;
-
-    public StateRequest() {
-    }
 
     public StateRequest(Long id) {
         this.id = id;

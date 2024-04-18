@@ -4,7 +4,6 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.util.Map;
 
 @Service
@@ -17,13 +16,14 @@ public class CloudinaryService {
     );
 
     public Map upload(MultipartFile file, String folder) {
+        if (file.isEmpty()) throw new RuntimeException("File is empty");
+        if (file.getSize() > 10485760) throw new RuntimeException("File is too large");
         try {
             Map result = cloudinary.uploader()
                     .upload(file.getBytes(), ObjectUtils.asMap("folder", folder));
             return result;
         } catch (Exception e) {
             throw new RuntimeException(e);
-
         }
     }
 

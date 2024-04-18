@@ -13,8 +13,12 @@ import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.gardengroup.agroplantationapp.dto.PublicationSaveDTO;
-import com.gardengroup.agroplantationapp.dto.PublicationUpdDTO;
+import com.gardengroup.agroplantationapp.dto.publication.PublicationSaveDTO;
+import com.gardengroup.agroplantationapp.dto.publication.PublicationUpdDTO;
+import com.gardengroup.agroplantationapp.entity.Image;
+import com.gardengroup.agroplantationapp.entity.Publication;
+import com.gardengroup.agroplantationapp.entity.StateRequest;
+import com.gardengroup.agroplantationapp.entity.User;
 import com.gardengroup.agroplantationapp.repository.PublicationRepository;
 import jakarta.transaction.Transactional;
 
@@ -60,27 +64,34 @@ public class PublicationService implements Approvable {
     public void saveImages(MultipartFile mainFile, List<MultipartFile> files, Long publicationId) {
         String folder = "publications";
 
-        //Montaje imagenes en Cloudinary
-        Map result = cloudinaryService.upload(mainFile, folder);
-        Image mainImage = new Image(result.get("public_id").toString(),
-                result.get("secure_url").toString());
-
-        List<Image> images = new ArrayList<Image>();
-        for (MultipartFile file : files) {
-            //Posible montaje simultaneo de imagenes para mayor velocidad
-            result = cloudinaryService.upload(file, folder);
-            Image image = new Image(result.get("public_id").toString(),
-                    result.get("secure_url").toString());
-            images.add(image);
-        }
-
         //Busqueda de publicacion que vamos a modificar
         Publication publication = publicationRepository.findById(publicationId).orElseThrow(() -> new DataAccessException("Publication not found") {
         });
 
-        //Asignar imagenes a la publicacion
-        publication.setMainImage(mainImage);
-        publication.setImages(images);
+        //Revisar si hay imagen principal y luego guardarla
+        if (mainFile.getOriginalFilename() != ""){
+            Map result = cloudinaryService.upload(mainFile, folder);
+    
+            Image mainImage = new Image(result.get("public_id").toString(), 
+            result.get("secure_url").toString());
+            publication.setMainImage(mainImage);
+        } else{
+            throw new DataAccessException("Main image not found") {
+            };
+        }
+        List<Image> images = new ArrayList<Image>();
+        //Revisar si hay imagenes secundarias y luego guardarlas
+        if (files.get(0).getOriginalFilename() != "") {
+            for (MultipartFile file : files) {
+                //Posible montaje simultaneo de imagenes para mayor velocidad
+                Map resultC = cloudinaryService.upload(file, folder);
+                Image image = new Image(resultC.get("public_id").toString(), 
+                    resultC.get("secure_url").toString());
+                images.add(image);
+            }
+            publication.setImages(images);
+        } 
+        
         publicationRepository.save(publication);
     }
 
@@ -112,13 +123,11 @@ public class PublicationService implements Approvable {
         }
     }
 
-
     public List<Publication> getTopPublications() {
         List<Publication> allPublications = publicationRepository.findTop6ByOrderByScoreDesc();
         // Limitar la cantidad de publicaciones devueltas a exactamente 6
         return allPublications.stream().limit(6).collect(Collectors.toList());
     }
-
 
     @Transactional
     public Publication getPublication(Long id) {
@@ -137,14 +146,15 @@ public class PublicationService implements Approvable {
     @Transactional
     public List<Publication> publicationsByEmail(String email) {
 
-        final List<Publication> publication = publicationRepository.publicationsByEmail(email);
+        final List<Publication> publications = publicationRepository.publicationsByEmail(email);
 
-        if (publication.size() > 0) {
-            return publication;
+        if (publications.size() > 0) {
+            return publications;
         } else {
             throw new DataAccessException("Publications not found") {
             };
         }
+
     }
 
 
@@ -280,5 +290,23 @@ public class PublicationService implements Approvable {
         return existingVote;
     }
 
+
+    @Transactional
+    public List<Publication> getPublicationsByLike(int pag){
+        
+        if (pag < 1) {
+            throw new IllegalArgumentException("Invalid page number");
+        }
+        pag = (pag-1) * 15;
+        int pagTop= pag + 15;
+        final List<Publication> publications = publicationRepository.publicationsBylike(pag, pagTop);
+
+        if (publications.size() > 0) {
+            return publications;
+        } else {
+            throw new DataAccessException("Publications not found") {
+            };
+        }
+    }
 
 }
