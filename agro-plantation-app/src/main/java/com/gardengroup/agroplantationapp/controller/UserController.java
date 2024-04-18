@@ -57,6 +57,7 @@ public class UserController {
     public ResponseEntity<?> userSession(HttpServletRequest request) {
         
         AthAnswerDTO answer = userService.getUserSession(request);
+        
         return ResponseEntity.ok(answer);
         
     }

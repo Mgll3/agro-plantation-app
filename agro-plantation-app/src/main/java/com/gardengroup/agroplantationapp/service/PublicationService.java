@@ -161,7 +161,8 @@ public class PublicationService {
 
     @Transactional
     public void deletePublication(Long id) {
-        Publication publicationSaved = publicationRepository.findById(id).orElseThrow(() -> new DataAccessException("Publication not found") {
+        Publication publicationSaved = publicationRepository.findById(id)
+            .orElseThrow(() -> new DataAccessException("Publication not found") {
         });
         
         cloudinaryService.delete(publicationSaved.getMainImage().getId());
