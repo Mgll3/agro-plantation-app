@@ -37,7 +37,7 @@ public class AuthController {
                     content = @Content(schema = @Schema(implementation = String.class)))
     })
     @PostMapping("/registro")
-    public ResponseEntity<?> record(@RequestBody RegisterDTO registerDto) {
+    public ResponseEntity<?> register(@RequestBody RegisterDTO registerDto) {
         
         try {
             // Verifica si el correo electrónico ya existe

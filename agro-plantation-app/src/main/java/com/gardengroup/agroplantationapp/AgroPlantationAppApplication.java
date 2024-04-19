@@ -18,9 +18,6 @@ public class AgroPlantationAppApplication {
 
 
 
-
-
-
 		docker image ls
 
 		docker commit nombre_del_contenedor nombre_de_la_imagen
@@ -36,10 +33,6 @@ public class AgroPlantationAppApplication {
 		*/
 
 	}
-
-
-
-
 
 }
 
