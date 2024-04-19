@@ -1,6 +1,5 @@
 package com.gardengroup.agroplantationapp.service;
 
-import com.gardengroup.agroplantationapp.exceptions.OurException;
 import com.gardengroup.agroplantationapp.model.dto.publication.PublicationSaveDTO;
 import com.gardengroup.agroplantationapp.model.dto.publication.PublicationUpdDTO;
 import com.gardengroup.agroplantationapp.model.entity.*;
@@ -8,10 +7,8 @@ import com.gardengroup.agroplantationapp.model.repository.PublicationRepository;
 import com.gardengroup.agroplantationapp.model.repository.StateRequestRepository;
 import com.gardengroup.agroplantationapp.model.repository.UserRepository;
 import com.gardengroup.agroplantationapp.model.repository.VoteRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,7 +19,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-public class PublicationService implements Approvable {
+public class PublicationService implements IPublicationService {
 
     @Autowired
     private PublicationRepository publicationRepository;
@@ -118,6 +115,7 @@ public class PublicationService implements Approvable {
         }
     }
 
+    
     public List<Publication> getTopPublications() {
         List<Publication> allPublications = publicationRepository.findTop6ByOrderByScoreDesc();
         // Limitar la cantidad de publicaciones devueltas a exactamente 6
@@ -182,14 +180,13 @@ public class PublicationService implements Approvable {
 
     }
 
-
     @Transactional
     public List<Publication> pendingPublications() {
         return publicationRepository.findAllPendingPublications();
     }
 
-
-    public void approve(Long publicationId) {
+    @Transactional
+    public void approvePublication(Long publicationId) {
         Optional<Publication> optionalPublication = publicationRepository.findById(publicationId);
 
         if (optionalPublication.isPresent()) {
@@ -213,8 +210,8 @@ public class PublicationService implements Approvable {
         }
     }
 
-
-    public void reject(Long publicationId) {
+    @Transactional
+    public void rejectPublication(Long publicationId) {
         Optional<Publication> optionalPublication = publicationRepository.findById(publicationId);
 
         if (optionalPublication.isPresent()) {

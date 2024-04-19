@@ -20,9 +20,9 @@ import org.springframework.web.bind.annotation.*;
 
 
 @Controller
-@RequestMapping("/v1/auth")
+@RequestMapping("/auth")
 @CrossOrigin(origins = "*")
-public class ControllerPortal {
+public class AuthController {
 
     @Autowired
     private UserService userService;

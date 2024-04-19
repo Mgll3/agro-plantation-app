@@ -35,7 +35,4 @@ public class CloudinaryService {
             throw new RuntimeException(e);
         }
     }
-
-
-
 }

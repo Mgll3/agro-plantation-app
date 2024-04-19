@@ -209,6 +209,74 @@ public class PublicationController {
         return new ResponseEntity<>(topPublications, HttpStatus.OK);
     }
 
+    @Operation(summary = "Alternar voto para una publicación",
+            description = "Endpoint para alternar el voto (me gusta/no me gusta) para una publicación específica", tags = "Publication")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Voto alternado exitosamente"),
+            @ApiResponse(responseCode = "400", description = "Solicitud incorrecta"),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor")
+    })
+    @PostMapping("/publications/toggleVote/{publicationId}")
+    public ResponseEntity<?> toggleVote(@PathVariable Long publicationId, HttpServletRequest request) {
+        try {
+            String email = securityService.getEmail(request);
+            Vote vote = publicationService.toggleVote(publicationId, email);
+            return ResponseEntity.status(HttpStatus.CREATED).body(vote);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @Operation(summary = "Obtener publicaciones pendientes", 
+        description = "Endpoint para obtener las publicaciones pendientes", tags = "Publication")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Éxito al obtener las publicaciones pendientes",
+                    content = @Content(schema = @Schema(implementation = List.class))),
+            @ApiResponse(responseCode = "204", description = "No hay publicaciones pendientes para mostrar"),
+            @ApiResponse(responseCode = "501", description = "Error al procesar la solicitud",
+                    content = @Content(schema = @Schema(implementation = String.class)))
+    })
+    @GetMapping("/pendingPublications")
+    public ResponseEntity<List<Publication>> getPendingPublications() {
+        List<Publication> pendingPublications = publicationService.pendingPublications();
+        return ResponseEntity.ok(pendingPublications);
+    }
+
+    @Operation(summary = "Aprobar publicación", 
+        description = "Endpoint para aprobar una solicitud de publicación", tags = "Publication")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Éxito al aprobar la publicación"),
+            @ApiResponse(responseCode = "400", description = "Error al procesar la solicitud")
+    })
+    @PutMapping("/approvePublication/{publicationId}")
+    public ResponseEntity<?> approvePublication(@PathVariable Long publicationId) {
+        try {
+            publicationService.approvePublication(publicationId);
+            return ResponseEntity.ok("La solicitud de publicación ha sido aprobada con éxito.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Error al aprobar la solicitud de publicación");
+        }
+    }
+
+    @Operation(summary = "Rechazar publicación", 
+        description = "Endpoint para rechazar una solicitud de publicación", tags = "Publication")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Éxito al rechazar la publicación"),
+            @ApiResponse(responseCode = "400", description = "Error al procesar la solicitud")
+    })
+    @PutMapping("/rejectPublication/{publicationId}")
+    public ResponseEntity<?> rejectPublication(@PathVariable Long publicationId) {
+        try {
+            publicationService.rejectPublication(publicationId);
+            return ResponseEntity.ok("La solicitud de publicación ha sido rechazada con éxito.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Error al rechazar la solicitud de publicación");
+        }
+    }
+
     @GetMapping("/like/{pag}")
     public ResponseEntity<List<Publication>> getPublicationsByLike(@PathVariable int pag) {
         try {
@@ -223,28 +291,6 @@ public class PublicationController {
             }
         }
     }
-
-
-    @Operation(summary = "Alternar voto para una publicación",
-            description = "Endpoint para alternar el voto (me gusta/no me gusta) para una publicación específica")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Voto alternado exitosamente"),
-            @ApiResponse(responseCode = "400", description = "Solicitud incorrecta"),
-            @ApiResponse(responseCode = "500", description = "Error interno del servidor")
-    })
-    @PostMapping("/publications/{publicationId}/toggle-vote")
-    public ResponseEntity<?> toggleVote(@PathVariable Long publicationId, HttpServletRequest request) {
-        try {
-            String email = securityService.getEmail(request);
-            Vote vote = publicationService.toggleVote(publicationId, email);
-            return ResponseEntity.status(HttpStatus.CREATED).body(vote);
-
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
-
-
 
 }
 
