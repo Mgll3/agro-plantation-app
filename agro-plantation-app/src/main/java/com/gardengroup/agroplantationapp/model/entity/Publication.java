@@ -30,7 +30,7 @@ public class Publication {
     private LocalDateTime publicationDate;
     @Column(columnDefinition = "BOOLEAN DEFAULT 0")
     private Boolean visibility;
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Image mainImage;
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Image> images;
