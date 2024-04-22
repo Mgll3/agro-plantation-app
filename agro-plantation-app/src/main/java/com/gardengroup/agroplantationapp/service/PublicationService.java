@@ -39,7 +39,10 @@ public class PublicationService implements IPublicationService {
 
         Publication publication = new Publication(publicationDTO);
 
-        User user = userRepository.searchEmail(email);
+        User user = userRepository.findByEmail(email)
+            .orElseThrow(() -> new DataAccessException("User not found") {
+        });
+
         publication.setAuthor(user);
 
         //Asignaciones de parametros default
@@ -89,7 +92,10 @@ public class PublicationService implements IPublicationService {
 
     @Transactional
     public Publication updateVisibility(Long publicationId, String email) {
-        User user = userRepository.searchEmail(email);
+        User user = userRepository.findByEmail(email)
+            .orElseThrow(() -> new DataAccessException("User not found") {
+        });
+
         Optional<Publication> optionalPublication = publicationRepository.findById(publicationId);
 
         if (optionalPublication.isPresent()) {
@@ -258,10 +264,9 @@ public class PublicationService implements IPublicationService {
             voteRepository.save(existingVote);
         } else {
             // El usuario no ha votado antes, se crea un nuevo voto
-            User user = userRepository.searchEmail(userEmail);
-            if (user == null) {
-                throw new IllegalArgumentException("Usuario no encontrado");
-            }
+            User user = userRepository.findByEmail(userEmail)
+                .orElseThrow(() -> new DataAccessException("User not found") {
+            });
 
             Vote newVote = new Vote();
             newVote.setUser(user);

@@ -13,22 +13,22 @@ import com.gardengroup.agroplantationapp.model.repository.UserRepository;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 
 @Service
-public class UserService {
+public class UserService implements IUserService {
     @Autowired
     private UserRepository userRepository;
     @Autowired
     private SecurityService securityService;
-    @Autowired
-    private ProducerRequestRepository producerRequestRepository;
+    
 
     @Transactional
-    public User createUser(RegisterDTO dtoRegistrer) throws OurException {
+    public User createUser(RegisterDTO dtoRegistrer) {
         User user = new User();
         user.setEmail(dtoRegistrer.getEmail());
         user.setPassword(securityService.passwordEncoder(dtoRegistrer.getPassword()));
@@ -45,10 +45,6 @@ public class UserService {
 
     }
 
-    public User getOne(Long id) {
-
-        return userRepository.getOne(id);
-    }
 
     public User findByname(String name) {
 
@@ -56,34 +52,16 @@ public class UserService {
     }
 
     public Boolean existsEmail(String email) {
-
         return userRepository.existsByUseremail(email);
     }
 
-    @Transactional
-    public void sendProducerRequest(String userEmail) throws OurException {
-        // Obtener el usuario por su correo electrónico
-        User user = userRepository.searchEmail(userEmail);
-
-        // Verificar si el usuario existe
-        if (user == null) {
-            throw new OurException("Usuario no encontrado");
-        }
-
-        // Crear la solicitud del productor
-        ProducerRequest producerRequest = new ProducerRequest();
-        producerRequest.setUser(user);
-        producerRequest.setDate(new Date());
-        producerRequest.setStaterequest(new StateRequest(1L));
-
-        // Guardar la solicitud del productor
-        producerRequestRepository.save(producerRequest);
-    }
+    
 
     @Transactional
     public AthAnswerDTO authenticate(LoginDTO LoginDTO) {
         String token = securityService.authenticate(LoginDTO);
-        User user = userRepository.searchEmail(LoginDTO.getEmail());
+        User user = userRepository.findByEmail(LoginDTO.getEmail()).orElseThrow(() -> new DataAccessException("User not found") {
+        });
         return new AthAnswerDTO(token, user.getName(), user.getLastname(), user.getUserType().getType());
     }
 
@@ -91,7 +69,9 @@ public class UserService {
     public AthAnswerDTO getUserSession(HttpServletRequest request) {
         String email = securityService.getEmail(request);
         
-        User user = userRepository.searchEmail(email);
+        User user = userRepository.findByEmail(email)
+            .orElseThrow(() -> new DataAccessException("User not found") {
+        });
         AthAnswerDTO answer = new AthAnswerDTO(user.getName(), user.getLastname(), user.getUserType().getType());
         return answer;
     }

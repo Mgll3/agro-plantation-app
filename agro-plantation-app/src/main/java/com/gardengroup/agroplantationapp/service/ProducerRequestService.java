@@ -1,8 +1,10 @@
 package com.gardengroup.agroplantationapp.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -72,6 +74,22 @@ public class ProducerRequestService implements IProducerRequestService{
         } else {
             throw new IllegalStateException("La solicitud no está en estado 'PENDING'");
         }
+    }
+
+    @Transactional
+    public void sendProducerRequest(String userEmail) {
+        // Obtener el usuario por su correo electrónico
+        User user = userRepository.findByEmail(userEmail)
+            .orElseThrow(() -> new DataAccessException("Publication not found") {
+        });
+        // Crear la solicitud del productor
+        ProducerRequest producerRequest = new ProducerRequest();
+        producerRequest.setUser(user);
+        producerRequest.setDate(new Date());
+        producerRequest.setStaterequest(new StateRequest(1L));
+
+        // Guardar la solicitud del productor
+        producerRequestRepository.save(producerRequest);
     }
 
 }

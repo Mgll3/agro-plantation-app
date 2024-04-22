@@ -50,10 +50,8 @@ public class AuthController {
             User user =  userService.createUser(registerDto);
 
             return new ResponseEntity<>(user, HttpStatus.CREATED);
-            } catch (OurException ex) {
-            // En caso de otros errores, devuelve una respuesta con HttpStatus.NOT_IMPLEMENTED
-            System.out.println(ex.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(ex.getMessage());
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(e.getMessage());
         }
     }
 
@@ -70,8 +68,12 @@ public class AuthController {
             AthAnswerDTO answer = userService.authenticate(LoginDto);
             return new ResponseEntity<>(answer, HttpStatus.OK);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return new ResponseEntity<>(new AthAnswerDTO("Error al autenticar"), HttpStatus.UNAUTHORIZED);
+            if (e.getMessage().equals("User not found")) {
+                return new ResponseEntity<>(new AthAnswerDTO("User not found"), HttpStatus.UNAUTHORIZED);
+            }else {
+                return new ResponseEntity<>(new AthAnswerDTO("Error al autenticar"), HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+            
         }
     }
 
