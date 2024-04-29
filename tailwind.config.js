@@ -31,9 +31,8 @@ export default {
 				"53": "13.25rem"
 			},
 			backgroundImage: {
-				"headerBg": "url('@/images/header_background.avif')",
-				"huerta": "url('@/images/huertas.jpg')",
-				"login" : "url('@/images/inicio_y_registro.jpg)"
+				"headerBg": "url('@/images/backgrounds/header_background.avif')",
+				"login": "url('@/images/backgrounds/inicio_y_registro.jpg')"
 			},
 			gridTemplateColumns: {
 				"form" : "repeat(auto-fit, minmax(300px, 1fr))"

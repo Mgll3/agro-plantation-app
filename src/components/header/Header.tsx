@@ -56,8 +56,8 @@ function Header() {
 	return (
 		<>
 			<header className="w-full">
-				<div className={"bg-headerBg bg-cover bg-center bg-no-repeat relative flex justify-center items-center py-5"}>
-					<img src="images/Logo_fondo_verde.png" alt="" className="w-1/12" />
+				<div className="bg-headerBg bg-cover bg-center bg-no-repeat relative flex justify-center items-center py-5">
+					<img src="images/logos/Logo_fondo_verde.png" alt="" className="w-1/12" />
 					<div className="absolute right-4 top-2">
 
 						{

@@ -15,7 +15,7 @@ function PlantInBanner() {
 			</div>
 
 			<img alt=""
-				src="images/home-card_somos.png"
+				src="images/banners/home-card_somos.png"
 				className="rounded-md"
 			/>
 	

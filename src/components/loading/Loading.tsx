@@ -10,7 +10,7 @@ function Loading() {
 				</h3>
 
 				<div className="w-[70px]">
-					<img src="icons/server-loading.png" />
+					<img src="icons/modals/server-loading.png" />
 				</div>
 
 				<p className="text-sm">Un momento por favor...</p>

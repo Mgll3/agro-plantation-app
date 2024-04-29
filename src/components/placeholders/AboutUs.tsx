@@ -1,6 +1,5 @@
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef} from "react";
 import Header from "../header/Header";
-import MustLoginWarning from "../header/MustLoginWarning";
 import { getStoredToken } from "../../utils/getStoredToken";
 import { checkOpenSession } from "../../interfaces/checkOpenSession";
 import { UserDataType } from "../../pages/commonTypes";
@@ -9,24 +8,12 @@ import { user } from "../../data/userData";
 import { useUserRoleContext } from "../../context/UserRoleContext";
 import { getStoredName } from "../../utils/getStoredName";
 
-type MustLoginWarningStateType = "visible" | "hidden";
 
 function AboutUs() {
-	const bgImageTailwind = "bg-headerBg";
-	const logoSrc = "images/Logo_fondo_verde.png";
-
-	const [mustLoginWarningState, setMustLoginWarningState] = useState<MustLoginWarningStateType>("hidden");
 	const { setUserRole } = useUserRoleContext();
 	const axiosController = useRef<AbortController>();
 
 
-	function handleOpenMustLoginWarning() {
-		setMustLoginWarningState("visible");
-	}
-
-	function handleCloseMustLoginWarning() {
-		setMustLoginWarningState("hidden");
-	}
 
 
 	useLayoutEffect( () => {
@@ -72,14 +59,8 @@ function AboutUs() {
 	return (
 		<>
 			<div className="w-full" >
-				<Header bgImageTailwind={bgImageTailwind} logoSrc={logoSrc} handleOpenMustLoginWarning={handleOpenMustLoginWarning} />
+				<Header />
 			</div>
-
-			{
-				mustLoginWarningState === "visible"
-				&& <MustLoginWarning handleCloseMustLoginWarning={handleCloseMustLoginWarning} />
-			}
-
 
 			<main className="py-12 px-[10vw]">
 				<h1 className="text-4xl text-center pb-10">Company</h1>

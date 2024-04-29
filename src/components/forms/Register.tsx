@@ -116,7 +116,7 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 
 				<aside className="w-[35vw] h-[100vh] relative">
 
-					<div className="bg-[url('@/images/inicio_y_registro.jpg')] w-[100%] h-[100%] bg-center bg-cover bg-no-repeat flex justify-end items-center font-sans">
+					<div className="bg-login w-[100%] h-[100%] bg-center bg-cover bg-no-repeat flex justify-end items-center font-sans">
 						<h2 className="bg-[#EAE3C0] text-black font-semibold text-2xl p-[1rem_4rem] rounded-2xl translate-x-[14px] translate-y-[30px]">Registro</h2>
 						<Link to="/copyright" className="absolute bottom-0 p-[4px_4px] m-[1rem] bg-[#94B447] text-[#1B7E25] text-center text-[15px] rounded-md">
 							Todos los derechos reservados para Plant-In &copy;
@@ -130,7 +130,7 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 					<div className="flex flex-col justify-center items-center gap-1 rounded-2xl text-2xl text-black font-sans mt-[2rem]">
 						<h1>Bienvenido a</h1>
 						<button type="button" onClick={() => navigate("/")}>
-							<img src="images/LogoVerde.png" alt="logo" className=" w-[120px] h-[150px] mb-5" />
+							<img src="images/logos/LogoVerde.png" alt="logo" className=" w-[120px] h-[150px] mb-5" />
 						</button>
 						<h2>Por favor, completa el formulario</h2>
 					</div>
