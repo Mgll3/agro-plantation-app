@@ -5,7 +5,6 @@ import { useUserRoleContext } from "../context/UserRoleContext";
 import { checkOpenSession } from "../interfaces/checkOpenSession";
 import { getBestPublications } from "../interfaces/getBestPublications";
 import PublicationsPreviewList from "../components/publicationsList/PublicationsPreviewList";
-import MustLoginWarning from "../components/header/MustLoginWarning";
 import { UserDataType } from "./commonTypes";
 import { getStoredToken } from "../utils/getStoredToken";
 import Footer from "../components/footer/Footer";
@@ -19,7 +18,6 @@ import { PublicationType } from "../components/publicationsList/publicationsList
 
 
 type LoadingStateType = "loading" | "loaded" | "error";
-type MustLoginWarningStateType = "visible" | "hidden";
 
 // type ChartsDataType = {
 // 	barChartData: BarChartDataType,
@@ -29,7 +27,6 @@ type MustLoginWarningStateType = "visible" | "hidden";
 
 export default function Home() {
 	const { userRole, setUserRole } = useUserRoleContext();
-	const [mustLoginWarningState, setMustLoginWarningState] = useState<MustLoginWarningStateType>("hidden");
 	const [publicationsState, setPublicationsState] = useState<LoadingStateType>("loading");
 	// const [dashboardState, setDashboardState] = useState<LoadingStateType>("loading");
 
@@ -37,18 +34,7 @@ export default function Home() {
 	// const chartsData = useRef<ChartsDataType>();
 	const axiosController = useRef<AbortController>();
 
-	const bgImageTailwind = "bg-headerBg";
-	const logoSrc = "images/Logo_fondo_verde.png";
 
-
-	function handleOpenMustLoginWarning() {
-		setMustLoginWarningState("visible");
-	}
-
-	function handleCloseMustLoginWarning() {
-		setMustLoginWarningState("hidden");
-	}
-	
 
 
 	useLayoutEffect( () => {
@@ -111,14 +97,8 @@ export default function Home() {
 	return (
 		<>
 			<div className="w-full" >
-				<Header bgImageTailwind={bgImageTailwind} logoSrc={logoSrc} handleOpenMustLoginWarning={handleOpenMustLoginWarning} />
+				<Header />
 			</div>
-
-			{
-				mustLoginWarningState === "visible"
-				&& <MustLoginWarning handleCloseMustLoginWarning={handleCloseMustLoginWarning} />
-			}
-
 
 			<main className="w-full py-8">
 

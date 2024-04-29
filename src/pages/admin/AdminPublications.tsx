@@ -15,8 +15,6 @@ function AdminPublications() {
 	const [publicationsFiltered, setPublicationsFiltered] = useState<PublicationType[]>([]);
 	const [publicationsLoadState, setPublicationsLoadState] = useState<PublicationsLoadStateType>("loading");
 
-	const bgImageTailwind = "bg-headerBg";
-	const logoSrc = "images/Logo_fondo_verde.png";
 
 
 
@@ -52,7 +50,7 @@ function AdminPublications() {
 	return (
 		<>
 			<div className="w-full" >
-				<Header bgImageTailwind={bgImageTailwind} logoSrc={logoSrc} />
+				<Header />
 			</div>
 			
 			<main className="">
