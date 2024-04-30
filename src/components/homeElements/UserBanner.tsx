@@ -17,7 +17,7 @@ function UserBanner() {
 		<div className="flex justify-center w-full p-10 bg-[#F9F8F8] font-sans">
 			<div className="w-[45%]">
 				<img className="w-full"
-					src="../../../public/images/banners/UserBanner.png" alt="" 
+					src="images/banners/UserBanner.png" alt="" 
 				/>
 			</div>
 

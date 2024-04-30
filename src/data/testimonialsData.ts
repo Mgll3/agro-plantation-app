@@ -14,7 +14,7 @@ export const testimonialsData: TestimonialsDataType[] = [
 		header: "Hice un curso de Agroecologia",
 		mainText: "Gracias a los cursos de Agroecologia que dan los productores que estan registrados en PLANT-IN, pude armar mi huerta en el fondo de mi casa, ahora tengo verduras sanas y saludables",
 		captionHeader: "Curso de Agroecologia",
-		captionMainText: "",
+		captionMainText: "Tengo la casa llena de plantas de la risa! xD",
 		imageUrl: "images/testimonials/home-card_testimonios_2.png",
 		imageAlt: "Huerta junto a mi ventana"
 	},

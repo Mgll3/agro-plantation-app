@@ -16,6 +16,7 @@ import { storeName } from "../utils/storeName";
 import { PublicationType } from "../components/publicationsList/publicationsListTypes";
 import Testimonials from "../components/homeElements/Testimonials";
 import UserBanner from "../components/homeElements/UserBanner";
+import ProducerBanner from "../components/homeElements/ProducerBanner";
 
 
 
@@ -116,6 +117,14 @@ export default function Home() {
 					userRole === "visitor" && (
 						<div className="px-[6vw] pt-[3vh]">
 							<UserBanner />
+						</div>
+					)
+				}
+
+				{
+					userRole === "visitor" && (
+						<div className="px-[6vw] pt-[3vh]">
+							<ProducerBanner />
 						</div>
 					)
 				}
