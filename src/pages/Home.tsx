@@ -14,6 +14,7 @@ import SocialNetworks from "../components/homeElements/SocialNetworks";
 import { getStoredName } from "../utils/getStoredName";
 import { storeName } from "../utils/storeName";
 import { PublicationType } from "../components/publicationsList/publicationsListTypes";
+import Testimonials from "../components/homeElements/Testimonials";
 
 
 
@@ -102,10 +103,14 @@ export default function Home() {
 
 			<main className="w-full py-8">
 
-				<div className="px-[10vw] pt-[3vh]">
-					<PlantInBanner />
-				</div>
-		
+				{
+					userRole === "visitor" && (
+						<div className="px-[10vw] pt-[3vh]">
+							<PlantInBanner />
+						</div>
+					)
+				}
+			
 				{
 					publicationsState === "loading" && (
 						<div className="px-[10vw] text-center">
@@ -117,8 +122,8 @@ export default function Home() {
 				{
 					publicationsState === "error" && (
 						<div className="px-[10vw] py-20 font-sans text-center text-2xl">
-							<p className="">No se han podido cargar las publicaciones.</p>
-							<p className="">Por favor, compruebe su conexión y refresque la página.</p>
+							<p className="">No se han podido cargar las publicaciones más votadas.</p>
+							<p className="mt-2 text-xl">Por favor, compruebe su conexión y refresque la página.</p>
 						</div>
 					)
 				}
@@ -176,6 +181,10 @@ export default function Home() {
 						)
 					}
 				</div> */}
+
+				<div className="px-[10vw] pt-[3vh]">
+					<Testimonials />
+				</div>
 
 				<div className="px-[10vw] mt-20 mb-0">
 					<SocialNetworks />

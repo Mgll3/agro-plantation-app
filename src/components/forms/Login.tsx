@@ -4,8 +4,8 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import *  as  Yup from "yup";
 import { LoginFormValuesType } from "./formsTypes.ts";
-import Loading from "../loading/Loading.tsx";
-import NetworkError from "../networkError/NetworkError.tsx";
+import Loading from "../modals/Loading.tsx";
+import NetworkError from "../modals/NetworkError.tsx";
 
 type LoginProps = {
 	handleSubmit: (formValues: LoginFormValuesType) => void,

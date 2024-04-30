@@ -4,8 +4,8 @@ import { RegisterFormValuesType } from "./formsTypes";
 import { RegisterStateType } from "../../pages/LoginRegisterPage";
 import { Link, useNavigate } from "react-router-dom";
 import RegisterOk from "./RegisterOk";
-import Loading from "../loading/Loading";
-import NetworkError from "../networkError/NetworkError";
+import Loading from "../modals/Loading";
+import NetworkError from "../modals/NetworkError";
 import RegisterKo from "./RegisterKo";
 
 

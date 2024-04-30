@@ -3,7 +3,7 @@ import { user } from "../../data/userData";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import { Link } from "react-router-dom";
 import { userProfileStateType } from "./headerTypes";
-import Loading from "../loading/Loading";
+import Loading from "../modals/Loading";
 
 type UserProfileProps = {
 	userProfileState: userProfileStateType,
