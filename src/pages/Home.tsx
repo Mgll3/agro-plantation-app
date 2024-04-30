@@ -8,13 +8,14 @@ import PublicationsPreviewList from "../components/publicationsList/Publications
 import { UserDataType } from "./commonTypes";
 import { getStoredToken } from "../utils/getStoredToken";
 import Footer from "../components/footer/Footer";
-import PlantInBanner from "../components/homeElements/PlantInBanner";
+import VisitorBanner from "../components/homeElements/VisitorBanner";
 import CallToAction from "../components/homeElements/CallToAction";
 import SocialNetworks from "../components/homeElements/SocialNetworks";
 import { getStoredName } from "../utils/getStoredName";
 import { storeName } from "../utils/storeName";
 import { PublicationType } from "../components/publicationsList/publicationsListTypes";
 import Testimonials from "../components/homeElements/Testimonials";
+import UserBanner from "../components/homeElements/UserBanner";
 
 
 
@@ -106,7 +107,15 @@ export default function Home() {
 				{
 					userRole === "visitor" && (
 						<div className="px-[10vw] pt-[3vh]">
-							<PlantInBanner />
+							<VisitorBanner />
+						</div>
+					)
+				}
+
+				{
+					userRole === "visitor" && (
+						<div className="px-[6vw] pt-[3vh]">
+							<UserBanner />
 						</div>
 					)
 				}

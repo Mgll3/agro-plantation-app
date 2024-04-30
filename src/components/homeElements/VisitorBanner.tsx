@@ -1,5 +1,5 @@
 
-function PlantInBanner() {
+function VisitorBanner() {
 	return (
 		<div className="flex w-full overflow-hidden bg-brandingLightYellow rounded-md">
 			<div className="py-0 px-2 text-center">
@@ -23,4 +23,4 @@ function PlantInBanner() {
 	);
 }
 
-export default PlantInBanner;
+export default VisitorBanner;
