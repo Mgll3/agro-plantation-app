@@ -17,7 +17,7 @@ function NetworkError( {failedAction}: NetworkErrorProps) {
 			
 				<h3 className="text-size2 font-light">Ha habido un problema al intentar {failedAction}</h3>
 
-				<p className="text-size3 font-light p-[2rem_0]">Revisa tu conexión e intentalo nuevamente</p>
+				<p className="text-size3 font-light p-[2rem_0]">Revisa tu conexión e inténtalo nuevamente</p>
 
 				<div className="p-[1rem_0]">
 					<CircularProgress color="success" size="90px" />

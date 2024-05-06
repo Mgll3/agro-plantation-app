@@ -25,13 +25,15 @@ export default {
 				brandingLightGreen: "#94B447",
 				brandingLightBlue: "#B5B3B3",
 				screenDarkening: "#00000070",
-				semiTansparentBlack: "#000000cc"
+				semiTansparentBlack: "#000000cc",
+				darkText: "#484848"
 			},
 			spacing: {
 				"53": "13.25rem"
 			},
 			backgroundImage: {
 				"headerBg": "url('@/images/backgrounds/header_background.avif')",
+				"headerBgAdmin": "url('@/images/backgrounds/Header2.png')",
 				"login": "url('@/images/backgrounds/inicio_y_registro.jpg')"
 			},
 			gridTemplateColumns: {

@@ -20,7 +20,7 @@ type LoginRegisterPageProps = {
 }
 
 function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
-	const { setUserRole } = useUserRoleContext();
+	const { userRole, setUserRole } = useUserRoleContext();
 	const [loginState, setLoginState] = useState<LoginStateType>("init");
 	const [registerState, setRegisterState] = useState<RegisterStateType>("init");
 
@@ -129,7 +129,9 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 		let loginNetworkErrorTimeout: number;
 
 		if (loginState === "logged") {
-			navigate("/", {replace: true});
+			userRole !== "ADMIN"
+				?	navigate("/", {replace: true})
+				: navigate("/admin/publications", {replace: true});
 		}
 
 		if (loginState === "networkError") {

@@ -1,3 +1,4 @@
+import { useLocation } from "react-router-dom";
 import { useUserRoleContext } from "../../context/UserRoleContext";
 import Button from "../button/Button";
 import { ButtonColorType } from "../button/buttonTypes";
@@ -8,8 +9,10 @@ type MainNavProps = {
 
 function MainNav({ handleOpenMustLoginWarning }: MainNavProps) {
 	const { userRole } = useUserRoleContext();
+	const location = useLocation();
 
 	const buttonColor: ButtonColorType = "yellow";
+	const buttonColor2: ButtonColorType = "green";
 	const buttonFontSize = "text-base";
 	const buttonWidth = "w-53";
 	const buttonPaddingY = "py-2.5";
@@ -20,7 +23,7 @@ function MainNav({ handleOpenMustLoginWarning }: MainNavProps) {
 			<ul className="flex gap-x-4">
 				<li className="">
 					<Button
-						buttonColor={buttonColor}
+						buttonColor={location.pathname === "/" ? buttonColor2 : buttonColor}
 						buttonFontSize={buttonFontSize}
 						buttonWidth={buttonWidth}
 						buttonPaddingY={buttonPaddingY}
@@ -33,7 +36,7 @@ function MainNav({ handleOpenMustLoginWarning }: MainNavProps) {
 						!handleOpenMustLoginWarning
 							? (
 								<Button
-									buttonColor={buttonColor}
+									buttonColor={location.pathname === "/publications" ? buttonColor2 : buttonColor}
 									buttonFontSize={buttonFontSize}
 									buttonWidth={buttonWidth}
 									buttonPaddingY={buttonPaddingY}
@@ -43,7 +46,7 @@ function MainNav({ handleOpenMustLoginWarning }: MainNavProps) {
 							: userRole === "visitor"
 								? (
 									<Button
-										buttonColor={buttonColor}
+										buttonColor={location.pathname === "/publications" ? buttonColor2 : buttonColor}
 										buttonFontSize={buttonFontSize}
 										buttonWidth={buttonWidth}
 										buttonPaddingY={buttonPaddingY}
@@ -52,7 +55,7 @@ function MainNav({ handleOpenMustLoginWarning }: MainNavProps) {
 								)
 								: (
 									<Button
-										buttonColor={buttonColor}
+										buttonColor={location.pathname === "/publications" ? buttonColor2 : buttonColor}
 										buttonFontSize={buttonFontSize}
 										buttonWidth={buttonWidth}
 										buttonPaddingY={buttonPaddingY}
@@ -67,7 +70,7 @@ function MainNav({ handleOpenMustLoginWarning }: MainNavProps) {
 						!handleOpenMustLoginWarning
 							? (
 								<Button
-									buttonColor={buttonColor}
+									buttonColor={location.pathname === "/forum" ? buttonColor2 : buttonColor}
 									buttonFontSize={buttonFontSize}
 									buttonWidth={buttonWidth}
 									buttonPaddingY={buttonPaddingY}
@@ -77,7 +80,7 @@ function MainNav({ handleOpenMustLoginWarning }: MainNavProps) {
 							: userRole === "visitor"
 								? (
 									<Button
-										buttonColor={buttonColor}
+										buttonColor={location.pathname === "/forum" ? buttonColor2 : buttonColor}
 										buttonFontSize={buttonFontSize}
 										buttonWidth={buttonWidth}
 										buttonPaddingY={buttonPaddingY}
@@ -86,7 +89,7 @@ function MainNav({ handleOpenMustLoginWarning }: MainNavProps) {
 								)
 								: (
 									<Button
-										buttonColor={buttonColor}
+										buttonColor={location.pathname === "/forum" ? buttonColor2 : buttonColor}
 										buttonFontSize={buttonFontSize}
 										buttonWidth={buttonWidth}
 										buttonPaddingY={buttonPaddingY}

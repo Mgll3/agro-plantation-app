@@ -114,7 +114,7 @@ export default function Home() {
 				}
 
 				{
-					userRole === "visitor" && (
+					userRole === "USER" && (
 						<div className="px-[6vw] pt-[3vh]">
 							<UserBanner />
 						</div>
@@ -122,11 +122,13 @@ export default function Home() {
 				}
 
 				{
-					userRole === "visitor" && (
-						<div className="px-[6vw] pt-[3vh]">
-							<ProducerBanner />
-						</div>
-					)
+					userRole === "PRODUCER" || userRole === "PRODUCER_VIP"
+						? (
+							<div className="px-[6vw] pt-[3vh]">
+								<ProducerBanner />
+							</div>
+						)
+						: null
 				}
 			
 				{

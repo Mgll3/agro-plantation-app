@@ -1,49 +1,52 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
 import Viewer from "../../components/admin/Viewer";
 import { PublicationType } from "../../components/publicationsList/publicationsListTypes";
-import { sortByRandom } from "../../utils/filters/sortByRandom";
-import { sortPublicationsByDate } from "../../utils/filters/sortPublicationsByDate";
-import { sortPublicationsByUser } from "../../utils/filters/sortPublicationsByUser";
-import { sortPublicationsByScore } from "../../utils/filters/sortPublicationsByScore";
+import NetworkError from "../../components/modals/NetworkError";
+import LoadingSmall from "../../components/modals/LoadingSmall";
+import Button from "../../components/button/Button";
+import { ButtonColorType } from "../../components/button/buttonTypes";
+import AdminPublicationsFilter from "./AdminPublicationsFilter";
 
 type PublicationsLoadStateType = "loading" | "error" | "loaded";
-type FilterType = "none" | "random" | "user" | "score" | "date" | "auth";
+export type FilterType = "random" | "user" | "score" | "date" | "ammount" | "auth";
 
 function AdminPublications() {
-	const [publicationsFiltered, setPublicationsFiltered] = useState<PublicationType[]>([]);
+	const [publicationsFiltered, setPublicationsFiltered] = useState<PublicationType[] | null>(null);
 	const [publicationsLoadState, setPublicationsLoadState] = useState<PublicationsLoadStateType>("loading");
+	const [filterComponentVisibility, setFilterComponentVisibility] = useState<boolean>(false);
+	const [filter, setFilter] = useState<FilterType>("random");
+	const axiosController = useRef<AbortController>();
+	const filterUnderlinedStyles = "w-[40px] border-[3px] border-darkText border-solid";
+	const dotStyle = "w-[6px] h-[6px] bg-brandingLightGreen rounded-full";
 
 
+	//Estilos del Botón de Filtros
+	const buttonColor: ButtonColorType = "yellow";
+	const buttonFontSize = "text-[19.78px]";
+	const buttonWidth = "w-[160px]";
+	const buttonPaddingY = "py-1";
 
 
-	function filterPublications(filter: FilterType) {
-
-		if (filter === "random") {
-			setPublicationsFiltered( sortByRandom(publicationsFiltered) );
-		}
-
-		if (filter === "date") {
-			setPublicationsFiltered( sortPublicationsByDate(publicationsFiltered) );
-		}
-
-		if (filter === "user") {
-			setPublicationsFiltered( sortPublicationsByUser(publicationsFiltered) );
-		}
-
-		if (filter === "score") {
-			setPublicationsFiltered( sortPublicationsByScore(publicationsFiltered) );
-		}
-
-		if (filter === "auth") {
-			setPublicationsFiltered( sortPublicationsByDate(publicationsFiltered));
-		}
+	function switchFilterComponentVisibility () {
+		setFilterComponentVisibility(!filterComponentVisibility);
 	}
 
-	useState( () => {
-		//Aquí se recupera la lista de publicaciones y se usa el Axios controller, sólo una vez, cuando se carga el componente.
-	}, []);
+
+	useEffect( () => {
+		axiosController.current = new AbortController();
+
+		if (filter === "random") {
+			
+		}
+
+		return () => {
+			axiosController.current?.abort();
+		};
+	}, [filter]);
+
+
 
 
 
@@ -53,17 +56,99 @@ function AdminPublications() {
 				<Header />
 			</div>
 			
-			<main className="">
-				<div className="">
-					TOOLS
-				</div>
+			<main className="flex flex-col items-center w-[80%] h-[40vh] mt-[5vh] mx-auto">
+				<ul className="flex gap-6 items-center font-montserrat font-semibold text-[16px]">
+					<li>
+						<div className="flex-col">
+							<p className="text-darkText">Aleatorio</p>
+							<div className={filter === "random" ? filterUnderlinedStyles : ""}></div>
+						</div>
+					</li>
+					<li>
+						<div className={dotStyle}></div>
+					</li>
+					<li>
+						<div className="flex-col">
+							<p className="text-darkText">Por Usuario</p>
+							<div className={filter === "user" ? filterUnderlinedStyles : ""}></div>
+						</div>
+					</li>
+					<li>
+						<div className={dotStyle}></div>
+					</li>
+					<li>
+						<div className="flex-col">
+							<p className="text-darkText">Por Like</p>
+							<div className={filter === "score" ? filterUnderlinedStyles : ""}></div>
+						</div>
+					</li>
+					<li>
+						<div className={dotStyle}></div>
+					</li>
+					<li>
+						<div className="flex-col">
+							<p className="text-darkText">Por Fecha de Publicación</p>
+							<div className={filter === "date" ? filterUnderlinedStyles : ""}></div>
+						</div>
+					</li>
+					<li>
+						<div className={dotStyle}></div>
+					</li>
+					<li>
+						<div className="flex-col">
+							<p className="text-darkText">Por cantidad de publicaciones</p>
+							<div className={filter === "ammount" ? filterUnderlinedStyles : ""}></div>
+						</div>
+					</li>
+					<li>
+						<div className={dotStyle}></div>
+					</li>
+					<li>
+						<div className="flex-col">
+							<p className="text-darkText">Por Pendientes</p>
+							<div className={filter === "auth" ? filterUnderlinedStyles : ""}></div>
+						</div>
+					</li>
+					<li>
+						<div className="relative">
+							<Button
+								buttonColor={buttonColor}
+								buttonFontSize={buttonFontSize}
+								buttonWidth={buttonWidth}
+								buttonPaddingY={buttonPaddingY}
+								buttonFuncionality={{actionText: "Filtros", handleClick: switchFilterComponentVisibility}}
+							>
+							</Button>
 
-				<div className="">
-					<Viewer itemsList={publicationsFiltered}/>
-				</div>
+							{
+								filterComponentVisibility === true && <AdminPublicationsFilter switchFilterComponentVisibility={switchFilterComponentVisibility} setFilter={setFilter} />
+							}
+						</div>
+					</li>
+				</ul>
+
+				{
+					publicationsFiltered === null 
+						?	(
+							<div className="mt-24 text-brandingLightGreen">
+								<LoadingSmall/>
+							</div>
+						)
+						: (
+							<div className="">
+								<Viewer itemsList={publicationsFiltered} />
+							</div>
+						)
+				}
+
+
+				{
+					publicationsLoadState === "error" && <NetworkError failedAction="cargar las publicaciones." />
+				}
+
 			</main>
 
-			<div className="">
+			<div className="mt-8">
 				<Footer />
 			</div>
 		</>

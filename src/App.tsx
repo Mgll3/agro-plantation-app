@@ -13,6 +13,7 @@ import ProtectedRouteAdmin from "./components/protectRoutes/ProtectedRouteAdmin"
 import AdminPublications from "./pages/admin/AdminPublications";
 import AdminUsers from "./pages/admin/AdminUsers";
 import AdminForum from "./pages/admin/AdminForum";
+import Management from "./pages/management/Management";
 
 
 
@@ -29,6 +30,7 @@ function App() {
 				<Route path="/helpdesk" element={<HelpDesk />} />
 				<Route path="/community" element={<Community />} />
 				<Route path="/company" element={<AboutUs />} />
+				<Route path="/management" element={<Management />} />
 
 				PROTECTED ROUTES
 				<Route element={<ProtectedRouteUser />} >
@@ -37,9 +39,9 @@ function App() {
 				</Route>
 
 				<Route element={<ProtectedRouteAdmin />} >
-					<Route path="/admin_publications" element={<AdminPublications />} />
-					<Route path="/admin_users" element={<AdminUsers />} />
-					<Route path="/admin_forum" element={<AdminForum />} />
+					<Route path="/admin/publications" element={<AdminPublications />} />
+					<Route path="/admin/users" element={<AdminUsers />} />
+					<Route path="/admin/forum" element={<AdminForum />} />
 				</Route>
 			</Routes >
 		</>

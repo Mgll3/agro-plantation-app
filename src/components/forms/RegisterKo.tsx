@@ -12,7 +12,7 @@ function RegisterKo( {errorText}: RegisterKoProps) {
 					<span className="block text-md">{errorText}</span>
 				</h3>
 
-				<img src="images/LogoVerde.png" alt="logo" className=" w-[120px] h-[150px] mb-5" />
+				<img src="images/logos/LogoVerde.png" alt="logo" className=" w-[120px] h-[150px] mb-5" />
 			</div>
 		</div>
 	);
