@@ -21,11 +21,8 @@ function ProducerBanner() {
 				/>
 			</div>
 
-			<div className="w-[50%]">
-			</div>
-
-			<div className="absolute top-[16%] right-0 w-[53%] h-[70%] p-10 bg-[#F9F8F8] rounded-2xl">
-				<h2>¡Compartí tus conocimientos!</h2>
+			<div className="absolute top-[16%] right-0 w-[53%] h-[70%] p-10 bg-[#F9F8F8] rounded-2xl flex flex-col gap-[2rem] justify-center text-[#797979]">
+				<h2 className="text-3xl">¡Compartí tus <br/>conocimientos!</h2>
 				<p>Publica sobre tu huerta o comparte tus mejores tips de jardinería.</p>
 				<Button buttonColor={buttonColor} buttonFontSize={buttonFontSize} buttonWidth={buttonWidth} buttonPaddingY={buttonPaddingY} buttonFuncionality={buttonFuncionality} />
 			</div>

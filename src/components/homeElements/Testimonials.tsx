@@ -80,7 +80,7 @@ function Testimonials() {
 
 	return (
 		<div className="relative w-full h-[70vh]">
-			<h2 className="w-full mb-[2vh] text-center text-3xl font-sans">Testimonios de nuestros usuarios</h2>
+			<h2 className="w-full mb-[8vh] text-center text-3xl font-sans">Testimonios de nuestros usuarios</h2>
 
 			{/* BOTONES */}
 			<button className="absolute z-20 top-[50%] -left-20 text-brandingDarkGreen text-[77px] font-light"
@@ -103,7 +103,7 @@ function Testimonials() {
 				{/* TESTIMONIOS */}
 				<div className="flex justify-between w-full h-full">
 					{/* TESTIMONIO A LA IZQUIERDA */}
-					<div className="absolute left-[-100%] z-10 flex items-center justify-between w-[100%] h-full bg-white"
+					<div className="absolute left-[-100%] z-10 flex items-center justify-between w-[100%] h-[90%] bg-white"
 						ref={prevTestimonialElement}
 					>
 						<div className="w-[55%] px-6">
@@ -111,37 +111,37 @@ function Testimonials() {
 							<p className="text-[32px] font-light">{testimonialsData[prevTestimonialIndex].captionMainText}</p>
 						</div>
 
-						<div className="w-[45%] h-full text-[19.78px]">
+						<div className="w-[45%] h-full text-[19.78px] border-solid border-[#d2d1d1] border rounded-xl overflow-hidden">
 							<img src={testimonialsData[prevTestimonialIndex].imageUrl} alt={testimonialsData[prevTestimonialIndex].imageAlt}
-								className="w-full"
+								className="w-full rounded-xl"
 							/>
-							<div className="">
-								<h3 className="font-bold">{testimonialsData[prevTestimonialIndex].header}</h3>
-								<p className="">{testimonialsData[prevTestimonialIndex].mainText}</p>
+							<div className="flex flex-col  p-[1rem_1rem_0.5rem]">
+								<h3 className="font-bold text-left">{testimonialsData[prevTestimonialIndex].header}</h3>
+								<p className="text-sm">{testimonialsData[prevTestimonialIndex].mainText}</p>
 							</div>
 						</div>
 					</div>
 
 					{/* TESTIMONIO VISIBLE */}
-					<div className="flex items-center justify-between w-[100%] h-full bg-white">
+					<div className="flex items-center justify-between w-[100%] h-[90%] bg-white">
 						<div className="w-[55%] px-6">
 							<h3 className="text-[51.78px]">{testimonialsData[selectedTestimonial].captionHeader}</h3>
 							<p className="text-[32px] font-light">{testimonialsData[selectedTestimonial].captionMainText}</p>
 						</div>
 
-						<div className="w-[45%] h-full text-[19.78px]">
+						<div className="w-[45%] h-full text-[19.78px] border-solid border-[#d2d1d1] border rounded-xl overflow-hidden">
 							<img src={testimonialsData[selectedTestimonial].imageUrl} alt={testimonialsData[selectedTestimonial].imageAlt}
-								className="w-full"
+								className="w-full rounded-xl"
 							/>
-							<div className="">
-								<h3 className="font-bold">{testimonialsData[selectedTestimonial].header}</h3>
-								<p className="">{testimonialsData[selectedTestimonial].mainText}</p>
+							<div className="flex flex-col  p-[1rem_1rem_0.5rem]">
+								<h3 className="font-bold text-left ">{testimonialsData[selectedTestimonial].header}</h3>
+								<p className=" text-sm">{testimonialsData[selectedTestimonial].mainText}</p>
 							</div>
 						</div>
 					</div>
 
 					{/* TESTIMONIO A LA DERECHA */}
-					<div className="absolute right-[-100%] z-10 flex items-center justify-between w-[100%] h-full bg-white"
+					<div className="absolute right-[-100%] z-10 flex items-center justify-between w-[100%] h-[90%] bg-white"
 						ref={nextTestimonialElement}
 					>
 						<div className="w-[55%] px-6">
@@ -149,13 +149,13 @@ function Testimonials() {
 							<p className="text-[32px] font-light">{testimonialsData[nextTestimonialIndex].captionMainText}</p>
 						</div>
 
-						<div className="w-[45%] h-full text-[19.78px]">
+						<div className="w-[45%] h-full text-[19.78px] border-solid border-[#d2d1d1] border rounded-xl overflow-hidden">
 							<img src={testimonialsData[nextTestimonialIndex].imageUrl} alt={testimonialsData[nextTestimonialIndex].imageAlt}
-								className="w-full"
+								className="w-full rounded-xl"
 							/>
-							<div className="">
-								<h3 className="font-bold">{testimonialsData[nextTestimonialIndex].header}</h3>
-								<p className="">{testimonialsData[nextTestimonialIndex].mainText}</p>
+							<div className="flex flex-col  p-[1rem_1rem_0.5rem]">
+								<h3 className="font-bold text-left ">{testimonialsData[nextTestimonialIndex].header}</h3>
+								<p className="text-sm">{testimonialsData[nextTestimonialIndex].mainText}</p>
 							</div>
 						</div>
 					</div>

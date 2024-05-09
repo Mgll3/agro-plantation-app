@@ -8,9 +8,9 @@ function VisitorBanner() {
 					<span className="block my-[-1rem] font-loginFont font-normal">PLANT-IN</span>
 				</h2>
 
-				<p className="mt-3 text-left text-[20px]">
-					<span className="font-loginFont text-[24px]">PLANT-IN </span>
-					es un proyecto sin fines de lucro que tiene como objetivo, conectar a todas las personas apasionadas por los alimentos saludables y la sanidad de la tierra, sin importar si son grandes o pequeños productores. En este espacio, compartiremos experiencias, fotos y novedades sobre nuestras huertas agroecologicas... TE SUMAS?
+				<p className="mt-3 text-left text-[20px] pb-4">
+					<span className="font-loginFont text-[24px] ">PLANT-IN </span>
+					es un proyecto sin fines de lucro que tiene como objetivo, conectar a todas las personas apasionadas por los alimentos saludables y la sanidad de la tierra, sin importar si son grandes o pequeños productores. En este espacio, compartiremos experiencias, fotos y novedades sobre nuestras huertas agroecologicas... <br/>TE SUMAS?
 				</p>
 			</div>
 

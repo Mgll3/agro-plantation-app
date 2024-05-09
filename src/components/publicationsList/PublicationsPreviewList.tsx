@@ -7,7 +7,7 @@ function PublicationsPreviewList({ bestPublicationsArray }: PublicationsPreviewL
 
 	return (
 		<div className="">
-			<h2 className="mb-[2vh] text-center text-3xl font-sans">Publicaciones</h2>
+			<h2 className="mb-[8vh] text-center text-3xl font-sans ">Publicaciones</h2>
 
 			<div className="flex flex-wrap justify-between gap-x-12 gap-y-12">
 				{

@@ -53,7 +53,7 @@ function PublicationPreviewCard({ id, mainImage, title, author, mainText }: Publ
 				ref={cardContainer} key={id} >
 
 				<div className="w-full h-[184px]">
-					<img alt="Publication Main Image" src={mainImage} className="w-full h-full" />
+					<img alt="Publication Main Image" src={mainImage} className="w-full h-full object-contain" />
 				</div>
 
 				<div className="w-full h-[136px] p-5">
