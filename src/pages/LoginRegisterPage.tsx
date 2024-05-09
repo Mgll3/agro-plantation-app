@@ -1,15 +1,14 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { logInUser } from "../interfaces/logInUser";
-import { user } from "../data/userData";
 import Login from "../components/forms/Login";
 import { registerUser } from "../interfaces/registerUser";
 import Register from "../components/forms/Register";
 import { LoginFormValuesType, RegiserFormFieldsToSendType, RegisterFormValuesType } from "../components/forms/formsTypes";
 import { UserDataType } from "./commonTypes";
 import { useUserRoleContext } from "../context/UserRoleContext";
-import { storeToken } from "../utils/storeToken";
-import { storeName } from "../utils/storeName";
+import { updateUserData } from "../utils/updateUserData";
+import { resetUserData } from "../utils/resetUserData";
 
 
 export type LoginStateType = "init" | "loading" | "loginError" | "networkError" | "logged";
@@ -47,16 +46,14 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 
 		logInUser(loginDataJson, axiosController.current!)
 			.then((UserDataResponse: UserDataType) => {
-				storeToken(UserDataResponse.accessToken);
-				storeName(`${UserDataResponse.name} ${UserDataResponse.lastname}`);
-				user.name = `${UserDataResponse.name} ${UserDataResponse.lastname}`;
-				setUserRole(UserDataResponse.userType);
+				updateUserData(UserDataResponse, setUserRole);
 				
 				loggedTimeout = window.setTimeout( () => {
 					setLoginState("logged");
 				}, 800);
 			})
 			.catch((error: Error) => {
+				resetUserData(setUserRole);
 				if (error.message === "401"){
 					setLoginState("loginError");
 				} else {

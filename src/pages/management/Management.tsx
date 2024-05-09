@@ -6,35 +6,53 @@ import Header from "../../components/header/Header";
 import { registerUser } from "../../interfaces/registerUser";
 import { logInUser } from "../../interfaces/logInUser";
 import { UserDataType } from "../commonTypes";
-import { storeToken } from "../../utils/storeToken";
-import { storeName } from "../../utils/storeName";
 import { useUserRoleContext } from "../../context/UserRoleContext";
-import { user } from "../../data/userData";
 import { getStoredToken } from "../../utils/getStoredToken";
 import { createPublication } from "../../interfaces/createPublication";
 import { PlantationDemoType } from "./plantationsDemoData";
+import { updateUserData } from "../../utils/updateUserData";
 
 type RegisterUserStateType = "init" | "usersOk" | "usersKo";
 type CreatePublicationsType = "init" | "publicationsOk" | "publicationsKo";
+type loginUserType = "init" | "loginUser" | "loginProducer" | "loginAdmin" |"loginKo";
 
 function Management() {
 	const { setUserRole } = useUserRoleContext();
 	const [registerUserState, setRegisterUserState] = useState<RegisterUserStateType>("init");
 	const [createPublicationsState, setCreatePublicationsState] = useState<CreatePublicationsType>("init");
+	const [loginUserState, setLoginUserState] = useState<loginUserType>("init");
 
-	const buttonColor: ButtonColorType = "yellow";
+	const buttonColorYellow: ButtonColorType = "yellow";
+	const buttonColorGreen: ButtonColorType = "green";
 	const buttonFontSize = "text-base";
 	const buttonWidth = "w-[250px]";
+	const buttonWidthSmall = "w-[180px]";
 	const buttonPaddingY = "py-3.5";
+	const buttonPaddingYSmall = "py-1.5";
 
-	const buttonFuncionality1 = {
+	const createUsersFuncionality = {
 		actionText: "Crear Usuarios",
 		handleClick: createUsers
 	};
 
-	const buttonFuncionality2 = {
+	const createPublicationsFuncionality = {
 		actionText: "Crear Publicaciones",
 		handleClick: createPublications
+	};
+
+	const loginAsUserFuncionality = {
+		actionText: "Logar Usuario",
+		handleClick: loginAsUser
+	};
+
+	const loginAsProducerFuncionality = {
+		actionText: "Logar Productor",
+		handleClick: loginAsProducer
+	};
+
+	const loginAsAdminFuncionality = {
+		actionText: "Logar Admin",
+		handleClick: loginAsAdmin
 	};
 
 	const axiosController1 = useRef<AbortController>();
@@ -105,6 +123,66 @@ function Management() {
 	}
 
 
+	function loginAsUser () {
+		axiosController2.current = new AbortController();
+		const loginData: LoginFormValuesType = {
+			email: userData.email,
+			password: userData.password
+		};
+		const loginDataJson = JSON.stringify(loginData);
+
+		logInUser(loginDataJson, axiosController2.current!)
+			.then((userDataResponse: UserDataType) => {
+				updateUserData(userDataResponse, setUserRole);
+				setLoginUserState("loginUser");
+			})
+			.catch((error: Error) => {
+				console.log(error);
+				setLoginUserState("loginKo");
+			});
+	}
+
+
+	function loginAsProducer () {
+		axiosController2.current = new AbortController();
+		const loginData: LoginFormValuesType = {
+			email: producerData.email,
+			password: producerData.password
+		};
+		const loginDataJson = JSON.stringify(loginData);
+
+		logInUser(loginDataJson, axiosController2.current!)
+			.then((userDataResponse: UserDataType) => {
+				updateUserData(userDataResponse, setUserRole);
+				setLoginUserState("loginProducer");
+			})
+			.catch((error: Error) => {
+				console.log(error);
+				setLoginUserState("loginKo");
+			});
+	}
+
+
+	function loginAsAdmin () {
+		axiosController2.current = new AbortController();
+		const loginData: LoginFormValuesType = {
+			email: adminData.email,
+			password: adminData.password
+		};
+		const loginDataJson = JSON.stringify(loginData);
+
+		logInUser(loginDataJson, axiosController2.current!)
+			.then((userDataResponse: UserDataType) => {
+				updateUserData(userDataResponse, setUserRole);
+				setLoginUserState("loginAdmin");
+			})
+			.catch((error: Error) => {
+				console.log(error);
+				setLoginUserState("loginKo");
+			});
+	}
+
+
 	function createPublications () {
 		axiosController2.current = new AbortController();
 		const loginData: LoginFormValuesType = {
@@ -115,11 +193,8 @@ function Management() {
 
 		//Nos logamos como admin.
 		logInUser(loginDataJson, axiosController2.current!)
-			.then((UserDataResponse: UserDataType) => {
-				storeToken(UserDataResponse.accessToken);
-				storeName(`${UserDataResponse.name} ${UserDataResponse.lastname}`);
-				user.name = `${UserDataResponse.name} ${UserDataResponse.lastname}`;
-				setUserRole(UserDataResponse.userType);
+			.then((userDataResponse: UserDataType) => {
+				updateUserData(userDataResponse, setUserRole);
 			})
 			.catch((error: Error) => {
 				console.log(error);
@@ -128,6 +203,7 @@ function Management() {
 		
 		//Creamos las publicaciones.
 		const storedToken = getStoredToken();
+		console.log(storedToken);
 		const publicationData = {
 			"title": "prueba",
 			"plantation": {
@@ -156,13 +232,13 @@ function Management() {
 
 
 	return (
-		<div className="w-full h-[100vh] bg-brandingLightYellow">
+		<div className="w-full pb-20 bg-brandingLightYellow">
 			<div className="w-full" >
 				<Header />
 			</div>
 
 			<div className="relative flex flex-col items-start w-full pl-28 mt-12 font-sans">
-				<Button buttonColor={buttonColor} buttonFontSize={buttonFontSize} buttonWidth={buttonWidth} buttonPaddingY={buttonPaddingY} buttonFuncionality={buttonFuncionality1} />
+				<Button buttonColor={buttonColorYellow} buttonFontSize={buttonFontSize} buttonWidth={buttonWidth} buttonPaddingY={buttonPaddingY} buttonFuncionality={createUsersFuncionality} />
 				
 				<div className="relative p-8">
 					<div className="mb-4">
@@ -171,10 +247,32 @@ function Management() {
 						<p className="">Contraseña:   <span className="font-bold">Tut$oms6</span></p>
 					</div>
 
-					<div className="mb-4">
+					<div className="relative my-6">
+						<Button buttonColor={buttonColorGreen} buttonFontSize={buttonFontSize} buttonWidth={buttonWidthSmall} buttonPaddingY={buttonPaddingYSmall} buttonFuncionality={loginAsAdminFuncionality} />
+						<div className="absolute bottom-4 right-[110%] font-bold">
+							{
+								loginUserState === "loginAdmin" && <p className="">Logado como Administrador</p>
+							}
+						</div>
+					</div>
+
+					<div className="my-6">
 						<p className="text-brandingDarkGreen">Productor: </p>
 						<p className="">Email:	<span className="font-bold">lorenita16tat@gmail.com</span></p>
 						<p className="">Contraseña:   <span className="font-bold">A%ldo1se</span></p>
+					</div>
+
+					<div className="relative my-6">
+						<Button buttonColor={buttonColorGreen} buttonFontSize={buttonFontSize} buttonWidth={buttonWidthSmall} buttonPaddingY={buttonPaddingYSmall} buttonFuncionality={loginAsProducerFuncionality} />
+						<div className="absolute bottom-4 right-[110%] font-bold">
+							{
+								loginUserState === "loginProducer" && <p className="">Logado como Productor</p>
+							}
+
+							{
+								loginUserState === "loginKo" && <p className="">¡Error al logar!</p>
+							}
+						</div>
 					</div>
 
 					<div className="">
@@ -183,9 +281,18 @@ function Management() {
 						<p className="">Contraseña:   <span className="font-bold">oem$TP5</span></p>
 					</div>
 
+					<div className="relative my-6">
+						<Button buttonColor={buttonColorGreen} buttonFontSize={buttonFontSize} buttonWidth={buttonWidthSmall} buttonPaddingY={buttonPaddingYSmall} buttonFuncionality={loginAsUserFuncionality} />
+						<div className="absolute bottom-4 right-[110%] font-bold">
+							{
+								loginUserState === "loginUser" && <p className="">Logado como Usuario</p>
+							}
+						</div>
+					</div>
+
 					<div className="absolute top-[-17%] right-[-160%] w-[500px] p-4 border-2 border-solid border-brandingYellow rounded-xl">
 						{
-							registerUserState === "init" && <p className="font-bold">Primero registra a los usuarios, luego crea las publicaciones.</p>
+							registerUserState === "init" && <p className="font-bold">Primero crea a los usuarios, luego puedes logarlos y crear las publicaciones.</p>
 						}
 
 						{
@@ -208,7 +315,7 @@ function Management() {
 					</div>
 				</div>
 
-				<Button buttonColor={buttonColor} buttonFontSize={buttonFontSize} buttonWidth={buttonWidth} buttonPaddingY={buttonPaddingY} buttonFuncionality={buttonFuncionality2} />
+				<Button buttonColor={buttonColorYellow} buttonFontSize={buttonFontSize} buttonWidth={buttonWidth} buttonPaddingY={buttonPaddingY} buttonFuncionality={createPublicationsFuncionality} />
 				<div className="absolute bottom-4 right-[40%] font-bold">
 					{
 						createPublicationsState === "publicationsOk" && <p className="">¡Publicaciones registradas correctamente!</p>
@@ -218,6 +325,7 @@ function Management() {
 						createPublicationsState === "publicationsKo" && <p className="">¡Error al registrar las publicaciones!</p>
 					}
 				</div>
+				
 			</div>
 		</div>
 	);

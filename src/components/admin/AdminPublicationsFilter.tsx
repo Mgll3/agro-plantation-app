@@ -1,4 +1,4 @@
-import { FilterType } from "./AdminPublications";
+import { FilterType } from "../../pages/admin/AdminPublications";
 
 type AdminPublicationsFilterProps = {
 	switchFilterComponentVisibility: () => void,

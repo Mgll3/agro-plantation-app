@@ -7,7 +7,7 @@ import NetworkError from "../../components/modals/NetworkError";
 import LoadingSmall from "../../components/modals/LoadingSmall";
 import Button from "../../components/button/Button";
 import { ButtonColorType } from "../../components/button/buttonTypes";
-import AdminPublicationsFilter from "./AdminPublicationsFilter";
+import AdminPublicationsFilter from "../../components/admin/AdminPublicationsFilter";
 
 type PublicationsLoadStateType = "loading" | "error" | "loaded";
 export type FilterType = "random" | "user" | "score" | "date" | "ammount" | "auth";
@@ -18,6 +18,7 @@ function AdminPublications() {
 	const [filterComponentVisibility, setFilterComponentVisibility] = useState<boolean>(false);
 	const [filter, setFilter] = useState<FilterType>("random");
 	const axiosController = useRef<AbortController>();
+	const axiosController2 = useRef<AbortController>();
 	const filterUnderlinedStyles = "w-[40px] border-[3px] border-darkText border-solid";
 	const dotStyle = "w-[6px] h-[6px] bg-brandingLightGreen rounded-full";
 
@@ -37,12 +38,23 @@ function AdminPublications() {
 	useEffect( () => {
 		axiosController.current = new AbortController();
 
+
+
+		return () => {
+			axiosController.current?.abort();
+		};
+	}, []);
+
+
+	useEffect( () => {
+		axiosController2.current = new AbortController();
+
 		if (filter === "random") {
 			
 		}
 
 		return () => {
-			axiosController.current?.abort();
+			axiosController2.current?.abort();
 		};
 	}, [filter]);
 
@@ -121,7 +133,8 @@ function AdminPublications() {
 							</Button>
 
 							{
-								filterComponentVisibility === true && <AdminPublicationsFilter switchFilterComponentVisibility={switchFilterComponentVisibility} setFilter={setFilter} />
+								filterComponentVisibility === true && 
+									<AdminPublicationsFilter switchFilterComponentVisibility={switchFilterComponentVisibility} setFilter={setFilter} />
 							}
 						</div>
 					</li>

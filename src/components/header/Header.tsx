@@ -5,10 +5,10 @@ import SecondaryNav from "./SecondaryNav";
 import UserProfile from "./UserProfile";
 import { userProfileStateType } from "./headerTypes";
 import { Link, useNavigate } from "react-router-dom";
-import { eraseStoredToken } from "../../utils/eraseStoredToken";
 import AdminNav from "./AdminNav";
 import MustLoginWarning from "./MustLoginWarning";
 import DvrIcon from "@mui/icons-material/Dvr";
+import { resetUserData } from "../../utils/resetUserData";
 
 type MustLoginWarningStateType = "visible" | "hidden";
 
@@ -40,8 +40,7 @@ function Header() {
 		setUserProfileState("loading");
 
 		logoutTimeout = window.setTimeout( () => {
-			eraseStoredToken();
-			setUserRole("visitor");
+			resetUserData(setUserRole);
 			setUserProfileState("logout");
 		}, 1500);
 	}
