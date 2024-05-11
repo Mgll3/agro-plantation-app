@@ -112,15 +112,14 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 
 	return (
 		<>
-			<div className="relative w-[100vw] font-loginFont flex h-[100%] text-[#eaefd4f2] bg-[#EAE3C0]">
+			<div className="relative w-[100vw] font-loginFont flex h-[100%] text-[#eaefd4f2]  bg-[#ffffff]">
 
-				<aside className="w-[35vw] h-[100vh] relative">
+				<aside className="w-[32vw] h-[100vh] relative">
 
-					<div className="bg-login w-[100%] h-[100%] bg-center bg-cover bg-no-repeat flex justify-end items-center font-sans">
-						<h2 className="bg-[#EAE3C0] text-black font-semibold text-2xl p-[1rem_4rem] rounded-2xl translate-x-[14px] translate-y-[30px]">Registro</h2>
-						<Link to="/copyright" className="absolute bottom-0 p-[4px_4px] m-[1rem] bg-[#94B447] text-[#1B7E25] text-center text-[15px] rounded-md">
-							Todos los derechos reservados para Plant-In &copy;
-							<small>Marzo 2024</small>
+					<div className="bg-login w-[100%] h-[100%] bg-center bg-cover bg-no-repeat flex justify-end items-center font-sans rounded-r-xl">
+						<h2 className="bg-[#EAE3C0] text-black font-medium font-sans text-2xl p-[.8rem_2.5rem] rounded-l-[25px] translate-y-[5px] drop-shadow-[2px_4px_2px_rgba(0,0,0,.2)]">Registro</h2>
+						<Link to="/copyright" className="absolute bottom-4 p-[4px_4px] m-[1rem] bg-[#94B447] text-[#000] text-center text-[13px] rounded-md drop-shadow-[2px_4px_2px_rgba(0,0,0,.2)]">
+							Todos los derechos reservados para Plant-In<span className="text-[#1B7E25]">&copy;</span> Marzo 2024
 						</Link>
 					</div>
 
@@ -136,7 +135,7 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 					</div>
 
 					<form name="registerForm" action="" encType="multipart/form-data" onSubmit={formik.handleSubmit}
-						className="w-[65vw] max-h-[100vh] border-solid text-center justify-around items-center bg-[#EAE3C0] text-black p-[1rem_6rem_2rem] font-sans">
+						className="w-[68vw] max-h-[100vh] border-solid text-center justify-around items-center text-black p-[1rem_6rem_2rem] font-sans">
 
 						<div className="flex flex-col pb-2">
 
@@ -145,7 +144,7 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 								<div className="relative mb-4">
 									<label htmlFor="userName">
 										<input type="text" id="userName" placeholder="Nombre" { ...formik.getFieldProps("userName") }
-											className="bg-[#00000011] outline-none  border-b-[2px] rounded-md border-b-[#00000052] p-[8px_8px_4px] w-full placeholder-[#666]" />
+											className="bg-[#00000011] outline-none  border-b-[2px] rounded-md border-b-[#00000052] p-[8px_8px_4px] w-full placeholder-[#666] drop-shadow-[2px_4px_2px_rgba(0,0,0,.6)]" />
 									</label>
 
 									{

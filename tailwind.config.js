@@ -34,13 +34,14 @@ export default {
 			backgroundImage: {
 				"headerBg": "url('@/images/backgrounds/header_background.avif')",
 				"headerBgAdmin": "url('@/images/backgrounds/Header2.png')",
-				"login": "url('@/images/backgrounds/inicio_y_registro.jpg')"
+				"login": "linear-gradient(rgba(27, 126, 37, .7), rgba(27, 126, 37, .7)),url('@/images/backgrounds/inicio_y_registro.jpg')"
 			},
 			gridTemplateColumns: {
 				"form" : "repeat(auto-fit, minmax(300px, 1fr))"
 			},
 			dropShadow: {
 				"custom": "0 3px 3px rgba(0, 0, 0, 0.55)",
+				"loginRegister" : "drop-shadow-[2px_4px_2px_rgba(0,0,0,.2)]"
 			},
 		},
 	},
