@@ -1,23 +1,20 @@
 import CheckIcon from "@mui/icons-material/Check";
 
 function RegisterOk() {
-	
+
 	return (
 		<div className="absolute flex justify-center items-center w-screen bg-screenDarkening h-screen">
-			<div className="flex items-center flex-col bg-brandingLightYellow w-[30vw] h-[55vh] text-center">
+			<div className="flex items-center flex-col justify-between bg-brandingLightYellow w-[30vw] h-[50vh] text-center rounded-xl p-[64px_32px] ">
 
-				<h3 className="text-black font-sans text-xl">REGISTRO REALIZADO 
-					<span className="block text-3xl">CORRECTAMENTE</span>
-				</h3>
 
-				<img src="images/logos/LogoVerde.png" alt="logo" className=" w-[120px] h-[150px] mb-5" />
-				
-				<div className="flex justify-center items-center bg-brandingDarkGreen text-brandingLightYellow w-[80px] h-[80px] rounded-full text-5xl">
-					<CheckIcon color="inherit" fontSize="inherit"/>
+				<div className="flex justify-center items-center bg-brandingDarkGreen text-brandingLightYellow w-[120px] h-[120px] rounded-full text-6xl drop-shadow-[2px_4px_2px_rgba(0,0,0,.35)]">
+					<CheckIcon color="inherit" fontSize="inherit" />
 				</div>
 
+				<h3 className="text-black font-sans text-4xl drop-shadow-[2px_4px_2px_rgba(0,0,0,.35)]">Listo! <br /> <span className=" text-lg">Tu registro se completó correctamente</span></h3>
+
 			</div>
-	
+
 		</div>
 	);
 }

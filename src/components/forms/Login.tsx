@@ -55,7 +55,7 @@ export default function Login({ handleSubmit, handleRegisterClick, loginState }:
 							<abbr title="Ir a la página principal">
 								<button type="button" onClick={() => navigate("/")}>
 									<img src="images/logos/LogoVerde.png" alt="logo"
-										className=" bg-[transparent] w-[133.3px] h-[163.12px]"
+										className=" bg-[transparent] w-[133.3px] h-[163.12px] drop-shadow-[0_3px_2px_rgba(0,0,0,.3)]"
 									/>
 								</button>
 							</abbr>
@@ -68,7 +68,7 @@ export default function Login({ handleSubmit, handleRegisterClick, loginState }:
 									id="loginEmail"
 									name="email"
 									placeholder="Correo Electrónico"
-									className="bg-[transparent] outline-none  border-b-[1px] border-b-[#00000038] mb-[0rem] p-[0_12px] w-[300px] text-black drop-shadow-[2px_4px_2px_rgba(0,0,0,.2)] shadow-[0_2px_0_rgba(0,0,0,.04)]"
+									className="bg-[transparent] outline-none  border-b-[1px] border-b-[#00000038] mb-[0rem] p-[0_12px] w-[300px] text-[#636363] drop-shadow-[2px_4px_2px_rgba(0,0,0,.2)] shadow-[0_2px_0_rgba(0,0,0,.04)]"
 								>
 								</Field>
 
@@ -105,17 +105,16 @@ export default function Login({ handleSubmit, handleRegisterClick, loginState }:
 						{
 							loginState === "loading" && <Loading />
 						}
-
 						<Button
 							buttonColor="yellow"
 							buttonFontSize="text-base"
 							buttonWidth="w-[300px]"
-							buttonPaddingY="py-2.5 m-[64px_0] shadow-[0_3px_6px_rgba(0,0,0,.3)]"
+							buttonPaddingY="py-2.5 m-[64px_0] shadow-[0_3px_6px_rgba(100,100,100,.6)]"
 							buttonFuncionality={{ submitText: "Iniciar Sesión" }}
 						/>
 
 
-						<p className="text-black font-sans drop-shadow-[2px_4px_2px_rgba(0,0,0,.5)]">Si no tienes una cuenta, por favor <span onClick={handleRegisterClick} className="text-[#1B7E25]" role="button" >regístrate</span></p>
+						<p className="text-black font-sans drop-shadow-[2px_4px_2px_rgba(0,0,0,.35)]">Si no tienes una cuenta, por favor <span onClick={handleRegisterClick} className="text-[#1B7E25]" role="button" >regístrate</span></p>
 					</Form>
 				</Formik>
 			</div>

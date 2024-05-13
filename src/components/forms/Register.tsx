@@ -126,10 +126,10 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 				</aside>
 
 				<div className=" max-h-[100vh] overflow-x-hidden ">
-					<div className="flex flex-col justify-center items-center gap-1 rounded-2xl text-2xl text-black font-sans mt-[2rem]">
+					<div className="flex flex-col justify-center items-center gap-y-[16px] rounded-2xl text-2xl text-black font-sans mt-[2rem] drop-shadow-[2px_4px_2px_rgba(0,0,0,.25)]">
 						<h1>Bienvenido a</h1>
 						<button type="button" onClick={() => navigate("/")}>
-							<img src="images/logos/LogoVerde.png" alt="logo" className=" w-[120px] h-[150px] mb-5" />
+							<img src="images/logos/LogoVerde.png" alt="logo" className=" w-[120px] h-[150px]" />
 						</button>
 						<h2>Por favor, completa el formulario</h2>
 					</div>
@@ -140,16 +140,16 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 						<div className="flex flex-col pb-2">
 
 
-							<div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start text-base text-left font-light width-[100%]">
+							<div className="grid grid-cols-1 md:grid-cols-2 gap-x-[24px] gap-y-[8px] items-start text-base text-left font-light width-[100%]">
 								<div className="relative mb-4">
 									<label htmlFor="userName">
 										<input type="text" id="userName" placeholder="Nombre" { ...formik.getFieldProps("userName") }
-											className="bg-[#00000011] outline-none  border-b-[2px] rounded-md border-b-[#00000052] p-[8px_8px_4px] w-full placeholder-[#666] drop-shadow-[2px_4px_2px_rgba(0,0,0,.6)]" />
+											className="bg-[#00000011] outline-none  border-b-[2px] rounded-md border-b-[#00000052] p-[8px_8px_4px] w-full drop-shadow-[2px_4px_2px_rgba(0,0,0,.2)] shadow-[0_2px_0_rgba(0,0,0,.04)]" />
 									</label>
 
 									{
 										formik.touched.userName && formik.errors.userName
-											? <p className="absolute text-xs text-red-600 ml-4">{formik.errors.userName}</p>
+											? <p className="absolute text-xs text-red-600 ml-4"> {formik.errors.userName}</p>
 											: null
 									}
 								</div>
@@ -160,12 +160,12 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 								<div className="relative mb-4">
 									<label htmlFor="userLastName">
 										<input type="text" id="userLastName" placeholder="Apellidos" { ...formik.getFieldProps("userLastName") }
-											className="bg-[#00000011] outline-none  border-b-[2px] rounded-md border-b-[#00000052] w-full placeholder-[#666] p-[8px_8px_4px]" />
+											className="bg-[#00000011] outline-none  border-b-[2px] rounded-md border-b-[#00000052] w-full drop-shadow-[2px_4px_2px_rgba(0,0,0,.2)] shadow-[0_2px_0_rgba(0,0,0,.04)] p-[8px_8px_4px]" />
 									</label>
 									
 									{
 										formik.touched.userLastName && formik.errors.userLastName
-											? <p className="absolute text-xs text-red-600 ml-4">{formik.errors.userLastName}</p>
+											? <p className="absolute text-xs text-red-600 ml-4"> {formik.errors.userLastName}</p>
 											: null
 									}
 								</div>
@@ -175,12 +175,12 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 								<div className="relative mb-4 md:col-span-2">
 									<label htmlFor="userEmail">
 										<input type="email" id="userEmail" placeholder="Correo Electrónico" { ...formik.getFieldProps("userEmail") }
-											className="bg-[#00000011] outline-none  border-b-[2px] rounded-md border-b-[#00000052] p-[8px_8px_4px] w-full placeholder-[#666]" />
+											className="bg-[#00000011] outline-none  border-b-[2px] rounded-md border-b-[#00000052] p-[8px_8px_4px] w-full drop-shadow-[2px_4px_2px_rgba(0,0,0,.2)] shadow-[0_2px_0_rgba(0,0,0,.04)]" />
 									</label>
 
 									{
 										formik.touched.userEmail && formik.errors.userEmail
-											? <p className="absolute text-xs text-red-600 ml-4">{formik.errors.userEmail}</p>
+											? <p className="absolute text-xs text-red-600 ml-4"> {formik.errors.userEmail}</p>
 											: null
 									}
 								</div>
@@ -202,12 +202,12 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 								<div className="relative mb-4">
 									<label htmlFor="userAddressCity">
 										<input type="text" id="userAddressCity" placeholder="Ciudad" { ...formik.getFieldProps("userAddressCity") }
-											className="bg-[#00000011] outline-none  border-b-[2px] rounded-md border-b-[#00000052] p-[8px_8px_4px] w-full placeholder-[#666]" />
+											className="bg-[#00000011] outline-none  border-b-[2px] rounded-md border-b-[#00000052] p-[8px_8px_4px] w-full drop-shadow-[2px_4px_2px_rgba(0,0,0,.2)] shadow-[0_2px_0_rgba(0,0,0,.04)]" />
 									</label>
 
 									{
 										formik.touched.userAddressCity && formik.errors.userAddressCity
-											? <p className="absolute text-xs text-red-600 ml-4">{formik.errors.userAddressCity}</p>
+											? <p className="absolute text-xs text-red-600 ml-4"> {formik.errors.userAddressCity}</p>
 											: null
 									}
 								</div>
@@ -217,12 +217,12 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 								<div className="relative mb-4">
 									<label htmlFor="userAddressProvince">
 										<input type="text" id="userAddressProvince" placeholder="Provincia" { ...formik.getFieldProps("userAddressProvince") }
-											className="bg-[#00000011] outline-none  border-b-[2px] rounded-md border-b-[#00000052] p-[8px_8px_4px] w-full placeholder-[#666]" />
+											className="bg-[#00000011] outline-none  border-b-[2px] rounded-md border-b-[#00000052] p-[8px_8px_4px] w-full drop-shadow-[2px_4px_2px_rgba(0,0,0,.2)] shadow-[0_2px_0_rgba(0,0,0,.04)]" />
 									</label>
 
 									{
 										formik.touched.userAddressProvince && formik.errors.userAddressProvince
-											? <p className="absolute text-xs text-red-600 ml-4">{formik.errors.userAddressProvince}</p>
+											? <p className="absolute text-xs text-red-600 ml-4"> {formik.errors.userAddressProvince}</p>
 											: null
 									}
 								</div>
@@ -232,12 +232,12 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 								<div className="relative mb-4">
 									<label htmlFor="userPassword">
 										<input type="password" id="userPassword" placeholder="Contraseña" { ...formik.getFieldProps("userPassword") }
-											className="bg-[#00000011] outline-none  border-b-[2px] rounded-md border-b-[#00000052] p-[8px_8px_4px] w-full placeholder-[#666]" />
+											className="bg-[#00000011] outline-none text-brandingLightGreen border-b-[2px] rounded-md border-b-[#00000052] p-[8px_8px_4px] w-full drop-shadow-[2px_4px_2px_rgba(0,0,0,.2)] shadow-[0_2px_0_rgba(0,0,0,.04)]" />
 									</label>
 
 									{
 										formik.touched.userPassword && formik.errors.userPassword
-											? <p className="absolute text-xs text-red-600 ml-4">{formik.errors.userPassword}</p>
+											? <p className="absolute text-xs text-red-600 ml-4"> {formik.errors.userPassword}</p>
 											: null
 									}
 								</div>
@@ -247,12 +247,12 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 								<div className="relative mb-4">
 									<label htmlFor="userPasswordConfirm">
 										<input type="password" id="userPasswordConfirm" placeholder="Confirmar contraseña" { ...formik.getFieldProps("userPasswordConfirm") }
-											className="bg-[#00000011] outline-none  border-b-[2px] rounded-md border-b-[#00000052] p-[8px_8px_4px] w-full placeholder-[#666]" />
+											className="bg-[#00000011] outline-none text-brandingLightGreen border-b-[2px] rounded-md border-b-[#00000052] p-[8px_8px_4px] w-full drop-shadow-[2px_4px_2px_rgba(0,0,0,.2)] shadow-[0_2px_0_rgba(0,0,0,.04)]" />
 									</label>
 
 									{
 										formik.touched.userPasswordConfirm && formik.errors.userPasswordConfirm
-											? <p className="absolute text-xs text-red-600 ml-4">{formik.errors.userPasswordConfirm}</p>
+											? <p className="absolute text-xs text-red-600 ml-4"> {formik.errors.userPasswordConfirm}</p>
 											: null
 									}
 								</div>
@@ -262,27 +262,26 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 								formik.isValid && formik.dirty
 									?	(
 										<button type="submit" 
-											className="w-[94%] text-base py-2.5 m-[3rem_auto] shadow-md rounded-lg font-sans text-brandingYellow cursor-pointer font-bold bg-brandingDarkGreen hover:bg-opacity-80 transition-all"
+											className="w-[50%] text-base py-2.5 rounded-lg font-sans text-black cursor-pointer m-[24px_auto] shadow-[0_3px_6px_rgba(100,100,100,.6)] font-bold bg-brandingYellow hover:bg-opacity-80 transition-all"
 										>
 												Regístrate
 										</button>
 									)
 									: (
 										<button type="submit" disabled
-											className="w-[94%] text-base py-2.5 m-[3rem_auto] shadow-md rounded-lg font-sans text-black cursor-pointer font-bold bg-brandingYellow hover:bg-opacity-80 transition-all"
+											className="w-[50%] text-base py-2.5 rounded-lg font-sans text-brandingYellow cursor-pointer m-[24px_auto] shadow-[0_3px_6px_rgba(100,100,100,.6)] font-bold bg-brandingDarkGreen hover:bg-opacity-80 transition-all"
 										>
 												Regístrate
 										</button>
 									)
 							}
 
-							<p>Si ya estás registrado, por favor <span onClick={handleLoginClick} className="text-brandingLightGreen mt-2" role="button" >INICIA SESIÓN</span></p>
+							<p className="drop-shadow-[0_4px_2px_rgba(0,0,0,.65)] text-xl font-light">Si ya estás registrado, por favor <span onClick={handleLoginClick} className="text-[#1B7E25]" role="button" >inicia sesión</span></p>
 
 						</div>
 					</form>
 
 				</div>
-				
 				{registerState === "loading" && <Loading />}
 				{registerState === "logged" && <RegisterOk />}
 				{registerState === "registerErrorEmailExists" && <RegisterKo errorText="El email introducido ya existe. Por favor, introduce otro." />}
