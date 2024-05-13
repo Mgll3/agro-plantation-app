@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Button from "../../components/button/Button";
 import { ButtonColorType } from "../../components/button/buttonTypes";
 import { LoginFormValuesType, RegiserFormFieldsToSendType } from "../../components/forms/formsTypes";
@@ -9,18 +9,25 @@ import { UserDataType } from "../commonTypes";
 import { useUserRoleContext } from "../../context/UserRoleContext";
 import { getStoredToken } from "../../utils/getStoredToken";
 import { createPublication } from "../../interfaces/createPublication";
-import { PlantationDemoType } from "./plantationsDemoData";
+import { PlantationDemoType, PlantationsDemoDataType, publicationsDemoData } from "./publicationsDemoData";
 import { updateUserData } from "../../utils/updateUserData";
+import { storePublicationsDemoIds } from "./storePublicationsDemoIds";
+import { getPublicationsDemoIds } from "./getPublicationsDemoIds";
+import { deletePublication } from "../../interfaces/deletePublication";
+import { erasePublicationsDemoIds } from "./erasePublicationsDemoIds";
 
 type RegisterUserStateType = "init" | "usersOk" | "usersKo";
 type CreatePublicationsType = "init" | "publicationsOk" | "publicationsKo";
 type loginUserType = "init" | "loginUser" | "loginProducer" | "loginAdmin" |"loginKo";
+type DeletePublicationsStateType = "init" | "noPublications" | "deletedOk" | "deletedKo" | "noToken";
 
 function Management() {
 	const { setUserRole } = useUserRoleContext();
 	const [registerUserState, setRegisterUserState] = useState<RegisterUserStateType>("init");
 	const [createPublicationsState, setCreatePublicationsState] = useState<CreatePublicationsType>("init");
 	const [loginUserState, setLoginUserState] = useState<loginUserType>("init");
+	const [areTherePublicationsToDelete, setAreTherePublicationsToDelete] = useState(false);
+	const [deletePublicationsState, setDeletePublicationsState] = useState<DeletePublicationsStateType>("init");
 
 	const buttonColorYellow: ButtonColorType = "yellow";
 	const buttonColorGreen: ButtonColorType = "green";
@@ -40,6 +47,11 @@ function Management() {
 		handleClick: createPublications
 	};
 
+	const deletePublicationsFuncionality = {
+		actionText: "Borrar Publicaciones",
+		handleClick: deletePublications
+	};
+
 	const loginAsUserFuncionality = {
 		actionText: "Logar Usuario",
 		handleClick: loginAsUser
@@ -57,6 +69,7 @@ function Management() {
 
 	const axiosController1 = useRef<AbortController>();
 	const axiosController2 = useRef<AbortController>();
+	const axiosController3 = useRef<AbortController>();
 
 	const userData: RegiserFormFieldsToSendType = {
 		email: "pedritoaldas2@gmail.com",
@@ -185,50 +198,103 @@ function Management() {
 
 	function createPublications () {
 		axiosController2.current = new AbortController();
-		const loginData: LoginFormValuesType = {
-			email: adminData.email,
-			password: adminData.password
-		};
-		const loginDataJson = JSON.stringify(loginData);
-
-		//Nos logamos como admin.
-		logInUser(loginDataJson, axiosController2.current!)
-			.then((userDataResponse: UserDataType) => {
-				updateUserData(userDataResponse, setUserRole);
-			})
-			.catch((error: Error) => {
-				console.log(error);
-				setCreatePublicationsState("publicationsKo");
-			});
-		
-		//Creamos las publicaciones.
 		const storedToken = getStoredToken();
-		console.log(storedToken);
-		const publicationData = {
-			"title": "prueba",
-			"plantation": {
-				"id": 111,
-				"plantType": "pepino",
-				"seasson": "verano",
-				"waterAmount": 1500,
-				"details": "Siempre es verano, con el pepino en la mano"
-			},
-			"visibility": true,
-			"score": 7
-		};
-		const publicationDataJson: Stringified<PlantationDemoType> = JSON.stringify(publicationData);
-		
-		createPublication(storedToken!, publicationDataJson, axiosController2.current)
-			.then( () => {
-				setCreatePublicationsState("publicationsOk");
-			})
-			.catch( (error) => {
-				console.log(error);
-				setCreatePublicationsState("publicationsKo");
+		let errorInPublication = false;
+		const publicationsIdsToStore: number[] = [];
+		const publicationsToPublish: PlantationsDemoDataType = publicationsDemoData;
+
+		if (storedToken) {
+
+			publicationsToPublish.map( (publication) => {
+				if (errorInPublication === false) {
+					const publicationDataJson: Stringified<PlantationDemoType> = JSON.stringify(publication);
+	
+					createPublication(storedToken!, publicationDataJson, axiosController2.current!)
+						.then( (response) => {
+							console.log(response);
+							publicationsIdsToStore.push(response.id!);
+						})
+						.catch( (error) => {
+							errorInPublication = true;
+							console.log(error);
+						});
+
+				} else {
+					setCreatePublicationsState("publicationsKo");
+					console.log("Error en alguna de las publicaciones!");
+				}
 			});
 
+			if (publicationsIdsToStore[0]) setAreTherePublicationsToDelete(true);
+			console.log(publicationsIdsToStore);
+			const publicationsIdsToStoreJSON = JSON.stringify(publicationsIdsToStore);
+			console.log(publicationsIdsToStoreJSON);
+			storePublicationsDemoIds(publicationsIdsToStoreJSON);
+
+			if (!errorInPublication) 	setCreatePublicationsState("publicationsOk");
+
+		} else {
+			setCreatePublicationsState("publicationsKo");
+			console.log("No hay token!");
+		}
 
 	}
+
+
+	function deletePublications () {
+		axiosController3.current = new AbortController();
+		const storedToken = getStoredToken();
+		let deletingError = false;
+		const publicationsToDeleteIdsStringify = getPublicationsDemoIds();
+		let publicationsToDeleteIds: number[];
+
+		if (publicationsToDeleteIdsStringify && storedToken) {
+			publicationsToDeleteIds = JSON.parse(publicationsToDeleteIdsStringify);
+
+			publicationsToDeleteIds.map( (id) => {
+
+				if (!deletingError) {
+					deletePublication(storedToken, id, axiosController3.current!)
+						.then( () => {
+	
+						})
+						.catch( (error) => {
+							deletingError = true;
+							console.log(error);
+						});
+
+				} else {
+					setDeletePublicationsState("deletedKo");
+				}
+
+			});
+
+			if (!deletingError) {
+				erasePublicationsDemoIds();
+				setDeletePublicationsState("deletedOk");
+				setAreTherePublicationsToDelete(false);
+			} else {
+				setDeletePublicationsState("deletedKo");
+			}
+
+		} else {
+			if (!publicationsToDeleteIdsStringify) setDeletePublicationsState("noPublications");
+			if (!storedToken) setDeletePublicationsState("noToken");
+		}
+	}
+
+
+
+	useEffect( () => {
+		const storedPublicationsIds = getPublicationsDemoIds();
+
+		if (storedPublicationsIds) {
+			setAreTherePublicationsToDelete(true);
+		} else {
+			setAreTherePublicationsToDelete(false);
+		}
+	});
+
 
 
 	return (
@@ -314,18 +380,48 @@ function Management() {
 						}
 					</div>
 				</div>
-
-				<Button buttonColor={buttonColorYellow} buttonFontSize={buttonFontSize} buttonWidth={buttonWidth} buttonPaddingY={buttonPaddingY} buttonFuncionality={createPublicationsFuncionality} />
-				<div className="absolute bottom-4 right-[40%] font-bold">
+				
+				<div className="relative">
 					{
-						createPublicationsState === "publicationsOk" && <p className="">¡Publicaciones registradas correctamente!</p>
-					}
+						areTherePublicationsToDelete === false && (
+							<>
+								<Button buttonColor={buttonColorYellow} buttonFontSize={buttonFontSize} buttonWidth={buttonWidth} buttonPaddingY={buttonPaddingY} buttonFuncionality={createPublicationsFuncionality} />
+								<div className="absolute bottom-4 right-[-150%] font-bold">
+									{
+										createPublicationsState === "publicationsOk" &&  <p className="">¡Publicaciones registradas correctamente!</p>
+									}
 
-					{
-						createPublicationsState === "publicationsKo" && <p className="">¡Error al registrar las publicaciones!</p>
+									{
+										createPublicationsState === "publicationsKo" && <p className="">¡Error al registrar las publicaciones!</p>
+									}
+								</div>
+							</>
+						)
 					}
 				</div>
 				
+				<div className="my-6">
+					<Button buttonColor={buttonColorYellow} buttonFontSize={buttonFontSize} buttonWidth={buttonWidth} buttonPaddingY={buttonPaddingY} buttonFuncionality={deletePublicationsFuncionality} />
+				</div>
+
+				<div className="font-bold">
+					{
+						deletePublicationsState === "noPublications" && <p className="">¡No hay publicaciones para borrar!</p>
+					}
+
+					{	
+						deletePublicationsState === "deletedOk" && <p className="">¡Publicaciones borradas correctamente!</p>
+					}
+
+					{
+						deletePublicationsState === "deletedKo" && <p className="">¡Error al borrar las publicaciones!</p>
+					}
+
+					{
+						deletePublicationsState === "noToken" && <p className="">¡No hay un usuario logado!</p>
+					}
+				</div>
+								
 			</div>
 		</div>
 	);

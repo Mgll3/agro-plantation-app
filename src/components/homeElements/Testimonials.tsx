@@ -4,8 +4,6 @@ import { testimonialsData } from "../../data/testimonialsData";
 export type TestimonialsDataType = {
 	header: string,
 	mainText: string,
-	captionHeader: string,
-	captionMainText: string,
 	imageUrl: string,
 	imageAlt: string
 }
@@ -106,11 +104,6 @@ function Testimonials() {
 					<div className="absolute left-[-100%] z-10 flex items-center justify-between w-[100%] h-full bg-white"
 						ref={prevTestimonialElement}
 					>
-						<div className="w-[55%] px-6">
-							<h3 className="text-[51.78px]">{testimonialsData[prevTestimonialIndex].captionHeader}</h3>
-							<p className="text-[32px] font-light">{testimonialsData[prevTestimonialIndex].captionMainText}</p>
-						</div>
-
 						<div className="w-[45%] h-full text-[19.78px]">
 							<img src={testimonialsData[prevTestimonialIndex].imageUrl} alt={testimonialsData[prevTestimonialIndex].imageAlt}
 								className="w-full"
@@ -124,11 +117,15 @@ function Testimonials() {
 
 					{/* TESTIMONIO VISIBLE */}
 					<div className="flex items-center justify-between w-[100%] h-full bg-white">
-						<div className="w-[55%] px-6">
-							<h3 className="text-[51.78px]">{testimonialsData[selectedTestimonial].captionHeader}</h3>
-							<p className="text-[32px] font-light">{testimonialsData[selectedTestimonial].captionMainText}</p>
+						<div className="w-[45%] h-full text-[19.78px]">
+							<img src={testimonialsData[selectedTestimonial].imageUrl} alt={testimonialsData[selectedTestimonial].imageAlt}
+								className="w-full"
+							/>
+							<div className="">
+								<h3 className="font-bold">{testimonialsData[selectedTestimonial].header}</h3>
+								<p className="">{testimonialsData[selectedTestimonial].mainText}</p>
+							</div>
 						</div>
-
 						<div className="w-[45%] h-full text-[19.78px]">
 							<img src={testimonialsData[selectedTestimonial].imageUrl} alt={testimonialsData[selectedTestimonial].imageAlt}
 								className="w-full"
@@ -144,11 +141,6 @@ function Testimonials() {
 					<div className="absolute right-[-100%] z-10 flex items-center justify-between w-[100%] h-full bg-white"
 						ref={nextTestimonialElement}
 					>
-						<div className="w-[55%] px-6">
-							<h3 className="text-[51.78px]">{testimonialsData[nextTestimonialIndex].captionHeader}</h3>
-							<p className="text-[32px] font-light">{testimonialsData[nextTestimonialIndex].captionMainText}</p>
-						</div>
-
 						<div className="w-[45%] h-full text-[19.78px]">
 							<img src={testimonialsData[nextTestimonialIndex].imageUrl} alt={testimonialsData[nextTestimonialIndex].imageAlt}
 								className="w-full"
