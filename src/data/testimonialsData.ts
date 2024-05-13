@@ -38,4 +38,10 @@ export const testimonialsData: TestimonialsDataType[] = [
 		imageUrl: "images/testimonials/home-card_testimonios_3.png",
 		imageAlt: "Mi invernadero, a pleno rendimiento"
 	},
+	{
+		header: "Mi verde lugar",
+		mainText: "Soy Bety, hace poco me registre en PLANT-IN y gracias a los consejos de muchos Plantineros, pude tener mis primeros brotes de mi pequeña huerta agroecologica, MUCHAS, MUCHAS GRACIAS!!!",
+		imageUrl: "images/testimonials/home-card_testimonios_1.png",
+		imageAlt: "Mis primeros brotes"
+	},
 ];
