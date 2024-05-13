@@ -286,12 +286,17 @@ function Management() {
 
 
 	useEffect( () => {
-		const storedPublicationsIds = getPublicationsDemoIds();
+		const storedPublicationsIdsString = getPublicationsDemoIds();
+		let storedPublicationsIdsArray: number[];
 
-		if (storedPublicationsIds) {
-			setAreTherePublicationsToDelete(true);
-		} else {
-			setAreTherePublicationsToDelete(false);
+		if (storedPublicationsIdsString) {
+			storedPublicationsIdsArray = JSON.parse(storedPublicationsIdsString);
+
+			if (storedPublicationsIdsArray[0]) {
+				setAreTherePublicationsToDelete(true);
+			} else {
+				setAreTherePublicationsToDelete(false);
+			}
 		}
 	});
 

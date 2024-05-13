@@ -30,8 +30,12 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 	let loggedTimeout: number;
 
 	const url = useLocation();
-
 	const navigate = useNavigate();
+
+
+	function closeErrorMessage() {
+		setRegisterState("init");
+	}
 
 	function submitLoginForm(formValues: LoginFormValuesType) {
 		setLoginState("loading");
@@ -150,7 +154,7 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 		let registeredTimeout: number;
 		let registeredTimeout2: number;
 
-		if (registerState === "networkError" || registerState === "registerErrorEmailExists" || registerState === "registerErrorServerError") {
+		if (registerState === "registerErrorEmailExists" || registerState === "registerErrorServerError") {
 			registerErrorTimeout = window.setTimeout(() => {
 				setRegisterState("init");
 			}, 3500);
@@ -196,14 +200,14 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 								</div>
 
 								<div className="w-screen ">
-									<Register handleSubmit={submitRegisterForm} handleLoginClick={changeForm} registerState={registerState} />
+									<Register handleSubmit={submitRegisterForm} handleLoginClick={changeForm} registerState={registerState} closeErrorMessages={closeErrorMessage} />
 								</div>
 							</>
 						)
 						: (
 							<>
 								<div className="w-screen">
-									<Register handleSubmit={submitRegisterForm} handleLoginClick={changeForm} registerState={registerState} />
+									<Register handleSubmit={submitRegisterForm} handleLoginClick={changeForm} registerState={registerState} closeErrorMessages={closeErrorMessage} />
 								</div>
 
 								<div className="w-screen">

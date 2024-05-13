@@ -13,9 +13,10 @@ type RegisterProps = {
 	handleSubmit: (formValues: RegisterFormValuesType) => void,
 	handleLoginClick: () => void,
 	registerState: RegisterStateType,
+	closeErrorMessages: () => void
 }
 
-export default function Register({ handleSubmit, handleLoginClick, registerState }: RegisterProps) {
+export default function Register({ handleSubmit, handleLoginClick, registerState, closeErrorMessages }: RegisterProps) {
 	const lowerCaseRegex = /[a-z]/g;
 	const upperCaseRegex = /[A-Z]/g;
 	const noSpaceAtStartRegex = /^\S/g;
@@ -288,7 +289,7 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 				{registerState === "logged" && <RegisterOk />}
 				{registerState === "registerErrorEmailExists" && <RegisterKo errorText="El email introducido ya existe. Por favor, introduce otro." />}
 				{registerState === "registerErrorServerError" && <RegisterKo errorText="Error al procesar tu solicitud. Por favor, inténtalo más tarde." />}
-				{registerState === "networkError" && <NetworkError failedAction="hacer el registro"/>}
+				{registerState === "networkError" && <NetworkError failedAction="registrarte" buttonText="Volver a intentar" handleClose={closeErrorMessages} />}
 
 			</div>
 		</>
