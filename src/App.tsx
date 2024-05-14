@@ -14,6 +14,9 @@ import AdminPublications from "./pages/admin/AdminPublications";
 import AdminUsers from "./pages/admin/AdminUsers";
 import AdminForum from "./pages/admin/AdminForum";
 import Management from "./pages/management/Management";
+import RegisterProducer from "./pages/producers/RegisterProducer";
+import TermsAndConditions from "./components/placeholders/TermsAndConditions";
+import PrivacyDeclaration from "./components/placeholders/PrivacyDeclaration";
 
 
 
@@ -31,11 +34,14 @@ function App() {
 				<Route path="/community" element={<Community />} />
 				<Route path="/company" element={<AboutUs />} />
 				<Route path="/management" element={<Management />} />
+				<Route path="/termsAndConditions" element={<TermsAndConditions />} />
+				<Route path="/privacy" element={<PrivacyDeclaration />} />
 
 				PROTECTED ROUTES
 				<Route element={<ProtectedRouteUser />} >
 					<Route path="/publications" element={<PublicationsPage />} />
 					<Route path="/publications/:id" element={<PublicationsPage />} />
+					<Route path="/producer/register" element={<RegisterProducer />} />
 				</Route>
 
 				<Route element={<ProtectedRouteAdmin />} >

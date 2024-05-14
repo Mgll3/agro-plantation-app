@@ -137,7 +137,8 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 					</div>
 
 					<form name="registerForm" action="" encType="multipart/form-data" onSubmit={formik.handleSubmit}
-						className="w-[65vw] max-h-[100vh] border-solid text-center justify-around items-center bg-[#EAE3C0] text-black p-[1rem_6rem_2rem] font-sans">
+						className="w-[65vw] max-h-[100vh] border-solid text-center justify-around items-center bg-[#EAE3C0] text-black p-[1rem_6rem_2rem] font-sans"
+					>
 
 						<div className="flex flex-col pb-2">
 

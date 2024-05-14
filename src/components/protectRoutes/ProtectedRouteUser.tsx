@@ -29,8 +29,10 @@ function ProtectedRouteUser() {
 					updateUserData(userData, setUserRole);
 					setIsAuthorized("authorized");
 				})
-				.catch(() => {
-					resetUserData(setUserRole);
+				.catch((error) => {
+					if (error === "401") {
+						resetUserData(setUserRole);
+					}
 					setIsAuthorized("notAuthorized");
 				});
 		} else {

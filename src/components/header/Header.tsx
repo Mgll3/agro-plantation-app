@@ -71,8 +71,8 @@ function Header() {
 					
 					{
 						userRole === "ADMIN"
-							?	<img src="images/logos/Logo_original_Plant-In.png" alt="" className="w-1/12" />
-							: <img src="images/logos/Logo_fondo_verde.png" alt="" className="w-1/12" />
+							?	<img src="/images/logos/Logo_original_Plant-In.png" alt="" className="w-1/12" />
+							: <img src="/images/logos/Logo_fondo_verde.png" alt="" className="w-1/12" />
 					}
 
 

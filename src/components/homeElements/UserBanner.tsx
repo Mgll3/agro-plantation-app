@@ -8,7 +8,7 @@ function UserBanner() {
 	const buttonPaddingY = "py-3.5";
 	const buttonFuncionality = {
 		linkText: "Quiero ser productor",
-		linkUrl: "/register",
+		linkUrl: "/producer/register",
 	};
 
 
