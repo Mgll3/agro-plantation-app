@@ -27,7 +27,7 @@ function MustLoginWarning({ handleCloseMustLoginWarning }: MustLoginWarningProps
 				<p>Lamentablemente los links a donde quieres ingresar son links exclusivos de nuestros usuarios registrados.</p>
 				<p>Si seguis interesado en conocernos, te invitamos a registrarte.</p>
 
-				<img src="images/LogoVerde.png" alt="" className="w-[130px] m-[1rem_0]" />
+				<img src="images/logos/LogoVerde.png" alt="" className="w-[130px] m-[1rem_0]" />
 
 				<div>
 					<Button

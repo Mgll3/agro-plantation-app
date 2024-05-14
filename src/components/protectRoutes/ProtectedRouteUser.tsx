@@ -3,9 +3,10 @@ import { checkOpenSession } from "../../interfaces/checkOpenSession";
 import { useUserRoleContext } from "../../context/UserRoleContext";
 import { Outlet, useNavigate } from "react-router-dom";
 import { UserDataType, isAuthorizedType } from "./ProtectedRoutesTypes";
-import { user } from "../../data/userData";
 import { CircularProgress } from "@mui/material";
 import { getStoredToken } from "../../utils/getStoredToken";
+import { updateUserData } from "../../utils/updateUserData";
+import { resetUserData } from "../../utils/resetUserData";
 
 
 
@@ -25,18 +26,17 @@ function ProtectedRouteUser() {
 		if (storedToken) {
 			checkOpenSession(storedToken, axiosController.current)
 				.then((userData: UserDataType) => {
-					user.name = `${userData.name} ${userData.lastname}`;
-					setUserRole(userData.userType);
+					updateUserData(userData, setUserRole);
 					setIsAuthorized("authorized");
 				})
-				.catch(() => {
-					user.name = "";
-					setUserRole("visitor");
+				.catch((error) => {
+					if (error === "401") {
+						resetUserData(setUserRole);
+					}
 					setIsAuthorized("notAuthorized");
 				});
 		} else {
-			user.name = "";
-			setUserRole("visitor");
+			resetUserData(setUserRole);
 			setIsAuthorized("notAuthorized");
 		}
 
@@ -44,6 +44,7 @@ function ProtectedRouteUser() {
 			axiosController.current?.abort();
 		};
 	}, []);
+
 
 	useEffect( () => {
 		if (isAuthorized === "notAuthorized") {

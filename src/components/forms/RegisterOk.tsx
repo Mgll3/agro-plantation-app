@@ -10,7 +10,7 @@ function RegisterOk() {
 					<span className="block text-3xl">CORRECTAMENTE</span>
 				</h3>
 
-				<img src="images/LogoVerde.png" alt="logo" className=" w-[120px] h-[150px] mb-5" />
+				<img src="images/logos/LogoVerde.png" alt="logo" className=" w-[120px] h-[150px] mb-5" />
 				
 				<div className="flex justify-center items-center bg-brandingDarkGreen text-brandingLightYellow w-[80px] h-[80px] rounded-full text-5xl">
 					<CheckIcon color="inherit" fontSize="inherit"/>

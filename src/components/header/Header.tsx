@@ -4,33 +4,43 @@ import MainNav from "./MainNav";
 import SecondaryNav from "./SecondaryNav";
 import UserProfile from "./UserProfile";
 import { userProfileStateType } from "./headerTypes";
-import { useNavigate } from "react-router-dom";
-import { eraseStoredToken } from "../../utils/eraseStoredToken";
+import { Link, useNavigate } from "react-router-dom";
 import AdminNav from "./AdminNav";
+import MustLoginWarning from "./MustLoginWarning";
+import DvrIcon from "@mui/icons-material/Dvr";
+import { resetUserData } from "../../utils/resetUserData";
 
+type MustLoginWarningStateType = "visible" | "hidden";
 
-type HeaderProps = {
-	bgImageTailwind: string,
-	logoSrc: string,
-	handleOpenMustLoginWarning?: () => void
-}
-
-function Header({ bgImageTailwind, logoSrc, handleOpenMustLoginWarning }: HeaderProps) {
-
+function Header() {
+	const [mustLoginWarningState, setMustLoginWarningState] = useState<MustLoginWarningStateType>("hidden");
 	const { userRole, setUserRole } = useUserRoleContext();
 	const [userProfileState, setUserProfileState] = useState<userProfileStateType>("init");
-
 	let logoutTimeout: number;
-
 	const navigate = useNavigate();
+
+	//Fondo del Header. Varía según el rol del usuario.
+	let headerBg: string = "bg-headerBg";
+
+	if (userRole === "ADMIN") {
+		headerBg = "bg-headerBgAdmin";
+	}
+
+
+	function handleOpenMustLoginWarning() {
+		setMustLoginWarningState("visible");
+	}
+
+	function handleCloseMustLoginWarning() {
+		setMustLoginWarningState("hidden");
+	}
 
 
 	function handleLogoutClick() {
 		setUserProfileState("loading");
 
 		logoutTimeout = window.setTimeout( () => {
-			eraseStoredToken();
-			setUserRole("visitor");
+			resetUserData(setUserRole);
 			setUserProfileState("logout");
 		}, 1500);
 	}
@@ -53,8 +63,19 @@ function Header({ bgImageTailwind, logoSrc, handleOpenMustLoginWarning }: Header
 	return (
 		<>
 			<header className="w-full">
-				<div className={`${bgImageTailwind} bg-cover bg-center bg-no-repeat relative flex justify-center items-center py-5`}>
-					<img src={logoSrc} alt="" className="w-1/12" />
+				<div className={`${headerBg} h-[30vh] bg-cover bg-center bg-no-repeat relative flex justify-center items-center py-5`}>
+
+					<Link to="/management" className="absolute top-0 left-0 w-[40px] text-3xl">
+						<DvrIcon fontSize="inherit"/>
+					</Link>
+					
+					{
+						userRole === "ADMIN"
+							?	<img src="/images/logos/Logo_original_Plant-In.png" alt="" className="w-1/12" />
+							: <img src="/images/logos/Logo_fondo_verde.png" alt="" className="w-1/12" />
+					}
+
+
 					<div className="absolute right-4 top-2">
 
 						{
@@ -79,6 +100,11 @@ function Header({ bgImageTailwind, logoSrc, handleOpenMustLoginWarning }: Header
 					}
 
 				</div>
+
+				{
+					mustLoginWarningState === "visible"
+					&& <MustLoginWarning handleCloseMustLoginWarning={handleCloseMustLoginWarning} />
+				}
 			</header>
 		</>
 	);

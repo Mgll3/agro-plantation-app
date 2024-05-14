@@ -1,15 +1,14 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { logInUser } from "../interfaces/logInUser";
-import { user } from "../data/userData";
 import Login from "../components/forms/Login";
 import { registerUser } from "../interfaces/registerUser";
 import Register from "../components/forms/Register";
 import { LoginFormValuesType, RegiserFormFieldsToSendType, RegisterFormValuesType } from "../components/forms/formsTypes";
 import { UserDataType } from "./commonTypes";
 import { useUserRoleContext } from "../context/UserRoleContext";
-import { storeToken } from "../utils/storeToken";
-import { storeName } from "../utils/storeName";
+import { updateUserData } from "../utils/updateUserData";
+import { resetUserData } from "../utils/resetUserData";
 
 
 export type LoginStateType = "init" | "loading" | "loginError" | "networkError" | "logged";
@@ -20,7 +19,7 @@ type LoginRegisterPageProps = {
 }
 
 function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
-	const { setUserRole } = useUserRoleContext();
+	const { userRole, setUserRole } = useUserRoleContext();
 	const [loginState, setLoginState] = useState<LoginStateType>("init");
 	const [registerState, setRegisterState] = useState<RegisterStateType>("init");
 
@@ -31,8 +30,12 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 	let loggedTimeout: number;
 
 	const url = useLocation();
-
 	const navigate = useNavigate();
+
+
+	function closeErrorMessage() {
+		setRegisterState("init");
+	}
 
 	function submitLoginForm(formValues: LoginFormValuesType) {
 		setLoginState("loading");
@@ -47,16 +50,14 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 
 		logInUser(loginDataJson, axiosController.current!)
 			.then((UserDataResponse: UserDataType) => {
-				storeToken(UserDataResponse.accessToken);
-				storeName(`${UserDataResponse.name} ${UserDataResponse.lastname}`);
-				user.name = `${UserDataResponse.name} ${UserDataResponse.lastname}`;
-				setUserRole(UserDataResponse.userType);
+				updateUserData(UserDataResponse, setUserRole);
 				
 				loggedTimeout = window.setTimeout( () => {
 					setLoginState("logged");
 				}, 800);
 			})
 			.catch((error: Error) => {
+				resetUserData(setUserRole);
 				if (error.message === "401"){
 					setLoginState("loginError");
 				} else {
@@ -129,7 +130,9 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 		let loginNetworkErrorTimeout: number;
 
 		if (loginState === "logged") {
-			navigate("/", {replace: true});
+			userRole !== "ADMIN"
+				?	navigate("/", {replace: true})
+				: navigate("/admin/publications", {replace: true});
 		}
 
 		if (loginState === "networkError") {
@@ -151,7 +154,7 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 		let registeredTimeout: number;
 		let registeredTimeout2: number;
 
-		if (registerState === "networkError" || registerState === "registerErrorEmailExists" || registerState === "registerErrorServerError") {
+		if (registerState === "registerErrorEmailExists" || registerState === "registerErrorServerError") {
 			registerErrorTimeout = window.setTimeout(() => {
 				setRegisterState("init");
 			}, 3500);
@@ -197,14 +200,14 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 								</div>
 
 								<div className="w-screen ">
-									<Register handleSubmit={submitRegisterForm} handleLoginClick={changeForm} registerState={registerState} />
+									<Register handleSubmit={submitRegisterForm} handleLoginClick={changeForm} registerState={registerState} closeErrorMessages={closeErrorMessage} />
 								</div>
 							</>
 						)
 						: (
 							<>
 								<div className="w-screen">
-									<Register handleSubmit={submitRegisterForm} handleLoginClick={changeForm} registerState={registerState} />
+									<Register handleSubmit={submitRegisterForm} handleLoginClick={changeForm} registerState={registerState} closeErrorMessages={closeErrorMessage} />
 								</div>
 
 								<div className="w-screen">

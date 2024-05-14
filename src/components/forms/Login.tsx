@@ -4,8 +4,8 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import *  as  Yup from "yup";
 import { LoginFormValuesType } from "./formsTypes.ts";
-import Loading from "../loading/Loading.tsx";
-import NetworkError from "../networkError/NetworkError.tsx";
+import Loading from "../modals/Loading.tsx";
+import NetworkError from "../modals/NetworkError.tsx";
 
 type LoginProps = {
 	handleSubmit: (formValues: LoginFormValuesType) => void,
@@ -35,7 +35,7 @@ export default function Login({ handleSubmit, handleRegisterClick, loginState }:
 	return (
 		<div className="w-[100%] font-sans flex h-[100vh] items-center justify-center text-[#eaefd4f2] overflow-x-hidden">
 			<aside className="w-[35vw] h-[100vh] ">
-				<div className="bg-[url('@/images/inicio_y_registro.jpg')] w-[100%] h-[100%] bg-center bg-cover bg-no-repeat flex justify-end items-center">
+				<div className="bg-login w-[100%] h-[100%] bg-center bg-cover bg-no-repeat flex justify-end items-center">
 					<h1 className="bg-[#EAE3C0] text-black font-semibold text-2xl font-sans p-[1rem_5rem] rounded-2xl translate-x-[14px] translate-y-[-20px]">Ingreso</h1>
 					<Link to="/copyright" className=" absolute bottom-0 p-[4px_4px] m-[1rem] bg-[#94B447] text-[#1B7E25] text-center text-[15px] rounded-md max-w-[32vw]">
 						Todos los derechos reservados para Plant-In &copy; 
@@ -54,8 +54,10 @@ export default function Login({ handleSubmit, handleRegisterClick, loginState }:
 
 						<div className="flex justify-center items-center gap-4 rounded-2xl text-2xl">
 							<abbr title="Ir a la página principal">
-								<button type="button" onClick={() => navigate("/")}><img src="images/LogoVerde.png" alt="logo"
-									className=" bg-[transparent] w-[120px] h-[160px]" />
+								<button type="button" onClick={() => navigate("/")}>
+									<img src="images/logos/LogoVerde.png" alt="logo"
+										className=" bg-[transparent] w-[120px] h-[160px]"
+									/>
 								</button>
 							</abbr>
 						</div>

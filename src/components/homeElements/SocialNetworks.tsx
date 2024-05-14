@@ -6,7 +6,7 @@ function SocialNetworks() {
 				<a href="https://www.instagram.com/" rel="noreferrer" target="_blank">
 					<div className="flex justify-center items-center w-[100px] h-[100px] bg-brandingLightYellow border-solid border-2 border-black rounded-[50%] hover:opacity-60 duration-200">
 						<img alt="Instagram"
-							src="icons/Instagram.png"
+							src="icons/social_media/Instagram.png"
 							className="w-[70px] h-[70px]"
 						/>
 					</div>
@@ -15,7 +15,7 @@ function SocialNetworks() {
 				<a href="https://www.facebook.com/" rel="noreferrer" target="_blank">
 					<div className="flex justify-center items-center w-[100px] h-[100px] bg-brandingLightYellow border-solid border-2 border-black rounded-[50%] hover:opacity-60 duration-200">
 						<img alt="Instagram"
-							src="icons/Facebook.png"
+							src="icons/social_media/Facebook.png"
 							className="w-[70px] h-[70px]"
 						/>
 					</div>
@@ -24,7 +24,7 @@ function SocialNetworks() {
 				<a href="https://www.linkedin.com/" rel="noreferrer" target="_blank">
 					<div className="flex justify-center items-center w-[100px] h-[100px] bg-brandingLightYellow border-solid border-2 border-black rounded-[50%] hover:opacity-60 duration-200">
 						<img alt="Instagram"
-							src="icons/LinkedIn.png"
+							src="icons/social_media/LinkedIn.png"
 							className="w-[70px] h-[70px]"
 						/>
 					</div>
@@ -33,7 +33,7 @@ function SocialNetworks() {
 				<a href="https://twitter.com/" rel="noreferrer" target="_blank">
 					<div className="flex justify-center items-center w-[100px] h-[100px] bg-brandingLightYellow border-solid border-2 border-black rounded-[50%] hover:opacity-60 duration-200">
 						<img alt="Instagram"
-							src="icons/TwitterX.png"
+							src="icons/social_media/TwitterX.png"
 							className="w-[70px] h-[70px]"
 						/>
 					</div>

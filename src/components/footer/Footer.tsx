@@ -4,7 +4,7 @@ function Footer() {
 	return (
 		<footer className="flex justify-center items-center w-full py-6 px-2 bg-brandingLightGreen">
 			<img alt=""
-				src="images/Logo_beige.png"
+				src="/images/logos/Logo_beige.png"
 				className="w-28"	
 			/>
 

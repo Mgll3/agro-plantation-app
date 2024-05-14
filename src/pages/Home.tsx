@@ -5,21 +5,24 @@ import { useUserRoleContext } from "../context/UserRoleContext";
 import { checkOpenSession } from "../interfaces/checkOpenSession";
 import { getBestPublications } from "../interfaces/getBestPublications";
 import PublicationsPreviewList from "../components/publicationsList/PublicationsPreviewList";
-import MustLoginWarning from "../components/header/MustLoginWarning";
 import { UserDataType } from "./commonTypes";
 import { getStoredToken } from "../utils/getStoredToken";
 import Footer from "../components/footer/Footer";
-import PlantInBanner from "../components/homeElements/PlantInBanner";
+import VisitorBanner from "../components/homeElements/VisitorBanner";
 import CallToAction from "../components/homeElements/CallToAction";
 import SocialNetworks from "../components/homeElements/SocialNetworks";
 import { getStoredName } from "../utils/getStoredName";
-import { storeName } from "../utils/storeName";
 import { PublicationType } from "../components/publicationsList/publicationsListTypes";
+import Testimonials from "../components/homeElements/Testimonials";
+import UserBanner from "../components/homeElements/UserBanner";
+import ProducerBanner from "../components/homeElements/ProducerBanner";
+import { getStoredRole } from "../utils/getStoredRole";
+import { updateUserData } from "../utils/updateUserData";
+import { resetUserData } from "../utils/resetUserData";
 
 
 
 type LoadingStateType = "loading" | "loaded" | "error";
-type MustLoginWarningStateType = "visible" | "hidden";
 
 // type ChartsDataType = {
 // 	barChartData: BarChartDataType,
@@ -29,7 +32,6 @@ type MustLoginWarningStateType = "visible" | "hidden";
 
 export default function Home() {
 	const { userRole, setUserRole } = useUserRoleContext();
-	const [mustLoginWarningState, setMustLoginWarningState] = useState<MustLoginWarningStateType>("hidden");
 	const [publicationsState, setPublicationsState] = useState<LoadingStateType>("loading");
 	// const [dashboardState, setDashboardState] = useState<LoadingStateType>("loading");
 
@@ -37,30 +39,20 @@ export default function Home() {
 	// const chartsData = useRef<ChartsDataType>();
 	const axiosController = useRef<AbortController>();
 
-	const bgImageTailwind = "bg-headerBg";
-	const logoSrc = "images/Logo_fondo_verde.png";
 
-
-	function handleOpenMustLoginWarning() {
-		setMustLoginWarningState("visible");
-	}
-
-	function handleCloseMustLoginWarning() {
-		setMustLoginWarningState("hidden");
-	}
-	
-
-
+	// Se utiliza este Layout Effect para que se carguen por defecto el nombre y el rol del usuario del Local Storage, si existen. 
+	// Esto evita que la página "parpadee" cuando esta información se obtiene del servidor. 
+	// No obstante, si no coinciden la información almacenada y la del servidor, tiene prevalencia esta última y habrá un parpadeo cuando ésta se "imponga".
 	useLayoutEffect( () => {
-		const userName = getStoredName();
-		const token = getStoredToken();
+		const userStoredName = getStoredName();
+		const userStoredRole = getStoredRole();
 
-		if (userName) {
-			user.name = userName;
+		if (userStoredName) {
+			user.name = userStoredName;
 		}
 
-		if (token) {
-			setUserRole("USER");
+		if (userStoredRole) {
+			setUserRole(userStoredRole);
 		}
 	});
 
@@ -73,13 +65,12 @@ export default function Home() {
 		if (storedToken) {
 			checkOpenSession(storedToken, axiosController.current)
 				.then((userData: UserDataType) => {
-					storeName(`${userData.name} ${userData.lastname}`);
-					user.name = `${userData.name} ${userData.lastname}`;
-					setUserRole(userData.userType);
+					updateUserData(userData, setUserRole);
 				})
-				.catch(() => {
-					user.name = "";
-					setUserRole("visitor");
+				.catch((error) => {
+					if (error === "401") {
+						resetUserData(setUserRole);
+					}
 				});
 		}
 
@@ -111,21 +102,37 @@ export default function Home() {
 	return (
 		<>
 			<div className="w-full" >
-				<Header bgImageTailwind={bgImageTailwind} logoSrc={logoSrc} handleOpenMustLoginWarning={handleOpenMustLoginWarning} />
+				<Header />
 			</div>
-
-			{
-				mustLoginWarningState === "visible"
-				&& <MustLoginWarning handleCloseMustLoginWarning={handleCloseMustLoginWarning} />
-			}
-
 
 			<main className="w-full py-8">
 
-				<div className="px-[10vw] pt-[3vh]">
-					<PlantInBanner />
-				</div>
-		
+				{
+					userRole === "visitor" && (
+						<div className="px-[10vw] pt-[3vh]">
+							<VisitorBanner />
+						</div>
+					)
+				}
+
+				{
+					userRole === "USER" && (
+						<div className="px-[6vw] pt-[3vh]">
+							<UserBanner />
+						</div>
+					)
+				}
+
+				{
+					userRole === "PRODUCER" || userRole === "PRODUCER_VIP"
+						? (
+							<div className="px-[6vw] pt-[3vh]">
+								<ProducerBanner />
+							</div>
+						)
+						: null
+				}
+			
 				{
 					publicationsState === "loading" && (
 						<div className="px-[10vw] text-center">
@@ -137,8 +144,8 @@ export default function Home() {
 				{
 					publicationsState === "error" && (
 						<div className="px-[10vw] py-20 font-sans text-center text-2xl">
-							<p className="">No se han podido cargar las publicaciones.</p>
-							<p className="">Por favor, compruebe su conexión y refresque la página.</p>
+							<p className="">No se han podido cargar las publicaciones más votadas.</p>
+							<p className="mt-2 text-xl">Por favor, compruebe su conexión y refresque la página.</p>
 						</div>
 					)
 				}
@@ -196,6 +203,10 @@ export default function Home() {
 						)
 					}
 				</div> */}
+
+				<div className="px-[10vw] pt-[3vh]">
+					<Testimonials />
+				</div>
 
 				<div className="px-[10vw] mt-20 mb-0">
 					<SocialNetworks />

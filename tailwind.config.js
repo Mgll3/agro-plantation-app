@@ -10,6 +10,14 @@ export default {
 				niramit: ["Niramit", "sans-serif"],
 				montserrat: ["Montserrat", "sans-serif"]
 			},
+			fontSize:{
+				size1: "2.618rem",
+				size2: "1.618rem",
+				size3: "1rem",
+				size4: "0.618rem",
+				size5: "0.382rem",
+				size6: "0.236rem"
+			},
 			colors: {
 				brandingYellow: "#F6C915",
 				brandingLightYellow: "#EAE3C0",
@@ -17,15 +25,19 @@ export default {
 				brandingLightGreen: "#94B447",
 				brandingLightBlue: "#B5B3B3",
 				screenDarkening: "#00000070",
-				semiTansparentBlack: "#000000cc"
+				semiTansparentBlack: "#000000cc",
+				darkText: "#484848",
+				darkGrayText: "#767676",
+				reddishBrown: "#C54600",
+				blueLink: "#6F86FF"
 			},
 			spacing: {
 				"53": "13.25rem"
 			},
 			backgroundImage: {
-				"headerBg": "url('@/images/header_background.avif')",
-				"huerta": "url('@/images/huertas.jpg')",
-				"login" : "url('@/images/inicio_y_registro.jpg)"
+				"headerBg": "url('@/images/backgrounds/header_background.avif')",
+				"headerBgAdmin": "url('@/images/backgrounds/Header2.png')",
+				"login": "url('@/images/backgrounds/inicio_y_registro.jpg')"
 			},
 			gridTemplateColumns: {
 				"form" : "repeat(auto-fit, minmax(300px, 1fr))"
