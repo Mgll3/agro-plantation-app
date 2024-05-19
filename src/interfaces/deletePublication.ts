@@ -1,14 +1,12 @@
 import axios from "axios";
 import { axiosConfig } from "../lib/axios/axios.config";
-import { PlantationDemoType } from "../pages/management/publicationsDemoData";
 
-export async function createPublication ( token: string, data: Stringified<PlantationDemoType>, axiosControler: AbortController ) {
+export async function deletePublication ( token: string, id: number, axiosControler: AbortController ) {
 
 	try{
-		const response = await axiosConfig.post("/v1/publication/save", data, {
+		const response = await axiosConfig.delete(`/v1/publication/${id}`, {
 			signal: axiosControler.signal,
 			headers: {
-				"Content-Type": "application/json",
 				"Authorization": `Bearer ${token}`,
 			}
 		});

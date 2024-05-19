@@ -26,7 +26,10 @@ export default {
 				brandingLightBlue: "#B5B3B3",
 				screenDarkening: "#00000070",
 				semiTansparentBlack: "#000000cc",
-				darkText: "#484848"
+				darkText: "#484848",
+				darkGrayText: "#767676",
+				reddishBrown: "#C54600",
+				blueLink: "#6F86FF"
 			},
 			spacing: {
 				"53": "13.25rem"

@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Button from "../../components/button/Button";
 import { ButtonColorType } from "../../components/button/buttonTypes";
 import { LoginFormValuesType, RegiserFormFieldsToSendType } from "../../components/forms/formsTypes";
@@ -6,39 +6,70 @@ import Header from "../../components/header/Header";
 import { registerUser } from "../../interfaces/registerUser";
 import { logInUser } from "../../interfaces/logInUser";
 import { UserDataType } from "../commonTypes";
-import { storeToken } from "../../utils/storeToken";
-import { storeName } from "../../utils/storeName";
 import { useUserRoleContext } from "../../context/UserRoleContext";
-import { user } from "../../data/userData";
 import { getStoredToken } from "../../utils/getStoredToken";
 import { createPublication } from "../../interfaces/createPublication";
-import { PlantationDemoType } from "./plantationsDemoData";
+import { PlantationDemoType, PlantationsDemoDataType, publicationsDemoData } from "./publicationsDemoData";
+import { updateUserData } from "../../utils/updateUserData";
+import { storePublicationsDemoIds } from "./storePublicationsDemoIds";
+import { getPublicationsDemoIds } from "./getPublicationsDemoIds";
+import { deletePublication } from "../../interfaces/deletePublication";
+import { erasePublicationsDemoIds } from "./erasePublicationsDemoIds";
 
 type RegisterUserStateType = "init" | "usersOk" | "usersKo";
 type CreatePublicationsType = "init" | "publicationsOk" | "publicationsKo";
+type loginUserType = "init" | "loginUser" | "loginProducer" | "loginAdmin" |"loginKo";
+type DeletePublicationsStateType = "init" | "noPublications" | "deletedOk" | "deletedKo" | "noToken";
 
 function Management() {
 	const { setUserRole } = useUserRoleContext();
 	const [registerUserState, setRegisterUserState] = useState<RegisterUserStateType>("init");
 	const [createPublicationsState, setCreatePublicationsState] = useState<CreatePublicationsType>("init");
+	const [loginUserState, setLoginUserState] = useState<loginUserType>("init");
+	const [areTherePublicationsToDelete, setAreTherePublicationsToDelete] = useState(false);
+	const [deletePublicationsState, setDeletePublicationsState] = useState<DeletePublicationsStateType>("init");
 
-	const buttonColor: ButtonColorType = "yellow";
+	const buttonColorYellow: ButtonColorType = "yellow";
+	const buttonColorGreen: ButtonColorType = "green";
 	const buttonFontSize = "text-base";
 	const buttonWidth = "w-[250px]";
+	const buttonWidthSmall = "w-[180px]";
 	const buttonPaddingY = "py-3.5";
+	const buttonPaddingYSmall = "py-1.5";
 
-	const buttonFuncionality1 = {
+	const createUsersFuncionality = {
 		actionText: "Crear Usuarios",
 		handleClick: createUsers
 	};
 
-	const buttonFuncionality2 = {
+	const createPublicationsFuncionality = {
 		actionText: "Crear Publicaciones",
 		handleClick: createPublications
 	};
 
+	const deletePublicationsFuncionality = {
+		actionText: "Borrar Publicaciones",
+		handleClick: deletePublications
+	};
+
+	const loginAsUserFuncionality = {
+		actionText: "Logar Usuario",
+		handleClick: loginAsUser
+	};
+
+	const loginAsProducerFuncionality = {
+		actionText: "Logar Productor",
+		handleClick: loginAsProducer
+	};
+
+	const loginAsAdminFuncionality = {
+		actionText: "Logar Admin",
+		handleClick: loginAsAdmin
+	};
+
 	const axiosController1 = useRef<AbortController>();
 	const axiosController2 = useRef<AbortController>();
+	const axiosController3 = useRef<AbortController>();
 
 	const userData: RegiserFormFieldsToSendType = {
 		email: "pedritoaldas2@gmail.com",
@@ -105,7 +136,47 @@ function Management() {
 	}
 
 
-	function createPublications () {
+	function loginAsUser () {
+		axiosController2.current = new AbortController();
+		const loginData: LoginFormValuesType = {
+			email: userData.email,
+			password: userData.password
+		};
+		const loginDataJson = JSON.stringify(loginData);
+
+		logInUser(loginDataJson, axiosController2.current!)
+			.then((userDataResponse: UserDataType) => {
+				updateUserData(userDataResponse, setUserRole);
+				setLoginUserState("loginUser");
+			})
+			.catch((error: Error) => {
+				console.log(error);
+				setLoginUserState("loginKo");
+			});
+	}
+
+
+	function loginAsProducer () {
+		axiosController2.current = new AbortController();
+		const loginData: LoginFormValuesType = {
+			email: producerData.email,
+			password: producerData.password
+		};
+		const loginDataJson = JSON.stringify(loginData);
+
+		logInUser(loginDataJson, axiosController2.current!)
+			.then((userDataResponse: UserDataType) => {
+				updateUserData(userDataResponse, setUserRole);
+				setLoginUserState("loginProducer");
+			})
+			.catch((error: Error) => {
+				console.log(error);
+				setLoginUserState("loginKo");
+			});
+	}
+
+
+	function loginAsAdmin () {
 		axiosController2.current = new AbortController();
 		const loginData: LoginFormValuesType = {
 			email: adminData.email,
@@ -113,56 +184,132 @@ function Management() {
 		};
 		const loginDataJson = JSON.stringify(loginData);
 
-		//Nos logamos como admin.
 		logInUser(loginDataJson, axiosController2.current!)
-			.then((UserDataResponse: UserDataType) => {
-				storeToken(UserDataResponse.accessToken);
-				storeName(`${UserDataResponse.name} ${UserDataResponse.lastname}`);
-				user.name = `${UserDataResponse.name} ${UserDataResponse.lastname}`;
-				setUserRole(UserDataResponse.userType);
+			.then((userDataResponse: UserDataType) => {
+				updateUserData(userDataResponse, setUserRole);
+				setLoginUserState("loginAdmin");
 			})
 			.catch((error: Error) => {
 				console.log(error);
-				setCreatePublicationsState("publicationsKo");
+				setLoginUserState("loginKo");
 			});
-		
-		//Creamos las publicaciones.
+	}
+
+
+	function createPublications () {
+		axiosController2.current = new AbortController();
 		const storedToken = getStoredToken();
-		const publicationData = {
-			"title": "prueba",
-			"plantation": {
-				"id": 111,
-				"plantType": "pepino",
-				"seasson": "verano",
-				"waterAmount": 1500,
-				"details": "Siempre es verano, con el pepino en la mano"
-			},
-			"visibility": true,
-			"score": 7
-		};
-		const publicationDataJson: Stringified<PlantationDemoType> = JSON.stringify(publicationData);
-		
-		createPublication(storedToken!, publicationDataJson, axiosController2.current)
-			.then( () => {
-				setCreatePublicationsState("publicationsOk");
-			})
-			.catch( (error) => {
-				console.log(error);
-				setCreatePublicationsState("publicationsKo");
+		let errorInPublication = false;
+		const publicationsIdsToStore: number[] = [];
+		const publicationsToPublish: PlantationsDemoDataType = publicationsDemoData;
+
+		if (storedToken) {
+
+			publicationsToPublish.map( (publication) => {
+				if (errorInPublication === false) {
+					const publicationDataJson: Stringified<PlantationDemoType> = JSON.stringify(publication);
+	
+					createPublication(storedToken!, publicationDataJson, axiosController2.current!)
+						.then( (response) => {
+							console.log(response);
+							publicationsIdsToStore.push(response.id!);
+						})
+						.catch( (error) => {
+							errorInPublication = true;
+							console.log(error);
+						});
+
+				} else {
+					setCreatePublicationsState("publicationsKo");
+					console.log("Error en alguna de las publicaciones!");
+				}
 			});
 
+			if (publicationsIdsToStore[0]) setAreTherePublicationsToDelete(true);
+			console.log(publicationsIdsToStore);
+			const publicationsIdsToStoreJSON = JSON.stringify(publicationsIdsToStore);
+			console.log(publicationsIdsToStoreJSON);
+			storePublicationsDemoIds(publicationsIdsToStoreJSON);
+
+			if (!errorInPublication) 	setCreatePublicationsState("publicationsOk");
+
+		} else {
+			setCreatePublicationsState("publicationsKo");
+			console.log("No hay token!");
+		}
 
 	}
 
 
+	function deletePublications () {
+		axiosController3.current = new AbortController();
+		const storedToken = getStoredToken();
+		let deletingError = false;
+		const publicationsToDeleteIdsStringify = getPublicationsDemoIds();
+		let publicationsToDeleteIds: number[];
+
+		if (publicationsToDeleteIdsStringify && storedToken) {
+			publicationsToDeleteIds = JSON.parse(publicationsToDeleteIdsStringify);
+
+			publicationsToDeleteIds.map( (id) => {
+
+				if (!deletingError) {
+					deletePublication(storedToken, id, axiosController3.current!)
+						.then( () => {
+	
+						})
+						.catch( (error) => {
+							deletingError = true;
+							console.log(error);
+						});
+
+				} else {
+					setDeletePublicationsState("deletedKo");
+				}
+
+			});
+
+			if (!deletingError) {
+				erasePublicationsDemoIds();
+				setDeletePublicationsState("deletedOk");
+				setAreTherePublicationsToDelete(false);
+			} else {
+				setDeletePublicationsState("deletedKo");
+			}
+
+		} else {
+			if (!publicationsToDeleteIdsStringify) setDeletePublicationsState("noPublications");
+			if (!storedToken) setDeletePublicationsState("noToken");
+		}
+	}
+
+
+
+	useEffect( () => {
+		const storedPublicationsIdsString = getPublicationsDemoIds();
+		let storedPublicationsIdsArray: number[];
+
+		if (storedPublicationsIdsString) {
+			storedPublicationsIdsArray = JSON.parse(storedPublicationsIdsString);
+
+			if (storedPublicationsIdsArray[0]) {
+				setAreTherePublicationsToDelete(true);
+			} else {
+				setAreTherePublicationsToDelete(false);
+			}
+		}
+	});
+
+
+
 	return (
-		<div className="w-full h-[100vh] bg-brandingLightYellow">
+		<div className="w-full pb-20 bg-brandingLightYellow">
 			<div className="w-full" >
 				<Header />
 			</div>
 
 			<div className="relative flex flex-col items-start w-full pl-28 mt-12 font-sans">
-				<Button buttonColor={buttonColor} buttonFontSize={buttonFontSize} buttonWidth={buttonWidth} buttonPaddingY={buttonPaddingY} buttonFuncionality={buttonFuncionality1} />
+				<Button buttonColor={buttonColorYellow} buttonFontSize={buttonFontSize} buttonWidth={buttonWidth} buttonPaddingY={buttonPaddingY} buttonFuncionality={createUsersFuncionality} />
 				
 				<div className="relative p-8">
 					<div className="mb-4">
@@ -171,10 +318,32 @@ function Management() {
 						<p className="">Contraseña:   <span className="font-bold">Tut$oms6</span></p>
 					</div>
 
-					<div className="mb-4">
+					<div className="relative my-6">
+						<Button buttonColor={buttonColorGreen} buttonFontSize={buttonFontSize} buttonWidth={buttonWidthSmall} buttonPaddingY={buttonPaddingYSmall} buttonFuncionality={loginAsAdminFuncionality} />
+						<div className="absolute bottom-4 right-[110%] font-bold">
+							{
+								loginUserState === "loginAdmin" && <p className="">Logado como Administrador</p>
+							}
+						</div>
+					</div>
+
+					<div className="my-6">
 						<p className="text-brandingDarkGreen">Productor: </p>
 						<p className="">Email:	<span className="font-bold">lorenita16tat@gmail.com</span></p>
 						<p className="">Contraseña:   <span className="font-bold">A%ldo1se</span></p>
+					</div>
+
+					<div className="relative my-6">
+						<Button buttonColor={buttonColorGreen} buttonFontSize={buttonFontSize} buttonWidth={buttonWidthSmall} buttonPaddingY={buttonPaddingYSmall} buttonFuncionality={loginAsProducerFuncionality} />
+						<div className="absolute bottom-4 right-[110%] font-bold">
+							{
+								loginUserState === "loginProducer" && <p className="">Logado como Productor</p>
+							}
+
+							{
+								loginUserState === "loginKo" && <p className="">¡Error al logar!</p>
+							}
+						</div>
 					</div>
 
 					<div className="">
@@ -183,9 +352,18 @@ function Management() {
 						<p className="">Contraseña:   <span className="font-bold">oem$TP5</span></p>
 					</div>
 
+					<div className="relative my-6">
+						<Button buttonColor={buttonColorGreen} buttonFontSize={buttonFontSize} buttonWidth={buttonWidthSmall} buttonPaddingY={buttonPaddingYSmall} buttonFuncionality={loginAsUserFuncionality} />
+						<div className="absolute bottom-4 right-[110%] font-bold">
+							{
+								loginUserState === "loginUser" && <p className="">Logado como Usuario</p>
+							}
+						</div>
+					</div>
+
 					<div className="absolute top-[-17%] right-[-160%] w-[500px] p-4 border-2 border-solid border-brandingYellow rounded-xl">
 						{
-							registerUserState === "init" && <p className="font-bold">Primero registra a los usuarios, luego crea las publicaciones.</p>
+							registerUserState === "init" && <p className="font-bold">Primero crea a los usuarios, luego puedes logarlos y crear las publicaciones.</p>
 						}
 
 						{
@@ -207,17 +385,48 @@ function Management() {
 						}
 					</div>
 				</div>
-
-				<Button buttonColor={buttonColor} buttonFontSize={buttonFontSize} buttonWidth={buttonWidth} buttonPaddingY={buttonPaddingY} buttonFuncionality={buttonFuncionality2} />
-				<div className="absolute bottom-4 right-[40%] font-bold">
+				
+				<div className="relative">
 					{
-						createPublicationsState === "publicationsOk" && <p className="">¡Publicaciones registradas correctamente!</p>
-					}
+						areTherePublicationsToDelete === false && (
+							<>
+								<Button buttonColor={buttonColorYellow} buttonFontSize={buttonFontSize} buttonWidth={buttonWidth} buttonPaddingY={buttonPaddingY} buttonFuncionality={createPublicationsFuncionality} />
+								<div className="absolute bottom-4 right-[-150%] font-bold">
+									{
+										createPublicationsState === "publicationsOk" &&  <p className="">¡Publicaciones registradas correctamente!</p>
+									}
 
-					{
-						createPublicationsState === "publicationsKo" && <p className="">¡Error al registrar las publicaciones!</p>
+									{
+										createPublicationsState === "publicationsKo" && <p className="">¡Error al registrar las publicaciones!</p>
+									}
+								</div>
+							</>
+						)
 					}
 				</div>
+				
+				<div className="my-6">
+					<Button buttonColor={buttonColorYellow} buttonFontSize={buttonFontSize} buttonWidth={buttonWidth} buttonPaddingY={buttonPaddingY} buttonFuncionality={deletePublicationsFuncionality} />
+				</div>
+
+				<div className="font-bold">
+					{
+						deletePublicationsState === "noPublications" && <p className="">¡No hay publicaciones para borrar!</p>
+					}
+
+					{	
+						deletePublicationsState === "deletedOk" && <p className="">¡Publicaciones borradas correctamente!</p>
+					}
+
+					{
+						deletePublicationsState === "deletedKo" && <p className="">¡Error al borrar las publicaciones!</p>
+					}
+
+					{
+						deletePublicationsState === "noToken" && <p className="">¡No hay un usuario logado!</p>
+					}
+				</div>
+								
 			</div>
 		</div>
 	);

@@ -12,11 +12,13 @@ import VisitorBanner from "../components/homeElements/VisitorBanner";
 import CallToAction from "../components/homeElements/CallToAction";
 import SocialNetworks from "../components/homeElements/SocialNetworks";
 import { getStoredName } from "../utils/getStoredName";
-import { storeName } from "../utils/storeName";
 import { PublicationType } from "../components/publicationsList/publicationsListTypes";
 import Testimonials from "../components/homeElements/Testimonials";
 import UserBanner from "../components/homeElements/UserBanner";
 import ProducerBanner from "../components/homeElements/ProducerBanner";
+import { getStoredRole } from "../utils/getStoredRole";
+import { updateUserData } from "../utils/updateUserData";
+import { resetUserData } from "../utils/resetUserData";
 
 
 
@@ -38,18 +40,19 @@ export default function Home() {
 	const axiosController = useRef<AbortController>();
 
 
-
-
+	// Se utiliza este Layout Effect para que se carguen por defecto el nombre y el rol del usuario del Local Storage, si existen. 
+	// Esto evita que la página "parpadee" cuando esta información se obtiene del servidor. 
+	// No obstante, si no coinciden la información almacenada y la del servidor, tiene prevalencia esta última y habrá un parpadeo cuando ésta se "imponga".
 	useLayoutEffect( () => {
-		const userName = getStoredName();
-		const token = getStoredToken();
+		const userStoredName = getStoredName();
+		const userStoredRole = getStoredRole();
 
-		if (userName) {
-			user.name = userName;
+		if (userStoredName) {
+			user.name = userStoredName;
 		}
 
-		if (token) {
-			setUserRole("USER");
+		if (userStoredRole) {
+			setUserRole(userStoredRole);
 		}
 	});
 
@@ -62,13 +65,12 @@ export default function Home() {
 		if (storedToken) {
 			checkOpenSession(storedToken, axiosController.current)
 				.then((userData: UserDataType) => {
-					storeName(`${userData.name} ${userData.lastname}`);
-					user.name = `${userData.name} ${userData.lastname}`;
-					setUserRole(userData.userType);
+					updateUserData(userData, setUserRole);
 				})
-				.catch(() => {
-					user.name = "";
-					setUserRole("visitor");
+				.catch((error) => {
+					if (error === "401") {
+						resetUserData(setUserRole);
+					}
 				});
 		}
 
