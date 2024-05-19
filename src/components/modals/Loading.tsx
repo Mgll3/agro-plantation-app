@@ -4,20 +4,22 @@ function Loading() {
 	/*shadow-[0_6px_16px_#94B447]*/
 	return (
 		<div className="fixed top-0 left-0 flex justify-center items-center w-screen bg-screenDarkening h-screen">
-			<div className="flex items-center flex-col justify-between bg-brandingLightYellow w-[30vw] h-[58vh] text-center text-black font-sans rounded-xl p-[4rem_2rem]">
+			<div className="flex items-center gap-[64px] flex-col justify-between bg-brandingLightYellow w-[550px] h-[531px] text-center text-black font-sans rounded-xl p-[64px_32px]">
 
-				<CircularProgress color="success" size={"100px"} className="drop-shadow-[0_1px_4px_rgba(0,0,0,.50)]"/>
+				<CircularProgress color="success" size={"167px"} className="" />
 
-				<h3 className="text-size2 font-medium pt-2 drop-shadow-[2px_4px_2px_rgba(0,0,0,.2)]">Esperando respuesta <br/> del servidor
-				</h3>
+				<div className="flex flex-col gap-[24px] ">
+					<h4 className="text-[35px] ">Esperando respuesta <br /> del servidor
+					</h4>
 
 
-				<p className="text-sm font-medium drop-shadow-[2px_4px_2px_rgba(0,0,0,.2)]">Un momento por favor...</p>
+					<h5 className="text-[24px]">Un momento por favor...</h5>
+				</div>
 
-				
+
 
 			</div>
-	
+
 		</div>
 	);
 }

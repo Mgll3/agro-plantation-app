@@ -8,12 +8,13 @@ function CallToAction() {
 	const buttonPaddingY = "py-3.5";
 
 	return (
-		<div className="flex items-center w-full px-[10vw] bg-brandingLightGreen">
-			<p className="font-niramit text-[32px] text-semiTansparentBlack">Lo pensaste? Dale registrate a 
-				<span className="font-loginFont"> PLANT-IN </span>
-				y comparti tu huerta, tus cosechas tus logros . Solo tenes que completar el formulario y sos parte de esta familia!!!!
-			</p>
-			
+		<div className="flex items-center justify-between w-full bg-[#F9F8F8] p-[16px_128px]">
+			<div className="flex flex-col ">
+				<p className="font-niramit text-2xl text-semiTansparentBlack">Regístrate a PLANT-IN y compartí tu huerta, tus cosechas y mucho más.
+				</p>
+				<p>Completa el formulario y forma parte de la Comunidad <span className="text-[#1B7E25]"> PLANT- IN!!!</span></p>
+			</div>
+
 			<Button
 				buttonColor={buttonColor}
 				buttonFontSize={buttonFontSize}

@@ -33,11 +33,11 @@ export default function Login({ handleSubmit, handleRegisterClick, loginState }:
 	});
 
 	return (
-		<div className="w-[100%] font-sans flex h-[100vh] items-center justify-center bg-[#FFFFFF] text-[#eaefd4f2] overflow-x-hidden">
+		<div className="w-[100%] flex h-[100vh] items-center justify-center bg-[#FFFFFF] text-[#eaefd4f2] overflow-x-hidden">
 			<aside className="w-[32vw] h-[100vh] ">
 				<div className="bg-login w-[100%] h-[100%]  bg-center bg-cover bg-no-repeat flex justify-end items-center rounded-r-xl">
-					<h1 className="bg-[#EAE3C0] text-black font-medium text-2xl font-sans p-[.8rem_3rem] rounded-l-[25px]  translate-y-[5px] drop-shadow-[2px_4px_2px_rgba(0,0,0,.2)]">Ingreso</h1>
-					<Link to="/copyright" className=" absolute bottom-4 p-[4px_4px] m-[1rem] bg-[#94B447] text-[#000] text-center text-[13px] rounded-md max-w-[32vw] drop-shadow-[2px_4px_2px_rgba(0,0,0,.2)]">
+					<h1 className="bg-[#EAE3C0] text-black font-medium text-2xl font-sans p-[.8rem_3rem] rounded-l-[25px]  translate-y-[5px] drop-shadow-[0_4px_2px_rgba(0,0,0,.2)]">Ingreso</h1>
+					<Link to="/copyright" className=" absolute font-sans bottom-4 p-[4px_2px] m-[1rem] bg-[#94B447] text-[#000] text-center text-[13px] rounded-md max-w-[32vw] drop-shadow-[2px_4px_2px_rgba(0,0,0,.2)]">
 						Todos los derechos reservados para PLANT-IN<span className="text-[#1B7E25]">&copy;</span> Marzo 2024
 					</Link>
 				</div>
@@ -55,7 +55,7 @@ export default function Login({ handleSubmit, handleRegisterClick, loginState }:
 							<abbr title="Ir a la página principal">
 								<button type="button" onClick={() => navigate("/")}>
 									<img src="images/logos/LogoVerde.png" alt="logo"
-										className=" bg-[transparent] w-[133.3px] h-[163.12px] drop-shadow-[0_3px_2px_rgba(0,0,0,.3)]"
+										className=" bg-[transparent] w-[133.3px] h-[163.12px]"
 									/>
 								</button>
 							</abbr>
@@ -68,7 +68,7 @@ export default function Login({ handleSubmit, handleRegisterClick, loginState }:
 									id="loginEmail"
 									name="email"
 									placeholder="Correo Electrónico"
-									className="bg-[transparent] outline-none  border-b-[1px] border-b-[#00000038] mb-[0rem] p-[0_12px] w-[300px] text-[#636363] drop-shadow-[2px_4px_2px_rgba(0,0,0,.2)] shadow-[0_2px_0_rgba(0,0,0,.04)]"
+									className="bg-[transparent] outline-none  border-b-[1px] border-b-[#00000038] mb-[0rem] p-[0_12px] w-[300px] text-[#636363] shadow-[0_2px_0_rgba(0,0,0,.04)]"
 								>
 								</Field>
 
@@ -84,7 +84,7 @@ export default function Login({ handleSubmit, handleRegisterClick, loginState }:
 									id="loginPassword"
 									name="password"
 									placeholder="Contraseña"
-									className="bg-[transparent] outline-none  border-b-[1px] border-b-[#00000038] mt-[64px] p-[0_12px] w-[300px] text-black drop-shadow-[2px_4px_2px_rgba(0,0,0,.2)] shadow-[0_2px_0_rgba(0,0,0,.04)]"
+									className="bg-[transparent] outline-none  border-b-[1px] border-b-[#00000038] mt-[64px] p-[0_12px] w-[300px] text-black shadow-[0_2px_0_rgba(0,0,0,.04)]"
 								>
 								</Field>
 								
@@ -114,10 +114,12 @@ export default function Login({ handleSubmit, handleRegisterClick, loginState }:
 						/>
 
 
-						<p className="text-black font-sans drop-shadow-[2px_4px_2px_rgba(0,0,0,.35)]">Si no tienes una cuenta, por favor <span onClick={handleRegisterClick} className="text-[#1B7E25]" role="button" >regístrate</span></p>
+						<p className="text-black font-sans font-light ">Si no tienes una cuenta, por favor <span onClick={handleRegisterClick} className="text-[#1B7E25]" role="button" >regístrate</span></p>
 					</Form>
 				</Formik>
 			</div>
 		</div>
 	);
 }
+
+
