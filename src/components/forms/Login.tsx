@@ -99,7 +99,7 @@ export default function Login({ handleSubmit, handleRegisterClick, loginState }:
 						}
 
 						{
-							loginState === "networkError" && <NetworkError failedAction="realizar el login" />
+							loginState === "networkError" && <NetworkError failedAction="realizar el login" buttonText="Volver a intentar" handleClose={()=>{}}/>
 						}
 
 						{
