@@ -35,6 +35,7 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 
 	function closeErrorMessage() {
 		setRegisterState("init");
+		setLoginState("init");
 	}
 
 	function submitLoginForm(formValues: LoginFormValuesType) {
@@ -127,22 +128,13 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 
 
 	useEffect(() => {
-		let loginNetworkErrorTimeout: number;
-
 		if (loginState === "logged") {
 			userRole !== "ADMIN"
 				?	navigate("/", {replace: true})
 				: navigate("/admin/publications", {replace: true});
 		}
 
-		if (loginState === "networkError") {
-			loginNetworkErrorTimeout = window.setTimeout( () => {
-				setLoginState("init");
-			}, 3500);
-		}
-
 		return () => {
-			clearTimeout(loginNetworkErrorTimeout);
 			// clearTimeout(changeFormTimeout);
 			clearTimeout(loggedTimeout);
 		};
@@ -196,7 +188,7 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 						? (
 							<>
 								<div className="w-screen">
-									<Login handleSubmit={submitLoginForm} handleRegisterClick={changeForm} loginState={loginState} />
+									<Login handleSubmit={submitLoginForm} handleRegisterClick={changeForm} loginState={loginState} closeErrorMessages={closeErrorMessage}/>
 								</div>
 
 								<div className="w-screen ">
@@ -211,7 +203,7 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 								</div>
 
 								<div className="w-screen">
-									<Login handleSubmit={submitLoginForm} handleRegisterClick={changeForm} loginState={loginState} />
+									<Login handleSubmit={submitLoginForm} handleRegisterClick={changeForm} loginState={loginState} closeErrorMessages={closeErrorMessage}/>
 								</div>
 							</>
 						)

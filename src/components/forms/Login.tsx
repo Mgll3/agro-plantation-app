@@ -10,10 +10,11 @@ import NetworkError from "../modals/NetworkError.tsx";
 type LoginProps = {
 	handleSubmit: (formValues: LoginFormValuesType) => void,
 	handleRegisterClick: () => void,
-	loginState: LoginStateType
+	loginState: LoginStateType,
+	closeErrorMessages: () => void
 }
 
-export default function Login({ handleSubmit, handleRegisterClick, loginState }: LoginProps) {
+export default function Login({ handleSubmit, handleRegisterClick, loginState, closeErrorMessages}: LoginProps) {
 
 	const navigate = useNavigate();
 
@@ -100,7 +101,7 @@ export default function Login({ handleSubmit, handleRegisterClick, loginState }:
 						}
 
 						{
-							loginState === "networkError" && <NetworkError failedAction="realizar el login" />
+							loginState === "networkError" && <NetworkError failedAction="realizar el login" buttonText="Volver a intentar" handleClose={closeErrorMessages} />
 						}
 
 						{

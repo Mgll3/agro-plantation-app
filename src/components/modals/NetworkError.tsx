@@ -20,7 +20,7 @@ function NetworkError( {failedAction, buttonText, handleClose}: NetworkErrorProp
 
 	
 	return (
-		<div className="z-50 absolute flex justify-center items-center w-screen  h-screen bg-screenDarkening">
+		<div className="z-50 fixed left-0 top-0 flex justify-center items-center w-screen  h-screen bg-screenDarkening">
 			<div className="flex items-center flex-col justify-between bg-brandingLightYellow w-[30vw] h-[58vh] text-center text-black font-sans rounded-xl shadow-[0_6px_16px_#94B447] p-[.5rem_1rem]">
 
 				<div className="">
