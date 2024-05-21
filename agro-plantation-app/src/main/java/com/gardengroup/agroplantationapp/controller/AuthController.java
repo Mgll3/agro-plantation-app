@@ -1,11 +1,10 @@
 package com.gardengroup.agroplantationapp.controller;
 
-import com.gardengroup.agroplantationapp.exceptions.OurException;
 import com.gardengroup.agroplantationapp.model.dto.user.AthAnswerDTO;
 import com.gardengroup.agroplantationapp.model.dto.user.LoginDTO;
 import com.gardengroup.agroplantationapp.model.dto.user.RegisterDTO;
 import com.gardengroup.agroplantationapp.model.entity.User;
-import com.gardengroup.agroplantationapp.service.UserService;
+import com.gardengroup.agroplantationapp.service.IUserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -25,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     @Autowired
-    private UserService userService;
+    private IUserService userService;
 
     @Operation(summary = "Registrar usuario", description = "Endpoint para registrar un nuevo usuario", tags = {"Auth"})
     @ApiResponses(value = {

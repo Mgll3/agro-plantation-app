@@ -1,23 +1,16 @@
 package com.gardengroup.agroplantationapp.service;
 
-import com.gardengroup.agroplantationapp.exceptions.OurException;
 import com.gardengroup.agroplantationapp.model.dto.user.AthAnswerDTO;
 import com.gardengroup.agroplantationapp.model.dto.user.LoginDTO;
 import com.gardengroup.agroplantationapp.model.dto.user.RegisterDTO;
-import com.gardengroup.agroplantationapp.model.entity.ProducerRequest;
-import com.gardengroup.agroplantationapp.model.entity.StateRequest;
 import com.gardengroup.agroplantationapp.model.entity.User;
 import com.gardengroup.agroplantationapp.model.entity.UserType;
-import com.gardengroup.agroplantationapp.model.repository.ProducerRequestRepository;
 import com.gardengroup.agroplantationapp.model.repository.UserRepository;
-
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Date;
 
 @Service
 public class UserService implements IUserService {

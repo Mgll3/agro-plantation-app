@@ -1,14 +1,14 @@
 package com.gardengroup.agroplantationapp.controller;
 
-import com.gardengroup.agroplantationapp.exceptions.OurException;
 import com.gardengroup.agroplantationapp.model.entity.ProducerRequest;
-import com.gardengroup.agroplantationapp.model.entity.Publication;
-import com.gardengroup.agroplantationapp.service.PublicationService;
+import com.gardengroup.agroplantationapp.service.IProducerRequestService;
+import com.gardengroup.agroplantationapp.service.SecurityService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
 
@@ -21,10 +21,13 @@ import org.springframework.web.bind.annotation.*;
 
 
 @Controller
+@CrossOrigin(origins = "*")
 public class ProducerRequestController {
     
     @Autowired
-    private com.gardengroup.agroplantationapp.service.ProducerRequestService ProducerRequestService;
+    private IProducerRequestService ProducerRequestService;
+    @Autowired
+    private SecurityService securityService;
 
     @Operation(
             summary = "Obtiene las solicitudes de productores pendientes",
@@ -84,7 +87,22 @@ public class ProducerRequestController {
         }
     }
 
-
-
+    @Operation(summary = "Solicitar ser productor", description = "Endpoint para solicitar ser productor", tags = {"User"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Solicitud creada con éxito",
+                    content = @Content(schema = @Schema(implementation = String.class))),
+            @ApiResponse(responseCode = "400", description = "Solicitud incorrecta - Error al crear la solicitud",
+                    content = @Content(schema = @Schema(implementation = String.class)))
+    })
+    @PostMapping("/request-producer")
+    public ResponseEntity<?> requestToBecomeProducer(HttpServletRequest request) {
+        try {
+            String email = securityService.getEmail(request);
+            ProducerRequestService.sendProducerRequest(email);
+            return ResponseEntity.ok("Solicitud para convertirse en productor creada con éxito.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error al crear la solicitud: ");
+        }
+    }
 
 }

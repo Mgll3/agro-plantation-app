@@ -48,7 +48,8 @@ public class PublicationService implements IPublicationService {
         //Asignaciones de parametros default
         publication.setVisibility(false);
         publication.setScore(0);
-        publication.setAuthorizationStatus(new StateRequest(1L));
+        //Inicializo la publicacion con estado rechazado
+        publication.setAuthorizationStatus(new StateRequest(3L));
         publication.setPublicationDate(LocalDateTime.now());
         publication.setPlantation(publication.getPlantation());
 
@@ -175,13 +176,20 @@ public class PublicationService implements IPublicationService {
 
     @Transactional
     public void deletePublication(Long id) {
-        Publication publicationSaved = publicationRepository.findById(id).orElseThrow(() -> new DataAccessException("Publication not found") {
+        Publication publicationSaved = publicationRepository.findById(id)
+            .orElseThrow(() -> new DataAccessException("Publication not found") {
         });
 
-        cloudinaryService.delete(publicationSaved.getMainImage().getId());
-        for (Image image : publicationSaved.getImages()) {
-            cloudinaryService.delete(image.getId());
+        //Comprobaciones, existencia de las imagenes
+        if (publicationSaved.getMainImage() != null) {
+            cloudinaryService.delete(publicationSaved.getMainImage().getId());
         }
+        if (publicationSaved.getImages() != null) {
+            for (Image image : publicationSaved.getImages()) {
+                cloudinaryService.delete(image.getId());
+            }
+        }
+        
         publicationRepository.deleteById(id);
 
     }
@@ -203,7 +211,7 @@ public class PublicationService implements IPublicationService {
                 // Buscar el estado "ACCEPTED" en la tabla StateRequest
                 StateRequest acceptedState = stateRequestRepository.findByState("ACCEPTED")
                         .orElseThrow(() -> new RuntimeException("Estado 'ACCEPTED' no encontrado"));
-
+                
                 // Asignar el estado "ACCEPTED" a la publicación
                 publication.setAuthorizationStatus(acceptedState);
 
@@ -305,5 +313,108 @@ public class PublicationService implements IPublicationService {
             };
         }
     }
+
+    @Transactional
+    public List<Publication> getPublicationsByUser(int pag){
+
+        if (pag < 1) {
+            throw new IllegalArgumentException("Invalid page number");
+        }
+
+        pag = (pag-1) * 15;
+        int pagTop= pag + 15;
+
+        final List<Publication> publications = publicationRepository.publicationsByUser(pag, pagTop);
+
+        if (publications.size() > 0) {
+            return publications;
+        } else {
+            throw new DataAccessException("Publications not found") {
+            };
+        }
+    }
+
+    @Transactional
+    public List<Publication> getPublicationsByDate(int pag){
+        
+        if (pag < 1) {
+            throw new IllegalArgumentException("Invalid page number");
+        }
+
+        pag = (pag-1) * 15;
+        int pagTop= pag + 15;
+
+        final List<Publication> publications = publicationRepository.publicationsByDate(pag, pagTop);
+
+        if (publications.size() > 0) {
+            return publications;
+        } else {
+            throw new DataAccessException("Publications not found") {
+            };
+        }
+    }
+
+    @Transactional
+    public List<Publication> getPublicationsByAleatory(int pag){
+        
+        if (pag < 1) {
+            throw new IllegalArgumentException("Invalid page number");
+        }
+
+        pag = (pag-1) * 15;
+        int pagTop= pag + 15;
+
+        final List<Publication> publications = publicationRepository.publicationsByAleatory(pag, pagTop);
+
+        if (publications.size() > 0) {
+            return publications;
+        } else {
+            throw new DataAccessException("Publications not found") {
+            };
+        }
+    }
+
+    @Transactional
+    public List<Publication> getPublicationsByPending(int pag){
+        
+        if (pag < 1) {
+            throw new IllegalArgumentException("Invalid page number");
+        }
+
+        pag = (pag-1) * 15;
+        int pagTop= pag + 15;
+
+        final List<Publication> publications = publicationRepository.publicationsByPending(pag, pagTop);
+
+        if (publications.size() > 0) {
+            return publications;
+        } else {
+            throw new DataAccessException("Publications not found") {
+            };
+        }
+
+    }
+
+    @Transactional
+    public List<Publication> getPublicationsByQuantity(int pag){
+        
+        if (pag < 1) {
+            throw new IllegalArgumentException("Invalid page number");
+        }
+
+        pag = (pag-1) * 15;
+        int pagTop= pag + 15;
+
+        final List<Publication> publications = publicationRepository.publicationsByQuantity(pag, pagTop);
+
+        if (publications.size() > 0) {
+            return publications;
+        } else {
+            throw new DataAccessException("Publications not found") {
+            };
+        }
+        
+    }
+    
 
 }

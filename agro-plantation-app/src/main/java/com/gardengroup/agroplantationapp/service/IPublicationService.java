@@ -24,5 +24,9 @@ public interface IPublicationService {
     public void rejectPublication(Long publicationId);
     public Vote toggleVote(Long publicationId, String userEmail);
     public List<Publication> getPublicationsByLike(int pag);
-    
+    public List<Publication> getPublicationsByUser(int pag);
+    public List<Publication> getPublicationsByDate(int pag);
+    public List<Publication> getPublicationsByAleatory(int pag);
+    public List<Publication> getPublicationsByPending(int pag);
+
 }

@@ -1,24 +1,20 @@
 package com.gardengroup.agroplantationapp.controller;
 
 import java.util.List;
-
-import com.gardengroup.agroplantationapp.exceptions.OurException;
 import com.gardengroup.agroplantationapp.model.dto.publication.PublicationSaveDTO;
 import com.gardengroup.agroplantationapp.model.dto.publication.PublicationUpdDTO;
 import com.gardengroup.agroplantationapp.model.entity.Publication;
 import com.gardengroup.agroplantationapp.model.entity.Vote;
-
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.gardengroup.agroplantationapp.service.PublicationService;
+import com.gardengroup.agroplantationapp.service.IPublicationService;
 import com.gardengroup.agroplantationapp.service.SecurityService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -32,12 +28,12 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 @CrossOrigin(origins = "*")
 public class PublicationController {
     @Autowired
-    private PublicationService publicationService;
+    private IPublicationService publicationService;
     @Autowired
     private SecurityService securityService;
 
     @Operation(summary = "Guardar publicación",
-            description = "End Point para guardar una nueva publicación en base de datos", tags = {"Publication"})
+            description = "End Point para guardar una nueva publicación en base de datos, con Token", tags = {"Publication"})
     @Parameter(name = "Publication", description = "Objeto Publication que se guardará en base de datos")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Publicación guardada exitosamente"),
@@ -47,6 +43,10 @@ public class PublicationController {
     public ResponseEntity<?> savePublication(@RequestBody PublicationSaveDTO publication, HttpServletRequest request) {
         try {
             String email = securityService.getEmail(request);
+            //Validar si existe correo
+            if (email == null) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
             Publication publicationSaved = publicationService.savePublication(publication, email);
             return new ResponseEntity<>(publicationSaved, HttpStatus.CREATED);
         } catch (Exception e) {
@@ -179,7 +179,6 @@ public class PublicationController {
     })
     @PutMapping("/updateVisibility/{publicationId}")
     public ResponseEntity<?> updateVisibility(@PathVariable Long publicationId, HttpServletRequest request) {
-
         try {
             String email = securityService.getEmail(request);
             Publication updatedPublication = publicationService.updateVisibility(publicationId, email);
@@ -210,13 +209,14 @@ public class PublicationController {
     }
 
     @Operation(summary = "Alternar voto para una publicación",
-            description = "Endpoint para alternar el voto (me gusta/no me gusta) para una publicación específica", tags = "Publication")
+            description = "Endpoint para alternar el voto (me gusta/no me gusta) para una publicación específica, necesita token", 
+            tags = "Publication")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Voto alternado exitosamente"),
             @ApiResponse(responseCode = "400", description = "Solicitud incorrecta"),
             @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
-    @PostMapping("/publications/toggleVote/{publicationId}")
+    @PostMapping("/toggleVote/{publicationId}")
     public ResponseEntity<?> toggleVote(@PathVariable Long publicationId, HttpServletRequest request) {
         try {
             String email = securityService.getEmail(request);
@@ -255,7 +255,7 @@ public class PublicationController {
             publicationService.approvePublication(publicationId);
             return ResponseEntity.ok("La solicitud de publicación ha sido aprobada con éxito.");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Error al aprobar la solicitud de publicación");
         }
     }
@@ -272,7 +272,7 @@ public class PublicationController {
             publicationService.rejectPublication(publicationId);
             return ResponseEntity.ok("La solicitud de publicación ha sido rechazada con éxito.");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Error al rechazar la solicitud de publicación");
         }
     }
@@ -291,6 +291,71 @@ public class PublicationController {
             }
         }
     }
+
+    @GetMapping("/user/{pag}")
+    public ResponseEntity<List<Publication>> getPublicationsByUser(@PathVariable int pag) {
+        try {
+            List<Publication> publications = publicationService.getPublicationsByUser(pag);
+            return new ResponseEntity<>(publications, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            if (e.getMessage().equals("Publications not found")) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            }
+        }
+    }
+
+    @GetMapping("/date/{pag}")
+    public ResponseEntity<List<Publication>> getPublicationsByDate(@PathVariable int pag) {
+        try {
+            List<Publication> publications = publicationService.getPublicationsByDate(pag);
+            return new ResponseEntity<>(publications, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            if (e.getMessage().equals("Publications not found")) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            }
+        }
+    }
+
+    @GetMapping("/aleatory/{pag}")
+    public ResponseEntity<List<Publication>> getPublicationsByAleatory(@PathVariable int pag) {
+        try {
+            List<Publication> publications = publicationService.getPublicationsByAleatory(pag);
+            return new ResponseEntity<>(publications, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            if (e.getMessage().equals("Publications not found")) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            }
+        }
+    }
+
+    @GetMapping("/pending/{pag}")
+    public ResponseEntity<List<Publication>> getPublicationsByPending(@PathVariable int pag) {
+        try {
+            List<Publication> publications = publicationService.getPublicationsByPending(pag);
+            return new ResponseEntity<>(publications, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            if (e.getMessage().equals("Publications not found")) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            }
+        }
+    }
+
+
+
+
+
 
 }
 

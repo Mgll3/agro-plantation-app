@@ -20,7 +20,7 @@ public class Plantation {
     private String seasson;
     @Column(length = 10 , nullable = false)
     private Integer waterAmount;
-    @Column(length = 300 , nullable = false)
+    @Column(length = 3000 , nullable = false)
     private String details;
 
 }

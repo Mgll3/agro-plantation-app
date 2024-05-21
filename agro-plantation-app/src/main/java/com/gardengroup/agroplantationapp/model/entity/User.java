@@ -6,6 +6,8 @@
 package com.gardengroup.agroplantationapp.model.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -39,12 +41,23 @@ public class User {
 
     @Column(name = "password", length = 100 , nullable = false)
     private String password;
-
+    
     @Column(columnDefinition = "BOOLEAN DEFAULT false")
     private Boolean totalAuthorization;
 
     @ManyToOne
     private UserType userType;
+
+    //Hago que la contraseña y el correo sea seguro y que no la envie al front
+    @JsonIgnore
+    public String getPassword() {
+        return password;
+    }
+
+    @JsonIgnore
+    public String getEmail() {
+        return email;
+    }
 
 
 }

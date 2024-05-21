@@ -6,6 +6,7 @@ import com.gardengroup.agroplantationapp.model.entity.UserType;
 import com.gardengroup.agroplantationapp.model.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -39,8 +40,9 @@ public class CustomUsersDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         // Busca un usuario en el repositorio por su correo electrónico
-        User user = userRepository.searchEmail(email);
-
+        User user = userRepository.findByEmail(email)
+            .orElseThrow(() -> new DataAccessException("User not found") {
+        });
         // Verifica si el usuario no fue encontrado
         if (user == null) {
             // Lanza una excepción indicando que el usuario no fue encontrado con el correo electrónico proporcionado

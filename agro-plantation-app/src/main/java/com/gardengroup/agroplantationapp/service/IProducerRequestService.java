@@ -9,5 +9,6 @@ public interface IProducerRequestService {
     public List<ProducerRequest> getPendingProducerRequests();
     void approve(Long entityId);
     void reject(Long entityId);
+    public void sendProducerRequest(String userEmail);
 
 }
