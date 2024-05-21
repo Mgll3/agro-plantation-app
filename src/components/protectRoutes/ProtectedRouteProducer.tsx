@@ -33,8 +33,10 @@ function ProtectedRouteProducer() {
 						setIsAuthorized("notAuthorized");
 					}
 				})
-				.catch(() => {
-					resetUserData(setUserRole);
+				.catch((error) => {
+					if (error === "401") {
+						resetUserData(setUserRole);
+					}
 					setIsAuthorized("notAuthorized");
 				});
 		} else {

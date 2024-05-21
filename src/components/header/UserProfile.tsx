@@ -1,9 +1,9 @@
 import { useRef } from "react";
 import { user } from "../../data/userData";
-import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import { Link } from "react-router-dom";
 import { userProfileStateType } from "./headerTypes";
 import Loading from "../modals/Loading";
+import { useUserRoleContext } from "../../context/UserRoleContext";
 
 type UserProfileProps = {
 	userProfileState: userProfileStateType,
@@ -11,6 +11,7 @@ type UserProfileProps = {
 }
 
 function UserProfile({ userProfileState, handleLogoutClick }: UserProfileProps) {
+	const { userRole } = useUserRoleContext();
 	const expandProfileIcon = useRef(null);
 	const userProfile = useRef(null);
 
@@ -28,13 +29,25 @@ function UserProfile({ userProfileState, handleLogoutClick }: UserProfileProps) 
 
 	return (
 		<div aria-label="Mi perfil" className="w-full">
-			<div className="flex items-center font-mono ">
-				<p role="button" onClick={showHideProfileOptions} className="font-bold text-3xl">
+			<div className="flex justify-center items-center py-[10px] px-[12px] rounded-lg bg-brandingYellow">
+				{
+					userRole === "PRODUCER" || userRole === "PRODUCER_VIP"
+						? (
+							<img src="/icons/black-plant.png" alt=""
+								className="mr-[6px]"
+							/>
+						)
+						: null
+				}
+
+				<p role="button" onClick={showHideProfileOptions} className="mr-[18px] font-semibold font-sans text-[19.78px]">
 					{user.name}
 				</p>
 
-				<div className="text-3xl cursor-pointer flex items-center duration-200" onClick={showHideProfileOptions} ref={expandProfileIcon}>
-					<PlayArrowIcon fontSize="inherit" />
+				<div className="flex items-center cursor-pointer duration-200" onClick={showHideProfileOptions} ref={expandProfileIcon}>
+					<img src="/icons/arrow-black.png" alt=""
+						className=""
+					/>
 				</div>
 			</div>
 

@@ -79,11 +79,9 @@ function Header() {
 					<div className="absolute right-4 top-2">
 
 						{
-							userRole === "ADMIN"
-								?	null 
-								: userRole === "visitor"
-									?	<SecondaryNav />
-									:	<UserProfile userProfileState={userProfileState} handleLogoutClick={handleLogoutClick} />
+							userRole === "visitor"
+								?	<SecondaryNav />
+								:	<UserProfile userProfileState={userProfileState} handleLogoutClick={handleLogoutClick} />
 						}
 
 					</div>
