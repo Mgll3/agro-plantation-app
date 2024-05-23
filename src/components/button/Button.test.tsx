@@ -2,6 +2,7 @@ import { render, screen } from "@testing-library/react";
 import Button from "./Button";
 import { BrowserRouter } from "react-router-dom";
 import user from "@testing-library/user-event";
+import {cleanup} from "@testing-library/react";
 
 user.setup();
 
@@ -21,14 +22,18 @@ const linkButtonFuncionality = {
 	linkUrl: "/login",
 };
 
+afterEach( () => cleanup() );
 
+
+
+//TESTS
 
 describe("Action type button:", () => {
 
 	beforeEach(() => {
 		handleClickMock.mockClear();
 		render(<Button buttonColor="yellow" buttonFontSize="text-base" buttonWidth="w-53" buttonPaddingY="py-2.5" buttonFuncionality={actionButtonFuncionality} />);
-	});
+	}); 
 
 	it("Renders correctly", () => {
 		const actionButton = screen.getByRole("button", {name: "Action"});

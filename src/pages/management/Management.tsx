@@ -28,6 +28,8 @@ function Management() {
 	const [loginUserState, setLoginUserState] = useState<loginUserType>("init");
 	const [areTherePublicationsToDelete, setAreTherePublicationsToDelete] = useState(false);
 	const [deletePublicationsState, setDeletePublicationsState] = useState<DeletePublicationsStateType>("init");
+	const errorInPublication = useRef(false);
+	const publicationsIdsToStore = useRef<number[]>([]);
 
 	const buttonColorYellow: ButtonColorType = "yellow";
 	const buttonColorGreen: ButtonColorType = "green";
@@ -199,46 +201,46 @@ function Management() {
 	function createPublications () {
 		axiosController2.current = new AbortController();
 		const storedToken = getStoredToken();
-		let errorInPublication = false;
-		const publicationsIdsToStore: number[] = [];
 		const publicationsToPublish: PlantationsDemoDataType = publicationsDemoData;
 
 		if (storedToken) {
 
 			publicationsToPublish.map( (publication) => {
-				if (errorInPublication === false) {
+				if (errorInPublication.current === false) {
 					const publicationDataJson: Stringified<PlantationDemoType> = JSON.stringify(publication);
 	
 					createPublication(storedToken!, publicationDataJson, axiosController2.current!)
 						.then( (response) => {
-							console.log(response);
-							publicationsIdsToStore.push(response.id!);
+							publicationsIdsToStore.current.push(response.id!);
+
+							if (publicationsIdsToStore.current.length === 30) {
+								const publicationsIdsToStoreJSON = JSON.stringify(publicationsIdsToStore.current);
+								storePublicationsDemoIds(publicationsIdsToStoreJSON);
+								setAreTherePublicationsToDelete(true);
+								setCreatePublicationsState("publicationsOk");
+								setDeletePublicationsState("init");
+								publicationsIdsToStore.current = [];
+							}
 						})
 						.catch( (error) => {
-							errorInPublication = true;
+							errorInPublication.current = true;
 							console.log(error);
 						});
 
 				} else {
 					setCreatePublicationsState("publicationsKo");
-					console.log("Error en alguna de las publicaciones!");
 				}
 			});
-
-			if (publicationsIdsToStore[0]) setAreTherePublicationsToDelete(true);
-			console.log(publicationsIdsToStore);
-			const publicationsIdsToStoreJSON = JSON.stringify(publicationsIdsToStore);
-			console.log(publicationsIdsToStoreJSON);
-			storePublicationsDemoIds(publicationsIdsToStoreJSON);
-
-			if (!errorInPublication) 	setCreatePublicationsState("publicationsOk");
 
 		} else {
 			setCreatePublicationsState("publicationsKo");
 			console.log("No hay token!");
 		}
 
+		errorInPublication.current = false;
 	}
+
+
 
 
 	function deletePublications () {
@@ -289,10 +291,10 @@ function Management() {
 		const storedPublicationsIdsString = getPublicationsDemoIds();
 		let storedPublicationsIdsArray: number[];
 
-		if (storedPublicationsIdsString) {
+		if (storedPublicationsIdsString !== null) {
 			storedPublicationsIdsArray = JSON.parse(storedPublicationsIdsString);
 
-			if (storedPublicationsIdsArray[0]) {
+			if (storedPublicationsIdsArray.length > 0) {
 				setAreTherePublicationsToDelete(true);
 			} else {
 				setAreTherePublicationsToDelete(false);
@@ -406,7 +408,11 @@ function Management() {
 				</div>
 				
 				<div className="my-6">
-					<Button buttonColor={buttonColorYellow} buttonFontSize={buttonFontSize} buttonWidth={buttonWidth} buttonPaddingY={buttonPaddingY} buttonFuncionality={deletePublicationsFuncionality} />
+					{
+						areTherePublicationsToDelete === true && (
+							<Button buttonColor={buttonColorYellow} buttonFontSize={buttonFontSize} buttonWidth={buttonWidth} buttonPaddingY={buttonPaddingY} buttonFuncionality={deletePublicationsFuncionality} />
+						)
+					}
 				</div>
 
 				<div className="font-bold">

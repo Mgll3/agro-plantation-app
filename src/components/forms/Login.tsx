@@ -1,7 +1,7 @@
 import { LoginStateType } from "../../pages/LoginRegisterPage.tsx";
 import Button from "../button/Button.tsx";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import *  as  Yup from "yup";
 import { LoginFormValuesType } from "./formsTypes.ts";
 import Loading from "../modals/Loading.tsx";
@@ -15,8 +15,6 @@ type LoginProps = {
 }
 
 export default function Login({ handleSubmit, handleRegisterClick, loginState, closeErrorMessages}: LoginProps) {
-
-	const navigate = useNavigate();
 
 	const initialValues = {
 		email: "",
@@ -55,11 +53,11 @@ export default function Login({ handleSubmit, handleRegisterClick, loginState, c
 
 						<div className="flex justify-center items-center gap-4 rounded-2xl text-2xl">
 							<abbr title="Ir a la página principal">
-								<button type="button" onClick={() => navigate("/")}>
-									<img src="images/logos/LogoVerde.png" alt="logo"
+								<Link to="/">
+									<img src="images/logos/LogoVerde.png" alt="logo" data-testid="Login_to_Home_Link"
 										className=" bg-[transparent] w-[120px] h-[160px]"
 									/>
-								</button>
+								</Link>
 							</abbr>
 						</div>
 
@@ -117,7 +115,7 @@ export default function Login({ handleSubmit, handleRegisterClick, loginState, c
 						/>
 
 
-						<p className="text-black font-sans">Si no tienes una cuenta, por favor <span onClick={handleRegisterClick} className="text-brandingLightGreen" role="button" >REGÍSTRATE</span></p>
+						<p className="text-black font-sans">Si no tienes una cuenta, por favor <span onClick={handleRegisterClick} className="text-brandingLightGreen" role="link" >REGÍSTRATE</span></p>
 					</Form>
 				</Formik>
 			</div>
