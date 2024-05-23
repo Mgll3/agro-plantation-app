@@ -2,13 +2,13 @@ import { Link } from "react-router-dom";
 
 function Footer() {
 	return (
-		<footer className="flex justify-center items-center w-full py-6 px-2 bg-brandingLightGreen">
+		<footer className="flex justify-between items-center w-full h-[284px] py-[50px] px-2 bg-brandingLightGreen">
 			<img alt=""
 				src="/images/logos/Logo_beige.png"
-				className="w-28"	
+				className="w-[170px]"	
 			/>
 
-			<div className="flex justify-center gap-x-10 w-full pl-[2vw]">
+			<div className="flex justify-center gap-x-10 text-[12px] font-bold">
 				<Link 
 					to="/helpDesk"
 					reloadDocument
@@ -37,7 +37,7 @@ function Footer() {
 			<Link 
 				to="/copyright"
 				reloadDocument
-				className="w-40 font-montserrat text-xs hover:opacity-60"
+				className=" font-montserrat text-[12px] hover:opacity-60"
 			>
 				Todos los derechos reservados para Plant-In © 2024
 			</Link>

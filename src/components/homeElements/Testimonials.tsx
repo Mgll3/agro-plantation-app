@@ -105,7 +105,7 @@ function Testimonials() {
 
 
 	return (
-		<div className="relative w-full h-[70vh]">
+		<div className="relative w-full h-[100%]">
 			<h2 className="w-full mb-[8vh] text-center text-3xl font-sans">Testimonios de nuestros usuarios</h2>
 
 			{/* BOTONES */}
@@ -127,75 +127,75 @@ function Testimonials() {
 				
 			<div className="relative flex w-full h-full overflow-hidden">
 				{/* TESTIMONIOS */}
-				<div className="flex justify-between w-full h-full">
+				<div className="flex justify-between w-full h-[max-content]">
 					{/* TESTIMONIO A LA IZQUIERDA */}
-					<div className="absolute left-[-100%] z-10 flex items-center justify-center gap-10 w-[100%] h-full bg-white"
+					<div className="absolute left-[-100%] z-10 flex justify-center gap-10 w-[100%] h-[max-content] bg-white "
 						ref={prevTestimonialElement}
 					>
-						<div className="w-[45%] h-full text-[19.78px]">
+						<div className="w-[560px] h-[560px] text-[19.78px] border border-solid border-[#b1b1b1] rounded-xl">
 							<img src={testimonialsData[prevTestimonialIndex1].imageUrl} alt={testimonialsData[prevTestimonialIndex1].imageAlt}
-								className="w-full"
+								className="w-full rounded-xl"
 							/>
-							<div className="">
-								<h3 className="font-bold">{testimonialsData[prevTestimonialIndex1].header}</h3>
-								<p className="">{testimonialsData[prevTestimonialIndex1].mainText}</p>
+							<div className="p-[3.5rem_3.5rem_1.5rem]">
+								<h5 className="font-medium text-[20px] mb-[18px]">{testimonialsData[prevTestimonialIndex1].header}</h5>
+								<p className="text-[16px] text-[#575757]">{testimonialsData[prevTestimonialIndex1].mainText}</p>
 							</div>
 						</div>
 
-						<div className="w-[45%] h-full text-[19.78px]">
+						<div className="w-[560px] h-[560px] text-[19.78px] border border-solid border-[#b1b1b1] rounded-xl">
 							<img src={testimonialsData[prevTestimonialIndex2].imageUrl} alt={testimonialsData[prevTestimonialIndex2].imageAlt}
-								className="w-full"
+								className="w-full rounded-xl"
 							/>
-							<div className="">
-								<h3 className="font-bold">{testimonialsData[prevTestimonialIndex2].header}</h3>
-								<p className="">{testimonialsData[prevTestimonialIndex2].mainText}</p>
+							<div className="p-[3.5rem_3.5rem_1.5rem]">
+								<h5 className="font-medium text-[20px] mb-[18px]">{testimonialsData[prevTestimonialIndex2].header}</h5>
+								<p className="text-[16px] text-[#575757]">{testimonialsData[prevTestimonialIndex2].mainText}</p>
 							</div>
 						</div>
 					</div>
 
 					{/* TESTIMONIO VISIBLE */}
-					<div className="flex items-center justify-center gap-10 w-[100%] h-full bg-white">
-						<div className="w-[45%] h-full text-[19.78px]">
+					<div className="flex justify-center gap-10 w-[100%] h-[max-content] bg-white">
+						<div className="w-[560px] h-[560px] text-[19.78px] border border-solid border-[#b1b1b1] rounded-xl overflow-hidden">
 							<img src={testimonialsData[selectedTestimonial].imageUrl} alt={testimonialsData[selectedTestimonial].imageAlt}
-								className="w-full"
+								className="w-full rounded-xl"
 							/>
-							<div className="">
-								<h3 className="font-bold">{testimonialsData[selectedTestimonial].header}</h3>
-								<p className="">{testimonialsData[selectedTestimonial].mainText}</p>
+							<div className="p-[3.5rem_3.5rem_1.5rem]">
+								<h5 className=" font-medium text-[20px] mb-[18px]">{testimonialsData[selectedTestimonial].header}</h5>
+								<p className=" text-[16px] text-[#575757]">{testimonialsData[selectedTestimonial].mainText}</p>
 							</div>
 						</div>
-						<div className="w-[45%] h-full text-[19.78px]">
+						<div className="w-[560px] h-[560px] text-[19.78px] border border-solid border-[#b1b1b1] rounded-xl overflow-hidden">
 							<img src={testimonialsData[selectedTestimonial2].imageUrl} alt={testimonialsData[selectedTestimonial2].imageAlt}
-								className="w-full"
+								className="w-full rounded-xl"
 							/>
-							<div className="">
-								<h3 className="font-bold">{testimonialsData[selectedTestimonial2].header}</h3>
-								<p className="">{testimonialsData[selectedTestimonial2].mainText}</p>
+							<div className="p-[3.5rem_3.5rem_1.5rem]">
+								<h5 className="font-medium text-[20px] mb-[18px]">{testimonialsData[selectedTestimonial2].header}</h5>
+								<p className="text-[16px] text-[#575757]">{testimonialsData[selectedTestimonial2].mainText}</p>
 							</div>
 						</div>
 					</div>
 
 					{/* TESTIMONIO A LA DERECHA */}
-					<div className="absolute right-[-100%] z-10 flex items-center justify-center gap-10 w-[100%] h-full bg-white"
+					<div className="absolute right-[-100%] z-10 flex justify-center gap-10 w-[100%] h-[max-content] bg-white"
 						ref={nextTestimonialElement}
 					>
-						<div className="w-[45%] h-full text-[19.78px]">
+						<div className="w-[560px] h-[560px] text-[19.78px] border border-solid border-[#b1b1b1] rounded-xl">
 							<img src={testimonialsData[nextTestimonialIndex1].imageUrl} alt={testimonialsData[nextTestimonialIndex1].imageAlt}
-								className="w-full"
+								className="w-full rounded-xl"
 							/>
-							<div className="">
-								<h3 className="font-bold">{testimonialsData[nextTestimonialIndex1].header}</h3>
-								<p className="">{testimonialsData[nextTestimonialIndex1].mainText}</p>
+							<div className="p-[3.5rem_3.5rem_1.5rem]">
+								<h5 className="font-medium text-[20px] mb-[18px]">{testimonialsData[nextTestimonialIndex1].header}</h5>
+								<p className="text-[16px] text-[#575757]">{testimonialsData[nextTestimonialIndex1].mainText}</p>
 							</div>
 						</div>
 
-						<div className="w-[45%] h-full text-[19.78px]">
+						<div className="w-[560px] h-[560px] text-[19.78px] border border-solid border-[#b1b1b1] rounded-xl">
 							<img src={testimonialsData[nextTestimonialIndex2].imageUrl} alt={testimonialsData[nextTestimonialIndex2].imageAlt}
-								className="w-full"
+								className="w-full rounded-xl"
 							/>
-							<div className="">
-								<h3 className="font-bold">{testimonialsData[nextTestimonialIndex2].header}</h3>
-								<p className="">{testimonialsData[nextTestimonialIndex2].mainText}</p>
+							<div className="p-[3.5rem_3.5rem_1.5rem]">
+								<h3 className="font-medium text-[20px] mb-[18px]">{testimonialsData[nextTestimonialIndex2].header}</h3>
+								<p className="text-[16px] text-[#575757]">{testimonialsData[nextTestimonialIndex2].mainText}</p>
 							</div>
 						</div>
 					</div>

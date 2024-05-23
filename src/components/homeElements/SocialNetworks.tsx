@@ -2,9 +2,9 @@
 function SocialNetworks() {
 	return (
 		<>
-			<div className="flex justify-center gap-6 w-full">
+			<div className="flex justify-center gap-6 w-full p-[1rem_0]">
 				<a href="https://www.instagram.com/" rel="noreferrer" target="_blank">
-					<div className="flex justify-center items-center w-[100px] h-[100px] bg-brandingLightYellow border-solid border-2 border-black rounded-[50%] hover:opacity-60 duration-200">
+					<div className="flex justify-center items-center w-[100px] h-[100px] opacity-85 duration-200 hover:scale-125">
 						<img alt="Instagram"
 							src="icons/social_media/Instagram.png"
 							className="w-[70px] h-[70px]"
@@ -13,7 +13,7 @@ function SocialNetworks() {
 				</a>
 
 				<a href="https://www.facebook.com/" rel="noreferrer" target="_blank">
-					<div className="flex justify-center items-center w-[100px] h-[100px] bg-brandingLightYellow border-solid border-2 border-black rounded-[50%] hover:opacity-60 duration-200">
+					<div className="flex justify-center items-center w-[100px] h-[100px] opacity-85 duration-200 hover:scale-125">
 						<img alt="Instagram"
 							src="icons/social_media/Facebook.png"
 							className="w-[70px] h-[70px]"
@@ -22,7 +22,7 @@ function SocialNetworks() {
 				</a>
 
 				<a href="https://www.linkedin.com/" rel="noreferrer" target="_blank">
-					<div className="flex justify-center items-center w-[100px] h-[100px] bg-brandingLightYellow border-solid border-2 border-black rounded-[50%] hover:opacity-60 duration-200">
+					<div className="flex justify-center items-center w-[100px] h-[100px] opacity-85 duration-200 hover:scale-125">
 						<img alt="Instagram"
 							src="icons/social_media/LinkedIn.png"
 							className="w-[70px] h-[70px]"
@@ -31,7 +31,7 @@ function SocialNetworks() {
 				</a>
 
 				<a href="https://twitter.com/" rel="noreferrer" target="_blank">
-					<div className="flex justify-center items-center w-[100px] h-[100px] bg-brandingLightYellow border-solid border-2 border-black rounded-[50%] hover:opacity-60 duration-200">
+					<div className="flex justify-center items-center w-[100px] h-[100px] opacity-85 duration-200 hover:scale-125">
 						<img alt="Instagram"
 							src="icons/social_media/TwitterX.png"
 							className="w-[70px] h-[70px]"
@@ -40,7 +40,7 @@ function SocialNetworks() {
 				</a>
 			</div>
 
-			<p className="text-center mt-12 text-semiTansparentBlack text-2xl">
+			<p className="text-center text-2xl m-[1.5rem_0_5.5rem] text-[#5b5b5b]">
 				Encontranos en todas nuestras redes sociales
 			</p>
 		</>

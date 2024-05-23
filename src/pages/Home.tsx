@@ -105,7 +105,7 @@ export default function Home() {
 				<Header />
 			</div>
 
-			<main className="w-full py-8">
+			<main className="w-full pt-8">
 
 				{
 					userRole === "visitor" && (
@@ -204,11 +204,11 @@ export default function Home() {
 					}
 				</div> */}
 
-				<div className="px-[10vw] pt-[3vh]">
+				<div className="pb-10 px-[10vw] pt-[3vh] h-[85vh]">
 					<Testimonials />
 				</div>
 
-				<div className="px-[10vw] mt-20 mb-0">
+				<div className="px-[10vw] mt-10 mb-0">
 					<SocialNetworks />
 				</div>
 

@@ -40,7 +40,7 @@ function MustLoginWarning({ handleCloseMustLoginWarning }: MustLoginWarningProps
 					</Button>
 
 				</div>
-				<p className="font-light text-sm">Si ya estás registrado, por favor <span className="text-[#1B7E25]" role="button" onClick={() => navigate("/register")}>inicia sesión</span></p>
+				<p className="font-light text-sm">Si ya estás registrado, por favor <span className="text-[#1B7E25] font-bold" role="button" onClick={() => navigate("/register")}>inicia sesión</span></p>
 			</div>
 
 		</div>
