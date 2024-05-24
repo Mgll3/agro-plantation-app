@@ -2,20 +2,29 @@ import { useEffect, useRef, useState } from "react";
 import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
 import Viewer from "../../components/admin/Viewer";
-import { PublicationType } from "../../components/publicationsList/publicationsListTypes";
 import NetworkError from "../../components/modals/NetworkError";
 import LoadingSmall from "../../components/modals/LoadingSmall";
-import PublicationsFilters, { FilterType } from "../../components/admin/PublicationsFilters";
+import PublicationsFilters from "../../components/admin/PublicationsFilters";
+import { useParams } from "react-router-dom";
+import { getStoredToken } from "../../utils/getStoredToken";
+import { getPublicationsByRandom } from "../../interfaces/publicationsFilters/getPublicationsByRandom";
+import { AdminPublicationsFilteredType, FilterType, FormattedPublicationsInfoType } from "../../components/admin/adminTypes";
 
 
 type PublicationsLoadStateType = "loading" | "error" | "loaded";
 
 function AdminPublications() {
-	const [publicationsFiltered, setPublicationsFiltered] = useState<PublicationType[] | null>(null);
+	const [publicationsFiltered, setPublicationsFiltered] = useState<FormattedPublicationsInfoType[] | null>(null);
 	const [publicationsLoadState, setPublicationsLoadState] = useState<PublicationsLoadStateType>("loading");
 	const [filter, setFilter] = useState<FilterType>("random");
+	
+	let  { id } =  useParams();														// Usado para mostrar una págína u otra del filtro seleccionado. Si no hay id se le da el valor "1" por defecto.
+	if (id === undefined) id = "1";
+	
 	const axiosController = useRef<AbortController>();
-	const axiosController2 = useRef<AbortController>();
+
+
+
 
 
 	function closeErrorModal () {
@@ -23,28 +32,50 @@ function AdminPublications() {
 	}
 
 
-	useEffect( () => {
-		axiosController.current = new AbortController();
+	//Estas funciones organizan la información recuperada del servidor y la adaptan al formato que entiende el componente "Viewer", el formato ()
 
+	function formatByRandomPublications (publications: AdminPublicationsFilteredType[]) {
+		const result: FormattedPublicationsInfoType[] = [];
+		
+		const formattedBlock = {
+			title: "Aleatorio",
+			content: publications
+		};
+
+		result.push(formattedBlock);
+
+		return result;
+	}
+
+
+	useEffect( () => {
+		setPublicationsLoadState("loading");
+		axiosController.current = new AbortController();
+		const storedToken = getStoredToken();
+
+		if (filter === "random" && storedToken) {
+			getPublicationsByRandom(storedToken, axiosController.current, id)
+				.then( (response: AdminPublicationsFilteredType[]) => {
+					const formattedPublications = formatByRandomPublications(response);
+					setPublicationsFiltered(formattedPublications);
+					setPublicationsLoadState("loaded");
+
+				})
+				.catch( (error) => {
+					setPublicationsLoadState("error");
+					console.log(error);
+				});
+
+		}
 
 
 		return () => {
 			axiosController.current?.abort();
 		};
-	}, []);
+	}, [filter]);
 
 
-	// useEffect( () => {
-	// 	axiosController2.current = new AbortController();
 
-	// 	if (filter === "random") {
-			
-	// 	}
-
-	// 	return () => {
-	// 		axiosController2.current?.abort();
-	// 	};
-	// }, [filter]);
 
 
 
@@ -56,21 +87,23 @@ function AdminPublications() {
 				<Header />
 			</div>
 			
-			<main className="flex flex-col items-center w-[80%] h-[40vh] mt-[5vh] mx-auto">
+			<main className="flex flex-col items-center w-[80%] min-h-[40vh] mt-[10vh] mx-auto">
 				<PublicationsFilters filter={filter} setFilter={setFilter} />
 
 				{
-					publicationsFiltered === null 
-						?	(
-							<div className="mt-24 text-brandingLightGreen">
-								<LoadingSmall/>
-							</div>
-						)
-						: (
-							<div className="">
-								<Viewer itemsList={publicationsFiltered} />
-							</div>
-						)
+					publicationsLoadState === "loading" && (
+						<div className="mt-24 text-brandingLightGreen">
+							<LoadingSmall/>
+						</div>
+					)
+				}
+
+				{
+					publicationsLoadState === "loaded" && publicationsFiltered !== null && (
+						<div className="flex justify-center w-[100%] mt-[8vh]">
+							<Viewer itemsList={publicationsFiltered} />
+						</div>
+					)
 				}
 
 

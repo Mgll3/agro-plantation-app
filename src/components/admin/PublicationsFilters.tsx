@@ -1,5 +1,5 @@
+import { FilterType } from "./adminTypes";
 
-export type FilterType = "random" | "user" | "score" | "date" | "ammount" | "auth";
 
 type PublicationsFiltersProps = {
 	filter: FilterType,

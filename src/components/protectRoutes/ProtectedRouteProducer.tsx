@@ -16,7 +16,7 @@ function ProtectedRouteProducer() {
 	const axiosController = useRef<AbortController>();
 	const navigate = useNavigate();
 	let navigateTimer: number = 0;
-
+	let resetUserCredentialsTimer: number = 0;
 
 
 	useEffect(() => {
@@ -27,6 +27,7 @@ function ProtectedRouteProducer() {
 			checkOpenSession(storedToken, axiosController.current)
 				.then((userData: UserDataType) => {
 					if (userData.userType === "PRODUCER" || userData.userType === "PRODUCER_VIP") {
+						clearTimeout(resetUserCredentialsTimer);
 						updateUserData(userData, setUserRole);
 						setIsAuthorized("authorized");
 					} else {
@@ -36,6 +37,10 @@ function ProtectedRouteProducer() {
 				.catch((error) => {
 					if (error === "401") {
 						resetUserData(setUserRole);
+					} else {
+						resetUserCredentialsTimer = window.setTimeout( () => {
+							resetUserData(setUserRole);
+						}, 1400);
 					}
 					setIsAuthorized("notAuthorized");
 				});

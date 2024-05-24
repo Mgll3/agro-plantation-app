@@ -2,25 +2,15 @@ import { useNavigate } from "react-router-dom";
 import Footer from "../../components/footer/Footer";
 import RegisterProducerForm, { RegisterProducerFormValuesType } from "../../components/forms/RegisterProducerForm";
 import Header from "../../components/header/Header";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { user } from "../../data/userData";
-import { getStoredName } from "../../utils/getStoredName";
-import { getStoredRole } from "../../utils/getStoredRole";
-import { useUserRoleContext } from "../../context/UserRoleContext";
-import { getStoredToken } from "../../utils/getStoredToken";
-import { checkOpenSession } from "../../interfaces/checkOpenSession";
-import { UserDataType } from "../commonTypes";
-import { updateUserData } from "../../utils/updateUserData";
-import { resetUserData } from "../../utils/resetUserData";
+import { useState } from "react";
 import GenericModal from "../../components/modals/GenericModal";
 
 type RegisterProducerStateType = "init" | "sending" | "sent" | "sendError"
 
 function RegisterProducer() {
 	const [registerProducerState, setRegisterProducerState] = useState<RegisterProducerStateType>("init");
-	const { setUserRole } = useUserRoleContext();
 	const navigate = useNavigate();
-	const axiosController = useRef<AbortController>();
+
 
 	function closeModals () {
 		setRegisterProducerState("init");
@@ -31,41 +21,7 @@ function RegisterProducer() {
 		console.log(formValues);
 	}
 
-	useLayoutEffect( () => {
-		const userStoredName = getStoredName();
-		const userStoredRole = getStoredRole();
 
-		if (userStoredName) {
-			user.name = userStoredName;
-		}
-
-		if (userStoredRole) {
-			setUserRole(userStoredRole);
-		}
-	});
-
-
-	useEffect(() => {
-		axiosController.current = new AbortController();
-
-		const storedToken = getStoredToken();
-
-		if (storedToken) {
-			checkOpenSession(storedToken, axiosController.current)
-				.then((userData: UserDataType) => {
-					updateUserData(userData, setUserRole);
-				})
-				.catch((error) => {
-					if (error === "401") {
-						resetUserData(setUserRole);
-					}
-				});
-		}
-
-		return () => {
-			axiosController.current?.abort();
-		};
-	}, []);
 
 
 	return (

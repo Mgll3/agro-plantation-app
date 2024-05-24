@@ -46,6 +46,7 @@ function App() {
 
 				<Route element={<ProtectedRouteAdmin />} >
 					<Route path="/admin/publications" element={<AdminPublications />} />
+					<Route path="/admin/publications/:id" element={<AdminPublications />} />
 					<Route path="/admin/users" element={<AdminUsers />} />
 					<Route path="/admin/forum" element={<AdminForum />} />
 				</Route>

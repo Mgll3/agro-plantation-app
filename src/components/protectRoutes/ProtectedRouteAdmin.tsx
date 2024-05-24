@@ -17,6 +17,7 @@ function ProtectedRouteAdmin() {
 	const axiosController = useRef<AbortController>();
 	const navigate = useNavigate();
 	let navigateTimer: number = 0;
+	let resetUserCredentialsTimer: number = 0;
 
 
 
@@ -28,6 +29,7 @@ function ProtectedRouteAdmin() {
 			checkOpenSession(storedToken, axiosController.current)
 				.then((userData: UserDataType) => {
 					if (userData.userType === "ADMIN") {
+						clearTimeout(resetUserCredentialsTimer);
 						updateUserData(userData, setUserRole);
 						setIsAuthorized("authorized");
 					} else {
@@ -37,6 +39,10 @@ function ProtectedRouteAdmin() {
 				.catch((error) => {
 					if (error === "401") {
 						resetUserData(setUserRole);
+					} else {
+						resetUserCredentialsTimer = window.setTimeout( () => {
+							resetUserData(setUserRole);
+						}, 1400);
 					}
 					setIsAuthorized("notAuthorized");
 				});

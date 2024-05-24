@@ -1,23 +1,51 @@
-import { UserType } from "./adminTypes";
-import { PublicationType } from "../publicationsList/publicationsListTypes";
+import PublicationCard from "./PublicationCard";
+import { FormattedPublicationsInfoType } from "./adminTypes";
+
 
 type ViewerPropsType = {
-	itemsList: UserType[] | PublicationType[]
+	itemsList: FormattedPublicationsInfoType[],
 }
 
 function Viewer( {itemsList}: ViewerPropsType) {
 
 
-	return (
-		<div className="">
-			
-			{/* {
-				if (email in itemsList) {
-					itemsList.map( (user) => {
 
-					});
-				}
-			} */}
+	return (
+		<div className="flex flex-col items-start w-[100%]">
+			
+			{
+				itemsList.map( (block, index) => {
+					return (
+						<div key={index}
+							className="w-[100%]"
+						>
+							<h2 
+								className="mb-[24px] text-sans font-semibold text-[24px]"
+							>
+								{block.title}
+							</h2>
+							
+							<div
+								className="flex justify-start flex-wrap gap-[11.03vw]"
+							>
+								{
+									block.content.map( (publication) => {
+										return (
+											<div key={publication.id} 
+												className="w-[19vw] h-[19vw]"
+											>
+												<PublicationCard publicationInfo={publication} />
+											</div>
+										);
+									})
+								}
+							</div>
+
+						</div>
+					);
+				})
+			}
+
 
 		</div>
 	);
