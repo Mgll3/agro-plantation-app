@@ -26,13 +26,23 @@ type AuthorizationStatusType = {
 	state: AuthorizationStateType
 }
 
+type AuthorType = {
+	address: string,
+	id: number,
+	lastname: string,
+	name: string,
+	totalAuthorization: boolean
+}
+
 //Este tipo describe las publicaciones tal como se reciben del servidor. Sólo se describen los campos que realmente se van a usar desde el Front.
 export type AdminPublicationsFilteredType = {
 	id: number,
 	title: string,
 	score: number,
+	publicationDate: string,
 	mainImage: MainImageType | null,
-	authorizationStatus: AuthorizationStatusType
+	authorizationStatus: AuthorizationStatusType,
+	author: AuthorType
 }
 
 export type FilterType = "random" | "user" | "score" | "date" | "ammount" | "auth";

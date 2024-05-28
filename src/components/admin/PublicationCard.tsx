@@ -35,13 +35,13 @@ function PublicationCard( {publicationInfo}: PublicationCardProps) {
 						<div className="flex items-center">
 							<img alt="" src="/icons/like.png" />
 
-							<p>
+							<p className="ml-[2px]">
 								{publicationInfo.score}
 							</p>
 						</div>
 
 						<div className="flex items-center">
-							<p>
+							<p className="mr-[2px]">
 								Estado
 							</p>
 

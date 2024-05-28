@@ -20,13 +20,13 @@ function Viewer( {itemsList}: ViewerPropsType) {
 							className="w-[100%]"
 						>
 							<h2 
-								className="mb-[24px] text-sans font-semibold text-[24px]"
+								className="mt-[88px] mb-[22px] text-sans font-semibold text-[24px]"
 							>
 								{block.title}
 							</h2>
 							
 							<div
-								className="flex justify-start flex-wrap gap-[11.03vw]"
+								className="flex justify-start flex-wrap gap-x-[11.03vw] gap-y-[4vh]"
 							>
 								{
 									block.content.map( (publication) => {

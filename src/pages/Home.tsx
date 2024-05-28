@@ -38,6 +38,7 @@ export default function Home() {
 	const bestPublicationsArray = useRef<PublicationType[]>([]);
 	// const chartsData = useRef<ChartsDataType>();
 	const axiosController = useRef<AbortController>();
+	let resetUserCredentialsTimer: number = 0;
 
 
 	// Se utiliza este Layout Effect para que se carguen por defecto el nombre y el rol del usuario del Local Storage, si existen. 
@@ -65,13 +66,20 @@ export default function Home() {
 		if (storedToken) {
 			checkOpenSession(storedToken, axiosController.current)
 				.then((userData: UserDataType) => {
+					clearTimeout(resetUserCredentialsTimer);
 					updateUserData(userData, setUserRole);
 				})
 				.catch((error) => {
 					if (error === "401") {
 						resetUserData(setUserRole);
+					} else {
+						resetUserCredentialsTimer = window.setTimeout( () => {
+							resetUserData(setUserRole);
+						}, 1400);
 					}
 				});
+		} else {
+			resetUserData(setUserRole);
 		}
 
 		getBestPublications(axiosController.current)

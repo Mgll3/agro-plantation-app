@@ -9,6 +9,10 @@ import { useParams } from "react-router-dom";
 import { getStoredToken } from "../../utils/getStoredToken";
 import { getPublicationsByRandom } from "../../interfaces/publicationsFilters/getPublicationsByRandom";
 import { AdminPublicationsFilteredType, FilterType, FormattedPublicationsInfoType } from "../../components/admin/adminTypes";
+import { getPublicationsByUser } from "../../interfaces/publicationsFilters/getPublicationsByUser";
+import { getPublicationsByScore } from "../../interfaces/publicationsFilters/getPublicationsByScore";
+import { getPublicationsByDate } from "../../interfaces/publicationsFilters/getPublicationsByDate";
+import { getPublicationsByPending } from "../../interfaces/publicationsFilters/getPublicationsByPending";
 
 
 type PublicationsLoadStateType = "loading" | "error" | "loaded";
@@ -34,10 +38,16 @@ function AdminPublications() {
 
 	//Estas funciones organizan la información recuperada del servidor y la adaptan al formato que entiende el componente "Viewer", el formato ()
 
+	type FormattedBlockType = {
+		title: string,
+		content: AdminPublicationsFilteredType[]
+	}
+
+
 	function formatByRandomPublications (publications: AdminPublicationsFilteredType[]) {
 		const result: FormattedPublicationsInfoType[] = [];
 		
-		const formattedBlock = {
+		const formattedBlock: FormattedBlockType = {
 			title: "Aleatorio",
 			content: publications
 		};
@@ -48,25 +58,187 @@ function AdminPublications() {
 	}
 
 
+	function formatByUserPublications (publications: AdminPublicationsFilteredType[]) {
+		type UserType = {
+			id: number,
+			name: string
+		}
+		const result: FormattedPublicationsInfoType[] = [];
+		const users: UserType[] = [];
+
+		// Guadamos en el array "users" todos los usuarios diferentes que aparecen en las publicaciones recuperadas.
+		publications.map( (publication) => {
+			if (!users.find( (element) => element.id === publication.author.id )) {
+				const newUser: UserType = {
+					id: publication.author.id,
+					name: `${publication.author.lastname}, ${publication.author.name} `
+				};
+
+				users.push(newUser);
+			}
+		});
+
+		//Generamos tantos objetos con la información en el formato que acepta "Viewer" como usuarios hay en el array "users"
+		users.map( (user) => {
+
+			const formattedBlock: FormattedBlockType = {
+				title: user.name,
+				content: []
+			};
+
+			publications.map( (publication) => {
+				if (publication.author.id === user.id) {
+					formattedBlock.content.push(publication);
+				}
+			});
+
+			result.push(formattedBlock);
+		});
+
+		return result;
+	}
+
+
+	function formatByScorePublications (publications: AdminPublicationsFilteredType[]) {
+		const result: FormattedPublicationsInfoType[] = [];
+		
+		const formattedBlock: FormattedBlockType = {
+			title: "Destacados",
+			content: publications
+		};
+
+		result.push(formattedBlock);
+
+		return result;
+	}
+
+
+	function formatByDatePublications (publications: AdminPublicationsFilteredType[]) {
+		const result: FormattedPublicationsInfoType[] = [];
+		const dates: string[] = [];
+		const dateOptions = { year: "numeric" as const, month: "long" as const, day: "numeric" as const};
+		const formatter = new Intl.DateTimeFormat("es-ES", dateOptions);
+
+		// Guadamos en el array "dates" todas las fechas diferentes que aparecen en las publicaciones recuperadas.
+		publications.map( (publication) => {
+			if (
+				!dates.find( (date) => {
+					const dateToFormat = new Date(date);
+					const formattedDate = formatter.format(dateToFormat);
+
+					const publicationDateToFormat = new Date(publication.publicationDate);
+					const formattedPublicationDate = formatter.format(publicationDateToFormat);
+					return formattedDate === formattedPublicationDate; 
+				})
+			) {
+				dates.push(publication.publicationDate);
+			}
+		});
+
+		//Generamos tantos objetos con la información en el formato que acepta "Viewer" como fechas hay en el array "dates"
+		dates.map( (date) => {
+			//Convertimos el string en "date" para poder darle formato:
+			const dateToFormat = new Date(date);																				
+			const formattedDate = formatter.format(dateToFormat);
+
+
+			const formattedBlock: FormattedBlockType = {
+				title: formattedDate,
+				content: []
+			};
+
+			publications.map( (publication) => {
+				const publicationDateToFormat = new Date(publication.publicationDate);
+				const formattedPublicationDate = formatter.format(publicationDateToFormat);
+
+				if (formattedPublicationDate === formattedDate) {
+					formattedBlock.content.push(publication);
+				}
+			});
+
+			result.push(formattedBlock);
+		});
+
+		return result;
+	}
+
+
+
+
+
 	useEffect( () => {
 		setPublicationsLoadState("loading");
 		axiosController.current = new AbortController();
 		const storedToken = getStoredToken();
 
 		if (filter === "random" && storedToken) {
-			getPublicationsByRandom(storedToken, axiosController.current, id)
+			getPublicationsByRandom(storedToken, axiosController.current, id as string)
 				.then( (response: AdminPublicationsFilteredType[]) => {
 					const formattedPublications = formatByRandomPublications(response);
 					setPublicationsFiltered(formattedPublications);
 					setPublicationsLoadState("loaded");
-
 				})
 				.catch( (error) => {
 					setPublicationsLoadState("error");
 					console.log(error);
 				});
-
 		}
+
+
+		if (filter === "user" && storedToken) {
+			getPublicationsByUser(storedToken, axiosController.current, id as string)
+				.then( (response: AdminPublicationsFilteredType[]) => {
+					const formattedPublications = formatByUserPublications(response);
+					setPublicationsFiltered(formattedPublications);
+					setPublicationsLoadState("loaded");
+				})
+				.catch( (error) => {
+					setPublicationsLoadState("error");
+					console.log(error);
+				});
+		}
+
+
+		if (filter === "score" && storedToken) {
+			getPublicationsByScore(storedToken, axiosController.current, id as string)
+				.then( (response: AdminPublicationsFilteredType[]) => {
+					const formattedPublications = formatByScorePublications(response);
+					setPublicationsFiltered(formattedPublications);
+					setPublicationsLoadState("loaded");
+				})
+				.catch( (error) => {
+					setPublicationsLoadState("error");
+					console.log(error);
+				});
+		}
+
+
+		if (filter === "date" && storedToken) {
+			getPublicationsByDate(storedToken, axiosController.current, id as string)
+				.then( (response: AdminPublicationsFilteredType[]) => {
+					const formattedPublications = formatByDatePublications(response);
+					setPublicationsFiltered(formattedPublications);
+					setPublicationsLoadState("loaded");
+				})
+				.catch( (error) => {
+					setPublicationsLoadState("error");
+					console.log(error);
+				});
+		}
+
+		if (filter === "auth" && storedToken) {
+			getPublicationsByPending(storedToken, axiosController.current, id as string)
+				.then( (response: AdminPublicationsFilteredType[]) => {
+					const formattedPublications = formatByScorePublications(response);
+					setPublicationsFiltered(formattedPublications);
+					setPublicationsLoadState("loaded");
+				})
+				.catch( (error) => {
+					setPublicationsLoadState("error");
+					console.log(error);
+				});
+		}
+
 
 
 		return () => {
@@ -100,7 +272,7 @@ function AdminPublications() {
 
 				{
 					publicationsLoadState === "loaded" && publicationsFiltered !== null && (
-						<div className="flex justify-center w-[100%] mt-[8vh]">
+						<div className="mb-[5vh] flex justify-center w-[100%]">
 							<Viewer itemsList={publicationsFiltered} />
 						</div>
 					)
