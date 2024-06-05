@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.gardengroup.agroplantationapp.model.dto.publication.PublicationFilterDTO;
 import com.gardengroup.agroplantationapp.model.dto.publication.PublicationSaveDTO;
 import com.gardengroup.agroplantationapp.model.dto.publication.PublicationUpdDTO;
 import com.gardengroup.agroplantationapp.model.entity.Publication;
@@ -23,10 +24,11 @@ public interface IPublicationService {
     public void approvePublication(Long publicationId);
     public void rejectPublication(Long publicationId);
     public Vote toggleVote(Long publicationId, String userEmail);
-    public List<Publication> getPublicationsByLike(int pag);
-    public List<Publication> getPublicationsByUser(int pag);
-    public List<Publication> getPublicationsByDate(int pag);
-    public List<Publication> getPublicationsByAleatory(int pag);
-    public List<Publication> getPublicationsByPending(int pag);
-
+    public PublicationFilterDTO getPublicationsByLike(int pag);
+    public PublicationFilterDTO getPublicationsByUser(int pag);
+    public PublicationFilterDTO getPublicationsByDate(int pag);
+    public PublicationFilterDTO getPublicationsByAleatory(int pag);
+    public PublicationFilterDTO getPublicationsByPending(int pag);
+    public PublicationFilterDTO getPublicationsByQuantity(int pag);
+    public void changeToPending(Long publicationId);
 }
