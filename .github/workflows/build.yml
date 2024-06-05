@@ -1,0 +1,31 @@
+#Workflow name
+name: CI/CD Pipeline
+on:
+  #Manually trigger workflow runs
+  workflow_dispatch:
+  #Trigger the workflow on push from the main branch
+  push:
+    branches:
+      - Front
+jobs:
+  sonar:
+    name: SonarCloud analysis
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: Install Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20' # Specify a Node.js version that matches your project environment
+      - name: SonarCloud Scan
+        uses: sonarsource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          projectBaseDir: .
+          args: >
+            -Dsonar.organization=mgll3
+            -Dsonar.projectKey=Mgll3_agro-plantation-app
