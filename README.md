@@ -89,6 +89,14 @@ La aplicación busca incentivar las prácticas agroecológicas para maximizar la
                 <li><strong>Github:</strong> <a href="https://github.com/lElliotCode">https://github.com/lElliotCode</a></li>
             </ul>
         </li>
+        <li>
+            <strong>Nombre completo:</strong> Arturo López Rosa
+            <ul>
+                <li><strong>LinkedIn:</strong> <a href=" https://www.linkedin.com/in/arturo-lopez-rosa/">Arturo López Rosa</a></li>
+                <li><strong>Email:</strong> jhonas29@gmail.com  </li>
+                <li><strong>Github:</strong> <a href="https://github.com/ArturoFLR">https://github.com/ArturoFLR</a></li>
+            </ul>
+        </li>
         <!-- Añadir más integrantes del Equipo Frontend aquí -->
     </ul>
 
