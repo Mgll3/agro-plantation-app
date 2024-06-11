@@ -314,10 +314,14 @@ public class PublicationService implements IPublicationService {
         int pagination = (int) Math.ceil(paginationDouble);
 
         if (!publications.isEmpty()) {
-            //Envio solo 15 publicaciones
-            publications = publications.subList(0, 15);
+            if (publications.size() > 14) {
+                //Envio solo 15 publicaciones que necesita el front
+                publications = publications.subList(0, 14);
+            } 
+
             PublicationFilterDTO publicationsDTO = new PublicationFilterDTO(publications, pagination);
             return publicationsDTO;
+
         } else {
             throw new DataAccessException("Publications not found") {
             };
@@ -341,10 +345,14 @@ public class PublicationService implements IPublicationService {
         int pagination = (int) Math.ceil(paginationDouble);
 
         if (!publications.isEmpty()) {
-            //Envio solo 15 publicaciones
-            publications = publications.subList(0, 15);
+            if (publications.size() > 14) {
+                //Envio solo 15 publicaciones que necesita el front
+                publications = publications.subList(0, 14);
+            } 
+
             PublicationFilterDTO publicationsDTO = new PublicationFilterDTO(publications, pagination);
             return publicationsDTO;
+
         } else {
             throw new DataAccessException("Publications not found") {
             };
@@ -368,10 +376,14 @@ public class PublicationService implements IPublicationService {
         int pagination = (int) Math.ceil(paginationDouble);
 
         if (!publications.isEmpty()) {
-            //Envio solo 15 publicaciones
-            publications = publications.subList(0, 15);
+            if (publications.size() > 14) {
+                //Envio solo 15 publicaciones que necesita el front
+                publications = publications.subList(0, 14);
+            } 
+
             PublicationFilterDTO publicationsDTO = new PublicationFilterDTO(publications, pagination);
             return publicationsDTO;
+
         } else {
             throw new DataAccessException("Publications not found") {
             };
@@ -395,10 +407,14 @@ public class PublicationService implements IPublicationService {
         int pagination = (int) Math.ceil(paginationDouble);
 
         if (!publications.isEmpty()) {
-            //Envio solo 15 publicaciones
-            publications = publications.subList(0, 15);
+            if (publications.size() > 14) {
+                //Envio solo 15 publicaciones que necesita el front
+                publications = publications.subList(0, 14);
+            } 
+
             PublicationFilterDTO publicationsDTO = new PublicationFilterDTO(publications, pagination);
             return publicationsDTO;
+
         } else {
             throw new DataAccessException("Publications not found") {
             };
@@ -446,17 +462,19 @@ public class PublicationService implements IPublicationService {
         Double paginationDouble = (double) publications.size() / 15;
         int pagination = (int) Math.ceil(paginationDouble);
 
-
         if (!publications.isEmpty()) {
-            //Envio solo 15 publicaciones que necesita el front
-            publications = publications.subList(0, 15);
+            if (publications.size() > 14) {
+                //Envio solo 15 publicaciones que necesita el front
+                publications = publications.subList(0, 14);
+            } 
+
             PublicationFilterDTO publicationsDTO = new PublicationFilterDTO(publications, pagination);
             return publicationsDTO;
+
         } else {
             throw new DataAccessException("Publications not found") {
             };
         }
-        
     }
 
     //Temporal

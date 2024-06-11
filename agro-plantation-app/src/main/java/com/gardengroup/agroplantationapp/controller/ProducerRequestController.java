@@ -87,14 +87,14 @@ public class ProducerRequestController {
         }
     }
 
-    @Operation(summary = "Solicitar ser productor", description = "Endpoint para solicitar ser productor", tags = {"User"})
+    @Operation(summary = "Solicitar ser productor", description = "Endpoint para solicitar ser productor", tags = {"Producer"})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Solicitud creada con éxito",
                     content = @Content(schema = @Schema(implementation = String.class))),
             @ApiResponse(responseCode = "400", description = "Solicitud incorrecta - Error al crear la solicitud",
                     content = @Content(schema = @Schema(implementation = String.class)))
     })
-    @PostMapping("/request-producer")
+    @PostMapping("/requestProducer")
     public ResponseEntity<?> requestToBecomeProducer(HttpServletRequest request) {
         try {
             String email = securityService.getEmail(request);

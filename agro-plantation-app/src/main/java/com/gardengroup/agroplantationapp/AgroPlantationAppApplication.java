@@ -13,8 +13,7 @@ public class AgroPlantationAppApplication {
 		docker build -t agro-plantation:1.53 .
 		docker pull mysql:8.1
 		docker run --name mysql-standalone -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=agroplantationapp -e MYSQL_USER=dev -e MYSQL_PASSWORD=dev -p 3306:3306 -d mysql:8.1
-		docker run -d -p 8080:8080 --name agro-plantation --link mysql-standalone:mysql 73ccfd20bc1f
-
+		docker run -d -p 8080:8080 --name agro-plantation --link mysql-standalone:mysql 0df0e52e005e
 
 
 		docker image ls

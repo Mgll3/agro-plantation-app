@@ -366,6 +366,7 @@ public class PublicationController {
             if (e.getMessage().equals("Publications not found")) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             } else {
+                System.out.println(e.getMessage());
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
             }
         }
