@@ -12,20 +12,18 @@ import {
 	AdminPublicationsFilteredType,
 	FilterType,
 	FormattedPublicationsInfoType,
+	PublicationInfoType
 } from "../../components/admin/adminTypes";
 import { getPublicationsByUser } from "../../interfaces/publicationsFilters/getPublicationsByUser";
 import { getPublicationsByScore } from "../../interfaces/publicationsFilters/getPublicationsByScore";
 import { getPublicationsByDate } from "../../interfaces/publicationsFilters/getPublicationsByDate";
 import { getPublicationsByPending } from "../../interfaces/publicationsFilters/getPublicationsByPending";
-
-type PublicationsLoadStateType = "loading" | "error" | "loaded";
+import { getPublicationsByAmmount } from "../../interfaces/publicationsFilters/getPublicationsByAmmount";
+import useLoadingState from "../../hooks/useLoadingState";
 
 function AdminPublications() {
-	const [publicationsFiltered, setPublicationsFiltered] = useState<
-		FormattedPublicationsInfoType[] | null
-	>(null);
-	const [publicationsLoadState, setPublicationsLoadState] =
-		useState<PublicationsLoadStateType>("loading");
+	const [publicationsFiltered, setPublicationsFiltered] = useState<FormattedPublicationsInfoType[] | null>(null);
+	const [loadingState, changeLoadingState] = useLoadingState();
 	const [filter, setFilter] = useState<FilterType>("random");
 
 	let { id } = useParams(); // Usado para mostrar una págína u otra del filtro seleccionado. Si no hay id se le da el valor "1" por defecto.
@@ -34,24 +32,22 @@ function AdminPublications() {
 	const axiosController = useRef<AbortController>();
 
 	function closeErrorModal() {
-		setPublicationsLoadState("loading");
+		changeLoadingState("loading");
 	}
 
 	//Estas funciones organizan la información recuperada del servidor y la adaptan al formato que entiende el componente "Viewer", el formato ()
 
 	type FormattedBlockType = {
 		title: string;
-		content: AdminPublicationsFilteredType[];
+		content: PublicationInfoType[];
 	};
 
-	function formatByRandomPublications(
-		publications: AdminPublicationsFilteredType[],
-	) {
+	function formatByRandomPublications(publications: PublicationInfoType[]) {
 		const result: FormattedPublicationsInfoType[] = [];
 
 		const formattedBlock: FormattedBlockType = {
 			title: "Aleatorio",
-			content: publications,
+			content: publications
 		};
 
 		result.push(formattedBlock);
@@ -59,9 +55,7 @@ function AdminPublications() {
 		return result;
 	}
 
-	function formatByUserPublications(
-		publications: AdminPublicationsFilteredType[],
-	) {
+	function formatByUserPublications(publications: PublicationInfoType[]) {
 		type UserType = {
 			id: number;
 			name: string;
@@ -74,7 +68,7 @@ function AdminPublications() {
 			if (!users.find((element) => element.id === publication.author.id)) {
 				const newUser: UserType = {
 					id: publication.author.id,
-					name: `${publication.author.lastname}, ${publication.author.name} `,
+					name: `${publication.author.lastname}, ${publication.author.name} `
 				};
 
 				users.push(newUser);
@@ -85,7 +79,7 @@ function AdminPublications() {
 		users.map((user) => {
 			const formattedBlock: FormattedBlockType = {
 				title: user.name,
-				content: [],
+				content: []
 			};
 
 			publications.map((publication) => {
@@ -100,14 +94,12 @@ function AdminPublications() {
 		return result;
 	}
 
-	function formatByScorePublications(
-		publications: AdminPublicationsFilteredType[],
-	) {
+	function formatByScorePublications(publications: PublicationInfoType[]) {
 		const result: FormattedPublicationsInfoType[] = [];
 
 		const formattedBlock: FormattedBlockType = {
 			title: "Destacados",
-			content: publications,
+			content: publications
 		};
 
 		result.push(formattedBlock);
@@ -115,15 +107,13 @@ function AdminPublications() {
 		return result;
 	}
 
-	function formatByDatePublications(
-		publications: AdminPublicationsFilteredType[],
-	) {
+	function formatByDatePublications(publications: PublicationInfoType[]) {
 		const result: FormattedPublicationsInfoType[] = [];
 		const dates: string[] = [];
 		const dateOptions = {
 			year: "numeric" as const,
 			month: "long" as const,
-			day: "numeric" as const,
+			day: "numeric" as const
 		};
 		const formatter = new Intl.DateTimeFormat("es-ES", dateOptions);
 
@@ -135,9 +125,7 @@ function AdminPublications() {
 					const formattedDate = formatter.format(dateToFormat);
 
 					const publicationDateToFormat = new Date(publication.publicationDate);
-					const formattedPublicationDate = formatter.format(
-						publicationDateToFormat,
-					);
+					const formattedPublicationDate = formatter.format(publicationDateToFormat);
 					return formattedDate === formattedPublicationDate;
 				})
 			) {
@@ -153,14 +141,12 @@ function AdminPublications() {
 
 			const formattedBlock: FormattedBlockType = {
 				title: formattedDate,
-				content: [],
+				content: []
 			};
 
 			publications.map((publication) => {
 				const publicationDateToFormat = new Date(publication.publicationDate);
-				const formattedPublicationDate = formatter.format(
-					publicationDateToFormat,
-				);
+				const formattedPublicationDate = formatter.format(publicationDateToFormat);
 
 				if (formattedPublicationDate === formattedDate) {
 					formattedBlock.content.push(publication);
@@ -173,80 +159,98 @@ function AdminPublications() {
 		return result;
 	}
 
+	function formatByAuthPublications(publications: PublicationInfoType[]) {
+		const result: FormattedPublicationsInfoType[] = [];
+
+		const formattedBlock: FormattedBlockType = {
+			title: "Pendientes de publicación",
+			content: publications
+		};
+
+		result.push(formattedBlock);
+
+		return result;
+	}
+
 	useEffect(() => {
-		setPublicationsLoadState("loading");
+		changeLoadingState("loading");
 		axiosController.current = new AbortController();
 		const storedToken = getStoredToken();
 
 		if (filter === "random" && storedToken) {
-			getPublicationsByRandom(
-				storedToken,
-				axiosController.current,
-				id as string,
-			)
-				.then((response: AdminPublicationsFilteredType[]) => {
-					const formattedPublications = formatByRandomPublications(response);
+			getPublicationsByRandom(storedToken, axiosController.current, id as string)
+				.then((response: AdminPublicationsFilteredType) => {
+					const formattedPublications = formatByRandomPublications(response.publications);
 					setPublicationsFiltered(formattedPublications);
-					setPublicationsLoadState("loaded");
+					changeLoadingState("loaded");
 				})
 				.catch((error) => {
-					setPublicationsLoadState("error");
+					changeLoadingState("errorServer");
 					console.log(error);
 				});
 		}
 
 		if (filter === "user" && storedToken) {
 			getPublicationsByUser(storedToken, axiosController.current, id as string)
-				.then((response: AdminPublicationsFilteredType[]) => {
-					const formattedPublications = formatByUserPublications(response);
+				.then((response: AdminPublicationsFilteredType) => {
+					const formattedPublications = formatByUserPublications(response.publications);
 					setPublicationsFiltered(formattedPublications);
-					setPublicationsLoadState("loaded");
+					changeLoadingState("loaded");
 				})
 				.catch((error) => {
-					setPublicationsLoadState("error");
+					changeLoadingState("errorServer");
 					console.log(error);
 				});
 		}
 
 		if (filter === "score" && storedToken) {
 			getPublicationsByScore(storedToken, axiosController.current, id as string)
-				.then((response: AdminPublicationsFilteredType[]) => {
-					const formattedPublications = formatByScorePublications(response);
+				.then((response: AdminPublicationsFilteredType) => {
+					const formattedPublications = formatByScorePublications(response.publications);
 					setPublicationsFiltered(formattedPublications);
-					setPublicationsLoadState("loaded");
+					changeLoadingState("loaded");
 				})
 				.catch((error) => {
-					setPublicationsLoadState("error");
+					changeLoadingState("errorServer");
 					console.log(error);
 				});
 		}
 
 		if (filter === "date" && storedToken) {
 			getPublicationsByDate(storedToken, axiosController.current, id as string)
-				.then((response: AdminPublicationsFilteredType[]) => {
-					const formattedPublications = formatByDatePublications(response);
+				.then((response: AdminPublicationsFilteredType) => {
+					const formattedPublications = formatByDatePublications(response.publications);
 					setPublicationsFiltered(formattedPublications);
-					setPublicationsLoadState("loaded");
+					changeLoadingState("loaded");
 				})
 				.catch((error) => {
-					setPublicationsLoadState("error");
+					changeLoadingState("errorServer");
 					console.log(error);
 				});
 		}
 
 		if (filter === "auth" && storedToken) {
-			getPublicationsByPending(
-				storedToken,
-				axiosController.current,
-				id as string,
-			)
-				.then((response: AdminPublicationsFilteredType[]) => {
-					const formattedPublications = formatByScorePublications(response);
+			getPublicationsByPending(storedToken, axiosController.current, id as string)
+				.then((response: AdminPublicationsFilteredType) => {
+					const formattedPublications = formatByAuthPublications(response.publications);
 					setPublicationsFiltered(formattedPublications);
-					setPublicationsLoadState("loaded");
+					changeLoadingState("loaded");
 				})
 				.catch((error) => {
-					setPublicationsLoadState("error");
+					changeLoadingState("errorServer");
+					console.log(error);
+				});
+		}
+
+		if (filter === "ammount" && storedToken) {
+			getPublicationsByAmmount(storedToken, axiosController.current, id as string)
+				.then((response: AdminPublicationsFilteredType) => {
+					const formattedPublications = formatByUserPublications(response.publications);
+					setPublicationsFiltered(formattedPublications);
+					changeLoadingState("loaded");
+				})
+				.catch((error) => {
+					changeLoadingState("errorServer");
 					console.log(error);
 				});
 		}
@@ -265,25 +269,20 @@ function AdminPublications() {
 			<main className="flex flex-col items-center w-[80%] min-h-[40vh] mt-[10vh] mx-auto">
 				<PublicationsFilters filter={filter} setFilter={setFilter} />
 
-				{publicationsLoadState === "loading" && (
+				{loadingState === "loading" && (
 					<div className="mt-24 text-brandingLightGreen">
 						<LoadingSmall />
 					</div>
 				)}
 
-				{publicationsLoadState === "loaded" &&
-					publicationsFiltered !== null && (
-						<div className="mb-[5vh] flex justify-center w-[100%]">
-							<Viewer itemsList={publicationsFiltered} />
-						</div>
-					)}
+				{loadingState === "loaded" && publicationsFiltered !== null && (
+					<div className="mb-[5vh] flex justify-center w-[100%]">
+						<Viewer itemsList={publicationsFiltered} />
+					</div>
+				)}
 
-				{publicationsLoadState === "error" && (
-					<NetworkError
-						failedAction="cargar las publicaciones."
-						buttonText="Entendido"
-						handleClose={closeErrorModal}
-					/>
+				{loadingState === "errorServer" && (
+					<NetworkError failedAction="cargar las publicaciones." buttonText="Entendido" handleClose={closeErrorModal} />
 				)}
 			</main>
 

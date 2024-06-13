@@ -1,18 +1,18 @@
 import axios from "axios";
 import { axiosConfig } from "../../lib/axios/axios.config";
 
-export async function getPublicationsByUser(token: string, axiosControler: AbortController, page: string) {
+export async function requestToBeProducer(token: string, axiosControler: AbortController) {
 	try {
-		const response = await axiosConfig.get(`/v1/publication/user/${page}`, {
+		const response = await axiosConfig.get("/request-producer", {
 			signal: axiosControler.signal,
 			headers: {
 				"Content-Type": "application/json",
 				Authorization: `Bearer ${token}`
 			}
 		});
-		const publicationsData = response.data;
+		const userData = response.data;
 
-		return publicationsData;
+		return userData;
 	} catch (error) {
 		if (axios.isAxiosError(error)) {
 			throw new Error(error.message);

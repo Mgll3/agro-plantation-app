@@ -2,34 +2,24 @@ import { useEffect, useRef, useState } from "react";
 import Button from "../../components/button/Button";
 import { ButtonColorType } from "../../components/button/buttonTypes";
 import Header from "../../components/header/Header";
-import { registerUser } from "../../interfaces/registerUser";
-import {
-	LoginFormValuesType,
-	RegiserFormFieldsToSendType,
-} from "../../components/forms/formsTypes";
+import { registerUser } from "../../interfaces/users/registerUser";
+import { LoginFormValuesType, RegiserFormFieldsToSendType } from "../../components/forms/formsTypes";
 import { useUserRoleContext } from "../../context/UserRoleContext";
-import { logInUser } from "../../interfaces/logInUser";
+import { logInUser } from "../../interfaces/users/logInUser";
 import { UserDataType } from "../commonTypes";
 import { updateUserData } from "../../utils/updateUserData";
 import { getStoredToken } from "../../utils/getStoredToken";
-import {
-	PlantationDemoType,
-	PlantationsDemoDataType,
-	publicationsDemoData,
-} from "./publicationsDemoData";
+import { PlantationDemoType, PlantationsDemoDataType, publicationsDemoData } from "./publicationsDemoData";
 import { createPublication } from "../../interfaces/createPublication";
 import { storePublicationsDemoIds } from "./storePublicationsDemoIds";
 import { getPublicationsDemoIds } from "./getPublicationsDemoIds";
 import { deletePublication } from "../../interfaces/deletePublication";
 import { erasePublicationsDemoIds } from "./erasePublicationsDemoIds";
-import { checkOpenSession } from "../../interfaces/checkOpenSession";
+import { checkOpenSession } from "../../interfaces/users/checkOpenSession";
 import { resetUserData } from "../../utils/resetUserData";
 import ContentCopyTwoToneIcon from "@mui/icons-material/ContentCopyTwoTone";
 import { uploadPublicationsImages } from "../../interfaces/uploadPublicationsImages";
-import {
-	mainImgMockArray,
-	secondImgMockArray,
-} from "./publicationsMockImages/publicationsImagesData";
+import { mainImgMockArray, secondImgMockArray } from "./publicationsMockImages/publicationsImagesData";
 import generateRandomNumber from "../../utils/generateRandomNumber";
 
 type RegisterUserStateType = "init" | "usersOk" | "usersKo";
@@ -41,29 +31,16 @@ type loginUserType =
 	| "loginKoUser"
 	| "loginKoProducer"
 	| "loginKoAdmin";
-type CreatePublicationsType =
-	| "init"
-	| "publicationsOk"
-	| "publicationsKo"
-	| "noToken";
-type DeletePublicationsStateType =
-	| "init"
-	| "noPublications"
-	| "deletedOk"
-	| "deletedKo"
-	| "noToken";
+type CreatePublicationsType = "init" | "publicationsOk" | "publicationsKo" | "noToken";
+type DeletePublicationsStateType = "init" | "noPublications" | "deletedOk" | "deletedKo" | "noToken";
 
 export default function Management() {
 	const { userRole, setUserRole } = useUserRoleContext();
-	const [registerUserState, setRegisterUserState] =
-		useState<RegisterUserStateType>("init");
+	const [registerUserState, setRegisterUserState] = useState<RegisterUserStateType>("init");
 	const [loginUserState, setLoginUserState] = useState<loginUserType>("init");
-	const [createPublicationsState, setCreatePublicationsState] =
-		useState<CreatePublicationsType>("init");
-	const [deletePublicationsState, setDeletePublicationsState] =
-		useState<DeletePublicationsStateType>("init");
-	const [areTherePublicationsToDelete, setAreTherePublicationsToDelete] =
-		useState(false);
+	const [createPublicationsState, setCreatePublicationsState] = useState<CreatePublicationsType>("init");
+	const [deletePublicationsState, setDeletePublicationsState] = useState<DeletePublicationsStateType>("init");
+	const [areTherePublicationsToDelete, setAreTherePublicationsToDelete] = useState(false);
 	const [rerender, setRerender] = useState(false);
 
 	function reRenderComponent() {
@@ -92,7 +69,7 @@ export default function Management() {
 
 	const createUsersFuncionality = {
 		actionText: "Crear Usuarios",
-		handleClick: createUsers,
+		handleClick: createUsers
 	};
 
 	function closeCodeAid() {
@@ -101,7 +78,7 @@ export default function Management() {
 
 	const closeCreateUsersAidFuncionality = {
 		actionText: "Cerrar",
-		handleClick: closeCodeAid,
+		handleClick: closeCodeAid
 	};
 
 	function create5Publications() {
@@ -110,7 +87,7 @@ export default function Management() {
 
 	const create5PublicationsFuncionality = {
 		actionText: "Crear 5 Publicaciones",
-		handleClick: create5Publications,
+		handleClick: create5Publications
 	};
 
 	function create10Publications() {
@@ -119,7 +96,7 @@ export default function Management() {
 
 	const create10PublicationsFuncionality = {
 		actionText: "Crear 10 Publicaciones",
-		handleClick: create10Publications,
+		handleClick: create10Publications
 	};
 
 	function createAllPublications() {
@@ -128,42 +105,42 @@ export default function Management() {
 
 	const createAllPublicationsFuncionality = {
 		actionText: `Crear Todas Las Publicaciones (${publicationsToPublish.length})`,
-		handleClick: createAllPublications,
+		handleClick: createAllPublications
 	};
 
 	const deletePublicationsFuncionality = {
 		actionText: "Borrar Publicaciones",
-		handleClick: deletePublications,
+		handleClick: deletePublications
 	};
 
 	const loginAsUser1Funcionality = {
 		actionText: "Logar Usuario",
-		handleClick: loginAsUser1,
+		handleClick: loginAsUser1
 	};
 
 	const loginAsUser2Funcionality = {
 		actionText: "Logar Usuario",
-		handleClick: loginAsUser2,
+		handleClick: loginAsUser2
 	};
 
 	const loginAsProducer1Funcionality = {
 		actionText: "Logar Productor",
-		handleClick: loginAsProducer1,
+		handleClick: loginAsProducer1
 	};
 
 	const loginAsProducer2Funcionality = {
 		actionText: "Logar Productor",
-		handleClick: loginAsProducer2,
+		handleClick: loginAsProducer2
 	};
 
 	const loginAsProducer3Funcionality = {
 		actionText: "Logar Productor",
-		handleClick: loginAsProducer3,
+		handleClick: loginAsProducer3
 	};
 
 	const loginAsAdmin1Funcionality = {
 		actionText: "Logar Admin",
-		handleClick: loginAsAdmin1,
+		handleClick: loginAsAdmin1
 	};
 
 	////////////////////////////////////////////////////////////////////////////   DATOS DE LOS USUARIOS
@@ -173,7 +150,7 @@ export default function Management() {
 		password: "oem$TP5",
 		name: "Pedro",
 		lastname: "Salas Díaz",
-		address: "Soto del Real, Madrid",
+		address: "Soto del Real, Madrid"
 	};
 
 	const user1DataJson = JSON.stringify(user1Data);
@@ -183,7 +160,7 @@ export default function Management() {
 		password: "fito$TP6",
 		name: "Marcos",
 		lastname: "Vélez Sando",
-		address: "Manzanares, Madrid",
+		address: "Manzanares, Madrid"
 	};
 
 	const user2DataJson = JSON.stringify(user2Data);
@@ -193,7 +170,7 @@ export default function Management() {
 		password: "A%ldo1se",
 		name: "Lorena",
 		lastname: "Aldán López",
-		address: "Soto del Real, Madrid",
+		address: "Soto del Real, Madrid"
 	};
 
 	const producer1DataJson = JSON.stringify(producer1Data);
@@ -203,7 +180,7 @@ export default function Management() {
 		password: "A%lco6$e",
 		name: "Gabriel",
 		lastname: "Mora Ruiz",
-		address: "Soto del Real, Madrid",
+		address: "Soto del Real, Madrid"
 	};
 
 	const producer2DataJson = JSON.stringify(producer2Data);
@@ -213,7 +190,7 @@ export default function Management() {
 		password: "A%lco6$e",
 		name: "Angel",
 		lastname: "Sánchez Márquez",
-		address: "Soto del Real, Madrid",
+		address: "Soto del Real, Madrid"
 	};
 
 	const producer3DataJson = JSON.stringify(producer3Data);
@@ -223,7 +200,7 @@ export default function Management() {
 		password: "Tut$oms6",
 		name: "Antonio",
 		lastname: "Gómez Cedán",
-		address: "Soto del Real, Madrid",
+		address: "Soto del Real, Madrid"
 	};
 
 	const admin1DataJson = JSON.stringify(admin1Data);
@@ -234,7 +211,7 @@ export default function Management() {
 		producer1DataJson,
 		producer2DataJson,
 		producer3DataJson,
-		admin1DataJson,
+		admin1DataJson
 	];
 
 	////////////////////////////////////////////////////////////////////////////   DATOS DE LOS USUARIOS - FIN
@@ -268,7 +245,7 @@ export default function Management() {
 		axiosController2.current = new AbortController();
 		const loginData: LoginFormValuesType = {
 			email: user1Data.email,
-			password: user1Data.password,
+			password: user1Data.password
 		};
 		const loginDataJson = JSON.stringify(loginData);
 
@@ -288,7 +265,7 @@ export default function Management() {
 		axiosController2.current = new AbortController();
 		const loginData: LoginFormValuesType = {
 			email: user2Data.email,
-			password: user2Data.password,
+			password: user2Data.password
 		};
 		const loginDataJson = JSON.stringify(loginData);
 
@@ -308,7 +285,7 @@ export default function Management() {
 		axiosController2.current = new AbortController();
 		const loginData: LoginFormValuesType = {
 			email: producer1Data.email,
-			password: producer1Data.password,
+			password: producer1Data.password
 		};
 		const loginDataJson = JSON.stringify(loginData);
 
@@ -328,7 +305,7 @@ export default function Management() {
 		axiosController2.current = new AbortController();
 		const loginData: LoginFormValuesType = {
 			email: producer2Data.email,
-			password: producer2Data.password,
+			password: producer2Data.password
 		};
 		const loginDataJson = JSON.stringify(loginData);
 
@@ -348,7 +325,7 @@ export default function Management() {
 		axiosController2.current = new AbortController();
 		const loginData: LoginFormValuesType = {
 			email: producer3Data.email,
-			password: producer3Data.password,
+			password: producer3Data.password
 		};
 		const loginDataJson = JSON.stringify(loginData);
 
@@ -368,7 +345,7 @@ export default function Management() {
 		axiosController2.current = new AbortController();
 		const loginData: LoginFormValuesType = {
 			email: admin1Data.email,
-			password: admin1Data.password,
+			password: admin1Data.password
 		};
 		const loginDataJson = JSON.stringify(loginData);
 
@@ -398,10 +375,7 @@ export default function Management() {
 					finishedAttemps++;
 					createdUsersNumber++;
 
-					if (
-						finishedAttemps === usersToCreateNumber &&
-						createdUsersNumber === usersToCreateNumber
-					) {
+					if (finishedAttemps === usersToCreateNumber && createdUsersNumber === usersToCreateNumber) {
 						setRegisterUserState("usersOk");
 					}
 				})
@@ -409,10 +383,7 @@ export default function Management() {
 					console.log(error);
 					finishedAttemps++;
 
-					if (
-						finishedAttemps === usersToCreateNumber &&
-						createdUsersNumber < usersToCreateNumber
-					) {
+					if (finishedAttemps === usersToCreateNumber && createdUsersNumber < usersToCreateNumber) {
 						setRegisterUserState("usersKo");
 					}
 				});
@@ -427,34 +398,22 @@ export default function Management() {
 		const storedPublicationsIdStringify = getPublicationsDemoIds();
 
 		if (storedPublicationsIdStringify) {
-			publicationsIdsToStore.current = JSON.parse(
-				storedPublicationsIdStringify,
-			);
+			publicationsIdsToStore.current = JSON.parse(storedPublicationsIdStringify);
 		}
 
 		if (userRole !== "visitor" && userRole !== "USER" && storedToken) {
 			for (let i = 0; i < ammount; i++) {
-				const publicationDataJson: Stringified<PlantationDemoType> =
-					JSON.stringify(publicationsToPublish[i]);
+				const publicationDataJson: Stringified<PlantationDemoType> = JSON.stringify(publicationsToPublish[i]);
 
-				createPublication(
-					storedToken!,
-					publicationDataJson,
-					axiosController2.current!,
-				)
+				createPublication(storedToken!, publicationDataJson, axiosController2.current!)
 					.then((response) => {
 						finishedAttemps++;
 						createdPublicationsNumber++;
 						publicationsIdsToStore.current.push(response.id!);
 						uploadImages(storedToken, response.id);
 
-						if (
-							finishedAttemps === ammount &&
-							createdPublicationsNumber === ammount
-						) {
-							const publicationsIdsToStoreJSON = JSON.stringify(
-								publicationsIdsToStore.current,
-							);
+						if (finishedAttemps === ammount && createdPublicationsNumber === ammount) {
+							const publicationsIdsToStoreJSON = JSON.stringify(publicationsIdsToStore.current);
 							storePublicationsDemoIds(publicationsIdsToStoreJSON);
 							setCreatePublicationsState("publicationsOk");
 							setDeletePublicationsState("init");
@@ -466,13 +425,8 @@ export default function Management() {
 						finishedAttemps++;
 						console.log(error);
 
-						if (
-							finishedAttemps === ammount &&
-							createdPublicationsNumber < ammount
-						) {
-							const publicationsIdsToStoreJSON = JSON.stringify(
-								publicationsIdsToStore.current,
-							);
+						if (finishedAttemps === ammount && createdPublicationsNumber < ammount) {
+							const publicationsIdsToStoreJSON = JSON.stringify(publicationsIdsToStore.current);
 							storePublicationsDemoIds(publicationsIdsToStoreJSON);
 							setCreatePublicationsState("publicationsKo");
 							setDeletePublicationsState("init");
@@ -503,11 +457,9 @@ export default function Management() {
 		}
 
 		// Preparamos los datos de la imagen principal.
-		const mainImgMockName =
-			mainImgMockArray[mainImgMockArrayPosition.current].name;
+		const mainImgMockName = mainImgMockArray[mainImgMockArrayPosition.current].name;
 
-		const mainImgMockUrl =
-			mainImgMockArray[mainImgMockArrayPosition.current].url;
+		const mainImgMockUrl = mainImgMockArray[mainImgMockArrayPosition.current].url;
 
 		const mainImgBlob = await fetchImageAsBlob(mainImgMockUrl);
 
@@ -516,33 +468,24 @@ export default function Management() {
 
 		//Preparamos los datos de las publicaciones secundarias
 		//A cada publicación vamos a añadirle un número aleatorio de imágenes secundarias:
-		const randomNumberOfImgs = generateRandomNumber(
-			1,
-			secondImgMockArray.length - 1,
-		);
+		const randomNumberOfImgs = generateRandomNumber(1, secondImgMockArray.length - 1);
 
 		if (randomNumberOfImgs > 0) {
 			for (let i = 0; i <= randomNumberOfImgs; i++) {
 				const secondaryImgMockName = secondImgMockArray[i].name;
 				const secondaryImgMockUrl = secondImgMockArray[i].url;
-				const secondaryImgMockBlob =
-					await fetchImageAsBlob(secondaryImgMockUrl);
+				const secondaryImgMockBlob = await fetchImageAsBlob(secondaryImgMockUrl);
 
 				formData.append("images", secondaryImgMockBlob, secondaryImgMockName);
 			}
 		}
-
-		const test = formData.entries();
-		console.log(...test);
 
 		uploadPublicationsImages(token, formData, axiosController5.current)
 			.then(() => {
 				return "OK";
 			})
 			.catch((error) => {
-				console.log(
-					`Error al subir las imágenes de la publicación ${publicationId}: ${error}`,
-				);
+				console.log(`Error al subir las imágenes de la publicación ${publicationId}: ${error}`);
 			});
 	}
 
@@ -577,8 +520,7 @@ export default function Management() {
 				setDeletePublicationsState("deletedKo");
 			}
 		} else {
-			if (!publicationsToDeleteIdsStringify)
-				setDeletePublicationsState("noPublications");
+			if (!publicationsToDeleteIdsStringify) setDeletePublicationsState("noPublications");
 			if (!storedToken) setDeletePublicationsState("noToken");
 		}
 	}
@@ -650,10 +592,7 @@ export default function Management() {
 
 					<div className="z-50 absolute flex flex-col items-center top-[-55vh] right-[-12vw] w-[660px] p-4 border-2 border-solid border-brandingYellow rounded-xl bg-white">
 						{registerUserState === "init" && (
-							<p>
-								Primero crea los Usuarios. Luego puedes logarlos y crear
-								publicaciones
-							</p>
+							<p>Primero crea los Usuarios. Luego puedes logarlos y crear publicaciones</p>
 						)}
 
 						{registerUserState === "usersOk" && (
@@ -664,9 +603,7 @@ export default function Management() {
 								>
 									<ContentCopyTwoToneIcon fontSize="inherit" color="inherit" />
 								</div>
-								<p className="mb-4 font-bold underline">
-									Script para asignar roles en MySql:
-								</p>
+								<p className="mb-4 font-bold underline">Script para asignar roles en MySql:</p>
 								<p className="mb-1 font-montserrat">mysql -uroot -p</p>
 								<p className="mb-1 font-montserrat">root</p>
 								<p className="mb-4 font-montserrat">-----------------</p>
@@ -675,40 +612,31 @@ export default function Management() {
 										onClick={copyToClipboard2}
 										className="absolute top-[0px] right-[0px] text-[35px] cursor-pointer hover:scale-125 active:opacity-30"
 									>
-										<ContentCopyTwoToneIcon
-											fontSize="inherit"
-											color="inherit"
-										/>
+										<ContentCopyTwoToneIcon fontSize="inherit" color="inherit" />
 									</div>
 									<p className="mb-1 font-montserrat">use agroplantationapp;</p>
 									<p className="mb-1 font-montserrat">
-										UPDATE user SET user_type_id = (SELECT id FROM user_type
-										WHERE type = &#39;USER&#39;) WHERE email =
+										UPDATE user SET user_type_id = (SELECT id FROM user_type WHERE type = &#39;USER&#39;) WHERE email =
 										&#39;pedritoaldas2@gmail.com&#39;;
 									</p>
 									<p className="mb-1 font-montserrat">
-										UPDATE user SET user_type_id = (SELECT id FROM user_type
-										WHERE type = &#39;USER&#39;) WHERE email =
+										UPDATE user SET user_type_id = (SELECT id FROM user_type WHERE type = &#39;USER&#39;) WHERE email =
 										&#39;velezmarcocontacto@gmail.com&#39;;
 									</p>
 									<p className="mb-1 font-montserrat">
-										UPDATE user SET user_type_id = (SELECT id FROM user_type
-										WHERE type = &#39;PRODUCER&#39;) WHERE email =
-										&#39;lorenita16tat@gmail.com&#39;;
+										UPDATE user SET user_type_id = (SELECT id FROM user_type WHERE type = &#39;PRODUCER&#39;) WHERE
+										email = &#39;lorenita16tat@gmail.com&#39;;
 									</p>
 									<p className="mb-1 font-montserrat">
-										UPDATE user SET user_type_id = (SELECT id FROM user_type
-										WHERE type = &#39;PRODUCER&#39;) WHERE email =
-										&#39;gabymoratrabajo@gmail.com&#39;;
+										UPDATE user SET user_type_id = (SELECT id FROM user_type WHERE type = &#39;PRODUCER&#39;) WHERE
+										email = &#39;gabymoratrabajo@gmail.com&#39;;
 									</p>
 									<p className="mb-1 font-montserrat">
-										UPDATE user SET user_type_id = (SELECT id FROM user_type
-										WHERE type = &#39;PRODUCER&#39;) WHERE email =
-										&#39;sanchezangelbarraco@gmail.com&#39;;
+										UPDATE user SET user_type_id = (SELECT id FROM user_type WHERE type = &#39;PRODUCER&#39;) WHERE
+										email = &#39;sanchezangelbarraco@gmail.com&#39;;
 									</p>
 									<p className="mb-6 font-montserrat">
-										UPDATE user SET user_type_id = (SELECT id FROM user_type
-										WHERE type = &#39;ADMIN&#39;) WHERE email =
+										UPDATE user SET user_type_id = (SELECT id FROM user_type WHERE type = &#39;ADMIN&#39;) WHERE email =
 										&#39;antoniolopez12@gmail.com&#39;;
 									</p>
 								</div>
@@ -722,30 +650,23 @@ export default function Management() {
 							</div>
 						)}
 
-						{registerUserState === "usersKo" && (
-							<p className="font-bold">Error al Crear Usuarios!!!</p>
-						)}
+						{registerUserState === "usersKo" && <p className="font-bold">Error al Crear Usuarios!!!</p>}
 					</div>
 				</div>
 
 				{/* /////////////////  LOGAR USUARIOS  ////////////////////// */}
 
-				<h2 className="font-semibold text-[24px] mt-[6.5vh] mb-[5vh]">
-					Logar Usuarios
-				</h2>
+				<h2 className="font-semibold text-[24px] mt-[6.5vh] mb-[5vh]">Logar Usuarios</h2>
 
 				{/* ///////////  USUARIOS NORMALES  /////////// */}
 
-				<h3 className="mb-4 text-[18px] font-semibold text-brandingDarkGreen">
-					Usuarios
-				</h3>
+				<h3 className="mb-4 text-[18px] font-semibold text-brandingDarkGreen">Usuarios</h3>
 
 				<div className="relative flex justify-center gap-16 width-[100%]">
 					<div className="flex flex-col items-center">
 						<div className="flex flex-col items-start">
 							<p className="">
-								Email:{" "}
-								<span className="font-bold">pedritoaldas2@gmail.com</span>
+								Email: <span className="font-bold">pedritoaldas2@gmail.com</span>
 							</p>
 							<p className="mb-4">
 								Contraseña: <span className="font-bold">oem$TP5</span>
@@ -763,8 +684,7 @@ export default function Management() {
 					<div className="flex flex-col items-center">
 						<div className="flex flex-col items-start">
 							<p className="">
-								Email:{" "}
-								<span className="font-bold">velezmarcocontacto@gmail.com</span>
+								Email: <span className="font-bold">velezmarcocontacto@gmail.com</span>
 							</p>
 							<p className="mb-4">
 								Contraseña: <span className="font-bold">fito$TP6</span>
@@ -780,30 +700,23 @@ export default function Management() {
 					</div>
 
 					{loginUserState === "loginUser" && (
-						<p className="absolute bottom-[-40px] font-semibold text-reddishBrown">
-							Logado Correctamente!!
-						</p>
+						<p className="absolute bottom-[-40px] font-semibold text-reddishBrown">Logado Correctamente!!</p>
 					)}
 
 					{loginUserState === "loginKoUser" && (
-						<p className="absolute bottom-[-40px] font-semibold text-reddishBrown">
-							Error al Logar Usuario!!
-						</p>
+						<p className="absolute bottom-[-40px] font-semibold text-reddishBrown">Error al Logar Usuario!!</p>
 					)}
 				</div>
 
 				{/* ///////////  PRODUCTORES  /////////// */}
 
-				<h3 className="mb-4 mt-16 text-[18px] font-semibold text-brandingDarkGreen">
-					Productores
-				</h3>
+				<h3 className="mb-4 mt-16 text-[18px] font-semibold text-brandingDarkGreen">Productores</h3>
 
 				<div className="relative flex justify-center gap-16 width-[100%]">
 					<div className="flex flex-col items-center">
 						<div className="flex flex-col items-start">
 							<p className="">
-								Email:{" "}
-								<span className="font-bold">lorenita16tat@gmail.com</span>
+								Email: <span className="font-bold">lorenita16tat@gmail.com</span>
 							</p>
 							<p className="mb-4">
 								Contraseña: <span className="font-bold">A%ldo1se</span>
@@ -821,8 +734,7 @@ export default function Management() {
 					<div className="flex flex-col items-center">
 						<div className="flex flex-col items-start">
 							<p className="">
-								Email:{" "}
-								<span className="font-bold">gabymoratrabajo@gmail.com</span>
+								Email: <span className="font-bold">gabymoratrabajo@gmail.com</span>
 							</p>
 							<p className="mb-4">
 								Contraseña: <span className="font-bold">A%lco6$e</span>
@@ -840,8 +752,7 @@ export default function Management() {
 					<div className="flex flex-col items-center">
 						<div className="flex flex-col items-start">
 							<p className="">
-								Email:{" "}
-								<span className="font-bold">sanchezangelbarraco@gmail.com</span>
+								Email: <span className="font-bold">sanchezangelbarraco@gmail.com</span>
 							</p>
 							<p className="mb-4">
 								Contraseña: <span className="font-bold">A%lco6$e</span>
@@ -857,30 +768,23 @@ export default function Management() {
 					</div>
 
 					{loginUserState === "loginProducer" && (
-						<p className="absolute bottom-[-40px] font-semibold text-reddishBrown">
-							Logado Correctamente!!
-						</p>
+						<p className="absolute bottom-[-40px] font-semibold text-reddishBrown">Logado Correctamente!!</p>
 					)}
 
 					{loginUserState === "loginKoProducer" && (
-						<p className="absolute bottom-[-40px] font-semibold text-reddishBrown">
-							Error al Logar Productor!!
-						</p>
+						<p className="absolute bottom-[-40px] font-semibold text-reddishBrown">Error al Logar Productor!!</p>
 					)}
 				</div>
 
 				{/* ///////////  ADMINISTRADOR  /////////// */}
 
-				<h3 className="mb-4 mt-16 text-[18px] font-semibold text-brandingDarkGreen">
-					Administrador
-				</h3>
+				<h3 className="mb-4 mt-16 text-[18px] font-semibold text-brandingDarkGreen">Administrador</h3>
 
 				<div className="relative flex justify-center gap-16 width-[100%]">
 					<div className="flex flex-col items-center">
 						<div className="flex flex-col items-start">
 							<p className="">
-								Email:{" "}
-								<span className="font-bold">antoniolopez12@gmail.com</span>
+								Email: <span className="font-bold">antoniolopez12@gmail.com</span>
 							</p>
 							<p className="mb-4">
 								Contraseña: <span className="font-bold">Tut$oms6</span>
@@ -896,23 +800,17 @@ export default function Management() {
 					</div>
 
 					{loginUserState === "loginAdmin" && (
-						<p className="absolute bottom-[-40px] font-semibold text-reddishBrown">
-							Logado Correctamente!!
-						</p>
+						<p className="absolute bottom-[-40px] font-semibold text-reddishBrown">Logado Correctamente!!</p>
 					)}
 
 					{loginUserState === "loginKoAdmin" && (
-						<p className="absolute bottom-[-40px] font-semibold text-reddishBrown">
-							Error al Logar Administrador!!
-						</p>
+						<p className="absolute bottom-[-40px] font-semibold text-reddishBrown">Error al Logar Administrador!!</p>
 					)}
 				</div>
 
 				{/* /////////////////////////////////////////  CREAR PUBLICACIONES  ////////////////////////////////////// */}
 
-				<h2 className="font-semibold text-[24px] mt-[6.5vh] mb-[5vh]">
-					Crear Publicaciones
-				</h2>
+				<h2 className="font-semibold text-[24px] mt-[6.5vh] mb-[5vh]">Crear Publicaciones</h2>
 
 				<div className="relative flex justify-center gap-20">
 					<Button
@@ -952,9 +850,7 @@ export default function Management() {
 
 				{/* /////////////////////////////////////////  BORRAR PUBLICACIONES  ////////////////////////////////////// */}
 
-				<h2 className="font-semibold text-[24px] mt-[6.5vh] mb-[5vh]">
-					Borrar Publicaciones
-				</h2>
+				<h2 className="font-semibold text-[24px] mt-[6.5vh] mb-[5vh]">Borrar Publicaciones</h2>
 
 				{areTherePublicationsToDelete === true ? (
 					<div className="relative flex justify-center gap-20">
@@ -965,21 +861,13 @@ export default function Management() {
 							buttonPaddingY={buttonPaddingY}
 							buttonFuncionality={deletePublicationsFuncionality}
 						/>
-						{deletePublicationsState === "noPublications" && (
-							<p className="">¡No hay publicaciones para borrar!</p>
-						)}
+						{deletePublicationsState === "noPublications" && <p className="">¡No hay publicaciones para borrar!</p>}
 
-						{deletePublicationsState === "deletedOk" && (
-							<p className="">¡Publicaciones borradas correctamente!</p>
-						)}
+						{deletePublicationsState === "deletedOk" && <p className="">¡Publicaciones borradas correctamente!</p>}
 
-						{deletePublicationsState === "deletedKo" && (
-							<p className="">¡Error al borrar las publicaciones!</p>
-						)}
+						{deletePublicationsState === "deletedKo" && <p className="">¡Error al borrar las publicaciones!</p>}
 
-						{deletePublicationsState === "noToken" && (
-							<p className="">¡No hay un usuario logado!</p>
-						)}
+						{deletePublicationsState === "noToken" && <p className="">¡No hay un usuario logado!</p>}
 					</div>
 				) : (
 					<p className="font-bold">No hay publicaciones para eliminar!!!</p>

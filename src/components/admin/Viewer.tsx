@@ -11,9 +11,7 @@ function Viewer({ itemsList }: ViewerPropsType) {
 			{itemsList.map((block, index) => {
 				return (
 					<div key={index} className="w-[100%]">
-						<h2 className="mt-[88px] mb-[22px] text-sans font-semibold text-[24px]">
-							{block.title}
-						</h2>
+						<h2 className="mt-[88px] mb-[22px] text-sans font-semibold text-[24px]">{block.title}</h2>
 
 						<div className="flex justify-start flex-wrap gap-x-[11.03vw] gap-y-[4vh]">
 							{block.content.map((publication) => {

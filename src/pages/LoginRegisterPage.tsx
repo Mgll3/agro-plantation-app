@@ -1,22 +1,31 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { logInUser } from "../interfaces/logInUser";
+import { logInUser } from "../interfaces/users/logInUser";
 import Login from "../components/forms/Login";
-import { registerUser } from "../interfaces/registerUser";
+import { registerUser } from "../interfaces/users/registerUser";
 import Register from "../components/forms/Register";
-import { LoginFormValuesType, RegiserFormFieldsToSendType, RegisterFormValuesType } from "../components/forms/formsTypes";
+import {
+	LoginFormValuesType,
+	RegiserFormFieldsToSendType,
+	RegisterFormValuesType
+} from "../components/forms/formsTypes";
 import { UserDataType } from "./commonTypes";
 import { useUserRoleContext } from "../context/UserRoleContext";
 import { updateUserData } from "../utils/updateUserData";
 import { resetUserData } from "../utils/resetUserData";
 
-
 export type LoginStateType = "init" | "loading" | "loginError" | "networkError" | "logged";
-export type RegisterStateType = "init" | "loading" | "registerErrorEmailExists" | "registerErrorServerError" | "networkError" | "logged";
+export type RegisterStateType =
+	| "init"
+	| "loading"
+	| "registerErrorEmailExists"
+	| "registerErrorServerError"
+	| "networkError"
+	| "logged";
 
 type LoginRegisterPageProps = {
-	focus: "login" | "register"
-}
+	focus: "login" | "register";
+};
 
 function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 	const { userRole, setUserRole } = useUserRoleContext();
@@ -31,7 +40,6 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 
 	const url = useLocation();
 	const navigate = useNavigate();
-
 
 	function closeErrorMessage() {
 		setRegisterState("init");
@@ -48,18 +56,17 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 
 		const loginDataJson = JSON.stringify(loginData);
 
-
 		logInUser(loginDataJson, axiosController.current!)
 			.then((UserDataResponse: UserDataType) => {
 				updateUserData(UserDataResponse, setUserRole);
-				
-				loggedTimeout = window.setTimeout( () => {
+
+				loggedTimeout = window.setTimeout(() => {
 					setLoginState("logged");
 				}, 800);
 			})
 			.catch((error: Error) => {
 				resetUserData(setUserRole);
-				if (error.message === "401"){
+				if (error.message === "401") {
 					setLoginState("loginError");
 				} else {
 					setLoginState("networkError");
@@ -69,9 +76,9 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 
 	const submitRegisterForm = (formValues: RegisterFormValuesType) => {
 		setRegisterState("loading");
-	
-		const userFullAddress = `${formValues.userAddressCity}, ${formValues.userAddressProvince}`;			// Unimos en Front los campos de dirección del usuario.
-	
+
+		const userFullAddress = `${formValues.userAddressCity}, ${formValues.userAddressProvince}`; // Unimos en Front los campos de dirección del usuario.
+
 		const resgisterDataToSend: RegiserFormFieldsToSendType = {
 			email: formValues.userEmail,
 			password: formValues.userPassword,
@@ -87,7 +94,7 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 				setRegisterState("logged");
 			})
 			.catch((error: Error) => {
-				if (error.message === "409"){
+				if (error.message === "409") {
 					setRegisterState("registerErrorEmailExists");
 				} else if (error.message === "501") {
 					setRegisterState("registerErrorServerError");
@@ -110,7 +117,7 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 			(mainContainerElement.current! as HTMLDivElement).classList.remove("left-0");
 		}
 
-		changeFormTimeout = window.setTimeout( () => {
+		changeFormTimeout = window.setTimeout(() => {
 			if (url.pathname === "/login") {
 				navigate("/register");
 			} else {
@@ -119,19 +126,16 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 		}, 1001);
 	}
 
-	useLayoutEffect( () => {
+	useLayoutEffect(() => {
 		(mainContainerElement.current! as HTMLDivElement).classList.remove("duration-1000");
 		(mainContainerElement.current! as HTMLDivElement).classList.add("duration-0");
 		(mainContainerElement.current! as HTMLDivElement).classList.remove("-left-full");
 		(mainContainerElement.current! as HTMLDivElement).classList.add("left-0");
 	});
 
-
 	useEffect(() => {
 		if (loginState === "logged") {
-			userRole !== "ADMIN"
-				?	navigate("/", {replace: true})
-				: navigate("/admin/publications", {replace: true});
+			userRole !== "ADMIN" ? navigate("/", { replace: true }) : navigate("/admin/publications", { replace: true });
 		}
 
 		return () => {
@@ -139,7 +143,6 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 			clearTimeout(loggedTimeout);
 		};
 	}, [loginState]);
-
 
 	useEffect(() => {
 		let registerErrorTimeout: number;
@@ -153,11 +156,11 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 		}
 
 		if (registerState === "logged") {
-			registeredTimeout = window.setTimeout( () => {
+			registeredTimeout = window.setTimeout(() => {
 				changeForm();
 			}, 2500);
 
-			registeredTimeout2 = window.setTimeout( () => {
+			registeredTimeout2 = window.setTimeout(() => {
 				setRegisterState("init");
 			}, 3500);
 		}
@@ -169,7 +172,6 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 		};
 	}, [registerState]);
 
-
 	useEffect(() => {
 		axiosController.current = new AbortController();
 
@@ -179,35 +181,50 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 		};
 	}, []);
 
-
 	return (
 		<>
 			<main ref={mainContainerElement} className="flex absolute transition-all left-0 duration-1000">
-				{
-					focus === "login"
-						? (
-							<>
-								<div className="w-screen">
-									<Login handleSubmit={submitLoginForm} handleRegisterClick={changeForm} loginState={loginState} closeErrorMessages={closeErrorMessage}/>
-								</div>
+				{focus === "login" ? (
+					<>
+						<div className="w-screen">
+							<Login
+								handleSubmit={submitLoginForm}
+								handleRegisterClick={changeForm}
+								loginState={loginState}
+								closeErrorMessages={closeErrorMessage}
+							/>
+						</div>
 
-								<div className="w-screen ">
-									<Register handleSubmit={submitRegisterForm} handleLoginClick={changeForm} registerState={registerState} closeErrorMessages={closeErrorMessage} />
-								</div>
-							</>
-						)
-						: (
-							<>
-								<div className="w-screen">
-									<Register handleSubmit={submitRegisterForm} handleLoginClick={changeForm} registerState={registerState} closeErrorMessages={closeErrorMessage} />
-								</div>
+						<div className="w-screen ">
+							<Register
+								handleSubmit={submitRegisterForm}
+								handleLoginClick={changeForm}
+								registerState={registerState}
+								closeErrorMessages={closeErrorMessage}
+							/>
+						</div>
+					</>
+				) : (
+					<>
+						<div className="w-screen">
+							<Register
+								handleSubmit={submitRegisterForm}
+								handleLoginClick={changeForm}
+								registerState={registerState}
+								closeErrorMessages={closeErrorMessage}
+							/>
+						</div>
 
-								<div className="w-screen">
-									<Login handleSubmit={submitLoginForm} handleRegisterClick={changeForm} loginState={loginState} closeErrorMessages={closeErrorMessage}/>
-								</div>
-							</>
-						)
-				}
+						<div className="w-screen">
+							<Login
+								handleSubmit={submitLoginForm}
+								handleRegisterClick={changeForm}
+								loginState={loginState}
+								closeErrorMessages={closeErrorMessage}
+							/>
+						</div>
+					</>
+				)}
 			</main>
 		</>
 	);

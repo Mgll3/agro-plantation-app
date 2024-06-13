@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { checkOpenSession } from "../../interfaces/checkOpenSession";
+import { checkOpenSession } from "../../interfaces/users/checkOpenSession";
 import { useUserRoleContext } from "../../context/UserRoleContext";
 import { Outlet, useNavigate } from "react-router-dom";
 import { UserDataType, isAuthorizedType } from "./ProtectedRoutesTypes";
@@ -7,7 +7,6 @@ import { CircularProgress } from "@mui/material";
 import { getStoredToken } from "../../utils/getStoredToken";
 import { updateUserData } from "../../utils/updateUserData";
 import { resetUserData } from "../../utils/resetUserData";
-
 
 function ProtectedRouteProducer() {
 	const { setUserRole } = useUserRoleContext();
@@ -17,7 +16,6 @@ function ProtectedRouteProducer() {
 	const navigate = useNavigate();
 	let navigateTimer: number = 0;
 	let resetUserCredentialsTimer: number = 0;
-
 
 	useEffect(() => {
 		axiosController.current = new AbortController();
@@ -38,7 +36,7 @@ function ProtectedRouteProducer() {
 					if (error === "401") {
 						resetUserData(setUserRole);
 					} else {
-						resetUserCredentialsTimer = window.setTimeout( () => {
+						resetUserCredentialsTimer = window.setTimeout(() => {
 							resetUserData(setUserRole);
 						}, 1400);
 					}
@@ -49,18 +47,15 @@ function ProtectedRouteProducer() {
 			setIsAuthorized("notAuthorized");
 		}
 
-
 		return () => {
 			axiosController.current?.abort();
 		};
 	}, []);
 
-
-
-	useEffect( () => {
+	useEffect(() => {
 		if (isAuthorized === "notAuthorized") {
 			navigateTimer = window.setTimeout(() => {
-				navigate("/login", {replace: true});
+				navigate("/login", { replace: true });
 			}, 1500);
 		}
 
@@ -69,15 +64,13 @@ function ProtectedRouteProducer() {
 		};
 	}, [isAuthorized]);
 
-
-	
 	return (
 		<>
-			{
-				isAuthorized === "loading" || isAuthorized === "notAuthorized"
-					? <CircularProgress color="success" />
-					: <Outlet />
-			}
+			{isAuthorized === "loading" || isAuthorized === "notAuthorized" ? (
+				<CircularProgress color="success" />
+			) : (
+				<Outlet />
+			)}
 		</>
 	);
 }
