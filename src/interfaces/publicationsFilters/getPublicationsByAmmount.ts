@@ -1,9 +1,9 @@
 import axios from "axios";
 import { axiosConfig } from "../../lib/axios/axios.config";
 
-export async function getPublicationsByUser(token: string, axiosControler: AbortController, page: string) {
+export async function getPublicationsByAmmount(token: string, axiosControler: AbortController, page: string) {
 	try {
-		const response = await axiosConfig.get(`/v1/publication/user/${page}`, {
+		const response = await axiosConfig.get(`/v1/publication/userQuantity/${page}`, {
 			signal: axiosControler.signal,
 			headers: {
 				"Content-Type": "application/json",

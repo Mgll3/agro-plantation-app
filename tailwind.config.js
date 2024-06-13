@@ -10,7 +10,7 @@ export default {
 				niramit: ["Niramit", "sans-serif"],
 				montserrat: ["Montserrat", "sans-serif"]
 			},
-			fontSize:{
+			fontSize: {
 				size1: "2.618rem",
 				size2: "1.618rem",
 				size3: "1rem",
@@ -29,24 +29,25 @@ export default {
 				darkText: "#484848",
 				darkGrayText: "#767676",
 				reddishBrown: "#C54600",
-				blueLink: "#6F86FF"
+				blueLink: "#6F86FF",
+				brightRed: "#FF0000"
 			},
 			spacing: {
-				"53": "13.25rem"
+				53: "13.25rem"
 			},
 			backgroundImage: {
-				"headerBg": "url('@/images/backgrounds/header_background.avif')",
-				"headerBgAdmin": "url('@/images/backgrounds/Header2.png')",
-				"login": "url('@/images/backgrounds/inicio_y_registro.jpg')"
+				headerBg: "url('@/images/backgrounds/header_background.avif')",
+				headerBgAdmin: "url('@/images/backgrounds/Header2.png')",
+				login: "url('@/images/backgrounds/inicio_y_registro.jpg')",
+				publicationCardsBg: "url('@/images/backgrounds/cards-background.jpg')"
 			},
 			gridTemplateColumns: {
-				"form" : "repeat(auto-fit, minmax(300px, 1fr))"
+				form: "repeat(auto-fit, minmax(300px, 1fr))"
 			},
 			dropShadow: {
-				"custom": "0 3px 3px rgba(0, 0, 0, 0.55)",
-			},
-		},
+				custom: "0 3px 3px rgba(0, 0, 0, 0.55)"
+			}
+		}
 	},
-	plugins: [],
+	plugins: []
 };
-

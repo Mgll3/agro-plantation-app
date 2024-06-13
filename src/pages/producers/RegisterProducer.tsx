@@ -14,6 +14,7 @@ function RegisterProducer() {
 
 	function closeModals () {
 		setRegisterProducerState("init");
+		navigate("/");
 	}
 
 	function submitForm (formValues: RegisterProducerFormValuesType) {

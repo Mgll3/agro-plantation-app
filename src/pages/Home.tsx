@@ -1,8 +1,11 @@
-import { useEffect, useLayoutEffect, useRef, useState } from "react"; {/*useState*/ }
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+{
+	/*useState*/
+}
 import Header from "../components/header/Header";
 import { user } from "../data/userData";
 import { useUserRoleContext } from "../context/UserRoleContext";
-import { checkOpenSession } from "../interfaces/checkOpenSession";
+import { checkOpenSession } from "../interfaces/users/checkOpenSession";
 import { getBestPublications } from "../interfaces/getBestPublications";
 import PublicationsPreviewList from "../components/publicationsList/PublicationsPreviewList";
 import { UserDataType } from "./commonTypes";
@@ -19,8 +22,6 @@ import ProducerBanner from "../components/homeElements/ProducerBanner";
 import { getStoredRole } from "../utils/getStoredRole";
 import { updateUserData } from "../utils/updateUserData";
 import { resetUserData } from "../utils/resetUserData";
-
-
 
 type LoadingStateType = "loading" | "loaded" | "error";
 
@@ -40,11 +41,10 @@ export default function Home() {
 	const axiosController = useRef<AbortController>();
 	let resetUserCredentialsTimer: number = 0;
 
-
-	// Se utiliza este Layout Effect para que se carguen por defecto el nombre y el rol del usuario del Local Storage, si existen. 
-	// Esto evita que la página "parpadee" cuando esta información se obtiene del servidor. 
+	// Se utiliza este Layout Effect para que se carguen por defecto el nombre y el rol del usuario del Local Storage, si existen.
+	// Esto evita que la página "parpadee" cuando esta información se obtiene del servidor.
 	// No obstante, si no coinciden la información almacenada y la del servidor, tiene prevalencia esta última y habrá un parpadeo cuando ésta se "imponga".
-	useLayoutEffect( () => {
+	useLayoutEffect(() => {
 		const userStoredName = getStoredName();
 		const userStoredRole = getStoredRole();
 
@@ -56,7 +56,6 @@ export default function Home() {
 			setUserRole(userStoredRole);
 		}
 	});
-
 
 	useEffect(() => {
 		axiosController.current = new AbortController();
@@ -73,7 +72,7 @@ export default function Home() {
 					if (error === "401") {
 						resetUserData(setUserRole);
 					} else {
-						resetUserCredentialsTimer = window.setTimeout( () => {
+						resetUserCredentialsTimer = window.setTimeout(() => {
 							resetUserData(setUserRole);
 						}, 1400);
 					}
@@ -105,75 +104,55 @@ export default function Home() {
 		};
 	}, []);
 
-
-
 	return (
 		<>
-			<div className="w-full" >
+			<div className="w-full">
 				<Header />
 			</div>
 
 			<main className="w-full py-8">
+				{userRole === "visitor" && (
+					<div className="px-[10vw] pt-[3vh]">
+						<VisitorBanner />
+					</div>
+				)}
 
-				{
-					userRole === "visitor" && (
-						<div className="px-[10vw] pt-[3vh]">
-							<VisitorBanner />
-						</div>
-					)
-				}
+				{userRole === "USER" && (
+					<div className="px-[6vw] pt-[3vh]">
+						<UserBanner />
+					</div>
+				)}
 
-				{
-					userRole === "USER" && (
-						<div className="px-[6vw] pt-[3vh]">
-							<UserBanner />
-						</div>
-					)
-				}
+				{userRole === "PRODUCER" || userRole === "PRODUCER_VIP" ? (
+					<div className="px-[6vw] pt-[3vh]">
+						<ProducerBanner />
+					</div>
+				) : null}
 
-				{
-					userRole === "PRODUCER" || userRole === "PRODUCER_VIP"
-						? (
-							<div className="px-[6vw] pt-[3vh]">
-								<ProducerBanner />
-							</div>
-						)
-						: null
-				}
-			
-				{
-					publicationsState === "loading" && (
-						<div className="px-[10vw] text-center">
-							<img alt="Cargando..." src="icons/loading.gif" className="" />
-						</div>
-					)
-				}
+				{publicationsState === "loading" && (
+					<div className="px-[10vw] text-center">
+						<img alt="Cargando..." src="icons/loading.gif" className="" />
+					</div>
+				)}
 
-				{
-					publicationsState === "error" && (
-						<div className="px-[10vw] py-20 font-sans text-center text-2xl">
-							<p className="">No se han podido cargar las publicaciones más votadas.</p>
-							<p className="mt-2 text-xl">Por favor, compruebe su conexión y refresque la página.</p>
-						</div>
-					)
-				}
+				{publicationsState === "error" && (
+					<div className="px-[10vw] py-20 font-sans text-center text-2xl">
+						<p className="">No se han podido cargar las publicaciones más votadas.</p>
+						<p className="mt-2 text-xl">Por favor, compruebe su conexión y refresque la página.</p>
+					</div>
+				)}
 
-				{
-					publicationsState === "loaded" && (
-						<div className="w-full px-[10vw] py-[10vh]">
-							<PublicationsPreviewList bestPublicationsArray={bestPublicationsArray.current} />
-						</div>
-					)
-				}
+				{publicationsState === "loaded" && (
+					<div className="w-full px-[10vw] py-[10vh]">
+						<PublicationsPreviewList bestPublicationsArray={bestPublicationsArray.current} />
+					</div>
+				)}
 
-				{
-					userRole === "visitor" && (
-						<div className="py-12">
-							<CallToAction />
-						</div>
-					)
-				}
-
+				{userRole === "visitor" && (
+					<div className="py-12">
+						<CallToAction />
+					</div>
+				)}
 
 				{/* <div className={styles.dashboardContainer}>
 					{
@@ -219,7 +198,6 @@ export default function Home() {
 				<div className="px-[10vw] mt-20 mb-0">
 					<SocialNetworks />
 				</div>
-
 			</main>
 
 			<Footer />
