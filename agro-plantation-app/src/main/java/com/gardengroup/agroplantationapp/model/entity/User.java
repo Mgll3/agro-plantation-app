@@ -46,6 +46,7 @@ public class User {
     private Boolean totalAuthorization;
 
     @ManyToOne
+    @Column(nullable = false)
     private UserType userType;
 
     //Hago que la contraseña y el correo sea seguro y que no la envie al front

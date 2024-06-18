@@ -10,10 +10,11 @@ public class AgroPlantationAppApplication {
 		
 		/*
 		mvn package
-		docker build -t agro-plantation:1.53 .
+		docker build -t agro-plantation:1.54 .
 		docker pull mysql:8.1
 		docker run --name mysql-standalone -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=agroplantationapp -e MYSQL_USER=dev -e MYSQL_PASSWORD=dev -p 3306:3306 -d mysql:8.1
-		docker run -d -p 8080:8080 --name agro-plantation --link mysql-standalone:mysql 0df0e52e005e
+		docker run -d -p 8080:8080 --name agro-plantation --link mysql-standalone:mysql 47c4c1fc3b55
+
 
 
 		docker image ls
@@ -23,10 +24,10 @@ public class AgroPlantationAppApplication {
 		docker commit 36b6f8129087 mysql-standalone
 
 		docker tag nombre_de_la_imagen usuario_dockerhub/nombre_del_repositorio
-		docker tag agro-plantation:1.53 mgll3/agro-plantation-app:Api-v1.53
+		docker tag agro-plantation:1.54 mgll3/agro-plantation-app:Api-v1.54
 		docker tag mysql-standalone mgll3/agro-plantation-app:Mysql-v1.1
 
-		docker push mgll3/agro-plantation-app:Api-v1.53
+		docker push mgll3/agro-plantation-app:Api-v1.54
 		docker push mgll3/agro-plantation-app:Mysql-v1.1
 		*/
 
