@@ -5,7 +5,7 @@ import Viewer from "../../components/admin/Viewer";
 import NetworkError from "../../components/modals/NetworkError";
 import LoadingSmall from "../../components/modals/LoadingSmall";
 import PublicationsFilters from "../../components/admin/PublicationsFilters";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { getStoredToken } from "../../utils/getStoredToken";
 import { getPublicationsByRandom } from "../../interfaces/publicationsFilters/getPublicationsByRandom";
 import {
@@ -22,9 +22,11 @@ import { getPublicationsByAmmount } from "../../interfaces/publicationsFilters/g
 import useLoadingState from "../../hooks/useLoadingState";
 
 function AdminPublications() {
+	const location = useLocation();
+	const initFilter = location.state ? location.state : "random";
 	const [publicationsFiltered, setPublicationsFiltered] = useState<FormattedPublicationsInfoType[] | null>(null);
 	const [loadingState, changeLoadingState] = useLoadingState();
-	const [filter, setFilter] = useState<FilterType>("random");
+	const [filter, setFilter] = useState<FilterType>(initFilter);
 
 	let { id } = useParams(); // Usado para mostrar una págína u otra del filtro seleccionado. Si no hay id se le da el valor "1" por defecto.
 	if (id === undefined) id = "1";
@@ -184,9 +186,8 @@ function AdminPublications() {
 					setPublicationsFiltered(formattedPublications);
 					changeLoadingState("loaded");
 				})
-				.catch((error) => {
+				.catch(() => {
 					changeLoadingState("errorServer");
-					console.log(error);
 				});
 		}
 
@@ -197,9 +198,8 @@ function AdminPublications() {
 					setPublicationsFiltered(formattedPublications);
 					changeLoadingState("loaded");
 				})
-				.catch((error) => {
+				.catch(() => {
 					changeLoadingState("errorServer");
-					console.log(error);
 				});
 		}
 
@@ -210,9 +210,8 @@ function AdminPublications() {
 					setPublicationsFiltered(formattedPublications);
 					changeLoadingState("loaded");
 				})
-				.catch((error) => {
+				.catch(() => {
 					changeLoadingState("errorServer");
-					console.log(error);
 				});
 		}
 
@@ -223,9 +222,8 @@ function AdminPublications() {
 					setPublicationsFiltered(formattedPublications);
 					changeLoadingState("loaded");
 				})
-				.catch((error) => {
+				.catch(() => {
 					changeLoadingState("errorServer");
-					console.log(error);
 				});
 		}
 
@@ -237,8 +235,12 @@ function AdminPublications() {
 					changeLoadingState("loaded");
 				})
 				.catch((error) => {
-					changeLoadingState("errorServer");
-					console.log(error);
+					if (error.message === "404") {
+						setPublicationsFiltered(null);
+						changeLoadingState("loaded");
+					} else {
+						changeLoadingState("errorServer");
+					}
 				});
 		}
 
@@ -249,9 +251,8 @@ function AdminPublications() {
 					setPublicationsFiltered(formattedPublications);
 					changeLoadingState("loaded");
 				})
-				.catch((error) => {
+				.catch(() => {
 					changeLoadingState("errorServer");
-					console.log(error);
 				});
 		}
 
@@ -275,9 +276,9 @@ function AdminPublications() {
 					</div>
 				)}
 
-				{loadingState === "loaded" && publicationsFiltered !== null && (
+				{loadingState === "loaded" && (
 					<div className="mb-[5vh] flex justify-center w-[100%]">
-						<Viewer itemsList={publicationsFiltered} />
+						<Viewer itemsList={publicationsFiltered} filter={filter} />
 					</div>
 				)}
 

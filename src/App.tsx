@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
+import "leaflet/dist/leaflet.css";
 import WrongPath from "./pages/WrongPath";
 import ProtectedRouteUser from "./components/protectRoutes/ProtectedRouteUser";
 import Home from "./pages/Home";
@@ -17,11 +18,9 @@ import Management from "./pages/management/Management";
 import RegisterProducer from "./pages/producers/RegisterProducer";
 import TermsAndConditions from "./components/placeholders/TermsAndConditions";
 import PrivacyDeclaration from "./components/placeholders/PrivacyDeclaration";
-
-
+import AdminPendingPublicationDetails from "./pages/admin/AdminPendingPublicationDetails";
 
 function App() {
-
 	return (
 		<>
 			<Routes>
@@ -36,21 +35,20 @@ function App() {
 				<Route path="/management" element={<Management />} />
 				<Route path="/termsAndConditions" element={<TermsAndConditions />} />
 				<Route path="/privacy" element={<PrivacyDeclaration />} />
-
 				PROTECTED ROUTES
-				<Route element={<ProtectedRouteUser />} >
+				<Route element={<ProtectedRouteUser />}>
 					<Route path="/publications" element={<PublicationsPage />} />
 					<Route path="/publications/:id" element={<PublicationsPage />} />
 					<Route path="/producer/register" element={<RegisterProducer />} />
 				</Route>
-
-				<Route element={<ProtectedRouteAdmin />} >
+				<Route element={<ProtectedRouteAdmin />}>
 					<Route path="/admin/publications" element={<AdminPublications />} />
 					<Route path="/admin/publications/:id" element={<AdminPublications />} />
 					<Route path="/admin/users" element={<AdminUsers />} />
 					<Route path="/admin/forum" element={<AdminForum />} />
+					<Route path="/admin/publications/details/:id" element={<AdminPendingPublicationDetails />} />
 				</Route>
-			</Routes >
+			</Routes>
 		</>
 	);
 }

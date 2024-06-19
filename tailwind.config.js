@@ -28,6 +28,10 @@ export default {
 				semiTansparentBlack: "#000000cc",
 				darkText: "#484848",
 				darkGrayText: "#767676",
+				darkGrayText2: "#595959",
+				lightGrayText: "#9A9A9A",
+				ligthGrayText2: "#E0E2E6",
+				veryLightGrey: "#F9FAFB",
 				reddishBrown: "#C54600",
 				blueLink: "#6F86FF",
 				brightRed: "#FF0000"
@@ -46,6 +50,12 @@ export default {
 			},
 			dropShadow: {
 				custom: "0 3px 3px rgba(0, 0, 0, 0.55)"
+			},
+			boxShadow: {
+				"below-light": "2px 2px 5px rgba(0, 0, 0, 0.2)",
+				"below-dark": "0px 4px 4px rgba(0, 0, 0, 0.5)",
+				"around-light": "0px 0px 10px rgba(0, 0, 0, 0.2)",
+				"around-dark": "0px 0px 5px rgba(0, 0, 0, 0.5)"
 			}
 		}
 	},
