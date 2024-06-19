@@ -14,7 +14,7 @@ export type UserType = {
 // Tipos para las publicaciones en AdminPublications.
 //////////////////////////////////////////////////////////////
 
-type MainImageType = {
+export type MainImageType = {
 	id: string;
 	url: string;
 };
@@ -26,7 +26,7 @@ type AuthorizationStatusType = {
 	state: AuthorizationStateType;
 };
 
-type AuthorType = {
+export type AuthorType = {
 	address: string;
 	id: number;
 	lastname: string;

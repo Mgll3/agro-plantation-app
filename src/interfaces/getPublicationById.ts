@@ -1,9 +1,9 @@
 import axios from "axios";
-import { axiosConfig } from "../../lib/axios/axios.config";
+import { axiosConfig } from "../lib/axios/axios.config";
 
-export async function getPublicationsByPending(token: string, axiosControler: AbortController, page: string) {
+export async function getPublicationById(token: string, axiosControler: AbortController, id: number) {
 	try {
-		const response = await axiosConfig.get(`/v1/publication/pending/${page}`, {
+		const response = await axiosConfig.get(`/v1/publication/${id}`, {
 			signal: axiosControler.signal,
 			headers: {
 				"Content-Type": "application/json",
@@ -15,8 +15,8 @@ export async function getPublicationsByPending(token: string, axiosControler: Ab
 		return publicationsData;
 	} catch (error) {
 		if (axios.isAxiosError(error)) {
-			if (error.response?.status === 404) {
-				throw new Error("404");
+			if (error.response?.status === 401) {
+				throw new Error("401");
 			} else {
 				throw new Error(error.message);
 			}

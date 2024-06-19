@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { ButtonProps } from "./buttonTypes";
 
 function Button({ buttonColor, buttonFontSize, buttonWidth, buttonPaddingY, buttonFuncionality }: ButtonProps) {
-
 	let color: string = "";
 	let textColor: string = "";
 
@@ -47,13 +46,11 @@ function Button({ buttonColor, buttonFontSize, buttonWidth, buttonPaddingY, butt
 		);
 	} else if ("linkText" in buttonFuncionality) {
 		return (
-			<Link to={buttonFuncionality.linkUrl} className="">
+			<Link to={buttonFuncionality.linkUrl} className={`inline-block ${buttonWidth}`}>
 				<button
-					className={`${buttonWidth} ${buttonPaddingY} ${buttonFontSize} ${color} ${textColor} shadow-md rounded-lg font-sans cursor-pointer font-bold hover:bg-brandingDarkGreen  transition-all hover:text-[#F6C915]`}
+					className={`${buttonPaddingY} ${buttonFontSize} ${color} ${textColor} w-[100%] shadow-md rounded-lg font-sans cursor-pointer font-bold hover:bg-brandingDarkGreen transition-all hover:text-[#F6C915]`}
 				>
-
 					{buttonFuncionality.linkText}
-
 				</button>
 			</Link>
 		);

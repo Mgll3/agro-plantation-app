@@ -3,9 +3,10 @@ import { PublicationInfoType } from "./adminTypes";
 
 type PublicationCardProps = {
 	publicationInfo: PublicationInfoType;
+	filter: string;
 };
 
-function PublicationCard({ publicationInfo }: PublicationCardProps) {
+function PublicationCard({ publicationInfo, filter }: PublicationCardProps) {
 	let stateColor: string;
 
 	if (publicationInfo.authorizationStatus.state === "ACCEPTED") {
@@ -17,7 +18,7 @@ function PublicationCard({ publicationInfo }: PublicationCardProps) {
 	}
 
 	return (
-		<Link to="/" className="h-[100%]">
+		<Link to={`/admin/publications/details/${publicationInfo.id}`} state={filter} className="h-[100%]">
 			<div className="w-[100%] h-[100%] p-[6.38%] rounded-lg text-sans bg-brandingLightYellow">
 				<div className="flex justify-center items-center overflow-hidden w-[100%] h-[67.27%] bg-publicationCardsBg bg-contain rounded-lg border-[2px] border-brandingDarkGreen border-solid">
 					<img alt="Imagen principal" src={publicationInfo.mainImage?.url} className="object-cover" />
