@@ -7,7 +7,9 @@ export type LoadingStateType =
 	| "errorCredentials"
 	| "errorUserExists"
 	| "modalLoading"
-	| "modalPublicationApproved";
+	| "modalPublicationStateApproved"
+	| "modalPublicationStateRejected"
+	| "modalPublicationStatePending";
 export type UseLoadingStateReturnType = [
 	LoadingStateType,
 	(newState: LoadingStateType, waitingState?: LoadingStateType) => void

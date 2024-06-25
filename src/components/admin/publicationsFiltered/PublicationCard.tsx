@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
-import { PublicationInfoType } from "./adminTypes";
+import { Link, useParams } from "react-router-dom";
+import { PublicationInfoType } from "../adminTypes";
 
 type PublicationCardProps = {
 	publicationInfo: PublicationInfoType;
@@ -7,6 +7,15 @@ type PublicationCardProps = {
 };
 
 function PublicationCard({ publicationInfo, filter }: PublicationCardProps) {
+	const params = useParams();
+	const pagination = params.id;
+
+	//Este objeto contiene la información del filtro y nº de página actual, para que al volver desde AdminPublicationDetails se vuelvan a aplicar.
+	const actualPageInfo = {
+		filter,
+		pagination
+	};
+
 	let stateColor: string;
 
 	if (publicationInfo.authorizationStatus.state === "ACCEPTED") {
@@ -18,7 +27,7 @@ function PublicationCard({ publicationInfo, filter }: PublicationCardProps) {
 	}
 
 	return (
-		<Link to={`/admin/publications/details/${publicationInfo.id}`} state={filter} className="h-[100%]">
+		<Link to={`/admin/publications/details/${publicationInfo.id}`} state={actualPageInfo} className="h-[100%]">
 			<div className="w-[100%] h-[100%] p-[6.38%] rounded-lg text-sans bg-brandingLightYellow">
 				<div className="flex justify-center items-center overflow-hidden w-[100%] h-[67.27%] bg-publicationCardsBg bg-contain rounded-lg border-[2px] border-brandingDarkGreen border-solid">
 					<img alt="Imagen principal" src={publicationInfo.mainImage?.url} className="object-cover" />

@@ -12,9 +12,10 @@ import PublicationDetails from "../../components/admin/publicationDetails/Public
 import { getAddressCoordinates } from "../../interfaces/geolocation/getAddressCoordinates";
 import Button from "../../components/button/Button";
 import Loading from "../../components/modals/Loading";
-import PublicationApproved from "../../components/modals/PublicationApproved";
+import PublicationStateModified from "../../components/modals/PublicationStateModified";
 import { approvePublication } from "../../interfaces/approvePublication";
 import { rejectPublication } from "../../interfaces/rejectPublication";
+import { changePublicationToPending } from "../../interfaces/changePublicationToPending";
 
 export type CoordinatesType = {
 	lat: number;
@@ -23,14 +24,14 @@ export type CoordinatesType = {
 
 export type AddressCoordinatesType = CoordinatesType | null;
 
-function AdminPendingPublicationDetails() {
+function AdminPublicationDetails() {
 	const [loadingState, changeLoadingState] = useLoadingState();
 	const [publicationData, setPublicationData] = useState<PublicationInfoType | null>(null);
 
-	// Este state del <Link> que nos ha traído a esta página lo usamos para saber qué filtro de publicaciones se estaba usando cuando pulsamos en la publicación, para poder devolver al usuario a ese mismo filtro (random, usuario, fecha...)
+	// Este state del <Link> que nos ha traído a esta página lo usamos para saber qué filtro de publicaciones y qué página dentro de ese filtro se estaban usando cuando pulsamos en la publicación, para poder devolver al usuario a ese mismo filtro (random, usuario, fecha...) y página.
 	const location = useLocation();
-	const prevPageFilter: string = location.state;
-	console.log(prevPageFilter);
+	const prevPageFilter: string = location.state.filter;
+	const prevPagePagination: string = location.state.pagination;
 
 	//Usamos parte de la URL para saber qué publicación tenemos que cargar
 	const params = useParams();
@@ -43,17 +44,33 @@ function AdminPendingPublicationDetails() {
 	const redirectToPendingTimeout = useRef<number>(0);
 	const navigate = useNavigate();
 
-	//Usada después de cambiar el estado de una publicación, para volver a la pantalla de publications con el filtro "auth"
-	function redirectToPendingPublications() {
-		changeLoadingState("modalPublicationApproved", "modalPublicationApproved");
+	//Usada después de cambiar el estado de una publicación, para volver a la pantalla de publications con el filtro desde el que venimos
+	function redirectToPreviousPageWithModal(modalState: "approved" | "rejected" | "pending") {
+		switch (modalState) {
+			case "approved":
+				changeLoadingState("modalPublicationStateApproved", "modalLoading");
+				break;
+
+			case "rejected":
+				changeLoadingState("modalPublicationStateRejected", "modalLoading");
+				break;
+
+			case "pending":
+				changeLoadingState("modalPublicationStatePending", "modalLoading");
+				break;
+
+			default:
+				break;
+		}
+
 		redirectToPendingTimeout.current = window.setTimeout(() => {
-			navigate("/admin/publications", { replace: true, state: prevPageFilter });
-		}, 2500);
+			navigate(`/admin/publications/${prevPagePagination}`, { replace: true, state: prevPageFilter });
+		}, 4000);
 	}
 
 	//Usada para volver a la pantalla de publications con el filtro "auth" cuando no se ha cambiado el estado de la publicación
-	function goToPendingPublications() {
-		navigate("/admin/publications", { replace: true, state: prevPageFilter });
+	function redirectToPreviousPage() {
+		navigate(`/admin/publications/${prevPagePagination}`, { replace: true, state: prevPageFilter });
 	}
 
 	function approveRejectPublication(action: "approve" | "reject") {
@@ -66,7 +83,7 @@ function AdminPendingPublicationDetails() {
 			if (action === "approve") {
 				approvePublication(storedToken, publicationData?.id, axiosController2.current)
 					.then(() => {
-						redirectToPendingPublications();
+						redirectToPreviousPageWithModal("approved");
 					})
 					.catch(() => {
 						changeLoadingState("errorServer", "modalLoading");
@@ -74,12 +91,31 @@ function AdminPendingPublicationDetails() {
 			} else {
 				rejectPublication(storedToken, publicationData?.id, axiosController2.current)
 					.then(() => {
-						redirectToPendingPublications();
+						redirectToPreviousPageWithModal("rejected");
 					})
 					.catch(() => {
 						changeLoadingState("errorServer", "modalLoading");
 					});
 			}
+		} else {
+			changeLoadingState("errorCredentials");
+		}
+	}
+
+	function setPublicationToPending() {
+		changeLoadingState("modalLoading", "modalLoading");
+
+		axiosController2.current = new AbortController();
+		const storedToken = getStoredToken();
+
+		if (storedToken && publicationData) {
+			changePublicationToPending(storedToken, publicationData?.id, axiosController2.current)
+				.then(() => {
+					redirectToPreviousPageWithModal("pending");
+				})
+				.catch(() => {
+					changeLoadingState("errorServer", "modalLoading");
+				});
 		} else {
 			changeLoadingState("errorCredentials");
 		}
@@ -95,9 +131,14 @@ function AdminPendingPublicationDetails() {
 		handleClick: () => approveRejectPublication("reject")
 	};
 
-	const buttonBackToPendingFunctionality = {
+	const buttonChangeToPendingFunctionality = {
+		actionText: "Cambiar a Pendiente",
+		handleClick: setPublicationToPending
+	};
+
+	const buttonBackToPreviousPageFunctionality = {
 		actionText: "Volver",
-		handleClick: goToPendingPublications
+		handleClick: redirectToPreviousPage
 	};
 
 	function closeErrorModal() {
@@ -140,6 +181,10 @@ function AdminPendingPublicationDetails() {
 		} else if (!storedToken) {
 			changeLoadingState("errorCredentials");
 		}
+
+		return () => {
+			clearTimeout(redirectToPendingTimeout.current);
+		};
 	}, []);
 
 	return (
@@ -157,7 +202,9 @@ function AdminPendingPublicationDetails() {
 
 				{(loadingState === "loaded" ||
 					loadingState === "modalLoading" ||
-					loadingState === "modalPublicationApproved") &&
+					loadingState === "modalPublicationStateApproved" ||
+					loadingState === "modalPublicationStateRejected" ||
+					loadingState === "modalPublicationStatePending") &&
 					publicationData && (
 						<>
 							<div className="mb-[5rem] flex justify-center w-[100%]">
@@ -176,7 +223,7 @@ function AdminPendingPublicationDetails() {
 										/>
 
 										<Button
-											buttonColor="yellow"
+											buttonColor="red"
 											buttonFontSize="text-[20px]"
 											buttonPaddingY="py-[0.5rem] px-[5rem]"
 											buttonWidth="w-[30%]"
@@ -185,22 +232,32 @@ function AdminPendingPublicationDetails() {
 									</>
 								)}
 
+								{publicationData.authorizationStatus.state !== "PENDING" && (
+									<Button
+										buttonColor="yellow"
+										buttonFontSize="text-[20px]"
+										buttonPaddingY="py-[0.5rem] px-[5rem]"
+										buttonWidth="w-[30%]"
+										buttonFuncionality={buttonChangeToPendingFunctionality}
+									/>
+								)}
+
 								<Button
 									buttonColor="yellow"
 									buttonFontSize="text-[20px]"
 									buttonPaddingY="py-[0.5rem] px-[6.5rem]"
 									buttonWidth="w-[30%]"
-									buttonFuncionality={buttonBackToPendingFunctionality}
+									buttonFuncionality={buttonBackToPreviousPageFunctionality}
 								/>
 							</div>
 
 							{loadingState === "modalLoading" && <Loading />}
 
-							{loadingState === "modalPublicationApproved" && (
-								<div className="mt-24 text-brandingLightGreen">
-									<PublicationApproved />
-								</div>
-							)}
+							{loadingState === "modalPublicationStateApproved" && <PublicationStateModified newState="approved" />}
+
+							{loadingState === "modalPublicationStateRejected" && <PublicationStateModified newState="rejected" />}
+
+							{loadingState === "modalPublicationStatePending" && <PublicationStateModified newState="pending" />}
 						</>
 					)}
 
@@ -224,4 +281,4 @@ function AdminPendingPublicationDetails() {
 	);
 }
 
-export default AdminPendingPublicationDetails;
+export default AdminPublicationDetails;

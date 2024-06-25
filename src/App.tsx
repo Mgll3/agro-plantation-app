@@ -18,7 +18,7 @@ import Management from "./pages/management/Management";
 import RegisterProducer from "./pages/producers/RegisterProducer";
 import TermsAndConditions from "./components/placeholders/TermsAndConditions";
 import PrivacyDeclaration from "./components/placeholders/PrivacyDeclaration";
-import AdminPendingPublicationDetails from "./pages/admin/AdminPendingPublicationDetails";
+import AdminPublicationDetails from "./pages/admin/AdminPublicationDetails";
 
 function App() {
 	return (
@@ -46,7 +46,7 @@ function App() {
 					<Route path="/admin/publications/:id" element={<AdminPublications />} />
 					<Route path="/admin/users" element={<AdminUsers />} />
 					<Route path="/admin/forum" element={<AdminForum />} />
-					<Route path="/admin/publications/details/:id" element={<AdminPendingPublicationDetails />} />
+					<Route path="/admin/publications/details/:id" element={<AdminPublicationDetails />} />
 				</Route>
 			</Routes>
 		</>

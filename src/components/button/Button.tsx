@@ -2,23 +2,28 @@ import { Link } from "react-router-dom";
 import { ButtonProps } from "./buttonTypes";
 
 function Button({ buttonColor, buttonFontSize, buttonWidth, buttonPaddingY, buttonFuncionality }: ButtonProps) {
-	let color: string = "";
+	let bgColor: string = "";
 	let textColor: string = "";
 
 	switch (buttonColor) {
 		case "yellow":
-			color = "bg-brandingYellow";
+			bgColor = "bg-brandingYellow";
 			textColor = "text-black";
 			break;
 
 		case "green":
-			color = "bg-brandingDarkGreen";
+			bgColor = "bg-brandingDarkGreen";
 			textColor = "text-brandingYellow";
 			break;
 
 		case "grey":
-			color = "bg-gray-500";
+			bgColor = "bg-gray-500";
 			textColor = "text-brandingYellow";
+			break;
+
+		case "red":
+			bgColor = "bg-redError";
+			textColor = "text-black";
 			break;
 
 		default:
@@ -30,7 +35,7 @@ function Button({ buttonColor, buttonFontSize, buttonWidth, buttonPaddingY, butt
 			<button
 				type="button"
 				onClick={buttonFuncionality.handleClick}
-				className={`${buttonWidth} ${buttonPaddingY} ${buttonFontSize} ${color} ${textColor} shadow-md rounded-lg font-sans cursor-pointer font-bold tracking-widest hover:bg-brandingDarkGreen transition-all hover:text-[#F6C915]`}
+				className={`${buttonWidth} ${buttonPaddingY} ${buttonFontSize} ${bgColor} ${textColor} shadow-md rounded-lg font-sans cursor-pointer font-bold tracking-widest hover:bg-brandingDarkGreen transition-all hover:text-[#F6C915]`}
 			>
 				{buttonFuncionality.actionText}
 			</button>
@@ -39,7 +44,7 @@ function Button({ buttonColor, buttonFontSize, buttonWidth, buttonPaddingY, butt
 		return (
 			<button
 				type="submit"
-				className={`${buttonWidth} ${buttonPaddingY} ${buttonFontSize} ${color} ${textColor} shadow-md rounded-lg font-sans cursor-pointer font-bold hover:bg-opacity-80 transition-all`}
+				className={`${buttonWidth} ${buttonPaddingY} ${buttonFontSize} ${bgColor} ${textColor} shadow-md rounded-lg font-sans cursor-pointer font-bold hover:bg-opacity-80 transition-all`}
 			>
 				{buttonFuncionality.submitText}
 			</button>
@@ -48,7 +53,7 @@ function Button({ buttonColor, buttonFontSize, buttonWidth, buttonPaddingY, butt
 		return (
 			<Link to={buttonFuncionality.linkUrl} className={`inline-block ${buttonWidth}`}>
 				<button
-					className={`${buttonPaddingY} ${buttonFontSize} ${color} ${textColor} w-[100%] shadow-md rounded-lg font-sans cursor-pointer font-bold hover:bg-brandingDarkGreen transition-all hover:text-[#F6C915]`}
+					className={`${buttonPaddingY} ${buttonFontSize} ${bgColor} ${textColor} w-[100%] shadow-md rounded-lg font-sans cursor-pointer font-bold hover:bg-brandingDarkGreen transition-all hover:text-[#F6C915]`}
 				>
 					{buttonFuncionality.linkText}
 				</button>

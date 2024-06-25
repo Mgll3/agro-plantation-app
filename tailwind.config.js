@@ -8,7 +8,8 @@ export default {
 				plantInFont: "sans-serif",
 				sans: ["Sora", "sans-serif"],
 				niramit: ["Niramit", "sans-serif"],
-				montserrat: ["Montserrat", "sans-serif"]
+				montserrat: ["Montserrat", "sans-serif"],
+				lato: ["Lato", "sans-serif"]
 			},
 			fontSize: {
 				size1: "2.618rem",
@@ -34,7 +35,8 @@ export default {
 				veryLightGrey: "#F9FAFB",
 				reddishBrown: "#C54600",
 				blueLink: "#6F86FF",
-				brightRed: "#FF0000"
+				brightRed: "#FF0000",
+				redError: "#FD0303"
 			},
 			spacing: {
 				53: "13.25rem"

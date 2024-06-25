@@ -1,23 +1,23 @@
 type ButtonSubmitType = {
-	submitText: string
-}
+	submitText: string;
+};
 
 type ButtonActionType = {
-	actionText: string,
-	handleClick: () => void
-}
+	actionText: string;
+	handleClick: () => void;
+};
 
 type ButtonLinkType = {
-	linkText: string,
-	linkUrl: string,
-}
+	linkText: string;
+	linkUrl: string;
+};
 
-export type ButtonColorType = "yellow" | "green" | "grey";
+export type ButtonColorType = "yellow" | "green" | "grey" | "red";
 
 export type ButtonProps = {
-	buttonColor: ButtonColorType,
-	buttonFontSize: string,
-	buttonWidth: string,
-	buttonPaddingY: string,
+	buttonColor: ButtonColorType;
+	buttonFontSize: string;
+	buttonWidth: string;
+	buttonPaddingY: string;
 	buttonFuncionality: ButtonActionType | ButtonLinkType | ButtonSubmitType;
-}
+};

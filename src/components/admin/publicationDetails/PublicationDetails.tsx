@@ -1,9 +1,8 @@
 import { PublicationInfoType } from "../adminTypes";
-import ShareIcon from "@mui/icons-material/Share";
 import PublicationImagesViewer from "./PublicationImagesViewer";
 import GeoViewer from "../../geolocator/GeoViewer";
 import Button from "../../button/Button";
-import { AddressCoordinatesType } from "../../../pages/admin/AdminPendingPublicationDetails";
+import { AddressCoordinatesType } from "../../../pages/admin/AdminPublicationDetails";
 
 type PublicationDetailsProps = {
 	publicationInfo: PublicationInfoType;
@@ -24,12 +23,7 @@ export default function PublicationDetails({ publicationInfo, addressCoordinates
 
 	return (
 		<div className="flex flex-col items-start w-[100%] text-sans">
-			<div className="flex justify-between w-[100%] mb-[4rem] text-[40.70px]">
-				<h1 className="font-bold capitalize">{`Huerta "${publicationInfo.title}"`}</h1>
-				<div className="pr-[2rem] cursor-pointer" role="button">
-					<ShareIcon color="inherit" fontSize="inherit" />
-				</div>
-			</div>
+			<h1 className="mb-[4rem] text-[40.70px] font-bold capitalize">{`Huerta "${publicationInfo.title}"`}</h1>
 
 			<h2 className="opacity-50 w-auto p-[0.5rem] mb-[1.5rem] rounded-[8px] shadow-below-dark text-[16px]">
 				Fotos de la publicación
