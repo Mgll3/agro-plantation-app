@@ -28,9 +28,10 @@ function AdminPendingPublicationDetails() {
 	const [loadingState, changeLoadingState] = useLoadingState();
 	const [publicationData, setPublicationData] = useState<PublicationInfoType | null>(null);
 
-	// Este state del <Link> que nos ha traído a esta página lo usamos para saber qué filtro de publicaciones se estaba usando cuando pulsamos en la publicación, para poder devolver al usuario a ese mismo filtro (random, usuario, fecha...)
+	// Este state del <Link> que nos ha traído a esta página lo usamos para saber qué filtro de publicaciones y qué página dentro de ese filtro se estaban usando cuando pulsamos en la publicación, para poder devolver al usuario a ese mismo filtro (random, usuario, fecha...) y página.
 	const location = useLocation();
-	const prevPageFilter: string = location.state;
+	const prevPageFilter: string = location.state.filter;
+	const prevPagePagination: string = location.state.pagination;
 
 	//Usamos parte de la URL para saber qué publicación tenemos que cargar
 	const params = useParams();
@@ -43,7 +44,7 @@ function AdminPendingPublicationDetails() {
 	const redirectToPendingTimeout = useRef<number>(0);
 	const navigate = useNavigate();
 
-	//Usada después de cambiar el estado de una publicación, para volver a la pantalla de publications con el filtro "auth"
+	//Usada después de cambiar el estado de una publicación, para volver a la pantalla de publications con el filtro desde el que venimos
 	function redirectToPreviousPageWithModal(modalState: "approved" | "rejected" | "pending") {
 		switch (modalState) {
 			case "approved":
@@ -63,13 +64,13 @@ function AdminPendingPublicationDetails() {
 		}
 
 		redirectToPendingTimeout.current = window.setTimeout(() => {
-			navigate("/admin/publications", { replace: true, state: prevPageFilter });
+			navigate(`/admin/publications/${prevPagePagination}`, { replace: true, state: prevPageFilter });
 		}, 4000);
 	}
 
 	//Usada para volver a la pantalla de publications con el filtro "auth" cuando no se ha cambiado el estado de la publicación
 	function redirectToPreviousPage() {
-		navigate("/admin/publications", { replace: true, state: prevPageFilter });
+		navigate(`/admin/publications/${prevPagePagination}`, { replace: true, state: prevPageFilter });
 	}
 
 	function approveRejectPublication(action: "approve" | "reject") {
@@ -180,6 +181,10 @@ function AdminPendingPublicationDetails() {
 		} else if (!storedToken) {
 			changeLoadingState("errorCredentials");
 		}
+
+		return () => {
+			clearTimeout(redirectToPendingTimeout.current);
+		};
 	}, []);
 
 	return (

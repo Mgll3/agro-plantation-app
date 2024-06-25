@@ -8,7 +8,8 @@ export default {
 				plantInFont: "sans-serif",
 				sans: ["Sora", "sans-serif"],
 				niramit: ["Niramit", "sans-serif"],
-				montserrat: ["Montserrat", "sans-serif"]
+				montserrat: ["Montserrat", "sans-serif"],
+				lato: ["Lato", "sans-serif"]
 			},
 			fontSize: {
 				size1: "2.618rem",
