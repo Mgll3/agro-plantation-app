@@ -4,7 +4,7 @@ import L from "leaflet";
 // Fijar el icono para que Leaflet lo pueda mostrar correctamente
 import icon from "leaflet/dist/images/marker-icon.png";
 import iconShadow from "leaflet/dist/images/marker-shadow.png";
-import { CoordinatesType } from "../../pages/admin/AdminPendingPublicationDetails";
+import { CoordinatesType } from "../../pages/admin/AdminPublicationDetails";
 
 const DefaultIcon = L.icon({
 	iconUrl: icon,

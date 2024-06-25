@@ -2,7 +2,7 @@ import { PublicationInfoType } from "../adminTypes";
 import PublicationImagesViewer from "./PublicationImagesViewer";
 import GeoViewer from "../../geolocator/GeoViewer";
 import Button from "../../button/Button";
-import { AddressCoordinatesType } from "../../../pages/admin/AdminPendingPublicationDetails";
+import { AddressCoordinatesType } from "../../../pages/admin/AdminPublicationDetails";
 
 type PublicationDetailsProps = {
 	publicationInfo: PublicationInfoType;

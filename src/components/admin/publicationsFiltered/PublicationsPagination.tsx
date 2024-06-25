@@ -21,14 +21,6 @@ function PublicationsPagination({ actualPage, pagesLeft, pagesForBlock }: Public
 	const isTherePrevBlock: boolean = minPage > 1 ? true : false;
 	const isThereNextBlock: boolean = actualPage + (pagesLeft - 1) > maxPage ? true : false;
 
-	console.log(actualPage);
-	console.log(pagesLeft);
-	console.log(pagesForBlock);
-	console.log(minPage);
-	console.log(maxPage);
-	console.log(isTherePrevBlock);
-	console.log(isThereNextBlock);
-
 	function renderPagination() {
 		const paginationElements: React.ReactNode[] = [];
 

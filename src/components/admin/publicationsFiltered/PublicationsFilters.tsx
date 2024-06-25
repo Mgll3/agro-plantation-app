@@ -2,7 +2,7 @@ import { FilterType } from "../adminTypes";
 
 type PublicationsFiltersProps = {
 	filter: FilterType;
-	setFilter: React.Dispatch<React.SetStateAction<FilterType>>;
+	setFilter: (newFilter: FilterType) => void;
 };
 
 function PublicationsFilters({ filter, setFilter }: PublicationsFiltersProps) {

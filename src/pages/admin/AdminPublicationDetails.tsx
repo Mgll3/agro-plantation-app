@@ -24,7 +24,7 @@ export type CoordinatesType = {
 
 export type AddressCoordinatesType = CoordinatesType | null;
 
-function AdminPendingPublicationDetails() {
+function AdminPublicationDetails() {
 	const [loadingState, changeLoadingState] = useLoadingState();
 	const [publicationData, setPublicationData] = useState<PublicationInfoType | null>(null);
 
@@ -281,4 +281,4 @@ function AdminPendingPublicationDetails() {
 	);
 }
 
-export default AdminPendingPublicationDetails;
+export default AdminPublicationDetails;
