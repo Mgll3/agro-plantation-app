@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { PublicationInfoType } from "./adminTypes";
+import { PublicationInfoType } from "../adminTypes";
 
 type PublicationCardProps = {
 	publicationInfo: PublicationInfoType;

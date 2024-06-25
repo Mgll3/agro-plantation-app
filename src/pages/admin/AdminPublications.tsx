@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
-import Viewer from "../../components/admin/Viewer";
+import Viewer from "../../components/admin/publicationsFiltered/Viewer";
 import NetworkError from "../../components/modals/NetworkError";
 import LoadingSmall from "../../components/modals/LoadingSmall";
-import PublicationsFilters from "../../components/admin/PublicationsFilters";
+import PublicationsFilters from "../../components/admin/publicationsFiltered/PublicationsFilters";
 import { useLocation, useParams } from "react-router-dom";
 import { getStoredToken } from "../../utils/getStoredToken";
 import { getPublicationsByRandom } from "../../interfaces/publicationsFilters/getPublicationsByRandom";

@@ -1,5 +1,5 @@
 import PublicationCard from "./PublicationCard";
-import { FormattedPublicationsInfoType } from "./adminTypes";
+import { FormattedPublicationsInfoType } from "../adminTypes";
 
 type ViewerPropsType = {
 	itemsList: FormattedPublicationsInfoType[] | null;
