@@ -31,7 +31,6 @@ function AdminPendingPublicationDetails() {
 	// Este state del <Link> que nos ha traído a esta página lo usamos para saber qué filtro de publicaciones se estaba usando cuando pulsamos en la publicación, para poder devolver al usuario a ese mismo filtro (random, usuario, fecha...)
 	const location = useLocation();
 	const prevPageFilter: string = location.state;
-	console.log(prevPageFilter);
 
 	//Usamos parte de la URL para saber qué publicación tenemos que cargar
 	const params = useParams();
@@ -45,8 +44,24 @@ function AdminPendingPublicationDetails() {
 	const navigate = useNavigate();
 
 	//Usada después de cambiar el estado de una publicación, para volver a la pantalla de publications con el filtro "auth"
-	function redirectToPreviousPageWithModal() {
-		changeLoadingState("modalPublicationApproved", "modalLoading");
+	function redirectToPreviousPageWithModal(modalState: "approved" | "rejected" | "pending") {
+		switch (modalState) {
+			case "approved":
+				changeLoadingState("modalPublicationStateApproved", "modalLoading");
+				break;
+
+			case "rejected":
+				changeLoadingState("modalPublicationStateRejected", "modalLoading");
+				break;
+
+			case "pending":
+				changeLoadingState("modalPublicationStatePending", "modalLoading");
+				break;
+
+			default:
+				break;
+		}
+
 		redirectToPendingTimeout.current = window.setTimeout(() => {
 			navigate("/admin/publications", { replace: true, state: prevPageFilter });
 		}, 4000);
@@ -67,7 +82,7 @@ function AdminPendingPublicationDetails() {
 			if (action === "approve") {
 				approvePublication(storedToken, publicationData?.id, axiosController2.current)
 					.then(() => {
-						redirectToPreviousPageWithModal();
+						redirectToPreviousPageWithModal("approved");
 					})
 					.catch(() => {
 						changeLoadingState("errorServer", "modalLoading");
@@ -75,7 +90,7 @@ function AdminPendingPublicationDetails() {
 			} else {
 				rejectPublication(storedToken, publicationData?.id, axiosController2.current)
 					.then(() => {
-						redirectToPreviousPageWithModal();
+						redirectToPreviousPageWithModal("rejected");
 					})
 					.catch(() => {
 						changeLoadingState("errorServer", "modalLoading");
@@ -95,7 +110,7 @@ function AdminPendingPublicationDetails() {
 		if (storedToken && publicationData) {
 			changePublicationToPending(storedToken, publicationData?.id, axiosController2.current)
 				.then(() => {
-					redirectToPreviousPageWithModal();
+					redirectToPreviousPageWithModal("pending");
 				})
 				.catch(() => {
 					changeLoadingState("errorServer", "modalLoading");
@@ -120,7 +135,7 @@ function AdminPendingPublicationDetails() {
 		handleClick: setPublicationToPending
 	};
 
-	const buttonBackToPendingFunctionality = {
+	const buttonBackToPreviousPageFunctionality = {
 		actionText: "Volver",
 		handleClick: redirectToPreviousPage
 	};
@@ -182,7 +197,9 @@ function AdminPendingPublicationDetails() {
 
 				{(loadingState === "loaded" ||
 					loadingState === "modalLoading" ||
-					loadingState === "modalPublicationApproved") &&
+					loadingState === "modalPublicationStateApproved" ||
+					loadingState === "modalPublicationStateRejected" ||
+					loadingState === "modalPublicationStatePending") &&
 					publicationData && (
 						<>
 							<div className="mb-[5rem] flex justify-center w-[100%]">
@@ -225,17 +242,17 @@ function AdminPendingPublicationDetails() {
 									buttonFontSize="text-[20px]"
 									buttonPaddingY="py-[0.5rem] px-[6.5rem]"
 									buttonWidth="w-[30%]"
-									buttonFuncionality={buttonBackToPendingFunctionality}
+									buttonFuncionality={buttonBackToPreviousPageFunctionality}
 								/>
 							</div>
 
 							{loadingState === "modalLoading" && <Loading />}
 
-							{loadingState === "modalPublicationApproved" && (
-								<div className="mt-24 text-brandingLightGreen">
-									<PublicationStateModified newState="approved" />
-								</div>
-							)}
+							{loadingState === "modalPublicationStateApproved" && <PublicationStateModified newState="approved" />}
+
+							{loadingState === "modalPublicationStateRejected" && <PublicationStateModified newState="rejected" />}
+
+							{loadingState === "modalPublicationStatePending" && <PublicationStateModified newState="pending" />}
 						</>
 					)}
 
