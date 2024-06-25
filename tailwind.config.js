@@ -34,7 +34,8 @@ export default {
 				veryLightGrey: "#F9FAFB",
 				reddishBrown: "#C54600",
 				blueLink: "#6F86FF",
-				brightRed: "#FF0000"
+				brightRed: "#FF0000",
+				redError: "#FD0303"
 			},
 			spacing: {
 				53: "13.25rem"

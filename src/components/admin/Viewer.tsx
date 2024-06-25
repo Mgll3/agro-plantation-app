@@ -30,7 +30,7 @@ function Viewer({ itemsList, filter }: ViewerPropsType) {
 
 			{itemsList === null && (
 				<h2 className="w-[100%] mt-[140px] mb-[22px] text-center text-sans text-lightGrayText font-semibold text-[24px]">
-					No ha publicaciones disponibles
+					No hay publicaciones disponibles
 				</h2>
 			)}
 		</div>

@@ -12,9 +12,10 @@ import PublicationDetails from "../../components/admin/publicationDetails/Public
 import { getAddressCoordinates } from "../../interfaces/geolocation/getAddressCoordinates";
 import Button from "../../components/button/Button";
 import Loading from "../../components/modals/Loading";
-import PublicationApproved from "../../components/modals/PublicationApproved";
+import PublicationStateModified from "../../components/modals/PublicationStateModified";
 import { approvePublication } from "../../interfaces/approvePublication";
 import { rejectPublication } from "../../interfaces/rejectPublication";
+import { changePublicationToPending } from "../../interfaces/changePublicationToPending";
 
 export type CoordinatesType = {
 	lat: number;
@@ -44,15 +45,15 @@ function AdminPendingPublicationDetails() {
 	const navigate = useNavigate();
 
 	//Usada después de cambiar el estado de una publicación, para volver a la pantalla de publications con el filtro "auth"
-	function redirectToPendingPublications() {
-		changeLoadingState("modalPublicationApproved", "modalPublicationApproved");
+	function redirectToPreviousPageWithModal() {
+		changeLoadingState("modalPublicationApproved", "modalLoading");
 		redirectToPendingTimeout.current = window.setTimeout(() => {
 			navigate("/admin/publications", { replace: true, state: prevPageFilter });
-		}, 2500);
+		}, 4000);
 	}
 
 	//Usada para volver a la pantalla de publications con el filtro "auth" cuando no se ha cambiado el estado de la publicación
-	function goToPendingPublications() {
+	function redirectToPreviousPage() {
 		navigate("/admin/publications", { replace: true, state: prevPageFilter });
 	}
 
@@ -66,7 +67,7 @@ function AdminPendingPublicationDetails() {
 			if (action === "approve") {
 				approvePublication(storedToken, publicationData?.id, axiosController2.current)
 					.then(() => {
-						redirectToPendingPublications();
+						redirectToPreviousPageWithModal();
 					})
 					.catch(() => {
 						changeLoadingState("errorServer", "modalLoading");
@@ -74,12 +75,31 @@ function AdminPendingPublicationDetails() {
 			} else {
 				rejectPublication(storedToken, publicationData?.id, axiosController2.current)
 					.then(() => {
-						redirectToPendingPublications();
+						redirectToPreviousPageWithModal();
 					})
 					.catch(() => {
 						changeLoadingState("errorServer", "modalLoading");
 					});
 			}
+		} else {
+			changeLoadingState("errorCredentials");
+		}
+	}
+
+	function setPublicationToPending() {
+		changeLoadingState("modalLoading", "modalLoading");
+
+		axiosController2.current = new AbortController();
+		const storedToken = getStoredToken();
+
+		if (storedToken && publicationData) {
+			changePublicationToPending(storedToken, publicationData?.id, axiosController2.current)
+				.then(() => {
+					redirectToPreviousPageWithModal();
+				})
+				.catch(() => {
+					changeLoadingState("errorServer", "modalLoading");
+				});
 		} else {
 			changeLoadingState("errorCredentials");
 		}
@@ -95,9 +115,14 @@ function AdminPendingPublicationDetails() {
 		handleClick: () => approveRejectPublication("reject")
 	};
 
+	const buttonChangeToPendingFunctionality = {
+		actionText: "Cambiar a Pendiente",
+		handleClick: setPublicationToPending
+	};
+
 	const buttonBackToPendingFunctionality = {
 		actionText: "Volver",
-		handleClick: goToPendingPublications
+		handleClick: redirectToPreviousPage
 	};
 
 	function closeErrorModal() {
@@ -176,13 +201,23 @@ function AdminPendingPublicationDetails() {
 										/>
 
 										<Button
-											buttonColor="yellow"
+											buttonColor="red"
 											buttonFontSize="text-[20px]"
 											buttonPaddingY="py-[0.5rem] px-[5rem]"
 											buttonWidth="w-[30%]"
 											buttonFuncionality={buttonRejectFunctionality}
 										/>
 									</>
+								)}
+
+								{publicationData.authorizationStatus.state !== "PENDING" && (
+									<Button
+										buttonColor="yellow"
+										buttonFontSize="text-[20px]"
+										buttonPaddingY="py-[0.5rem] px-[5rem]"
+										buttonWidth="w-[30%]"
+										buttonFuncionality={buttonChangeToPendingFunctionality}
+									/>
 								)}
 
 								<Button
@@ -198,7 +233,7 @@ function AdminPendingPublicationDetails() {
 
 							{loadingState === "modalPublicationApproved" && (
 								<div className="mt-24 text-brandingLightGreen">
-									<PublicationApproved />
+									<PublicationStateModified newState="approved" />
 								</div>
 							)}
 						</>
