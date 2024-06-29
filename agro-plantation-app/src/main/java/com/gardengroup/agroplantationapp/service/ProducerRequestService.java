@@ -77,19 +77,20 @@ public class ProducerRequestService implements IProducerRequestService{
     }
 
     @Transactional
-    public void sendProducerRequest(String userEmail) {
-        // Obtener el usuario por su correo electrónico
+    public ProducerRequest sendProducerRequest(String userEmail, ProducerRequest producerRequest ) {
+        
         User user = userRepository.findByEmail(userEmail)
-            .orElseThrow(() -> new DataAccessException("Publication not found") {
+            .orElseThrow(() -> new DataAccessException("User not found") {
         });
-        // Crear la solicitud del productor
-        ProducerRequest producerRequest = new ProducerRequest();
+        
         producerRequest.setUser(user);
         producerRequest.setDate(new Date());
+        //Guardo el estado de la solicitud en "PENDING"
         producerRequest.setStaterequest(new StateRequest(1L));
+        
+        return producerRequestRepository.save(producerRequest);
 
-        // Guardar la solicitud del productor
-        producerRequestRepository.save(producerRequest);
+        
     }
 
 }

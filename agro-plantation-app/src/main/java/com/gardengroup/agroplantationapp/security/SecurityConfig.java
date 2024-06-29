@@ -80,7 +80,7 @@ public class SecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)  // Configura la política de creación de sesiones como STATELESS (sin sesiones)
                 .and()
                 .authorizeHttpRequests()
-                .requestMatchers("/auth/**", "/v1/user/**", "/publication/publications/top", "/v1/publication/**", "/swagger-ui/**", "/swagger-ui.html/**", "/v3/api-docs/**").permitAll() // Permite acceso sin autenticación a las páginas de inicio, registro y login
+                .requestMatchers("/auth/**", "/v1/user/**", "/publication/publications/top", "/v1/publication/**", "/v1/producerRequest/**", "/swagger-ui/**", "/swagger-ui.html/**", "/v3/api-docs/**").permitAll() // Permite acceso sin autenticación a las páginas de inicio, registro y login
                 .requestMatchers("/configuracion").hasAuthority("ADMINISTRATOR")
                 .anyRequest().authenticated()  // Requiere autenticación para cualquier otra solicitud
                 .and()

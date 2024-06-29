@@ -4,6 +4,7 @@ import com.gardengroup.agroplantationapp.model.entity.ProducerRequest;
 import com.gardengroup.agroplantationapp.service.IProducerRequestService;
 import com.gardengroup.agroplantationapp.service.SecurityService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -22,10 +23,11 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @CrossOrigin(origins = "*")
+@RequestMapping("/v1/producerRequest")
 public class ProducerRequestController {
     
     @Autowired
-    private IProducerRequestService ProducerRequestService;
+    private IProducerRequestService producerRequestService;
     @Autowired
     private SecurityService securityService;
 
@@ -38,10 +40,10 @@ public class ProducerRequestController {
             @ApiResponse(responseCode = "200", description = "Éxito al obtener las solicitudes de productores pendientes"),
             @ApiResponse(responseCode = "500", description = "Error en el servidor al obtener las solicitudes de productores pendientes")
     })
-    @GetMapping("/producerRequests")
+    @GetMapping("/pending")
     public ResponseEntity<?> getProducerRequests() {
         try {
-            List<ProducerRequest> producerRequests = ProducerRequestService.getPendingProducerRequests();
+            List<ProducerRequest> producerRequests = producerRequestService.getPendingProducerRequests();
             return ResponseEntity.ok(producerRequests);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error en el servidor" );
@@ -58,10 +60,10 @@ public class ProducerRequestController {
             @ApiResponse(responseCode = "400", description = "Error al aprobar la solicitud del productor")
     })
     //@PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/approveProducerRequest/{producerRequestId}")
+    @PostMapping("/approve/{producerRequestId}")
     public ResponseEntity<?> approveProducerRequest(@PathVariable Long producerRequestId) {
         try {
-            ProducerRequestService.approve(producerRequestId);
+            producerRequestService.approve(producerRequestId);
             return ResponseEntity.ok("La solicitud del productor ha sido aprobada con éxito.");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error al aprobar la solicitud del productor" );
@@ -77,31 +79,34 @@ public class ProducerRequestController {
             @ApiResponse(responseCode = "200", description = "Éxito al rechazar la solicitud del productor"),
             @ApiResponse(responseCode = "400", description = "Error al rechazar la solicitud del productor")
     })
-    @PostMapping("/rejectProducerRequest/{producerRequestId}")
+    @PostMapping("/reject/{producerRequestId}")
     public ResponseEntity<?> rejectProducerRequest(@PathVariable Long producerRequestId) {
         try {
-            ProducerRequestService.reject(producerRequestId);
+            producerRequestService.reject(producerRequestId);
             return ResponseEntity.ok("La solicitud del productor ha sido rechazada con éxito.");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error al rechazar la solicitud del productor");
         }
     }
 
-    @Operation(summary = "Solicitar ser productor", description = "Endpoint para solicitar ser productor", tags = {"Producer"})
+    @Operation(summary = "Solicitar ser productor", description = "Endpoint para solicitar ser productor", tags = {"ProducerRequest"})
+    @Parameter(name = "ProducerRequest",
+            description = "Solicitud de productor")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Solicitud creada con éxito",
                     content = @Content(schema = @Schema(implementation = String.class))),
             @ApiResponse(responseCode = "400", description = "Solicitud incorrecta - Error al crear la solicitud",
                     content = @Content(schema = @Schema(implementation = String.class)))
     })
-    @PostMapping("/requestProducer")
-    public ResponseEntity<?> requestToBecomeProducer(HttpServletRequest request) {
+    @PostMapping("/send")
+    public ResponseEntity<?> requestToBecomeProducer(HttpServletRequest request, @RequestBody ProducerRequest producerRequest) {
         try {
             String email = securityService.getEmail(request);
-            ProducerRequestService.sendProducerRequest(email);
-            return ResponseEntity.ok("Solicitud para convertirse en productor creada con éxito.");
+            ProducerRequest requestSaved = producerRequestService.sendProducerRequest(email, producerRequest);
+            return new ResponseEntity<>(requestSaved, HttpStatus.CREATED);
+            
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error al crear la solicitud: ");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
 
