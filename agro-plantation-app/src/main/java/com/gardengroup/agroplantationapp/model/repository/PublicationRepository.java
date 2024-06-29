@@ -37,13 +37,12 @@ public interface PublicationRepository  extends JpaRepository<Publication,Long>{
     @Query(value = "SELECT * FROM publication p ORDER BY RAND() DESC LIMIT :pagination, :pagTop", nativeQuery = true)
     List<Publication> publicationsByAleatory(@Param("pagination") int pagination, @Param("pagTop") int pagTop);
     
-
     @Query(value = "SELECT * FROM publication p WHERE authorization_status_id = 1 ORDER BY publication_date DESC LIMIT :pagination, :pagTop", nativeQuery = true)
     List<Publication> publicationsByPending(@Param("pagination") int pagination, @Param("pagTop") int pagTop);
     @Query(value = "SELECT COUNT(*) FROM publication WHERE authorization_status_id = 1", nativeQuery = true)
     int countPublicationsByPending();
 
-    @Query(value = "SELECT * FROM publication ORDER BY COUNT(*) OVER (PARTITION BY author_id) DESC, author_id; LIMIT :pagination, :pagTop", nativeQuery = true)
+    @Query(value = "SELECT * FROM publication ORDER BY COUNT(*) OVER (PARTITION BY author_id) DESC, author_id LIMIT :pagination, :pagTop", nativeQuery = true)
     List<Publication> publicationsByQuantity(@Param("pagination") int pagination, @Param("pagTop") int pagTop);
 
 }

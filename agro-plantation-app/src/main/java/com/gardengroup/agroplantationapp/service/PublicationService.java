@@ -110,15 +110,12 @@ public class PublicationService implements IPublicationService {
                     publication.setVisibility(true);
                     return publicationRepository.save(publication);
                 } else {
-                    System.out.println("La publicación no está autorizada");
                     return null;
                 }
             } else {
-                System.out.println("No es el autor de la publicación");
                 return null;
             }
         } else {
-            System.out.println("Publicación no encontrada");
             return null;
         }
     }
@@ -186,6 +183,7 @@ public class PublicationService implements IPublicationService {
             cloudinaryService.delete(publicationSaved.getMainImage().getId());
         }
         if (publicationSaved.getImages() != null) {
+            
             for (Image image : publicationSaved.getImages()) {
                 cloudinaryService.delete(image.getId());
             }
@@ -304,9 +302,13 @@ public class PublicationService implements IPublicationService {
             throw new IllegalArgumentException("Invalid page number");
         }
 
-        // Busco si hay 3 paginaciones más adelante de la actual
-        pag = (pag-1) * 46;
-        int pagTop= pag + 46;
+        // Busco si hay 3 paginaciones más adelante de la actual (1 Paginacion = 15)
+        if (pag == 1) {
+            pag = 0;
+        } else {
+            pag = (pag-1) * 15;
+        }
+        int pagTop = pag * 15 + 31;
 
         List<Publication> publications = publicationRepository.publicationsBylike(pag, pagTop);
         //Calculo número posible de paginaciones que hay en base de datos
@@ -335,9 +337,13 @@ public class PublicationService implements IPublicationService {
             throw new IllegalArgumentException("Invalid page number");
         }
 
-        // Busco si hay 3 (46/15) paginaciones más adelante de la actual
-        pag = (pag-1) * 46;
-        int pagTop= pag + 46;
+        // Busco si hay 3 paginaciones más adelante de la actual (1 Paginacion = 15)
+        if (pag == 1) {
+            pag = 0;
+        } else {
+            pag = (pag-1) * 15;
+        }
+        int pagTop = pag * 15 + 31;
 
         List<Publication> publications = publicationRepository.publicationsByUser(pag, pagTop);
         //Calculo número posible de paginaciones que hay en base de datos
@@ -366,9 +372,13 @@ public class PublicationService implements IPublicationService {
             throw new IllegalArgumentException("Invalid page number");
         }
 
-        // Busco si hay 3 paginaciones más adelante de la actual
-        pag = (pag-1) * 46;
-        int pagTop= pag + 46;
+        // Busco si hay 3 paginaciones más adelante de la actual (1 Paginacion = 15)
+        if (pag == 1) {
+            pag = 0;
+        } else {
+            pag = (pag-1) * 15;
+        }
+        int pagTop = pag * 15 + 31;
 
         List<Publication> publications = publicationRepository.publicationsByDate(pag, pagTop);
         //Calculo número posible de paginaciones que hay en base de datos
@@ -397,14 +407,18 @@ public class PublicationService implements IPublicationService {
             throw new IllegalArgumentException("Invalid page number");
         }
 
-        // Busco si hay 3 paginaciones más adelante de la actual
-        pag = (pag-1) * 46;
-        int pagTop= pag + 46;
+        // Busco si hay 3 paginaciones más adelante de la actual (1 Paginacion = 15)
+        if (pag == 1) {
+            pag = 0;
+        } else {
+            pag = (pag-1) * 15;
+        }
+        int pagTop = pag * 15 + 31;
 
         List<Publication> publications = publicationRepository.publicationsByAleatory(pag, pagTop);
         //Calculo número posible de paginaciones que hay en base de datos
         Double paginationDouble = (double) publications.size() / 15;
-        int pagination = (int) Math.ceil(paginationDouble);
+        int pagination = (int) (Math.ceil(paginationDouble)-1);
 
         if (!publications.isEmpty()) {
             if (publications.size() > 14) {
@@ -428,8 +442,13 @@ public class PublicationService implements IPublicationService {
             throw new IllegalArgumentException("Invalid page number");
         }
 
-        pag = (pag-1) * 15;
-        int pagTop= pag + 15;
+        // Busco si hay 3 paginaciones más adelante de la actual (1 Paginacion = 15)
+        if (pag == 1) {
+            pag = 0;
+        } else {
+            pag = (pag-1) * 15;
+        }
+        int pagTop = pag * 15 + 31;
 
         final List<Publication> publications = publicationRepository.publicationsByPending(pag, pagTop);
         //Calculo número posible de paginaciones que hay en base de datos
@@ -453,9 +472,13 @@ public class PublicationService implements IPublicationService {
             throw new IllegalArgumentException("Invalid page number");
         }
 
-        // Busco si hay 3 paginaciones más adelante de la actual
-        pag = (pag-1) * 46;
-        int pagTop= pag + 46;
+        // Busco si hay 3 paginaciones más adelante de la actual (1 Paginacion = 15)
+        if (pag == 1) {
+            pag = 0;
+        } else {
+            pag = (pag-1) * 15;
+        }
+        int pagTop = pag * 15 + 31;
         
         List<Publication> publications = publicationRepository.publicationsByQuantity(pag, pagTop);
         //Calculo número posible de paginaciones que hay en base de datos

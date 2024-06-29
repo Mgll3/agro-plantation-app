@@ -14,9 +14,5 @@ public interface IUserService {
     public Boolean existsEmail(String email);
     public AthAnswerDTO authenticate(LoginDTO LoginDTO);
     public AthAnswerDTO getUserSession(HttpServletRequest request);
-
-    
-
-
     
 }
