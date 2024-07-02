@@ -1,23 +1,29 @@
 package com.gardengroup.agroplantationapp.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import com.gardengroup.agroplantationapp.model.dto.publication.PublicationFilterDTO;
-import com.gardengroup.agroplantationapp.model.dto.publication.PublicationSaveDTO;
-import com.gardengroup.agroplantationapp.model.dto.publication.PublicationUpdDTO;
+import com.gardengroup.agroplantationapp.model.dto.publication.*;
 import com.gardengroup.agroplantationapp.model.entity.Publication;
 import com.gardengroup.agroplantationapp.model.entity.Vote;
+
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.gardengroup.agroplantationapp.service.IPublicationService;
 import com.gardengroup.agroplantationapp.service.SecurityService;
+import com.gardengroup.agroplantationapp.utils.Constants;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -39,10 +45,12 @@ public class PublicationController {
     @Parameter(name = "Publication", description = "Objeto Publication que se guardará en base de datos")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Publicación guardada exitosamente"),
-            @ApiResponse(responseCode = "501", description = "Error al guardar la publicación")
+            @ApiResponse(responseCode = "501", description = "Error al guardar la publicación"),
+            @ApiResponse(responseCode = "401", description = "Email no autorizado para crear publicaciones"),
+            @ApiResponse(responseCode = "400", description = "Error de validación en los campos de la publicación")
     })
     @PostMapping("/save")
-    public ResponseEntity<?> savePublication(@RequestBody PublicationSaveDTO publication, HttpServletRequest request) {
+    public ResponseEntity<?> savePublication(@Valid @RequestBody PublicationSaveDTO publication, HttpServletRequest request) {
         try {
             String email = securityService.getEmail(request);
             //Validar si existe correo
@@ -61,6 +69,11 @@ public class PublicationController {
     @Parameter(name = "mainImage", description = "Imagen principal que se va a guardar")
     @Parameter(name = "images", description = "Lista de imagenes secundarias que se van a guardar")
     @Parameter(name = "publicationId", description = "Id de la publicación a la que se le van a asociar las imagenes")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Imagenes guardadas exitosamente"),
+        @ApiResponse(responseCode = "501", description = "Error al guardar las imagenes"),
+        @ApiResponse(responseCode = "404", description = "Publicación no encontrada")
+    })
     @PostMapping("/saveImages")
     public ResponseEntity<?> saveImages(
             @RequestParam("images") List<MultipartFile> files,
@@ -73,98 +86,10 @@ public class PublicationController {
             return new ResponseEntity<>(HttpStatus.OK);
 
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-        }
-    }
-
-    @Operation(summary = "Obtener una publicación",
-            description = "End Point para obtener una publicación por su id", tags = {"Publication"})
-    @Parameter(name = "id", description = "Id de la publicación que se desea obtener")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Publicación obtenida exitosamente"),
-            @ApiResponse(responseCode = "404", description = "Publicación no encontrada"),
-            @ApiResponse(responseCode = "500", description = "Error al obtener la publicación")
-    })
-    @GetMapping("/{id}")
-    public ResponseEntity<?> getPublication(@PathVariable Long id) {
-        try {
-            Publication publication = publicationService.getPublication(id);
-            return new ResponseEntity<>(publication, HttpStatus.OK);
-        } catch (Exception e) {
-            if (e.getMessage().equals("Publication not found")) {
+            if (e.getMessage().equals(Constants.P_NOT_FOUND)) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             } else {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-            }
-        }
-    }
-
-
-    @Operation(summary = "Obtener publicaciones por email",
-            description = "End Point para obtener todas las publicaciones asociadas a un email de usuario",
-            tags = {"Publication"})
-    @Parameter(name = "email", description = "Email del usuario que se desea obtener sus publicaciones")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Publicaciones obtenidas exitosamente"),
-            @ApiResponse(responseCode = "404", description = "Publicaciones no encontradas"),
-            @ApiResponse(responseCode = "500", description = "Error al obtener las publicaciones")
-    })
-    @GetMapping("/email/{email}")
-    public ResponseEntity<?> PublicationsByEmail(@PathVariable String email) {
-        try {
-            List<Publication> publication = publicationService.publicationsByEmail(email);
-            return new ResponseEntity<>(publication, HttpStatus.OK);
-        } catch (Exception e) {
-            if (e.getMessage().equals("Publications not found")) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-            } else {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-            }
-        }
-    }
-
-
-    @Operation(summary = "Actualizar Publicación existente",
-            description = "Modificar los datos de una publicación ya existente", tags = "Publication")
-    @Parameter(name = "Publication",
-            description = "Publicación que va ser actualizada, unicamente se actualizan los campos title, plantation y visibility")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Publicación actualizada exitosamente"),
-            @ApiResponse(responseCode = "404", description = "Publicación no encontrada"),
-            @ApiResponse(responseCode = "304", description = "Error al actualizar la publicación, No se modificó ningún campo")
-    })
-    @PutMapping()
-    public ResponseEntity<?> updatePublication(@RequestBody PublicationUpdDTO publicationUpdDTO) {
-        try {
-            publicationService.updatePublication(publicationUpdDTO);
-            return ResponseEntity.status(HttpStatus.OK).build();
-        } catch (Exception e) {
-            if (e.getMessage().equals("Publication not found")) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-            } else {
-                return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
-            }
-        }
-    }
-
-    @Operation(summary = "Eliminar Publicacion",
-            description = "Eliminar todos los datos de una Publicación por su Id", tags = "Publication")
-    @Parameter(name = "id", description = "Id de la publicación que se desea eliminar")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "204", description = "Publicación eliminada exitosamente"),
-            @ApiResponse(responseCode = "404", description = "Publicación no encontrada"),
-            @ApiResponse(responseCode = "501", description = "Error interno al eliminar la publicación")
-    })
-    @DeleteMapping("{id}")
-    public ResponseEntity<?> deletePublication(@PathVariable Long id) {
-        try {
-            publicationService.deletePublication(id);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } catch (Exception e) {
-            if (e.getMessage().equals("Publication not found")) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-            } else {
-                return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
+                return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
             }
         }
     }
@@ -195,19 +120,121 @@ public class PublicationController {
         }
     }
 
+    @Operation(summary = "Obtener una publicación",
+            description = "End Point para obtener una publicación por su id", tags = {"Publication"})
+    @Parameter(name = "id", description = "Id de la publicación que se desea obtener")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Publicación obtenida exitosamente"),
+            @ApiResponse(responseCode = "404", description = "Publicación no encontrada"),
+            @ApiResponse(responseCode = "500", description = "Error al obtener la publicación")
+    })
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getPublication(@PathVariable Long id) {
+        try {
+            Publication publication = publicationService.getPublication(id);
+            return new ResponseEntity<>(publication, HttpStatus.OK);
+        } catch (Exception e) {
+            if (e.getMessage().equals(Constants.P_NOT_FOUND)) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            }
+        }
+    }
+
+
+    @Operation(summary = "Obtener publicaciones por email",
+            description = "End Point para obtener todas las publicaciones asociadas a un email de usuario",
+            tags = {"Publication"})
+    @Parameter(name = "email", description = "Email del usuario que se desea obtener sus publicaciones")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Publicaciones obtenidas exitosamente"),
+            @ApiResponse(responseCode = "404", description = "Publicaciones no encontradas"),
+            @ApiResponse(responseCode = "500", description = "Error al obtener las publicaciones")
+    })
+    @GetMapping("/email/{email}")
+    public ResponseEntity<?> PublicationsByEmail(@PathVariable String email) {
+        try {
+            List<Publication> publication = publicationService.publicationsByEmail(email);
+            return new ResponseEntity<>(publication, HttpStatus.OK);
+        } catch (Exception e) {
+            if (e.getMessage().equals(Constants.PS_NOT_FOUND)) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            }
+        }
+    }
+
+
+    @Operation(summary = "Actualizar Publicación existente",
+            description = "Modificar los datos de una publicación ya existente", tags = "Publication")
+    @Parameter(name = "Publication",
+            description = "Publicación que va ser actualizada, unicamente se actualizan los campos title, plantation y visibility")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Publicación actualizada exitosamente"),
+            @ApiResponse(responseCode = "404", description = "Publicación no encontrada"),
+            @ApiResponse(responseCode = "304", description = "Error al actualizar la publicación, No se modificó ningún campo")
+    })
+    @PutMapping()
+    public ResponseEntity<?> updatePublication(@RequestBody PublicationUpdDTO publicationUpdDTO) {
+        try {
+            publicationService.updatePublication(publicationUpdDTO);
+            return ResponseEntity.status(HttpStatus.OK).build();
+        } catch (Exception e) {
+            if (e.getMessage().equals(Constants.P_NOT_FOUND)) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
+            }
+        }
+    }
+
+    @Operation(summary = "Eliminar Publicacion",
+            description = "Eliminar todos los datos de una Publicación por su Id", tags = "Publication")
+    @Parameter(name = "id", description = "Id de la publicación que se desea eliminar")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Publicación eliminada exitosamente"),
+            @ApiResponse(responseCode = "404", description = "Publicación no encontrada"),
+            @ApiResponse(responseCode = "501", description = "Error interno al eliminar la publicación")
+    })
+    @DeleteMapping("{id}")
+    public ResponseEntity<?> deletePublication(@PathVariable Long id) {
+        try {
+            publicationService.deletePublication(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            if (e.getMessage().equals(Constants.P_NOT_FOUND)) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
+            }
+        }
+    }
+
+    
+
     @Operation(summary = "Obtener las publicaciones principales",
             description = "Endpoint para obtener las publicaciones más populares o mejor valoradas", tags = {"Publication"})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Éxito al obtener las publicaciones principales",
                     content = @Content(schema = @Schema(implementation = List.class))),
-            @ApiResponse(responseCode = "204", description = "No hay publicaciones para mostrar"),
-            @ApiResponse(responseCode = "501", description = "Error al procesar la solicitud",
+            @ApiResponse(responseCode = "404", description = "No hay publicaciones para mostrar"),
+            @ApiResponse(responseCode = "500", description = "Error al procesar la solicitud",
                     content = @Content(schema = @Schema(implementation = String.class)))
     })
     @GetMapping("publications/top")
     public ResponseEntity<List<Publication>> getTopPublications() {
-        List<Publication> topPublications = publicationService.getTopPublications();
-        return new ResponseEntity<>(topPublications, HttpStatus.OK);
+        try {
+            List<Publication> topPublications = publicationService.getTopPublications();
+            return new ResponseEntity<>(topPublications, HttpStatus.OK);
+        } catch (Exception e) {
+            if (e.getMessage().equals(Constants.PS_NOT_FOUND)) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            }
+        }
     }
 
     @Operation(summary = "Alternar voto para una publicación",
@@ -215,8 +242,8 @@ public class PublicationController {
             tags = "Publication")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Voto alternado exitosamente"),
-            @ApiResponse(responseCode = "400", description = "Solicitud incorrecta"),
-            @ApiResponse(responseCode = "500", description = "Error interno del servidor")
+            @ApiResponse(responseCode = "404", description = "Publicación no encontrada"),
+            @ApiResponse(responseCode = "501", description = "Error, no se pudo alternar el voto")
     })
     @PostMapping("/toggleVote/{publicationId}")
     public ResponseEntity<Vote> toggleVote(@PathVariable Long publicationId, HttpServletRequest request) {
@@ -226,7 +253,11 @@ public class PublicationController {
             return ResponseEntity.status(HttpStatus.CREATED).body(vote);
 
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            if (e.getMessage().equals(Constants.P_NOT_FOUND)) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
+            }
         }
     }
 
@@ -249,7 +280,7 @@ public class PublicationController {
         description = "Endpoint para aprobar una solicitud de publicación", tags = "Publication")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Éxito al aprobar la publicación"),
-            @ApiResponse(responseCode = "400", description = "Error al procesar la solicitud")
+            @ApiResponse(responseCode = "501", description = "Error al procesar la solicitud")
     })
     @PutMapping("/approvePublication/{publicationId}")
     public ResponseEntity<String> approvePublication(@PathVariable Long publicationId) {
@@ -257,8 +288,11 @@ public class PublicationController {
             publicationService.approvePublication(publicationId);
             return ResponseEntity.ok("La solicitud de publicación ha sido aprobada con éxito.");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error al aprobar la solicitud de publicación");
+            if (e.getMessage().equals(Constants.P_NOT_FOUND)) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
+            }
         }
     }
 
@@ -266,16 +300,15 @@ public class PublicationController {
         description = "Endpoint para rechazar una solicitud de publicación", tags = "Publication")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Éxito al rechazar la publicación"),
-            @ApiResponse(responseCode = "400", description = "Error al procesar la solicitud")
+            @ApiResponse(responseCode = "501", description = "Error al procesar la solicitud")
     })
     @PutMapping("/rejectPublication/{publicationId}")
     public ResponseEntity<String> rejectPublication(@PathVariable Long publicationId) {
         try {
             publicationService.rejectPublication(publicationId);
-            return ResponseEntity.ok("La solicitud de publicación ha sido rechazada con éxito.");
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error al rechazar la solicitud de publicación");
+            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
         }
     }
 
@@ -294,7 +327,7 @@ public class PublicationController {
             PublicationFilterDTO publications = publicationService.getPublicationsByLike(pag);
             return new ResponseEntity<>(publications, HttpStatus.OK);
         } catch (Exception e) {
-            if (e.getMessage().equals("Publications not found")) {
+            if (e.getMessage().equals(Constants.PS_NOT_FOUND)) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             } else {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -317,7 +350,7 @@ public class PublicationController {
             PublicationFilterDTO publications = publicationService.getPublicationsByUser(pag);
             return new ResponseEntity<>(publications, HttpStatus.OK);
         } catch (Exception e) {
-            if (e.getMessage().equals("Publications not found")) {
+            if (e.getMessage().equals(Constants.PS_NOT_FOUND)) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             } else {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -340,7 +373,7 @@ public class PublicationController {
             PublicationFilterDTO publications = publicationService.getPublicationsByDate(pag);
             return new ResponseEntity<>(publications, HttpStatus.OK);
         } catch (Exception e) {
-            if (e.getMessage().equals("Publications not found")) {
+            if (e.getMessage().equals(Constants.PS_NOT_FOUND)) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             } else {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -363,7 +396,7 @@ public class PublicationController {
             PublicationFilterDTO publications = publicationService.getPublicationsByAleatory(pag);
             return new ResponseEntity<>(publications, HttpStatus.OK);
         } catch (Exception e) {
-            if (e.getMessage().equals("Publications not found")) {
+            if (e.getMessage().equals(Constants.PS_NOT_FOUND)) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             } else {
                 System.out.println(e.getMessage());
@@ -389,7 +422,7 @@ public class PublicationController {
 
             return new ResponseEntity<>(publications, HttpStatus.OK);
         } catch (Exception e) {
-            if (e.getMessage().equals("Publications not found")) {
+            if (e.getMessage().equals(Constants.PS_NOT_FOUND)) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             } else {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -412,7 +445,7 @@ public class PublicationController {
             PublicationFilterDTO publications = publicationService.getPublicationsByQuantity(pag);
             return new ResponseEntity<>(publications, HttpStatus.OK);
         } catch (Exception e) {
-            if (e.getMessage().equals("Publications not found")) {
+            if (e.getMessage().equals(Constants.PS_NOT_FOUND)) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             } else {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -427,12 +460,30 @@ public class PublicationController {
             publicationService.changeToPending(publicationId);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
-            if (e.getMessage().equals("Publication not found")) {
+            if (e.getMessage().equals(Constants.P_NOT_FOUND)) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             } else {
                 return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
             }
         }
+    }
+
+
+
+
+
+    
+
+    //Manejo de errores de validación
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new HashMap<>();
+        ex.getBindingResult().getAllErrors().forEach(error -> {
+            String fieldName = ((FieldError) error).getField();
+            String errorMessage = error.getDefaultMessage();
+            errors.put(fieldName, errorMessage);
+        });
+        return ResponseEntity.badRequest().body(errors);
     }
 
 

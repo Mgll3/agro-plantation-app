@@ -8,6 +8,8 @@ import com.gardengroup.agroplantationapp.model.repository.PublicationRepository;
 import com.gardengroup.agroplantationapp.model.repository.StateRequestRepository;
 import com.gardengroup.agroplantationapp.model.repository.UserRepository;
 import com.gardengroup.agroplantationapp.model.repository.VoteRepository;
+import com.gardengroup.agroplantationapp.utils.Constants;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -62,7 +64,7 @@ public class PublicationService implements IPublicationService {
         String folder = "publications";
 
         //Busqueda de publicacion que vamos a modificar
-        Publication publication = publicationRepository.findById(publicationId).orElseThrow(() -> new DataAccessException("Publication not found") {
+        Publication publication = publicationRepository.findById(publicationId).orElseThrow(() -> new DataAccessException(Constants.P_NOT_FOUND) {
         });
 
         //Revisar si hay imagen principal y luego guardarla
@@ -122,7 +124,13 @@ public class PublicationService implements IPublicationService {
 
     
     public List<Publication> getTopPublications() {
+        
         List<Publication> allPublications = publicationRepository.findTop6ByOrderByScoreDesc();
+
+        if (allPublications.isEmpty()) {
+            throw new DataAccessException(Constants.PS_NOT_FOUND) {
+            };
+        }
         // Limitar la cantidad de publicaciones devueltas a exactamente 6
         return allPublications.stream().limit(6).collect(Collectors.toList());
     }
@@ -135,7 +143,7 @@ public class PublicationService implements IPublicationService {
         if (publication.isPresent()) {
             return publication.get();
         } else {
-            throw new DataAccessException("Publication not found") {
+            throw new DataAccessException(Constants.P_NOT_FOUND) {
             };
         }
 
@@ -149,7 +157,7 @@ public class PublicationService implements IPublicationService {
         if (publications.size() > 0) {
             return publications;
         } else {
-            throw new DataAccessException("Publications not found") {
+            throw new DataAccessException(Constants.PS_NOT_FOUND) {
             };
         }
 
@@ -162,7 +170,7 @@ public class PublicationService implements IPublicationService {
         Publication publication = new Publication(publicationUpdDTO);
 
         if (!publicationRepository.existsById(publication.getId())) {
-            throw new DataAccessException("Publication not found") {
+            throw new DataAccessException(Constants.P_NOT_FOUND) {
             };
         } else {
             Publication PublicationSaved = publicationRepository.findById(publication.getId()).get();
@@ -175,7 +183,7 @@ public class PublicationService implements IPublicationService {
     @Transactional
     public void deletePublication(Long id) {
         Publication publicationSaved = publicationRepository.findById(id)
-            .orElseThrow(() -> new DataAccessException("Publication not found") {
+            .orElseThrow(() -> new DataAccessException(Constants.P_NOT_FOUND) {
         });
 
         //Comprobaciones, existencia de las imagenes
@@ -219,7 +227,7 @@ public class PublicationService implements IPublicationService {
                 throw new IllegalStateException("La publicación con ID " + publicationId + " no está en estado PENDIENTE");
             }
         } else {
-            throw new IllegalArgumentException("Publicación con ID " + publicationId + " no encontrada.");
+            throw new IllegalArgumentException(Constants.P_NOT_FOUND);
         }
     }
 
@@ -253,7 +261,7 @@ public class PublicationService implements IPublicationService {
     public Vote toggleVote(Long publicationId, String userEmail) {
 
         Publication publication = publicationRepository.findById(publicationId)
-                .orElseThrow(() -> new IllegalArgumentException("Publicación no encontrada"));
+                .orElseThrow(() -> new IllegalArgumentException(Constants.P_NOT_FOUND));
 
         // Verificar si el usuario ya ha votado en esta publicación
         Vote existingVote = voteRepository.findByUserEmailAndPublicationId(userEmail, publicationId);
@@ -299,7 +307,7 @@ public class PublicationService implements IPublicationService {
     public PublicationFilterDTO getPublicationsByLike(int pag){
         
         if (pag < 1) {
-            throw new IllegalArgumentException("Invalid page number");
+            throw new IllegalArgumentException(Constants.PAGE_INVALID);
         }
 
         // Busco si hay 3 paginaciones más adelante de la actual (1 Paginacion = 15)
@@ -325,7 +333,7 @@ public class PublicationService implements IPublicationService {
             return publicationsDTO;
 
         } else {
-            throw new DataAccessException("Publications not found") {
+            throw new DataAccessException(Constants.PS_NOT_FOUND) {
             };
         }
     }
@@ -334,7 +342,7 @@ public class PublicationService implements IPublicationService {
     public PublicationFilterDTO getPublicationsByUser(int pag){
 
         if (pag < 1) {
-            throw new IllegalArgumentException("Invalid page number");
+            throw new IllegalArgumentException(Constants.PAGE_INVALID);
         }
 
         // Busco si hay 3 paginaciones más adelante de la actual (1 Paginacion = 15)
@@ -360,7 +368,7 @@ public class PublicationService implements IPublicationService {
             return publicationsDTO;
 
         } else {
-            throw new DataAccessException("Publications not found") {
+            throw new DataAccessException(Constants.PS_NOT_FOUND) {
             };
         }
     }
@@ -369,7 +377,7 @@ public class PublicationService implements IPublicationService {
     public PublicationFilterDTO getPublicationsByDate(int pag){
         
         if (pag < 1) {
-            throw new IllegalArgumentException("Invalid page number");
+            throw new IllegalArgumentException(Constants.PAGE_INVALID);
         }
 
         // Busco si hay 3 paginaciones más adelante de la actual (1 Paginacion = 15)
@@ -395,7 +403,7 @@ public class PublicationService implements IPublicationService {
             return publicationsDTO;
 
         } else {
-            throw new DataAccessException("Publications not found") {
+            throw new DataAccessException(Constants.PS_NOT_FOUND) {
             };
         }
     }
@@ -404,7 +412,7 @@ public class PublicationService implements IPublicationService {
     public PublicationFilterDTO getPublicationsByAleatory(int pag){
         
         if (pag < 1) {
-            throw new IllegalArgumentException("Invalid page number");
+            throw new IllegalArgumentException(Constants.PAGE_INVALID);
         }
 
         // Busco si hay 3 paginaciones más adelante de la actual (1 Paginacion = 15)
@@ -430,7 +438,7 @@ public class PublicationService implements IPublicationService {
             return publicationsDTO;
 
         } else {
-            throw new DataAccessException("Publications not found") {
+            throw new DataAccessException(Constants.PS_NOT_FOUND) {
             };
         }
     }
@@ -439,7 +447,7 @@ public class PublicationService implements IPublicationService {
     public PublicationFilterDTO getPublicationsByPending(int pag){
         
         if (pag < 1) {
-            throw new IllegalArgumentException("Invalid page number");
+            throw new IllegalArgumentException(Constants.PAGE_INVALID);
         }
 
         // Busco si hay 3 paginaciones más adelante de la actual (1 Paginacion = 15)
@@ -459,7 +467,7 @@ public class PublicationService implements IPublicationService {
             PublicationFilterDTO publicationsDTO = new PublicationFilterDTO(publications, pagination);
             return publicationsDTO;
         } else {
-            throw new DataAccessException("Publications not found") {
+            throw new DataAccessException(Constants.PS_NOT_FOUND) {
             };
         }
 
@@ -469,7 +477,7 @@ public class PublicationService implements IPublicationService {
     public PublicationFilterDTO getPublicationsByQuantity(int pag){
         
         if (pag < 1) {
-            throw new IllegalArgumentException("Invalid page number");
+            throw new IllegalArgumentException(Constants.PAGE_INVALID);
         }
 
         // Busco si hay 3 paginaciones más adelante de la actual (1 Paginacion = 15)
@@ -495,7 +503,7 @@ public class PublicationService implements IPublicationService {
             return publicationsDTO;
 
         } else {
-            throw new DataAccessException("Publications not found") {
+            throw new DataAccessException(Constants.PS_NOT_FOUND) {
             };
         }
     }
@@ -503,7 +511,7 @@ public class PublicationService implements IPublicationService {
     //Temporal
     @Transactional
     public void changeToPending(Long publicationId) {
-        Publication publication = publicationRepository.findById(publicationId).orElseThrow(() -> new DataAccessException("Publication not found") {
+        Publication publication = publicationRepository.findById(publicationId).orElseThrow(() -> new DataAccessException(Constants.P_NOT_FOUND) {
         });
         publication.setAuthorizationStatus(new StateRequest(1L));
         

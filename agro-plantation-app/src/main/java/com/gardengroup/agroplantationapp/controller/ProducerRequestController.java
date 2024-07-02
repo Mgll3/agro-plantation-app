@@ -57,16 +57,16 @@ public class ProducerRequestController {
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Éxito al aprobar la solicitud del productor"),
-            @ApiResponse(responseCode = "400", description = "Error al aprobar la solicitud del productor")
+            @ApiResponse(responseCode = "501", description = "Error al aprobar la solicitud del productor")
     })
     //@PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/approve/{producerRequestId}")
     public ResponseEntity<?> approveProducerRequest(@PathVariable Long producerRequestId) {
         try {
             producerRequestService.approve(producerRequestId);
-            return ResponseEntity.ok("La solicitud del productor ha sido aprobada con éxito.");
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error al aprobar la solicitud del productor" );
+            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
         }
     }
 
@@ -77,15 +77,15 @@ public class ProducerRequestController {
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Éxito al rechazar la solicitud del productor"),
-            @ApiResponse(responseCode = "400", description = "Error al rechazar la solicitud del productor")
+            @ApiResponse(responseCode = "501", description = "Error al rechazar la solicitud del productor")
     })
     @PostMapping("/reject/{producerRequestId}")
     public ResponseEntity<?> rejectProducerRequest(@PathVariable Long producerRequestId) {
         try {
             producerRequestService.reject(producerRequestId);
-            return ResponseEntity.ok("La solicitud del productor ha sido rechazada con éxito.");
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error al rechazar la solicitud del productor");
+            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
         }
     }
 
@@ -93,9 +93,9 @@ public class ProducerRequestController {
     @Parameter(name = "ProducerRequest",
             description = "Solicitud de productor")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Solicitud creada con éxito",
+            @ApiResponse(responseCode = "201", description = "Solicitud creada con éxito",
                     content = @Content(schema = @Schema(implementation = String.class))),
-            @ApiResponse(responseCode = "400", description = "Solicitud incorrecta - Error al crear la solicitud",
+            @ApiResponse(responseCode = "501", description = "Solicitud incorrecta - Error al crear la solicitud",
                     content = @Content(schema = @Schema(implementation = String.class)))
     })
     @PostMapping("/send")
@@ -106,7 +106,7 @@ public class ProducerRequestController {
             return new ResponseEntity<>(requestSaved, HttpStatus.CREATED);
             
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
         }
     }
 
