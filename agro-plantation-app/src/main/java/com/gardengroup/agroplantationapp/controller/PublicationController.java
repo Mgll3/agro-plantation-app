@@ -314,7 +314,7 @@ public class PublicationController {
 
     @Operation(summary = "Obtener publicaciones por Likes",
             description = "End Point para obtener las publicaciónes en orden por más likes, además devuelve como maximo 3, el número de paginaciónes siguientes posibles",
-            tags = {"Publication"})
+            tags = {"Publication Filters"})
     @Parameter(name = "pag", description = "Numero de Paginación")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Publicaciones obtenidas exitosamente"),
@@ -337,7 +337,7 @@ public class PublicationController {
 
     @Operation(summary = "Obtener publicaciones por Usuario",
             description = "End Point para obtener las publicaciónes en orden alfabetico por usuario, además devuelve como maximo 3, el número de paginaciónes siguientes posibles",
-            tags = {"Publication"})
+            tags = {"Publication Filters"})
     @Parameter(name = "pag", description = "Numero de Paginación")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Publicaciones obtenidas exitosamente"),
@@ -360,7 +360,7 @@ public class PublicationController {
 
     @Operation(summary = "Obtener publicaciones aleatoriamente",
             description = "End Point para obtener las publicaciónes en orden más recientes por fecha, además devuelve como maximo 3, el número de paginaciónes siguientes posibles",
-            tags = {"Publication"})
+            tags = {"Publication Filters"})
     @Parameter(name = "pag", description = "Numero de Paginación")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Publicaciones obtenidas exitosamente"),
@@ -383,7 +383,7 @@ public class PublicationController {
 
     @Operation(summary = "Obtener publicaciones aleatoriamente",
             description = "End Point para obtener las publicaciónes de forma aleatoria, además devuelve como maximo 3, el número de paginaciónes siguientes posibles",
-            tags = {"Publication"})
+            tags = {"Publication Filters"})
     @Parameter(name = "pag", description = "Numero de Paginación")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Publicaciones obtenidas exitosamente"),
@@ -407,7 +407,7 @@ public class PublicationController {
 
     @Operation(summary = "Obtener publicaciones pendientes",
             description = "End Point para obtener las publicaciónes pendientes de aprobar para ser publicas, además devuelve como maximo 3, el número de paginaciónes siguientes posibles",
-            tags = {"Publication"})
+            tags = {"Publication Filters"})
     @Parameter(name = "pag", description = "Numero de Paginación")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Publicaciones obtenidas exitosamente"),
@@ -432,7 +432,7 @@ public class PublicationController {
 
     @Operation(summary = "Obtener publicaciones por Usuario y cantidad",
             description = "End Point para obtener las publicaciónes en orden por usuario con cantidad mayor a menor, además devuelve como maximo 3, el número de paginaciónes siguientes posibles",
-            tags = {"Publication"})
+            tags = {"Publication Filters"})
     @Parameter(name = "pag", description = "Numero de Paginación")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Publicaciones obtenidas exitosamente"),

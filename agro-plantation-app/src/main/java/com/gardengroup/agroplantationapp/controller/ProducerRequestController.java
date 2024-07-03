@@ -1,5 +1,6 @@
 package com.gardengroup.agroplantationapp.controller;
 
+import com.gardengroup.agroplantationapp.model.dto.request.ProducerRequestSaveDTO;
 import com.gardengroup.agroplantationapp.model.entity.ProducerRequest;
 import com.gardengroup.agroplantationapp.service.IProducerRequestService;
 import com.gardengroup.agroplantationapp.service.SecurityService;
@@ -99,7 +100,7 @@ public class ProducerRequestController {
                     content = @Content(schema = @Schema(implementation = String.class)))
     })
     @PostMapping("/send")
-    public ResponseEntity<?> requestToBecomeProducer(HttpServletRequest request, @RequestBody ProducerRequest producerRequest) {
+    public ResponseEntity<?> requestToBecomeProducer(HttpServletRequest request, @RequestBody ProducerRequestSaveDTO producerRequest) {
         try {
             String email = securityService.getEmail(request);
             ProducerRequest requestSaved = producerRequestService.sendProducerRequest(email, producerRequest);

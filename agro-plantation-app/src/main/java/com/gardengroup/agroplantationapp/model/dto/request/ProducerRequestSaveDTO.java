@@ -1,4 +1,4 @@
-package com.gardengroup.agroplantationapp.model.dto;
+package com.gardengroup.agroplantationapp.model.dto.request;
 
 import lombok.Data;
 
@@ -10,4 +10,5 @@ public class ProducerRequestSaveDTO {
     private String gardenSize;
     private String gardenAddress;
     private String description;
+    
 }

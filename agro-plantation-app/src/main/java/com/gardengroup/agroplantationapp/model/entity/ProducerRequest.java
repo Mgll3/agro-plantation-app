@@ -8,6 +8,8 @@ import lombok.ToString;
 
 import java.util.Date;
 
+import com.gardengroup.agroplantationapp.model.dto.request.ProducerRequestSaveDTO;
+
 @Entity
 @Table(name ="producer_request")
 @Getter
@@ -35,4 +37,11 @@ public class ProducerRequest {
     @ManyToOne
     @JoinColumn(nullable = false)
     private StateRequest staterequest;
+
+    public ProducerRequest(ProducerRequestSaveDTO producerRequestDTO) {
+        this.gardenName = producerRequestDTO.getGardenName();
+        this.gardenSize = producerRequestDTO.getGardenSize();
+        this.gardenAddress = producerRequestDTO.getGardenAddress();
+        this.description = producerRequestDTO.getDescription();
+    }
 }

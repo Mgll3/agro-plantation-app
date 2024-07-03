@@ -43,7 +43,7 @@ public class PublicationService implements IPublicationService {
         Publication publication = new Publication(publicationDTO);
 
         User user = userRepository.findByEmail(email)
-            .orElseThrow(() -> new DataAccessException("User not found") {
+            .orElseThrow(() -> new DataAccessException(Constants.U_NOT_FOUND) {
         });
 
         publication.setAuthor(user);
@@ -64,7 +64,8 @@ public class PublicationService implements IPublicationService {
         String folder = "publications";
 
         //Busqueda de publicacion que vamos a modificar
-        Publication publication = publicationRepository.findById(publicationId).orElseThrow(() -> new DataAccessException(Constants.P_NOT_FOUND) {
+        Publication publication = publicationRepository.findById(publicationId)
+            .orElseThrow(() -> new DataAccessException(Constants.P_NOT_FOUND) {
         });
 
         //Revisar si hay imagen principal y luego guardarla
@@ -96,8 +97,9 @@ public class PublicationService implements IPublicationService {
 
     @Transactional
     public Publication updateVisibility(Long publicationId, String email) {
+        
         User user = userRepository.findByEmail(email)
-            .orElseThrow(() -> new DataAccessException("User not found") {
+            .orElseThrow(() -> new DataAccessException(Constants.U_NOT_FOUND) {
         });
 
         Optional<Publication> optionalPublication = publicationRepository.findById(publicationId);
@@ -223,6 +225,7 @@ public class PublicationService implements IPublicationService {
                 publication.setAuthorizationStatus(acceptedState);
 
                 publicationRepository.save(publication);
+
             } else {
                 throw new IllegalStateException("La publicación con ID " + publicationId + " no está en estado PENDIENTE");
             }
@@ -280,7 +283,7 @@ public class PublicationService implements IPublicationService {
         } else {
             // El usuario no ha votado antes, se crea un nuevo voto
             User user = userRepository.findByEmail(userEmail)
-                .orElseThrow(() -> new DataAccessException("User not found") {
+                .orElseThrow(() -> new DataAccessException(Constants.U_NOT_FOUND) {
             });
 
             Vote newVote = new Vote();
@@ -310,23 +313,25 @@ public class PublicationService implements IPublicationService {
             throw new IllegalArgumentException(Constants.PAGE_INVALID);
         }
 
+        int pagTop = pag * 15 + 31;
+
         // Busco si hay 3 paginaciones más adelante de la actual (1 Paginacion = 15)
         if (pag == 1) {
             pag = 0;
         } else {
             pag = (pag-1) * 15;
         }
-        int pagTop = pag * 15 + 31;
+        
 
         List<Publication> publications = publicationRepository.publicationsBylike(pag, pagTop);
         //Calculo número posible de paginaciones que hay en base de datos
         Double paginationDouble = (double) publications.size() / 15;
-        int pagination = (int) Math.ceil(paginationDouble);
+        int pagination = (int) (Math.ceil(paginationDouble)-1);
 
         if (!publications.isEmpty()) {
-            if (publications.size() > 14) {
+            if (publications.size() > 15) {
                 //Envio solo 15 publicaciones que necesita el front
-                publications = publications.subList(0, 14);
+                publications = publications.subList(0, 15);
             } 
 
             PublicationFilterDTO publicationsDTO = new PublicationFilterDTO(publications, pagination);
@@ -345,23 +350,25 @@ public class PublicationService implements IPublicationService {
             throw new IllegalArgumentException(Constants.PAGE_INVALID);
         }
 
+        int pagTop = pag * 15 + 31;
+
         // Busco si hay 3 paginaciones más adelante de la actual (1 Paginacion = 15)
         if (pag == 1) {
             pag = 0;
         } else {
             pag = (pag-1) * 15;
         }
-        int pagTop = pag * 15 + 31;
+        
 
         List<Publication> publications = publicationRepository.publicationsByUser(pag, pagTop);
         //Calculo número posible de paginaciones que hay en base de datos
         Double paginationDouble = (double) publications.size() / 15;
-        int pagination = (int) Math.ceil(paginationDouble);
+        int pagination = (int) (Math.ceil(paginationDouble)-1);
 
         if (!publications.isEmpty()) {
-            if (publications.size() > 14) {
+            if (publications.size() > 15) {
                 //Envio solo 15 publicaciones que necesita el front
-                publications = publications.subList(0, 14);
+                publications = publications.subList(0, 15);
             } 
 
             PublicationFilterDTO publicationsDTO = new PublicationFilterDTO(publications, pagination);
@@ -380,23 +387,25 @@ public class PublicationService implements IPublicationService {
             throw new IllegalArgumentException(Constants.PAGE_INVALID);
         }
 
+        int pagTop = pag * 15 + 31;
+
         // Busco si hay 3 paginaciones más adelante de la actual (1 Paginacion = 15)
         if (pag == 1) {
             pag = 0;
         } else {
             pag = (pag-1) * 15;
         }
-        int pagTop = pag * 15 + 31;
+        
 
         List<Publication> publications = publicationRepository.publicationsByDate(pag, pagTop);
         //Calculo número posible de paginaciones que hay en base de datos
         Double paginationDouble = (double) publications.size() / 15;
-        int pagination = (int) Math.ceil(paginationDouble);
+        int pagination = (int) (Math.ceil(paginationDouble)-1);
 
         if (!publications.isEmpty()) {
-            if (publications.size() > 14) {
+            if (publications.size() > 15) {
                 //Envio solo 15 publicaciones que necesita el front
-                publications = publications.subList(0, 14);
+                publications = publications.subList(0, 15);
             } 
 
             PublicationFilterDTO publicationsDTO = new PublicationFilterDTO(publications, pagination);
@@ -415,23 +424,24 @@ public class PublicationService implements IPublicationService {
             throw new IllegalArgumentException(Constants.PAGE_INVALID);
         }
 
+        int pagTop = pag * 15 + 31;
+
         // Busco si hay 3 paginaciones más adelante de la actual (1 Paginacion = 15)
         if (pag == 1) {
             pag = 0;
         } else {
             pag = (pag-1) * 15;
         }
-        int pagTop = pag * 15 + 31;
-
+        
         List<Publication> publications = publicationRepository.publicationsByAleatory(pag, pagTop);
         //Calculo número posible de paginaciones que hay en base de datos
         Double paginationDouble = (double) publications.size() / 15;
         int pagination = (int) (Math.ceil(paginationDouble)-1);
 
         if (!publications.isEmpty()) {
-            if (publications.size() > 14) {
+            if (publications.size() > 15) {
                 //Envio solo 15 publicaciones que necesita el front
-                publications = publications.subList(0, 14);
+                publications = publications.subList(0, 15);
             } 
 
             PublicationFilterDTO publicationsDTO = new PublicationFilterDTO(publications, pagination);
@@ -450,18 +460,21 @@ public class PublicationService implements IPublicationService {
             throw new IllegalArgumentException(Constants.PAGE_INVALID);
         }
 
+        int pagTop = pag * 15 + 31;
+
         // Busco si hay 3 paginaciones más adelante de la actual (1 Paginacion = 15)
         if (pag == 1) {
             pag = 0;
+            
         } else {
             pag = (pag-1) * 15;
         }
-        int pagTop = pag * 15 + 31;
+        
 
         final List<Publication> publications = publicationRepository.publicationsByPending(pag, pagTop);
         //Calculo número posible de paginaciones que hay en base de datos
         Double paginationDouble = (double) publicationRepository.countPublicationsByPending() / 15;
-        int pagination = (int) Math.ceil(paginationDouble);
+        int pagination = (int) (Math.ceil(paginationDouble)-1);
 
         if (!publications.isEmpty()) {
             PublicationFilterDTO publicationsDTO = new PublicationFilterDTO(publications, pagination);
@@ -480,23 +493,25 @@ public class PublicationService implements IPublicationService {
             throw new IllegalArgumentException(Constants.PAGE_INVALID);
         }
 
+        int pagTop = pag * 15 + 31;
+
         // Busco si hay 3 paginaciones más adelante de la actual (1 Paginacion = 15)
         if (pag == 1) {
             pag = 0;
         } else {
             pag = (pag-1) * 15;
         }
-        int pagTop = pag * 15 + 31;
+        
         
         List<Publication> publications = publicationRepository.publicationsByQuantity(pag, pagTop);
         //Calculo número posible de paginaciones que hay en base de datos
         Double paginationDouble = (double) publications.size() / 15;
-        int pagination = (int) Math.ceil(paginationDouble);
+        int pagination = (int) (Math.ceil(paginationDouble)-1);
 
         if (!publications.isEmpty()) {
-            if (publications.size() > 14) {
+            if (publications.size() > 15) {
                 //Envio solo 15 publicaciones que necesita el front
-                publications = publications.subList(0, 14);
+                publications = publications.subList(0, 15);
             } 
 
             PublicationFilterDTO publicationsDTO = new PublicationFilterDTO(publications, pagination);

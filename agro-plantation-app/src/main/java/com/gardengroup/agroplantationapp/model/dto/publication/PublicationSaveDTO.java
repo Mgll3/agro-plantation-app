@@ -17,8 +17,4 @@ public class PublicationSaveDTO {
     @NotNull(message = "Visibility must not be null")
     private boolean visibility;
 
-    @NotNull(message = "Score must not be null")
-    @PositiveOrZero(message = "Score must be greater or equal  than 0")
-    private Integer score;
-
 }

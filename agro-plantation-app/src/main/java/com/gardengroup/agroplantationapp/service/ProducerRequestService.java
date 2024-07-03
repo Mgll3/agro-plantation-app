@@ -8,6 +8,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.gardengroup.agroplantationapp.model.dto.request.ProducerRequestSaveDTO;
 import com.gardengroup.agroplantationapp.model.entity.ProducerRequest;
 import com.gardengroup.agroplantationapp.model.entity.StateRequest;
 import com.gardengroup.agroplantationapp.model.entity.User;
@@ -77,7 +78,9 @@ public class ProducerRequestService implements IProducerRequestService{
     }
 
     @Transactional
-    public ProducerRequest sendProducerRequest(String userEmail, ProducerRequest producerRequest ) {
+    public ProducerRequest sendProducerRequest(String userEmail, ProducerRequestSaveDTO producerDTO ) {
+        
+        ProducerRequest producerRequest = new ProducerRequest(producerDTO);
         
         User user = userRepository.findByEmail(userEmail)
             .orElseThrow(() -> new DataAccessException("User not found") {
@@ -89,7 +92,6 @@ public class ProducerRequestService implements IProducerRequestService{
         producerRequest.setStaterequest(new StateRequest(1L));
         
         return producerRequestRepository.save(producerRequest);
-
         
     }
 
