@@ -35,8 +35,11 @@ function PublicationImagesViewer({ mainImg, secondaryImages, handleImageOnClick 
 		}
 	}
 
+	//Este es el estilo que se aplicará al cursor en el último recuadro.
+	const pointerStyle = leftPicturesNumber > 0 ? "cursor-pointer" : "";
+
 	return (
-		<div className="flex w-[100%] gap-[1rem]">
+		<div className="flex w-[100%] gap-[1rem] select-none">
 			<div
 				className={`flex justify-center items-center w-[50%] h-[50vh] overflow-hidden text-[100px] rounded-xl ${mainPictureBg} bg-cover border-[2px] border-brandingDarkGreen border-solid`}
 			>
@@ -98,7 +101,7 @@ function PublicationImagesViewer({ mainImg, secondaryImages, handleImageOnClick 
 
 				<div
 					onClick={handleLeftPicturesOnClick}
-					className="flex justify-center items-center gap-[0.6rem] w-[48.5%] h-[48%] overflow-hidden text-darkText rounded-xl bg-brandingLightGreen cursor-pointer"
+					className={`flex justify-center items-center gap-[0.6rem] w-[48.5%] h-[48%] overflow-hidden text-darkText rounded-xl bg-brandingLightGreen ${pointerStyle}`}
 				>
 					{leftPicturesNumber > 0 ? (
 						<>
