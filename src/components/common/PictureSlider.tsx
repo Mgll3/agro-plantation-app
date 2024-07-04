@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { MainImageType } from "../admin/adminTypes";
 import ArrowBackIosNewRoundedIcon from "@mui/icons-material/ArrowBackIosNewRounded";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
@@ -52,8 +52,8 @@ function PictureSlider({ sliderInfo, handleImageOnClick }: PictureSliderProps) {
 
 			prevImgElementTimeout.current = window.setTimeout(() => {
 				setMainImg(prevImg);
-				prevImgElement.current!.classList.remove("animate-sliderPrevImgGoRight");
-				mainImgElement.current!.classList.remove("animate-sliderMainImgGoRight");
+				// prevImgElement.current!.classList.remove("animate-sliderPrevImgGoRight");
+				// mainImgElement.current!.classList.remove("animate-sliderMainImgGoRight");
 			}, 750);
 		}
 	}
@@ -65,11 +65,25 @@ function PictureSlider({ sliderInfo, handleImageOnClick }: PictureSliderProps) {
 
 			nextImgElementTimeout.current = window.setTimeout(() => {
 				setMainImg(nextImg);
-				nextImgElement.current!.classList.remove("animate-sliderNextImgGoLeft");
-				mainImgElement.current!.classList.remove("animate-sliderMainImgGoLeft");
+				// nextImgElement.current!.classList.remove("animate-sliderNextImgGoLeft");
+				// mainImgElement.current!.classList.remove("animate-sliderMainImgGoLeft");
 			}, 750);
 		}
 	}
+
+	useEffect(() => {
+		return () => {
+			clearTimeout(prevImgElementTimeout.current);
+			clearTimeout(nextImgElementTimeout.current);
+		};
+	});
+
+	useLayoutEffect(() => {
+		prevImgElement.current!.classList.remove("animate-sliderPrevImgGoRight");
+		mainImgElement.current!.classList.remove("animate-sliderMainImgGoRight");
+		nextImgElement.current!.classList.remove("animate-sliderNextImgGoLeft");
+		mainImgElement.current!.classList.remove("animate-sliderMainImgGoLeft");
+	});
 
 	return (
 		<div className="z-50 fixed top-0 left-0 flex flex-col justify-center items-center w-screen bg-semiTansparentBlack h-screen">
