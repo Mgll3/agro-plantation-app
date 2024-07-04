@@ -86,7 +86,7 @@ function PictureSlider({ sliderInfo, handleImageOnClick }: PictureSliderProps) {
 	});
 
 	return (
-		<div className="z-50 fixed top-0 left-0 flex flex-col justify-center items-center w-screen bg-semiTansparentBlack h-screen">
+		<div className="z-50 fixed top-0 left-0 flex flex-col justify-center items-center w-screen bg-semiTansparentBlack h-screen select-none">
 			<div className="relative flex justify-center items-center w-[57vw] h-[70vh] overflow-hidden bg-publicationCardsBg bg-no-repeat bg-cover text-center text-black font-sans border-[2px] border-brandingDarkGreen border-solid rounded-2xl">
 				<img ref={mainImgElement} alt="" src={mainImg} className="absolute z-0 left-[0%] w-[70vw] duration-700" />
 				<img ref={prevImgElement} alt="" src={prevImg} className="absolute z-10 left-[-100%] w-[70vw]" />
@@ -103,13 +103,13 @@ function PictureSlider({ sliderInfo, handleImageOnClick }: PictureSliderProps) {
 					<>
 						<div
 							onClick={changeToPrevImg}
-							className="absolute top-[40%] left-[2%] z-20 flex justify-center items-center w-[4vw] h-[8vw] bg-screenDarkening hover:bg-semiTansparentBlack hover:scale-110 rounded-xl text-brandingLightGreen text-[45px] cursor-pointer duration-300"
+							className="absolute top-[40%] left-[2%] z-20 flex justify-center items-center w-[4vw] h-[8vw] bg-screenDarkening hover:bg-semiTansparentBlack hover:scale-110 active:scale-90 rounded-xl text-brandingLightGreen text-[45px] cursor-pointer duration-300"
 						>
 							<ArrowBackIosNewRoundedIcon color="inherit" fontSize="inherit" />
 						</div>
 						<div
 							onClick={changeToNextImg}
-							className="absolute top-[40%] right-[2%] z-20 flex justify-center items-center w-[4vw] h-[8vw] bg-screenDarkening hover:bg-semiTansparentBlack hover:scale-110 rounded-xl text-brandingLightGreen text-[45px] cursor-pointer duration-300"
+							className="absolute top-[40%] right-[2%] z-20 flex justify-center items-center w-[4vw] h-[8vw] bg-screenDarkening hover:bg-semiTansparentBlack hover:scale-110 active:scale-90 rounded-xl text-brandingLightGreen text-[45px] cursor-pointer duration-300"
 						>
 							<ArrowForwardIosRoundedIcon color="inherit" fontSize="inherit" />
 						</div>
