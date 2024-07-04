@@ -6,7 +6,7 @@ import { registerUser } from "../interfaces/users/registerUser";
 import Register from "../components/forms/Register";
 import {
 	LoginFormValuesType,
-	RegiserFormFieldsToSendType,
+	RegisterFormFieldsToSendType,
 	RegisterFormValuesType
 } from "../components/forms/formsTypes";
 import { UserDataType } from "./commonTypes";
@@ -79,7 +79,7 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 
 		const userFullAddress = `${formValues.userAddressCity}, ${formValues.userAddressProvince}`; // Unimos en Front los campos de dirección del usuario.
 
-		const resgisterDataToSend: RegiserFormFieldsToSendType = {
+		const resgisterDataToSend: RegisterFormFieldsToSendType = {
 			email: formValues.userEmail,
 			password: formValues.userPassword,
 			name: formValues.userName,

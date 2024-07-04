@@ -61,6 +61,7 @@ function ProtectedRouteAdmin() {
 
 		return () => {
 			clearTimeout(navigateTimer);
+			clearTimeout(resetUserCredentialsTimer);
 		};
 	}, [isAuthorized]);
 

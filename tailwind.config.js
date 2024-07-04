@@ -36,7 +36,8 @@ export default {
 				reddishBrown: "#C54600",
 				blueLink: "#6F86FF",
 				brightRed: "#FF0000",
-				redError: "#FD0303"
+				redError: "#FD0303",
+				green300: "#AAC46A"
 			},
 			spacing: {
 				53: "13.25rem"
@@ -58,6 +59,30 @@ export default {
 				"below-dark": "0px 4px 4px rgba(0, 0, 0, 0.5)",
 				"around-light": "0px 0px 10px rgba(0, 0, 0, 0.2)",
 				"around-dark": "0px 0px 5px rgba(0, 0, 0, 0.5)"
+			},
+			animation: {
+				sliderMainImgGoLeft: "moveLeftFromCenter 0.7s ease-in-out forwards",
+				sliderMainImgGoRight: "moveRightFromCenter 0.7s ease-in-out forwards",
+				sliderPrevImgGoRight: "moveRightFromLeft 0.7s ease-in-out forwards",
+				sliderNextImgGoLeft: "moveLeftFromRight 0.7s ease-in-out forwards"
+			},
+			keyframes: {
+				moveLeftFromCenter: {
+					"0%": { left: "0%" },
+					"100%": { left: "-100%" }
+				},
+				moveRightFromCenter: {
+					"0%": { left: "0%" },
+					"100%": { left: "100%" }
+				},
+				moveRightFromLeft: {
+					"0%": { left: "-100%" },
+					"100%": { left: "0%" }
+				},
+				moveLeftFromRight: {
+					"0%": { right: "-100%" },
+					"100%": { right: "0%" }
+				}
 			}
 		}
 	},

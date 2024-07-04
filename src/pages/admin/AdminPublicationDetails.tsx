@@ -7,7 +7,7 @@ import useLoadingState from "../../hooks/useLoadingState";
 import { useEffect, useRef, useState } from "react";
 import { getPublicationById } from "../../interfaces/getPublicationById";
 import { getStoredToken } from "../../utils/getStoredToken";
-import { PublicationInfoType } from "../../components/admin/adminTypes";
+import { MainImageType, PublicationInfoType } from "../../components/admin/adminTypes";
 import PublicationDetails from "../../components/admin/publicationDetails/PublicationDetails";
 import { getAddressCoordinates } from "../../interfaces/geolocation/getAddressCoordinates";
 import Button from "../../components/button/Button";
@@ -16,6 +16,7 @@ import PublicationStateModified from "../../components/modals/PublicationStateMo
 import { approvePublication } from "../../interfaces/approvePublication";
 import { rejectPublication } from "../../interfaces/rejectPublication";
 import { changePublicationToPending } from "../../interfaces/changePublicationToPending";
+import PictureSlider, { SliderInfoType } from "../../components/common/PictureSlider";
 
 export type CoordinatesType = {
 	lat: number;
@@ -26,7 +27,54 @@ export type AddressCoordinatesType = CoordinatesType | null;
 
 function AdminPublicationDetails() {
 	const [loadingState, changeLoadingState] = useLoadingState();
+	const [sliderVisibility, setSliderVisibility] = useState(false);
 	const [publicationData, setPublicationData] = useState<PublicationInfoType | null>(null);
+
+	//A "PictureSlider" le pasamos un objeto con todas las imágenes (no necesita diferenciar entre la principal y el resto) y el id de la imagen pulsada (la que debe mostrarse en primer lugar)
+
+	const sliderInfo = useRef<SliderInfoType>({
+		pictures: [],
+		selectedImg: "0"
+	});
+
+	//Esta función hace aparecer el componente PictureSlider. También actualiza la imagen seleccionada que deberá mostrar el slider en primer lugar. Se pasa por props hasta el componente PublicationImagesViewer
+	function showSlider(pictureId: string) {
+		let mainImg: MainImageType | null;
+		let secondaryImages: MainImageType[] | null = null;
+
+		if (publicationData?.mainImage) {
+			mainImg = structuredClone(publicationData.mainImage);
+		} else {
+			mainImg = null;
+		}
+
+		if (publicationData?.images) {
+			secondaryImages = structuredClone(publicationData?.images);
+		}
+
+		let allPictures: MainImageType[] = [];
+
+		if (mainImg && secondaryImages) {
+			allPictures = secondaryImages;
+			allPictures.push(mainImg);
+		} else if (mainImg && !secondaryImages) {
+			allPictures.push(mainImg);
+		} else if (!mainImg && secondaryImages) {
+			allPictures = secondaryImages;
+		} else if (!mainImg && !secondaryImages) {
+			allPictures = [];
+		}
+
+		sliderInfo.current.selectedImg = pictureId;
+		sliderInfo.current.pictures = allPictures;
+
+		setSliderVisibility(true);
+	}
+
+	//Esta función hace desaparecer el componente PictureSlider. Se pasa por props y se utiliza desde dicho componente.
+	function hideSlider() {
+		setSliderVisibility(false);
+	}
 
 	// Este state del <Link> que nos ha traído a esta página lo usamos para saber qué filtro de publicaciones y qué página dentro de ese filtro se estaban usando cuando pulsamos en la publicación, para poder devolver al usuario a ese mismo filtro (random, usuario, fecha...) y página.
 	const location = useLocation();
@@ -208,7 +256,11 @@ function AdminPublicationDetails() {
 					publicationData && (
 						<>
 							<div className="mb-[5rem] flex justify-center w-[100%]">
-								<PublicationDetails publicationInfo={publicationData} addressCoordinates={addressCoordinates.current} />
+								<PublicationDetails
+									publicationInfo={publicationData}
+									addressCoordinates={addressCoordinates.current}
+									handleImageOnClick={showSlider}
+								/>
 							</div>
 
 							<div className="flex justify-center gap-[5%] w-[100%] mb-[5rem]">
@@ -258,6 +310,10 @@ function AdminPublicationDetails() {
 							{loadingState === "modalPublicationStateRejected" && <PublicationStateModified newState="rejected" />}
 
 							{loadingState === "modalPublicationStatePending" && <PublicationStateModified newState="pending" />}
+
+							{sliderVisibility === true && (
+								<PictureSlider sliderInfo={sliderInfo.current} handleImageOnClick={hideSlider} />
+							)}
 						</>
 					)}
 

@@ -304,7 +304,7 @@ function AdminPublications() {
 						</div>
 
 						<div className="py-[2rem]">
-							<PublicationsPagination actualPage={Number(id)} pagesLeft={pagesLeft.current} pagesForBlock={4} />
+							<PublicationsPagination actualPage={Number(id)} pagesLeft={pagesLeft.current} pagesForBlock={8} />
 						</div>
 					</>
 				)}
