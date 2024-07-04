@@ -48,7 +48,7 @@ export default function Management() {
 	}
 
 	const publicationsIdsToStore = useRef<number[]>([]);
-	const mainImgMockArrayPosition = useRef<number>(0); //Guarda la posición en el array de la última imagen principal utilizada, para usar la siguiente y no volver a usarla.
+	const mainImgMockArrayPosition = useRef<number>(0); //Guarda la posición en el array de la última imagen principal utilizada, para usar la siguiente y no volver a usar la misma.
 
 	const publicationsToPublish: PlantationsDemoDataType = publicationsDemoData;
 	let resetUserCredentialsTimer: number = 0;

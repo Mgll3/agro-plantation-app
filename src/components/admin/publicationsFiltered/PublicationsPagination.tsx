@@ -14,16 +14,14 @@ function PublicationsPagination({ actualPage, pagesLeft, pagesForBlock }: Public
 
 	// Calculamos el número de página mínimo y el máximo que tenemos que renderizar
 	const minPage = paginationGroup - (pagesForBlock - 1);
-	const maxPage =
-		actualPage + (pagesLeft - 1) <= pagesForBlock ? actualPage + (pagesLeft - 1) : minPage + (pagesForBlock - 1); //Hay que restarle "1" a "pagesLeft", ya que el servidor cuenta la página actual, no sólo las que quedan.
+	const maxPage = actualPage + pagesLeft <= paginationGroup ? actualPage + pagesLeft : minPage + (pagesForBlock - 1);
 
 	// Calculamos si debe hay un bloque anterior / posterior al que saltar con los iconos de flecha
 	const isTherePrevBlock: boolean = minPage > 1 ? true : false;
-	const isThereNextBlock: boolean = actualPage + (pagesLeft - 1) > maxPage ? true : false;
+	const isThereNextBlock: boolean = actualPage + pagesLeft > maxPage ? true : false;
 
 	function renderPagination() {
 		const paginationElements: React.ReactNode[] = [];
-
 		for (let i = minPage; i <= maxPage; i++) {
 			if (i === actualPage) {
 				paginationElements.push(

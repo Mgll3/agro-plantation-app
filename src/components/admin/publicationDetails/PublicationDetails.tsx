@@ -7,9 +7,14 @@ import { AddressCoordinatesType } from "../../../pages/admin/AdminPublicationDet
 type PublicationDetailsProps = {
 	publicationInfo: PublicationInfoType;
 	addressCoordinates: AddressCoordinatesType;
+	handleImageOnClick: (pictureId: string) => void;
 };
 
-export default function PublicationDetails({ publicationInfo, addressCoordinates }: PublicationDetailsProps) {
+export default function PublicationDetails({
+	publicationInfo,
+	addressCoordinates,
+	handleImageOnClick
+}: PublicationDetailsProps) {
 	const contactButtonFuncionality = {
 		actionText: "Contactar",
 		handleClick: contactProducer
@@ -29,7 +34,11 @@ export default function PublicationDetails({ publicationInfo, addressCoordinates
 				Fotos de la publicación
 			</h2>
 
-			<PublicationImagesViewer mainImg={publicationInfo.mainImage} secondaryImages={publicationInfo.images} />
+			<PublicationImagesViewer
+				mainImg={publicationInfo.mainImage}
+				secondaryImages={publicationInfo.images}
+				handleImageOnClick={handleImageOnClick}
+			/>
 
 			<h2 className="opacity-50 w-auto p-[0.5rem] mt-[3rem] mb-[1.5rem] rounded-[8px] shadow-below-dark text-[16px]">
 				Texto de la publicación

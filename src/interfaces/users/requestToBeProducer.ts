@@ -1,9 +1,9 @@
 import axios from "axios";
 import { axiosConfig } from "../../lib/axios/axios.config";
 
-export async function requestToBeProducer(token: string, axiosControler: AbortController) {
+export async function requestToBeProducer(data: string, token: string, axiosControler: AbortController) {
 	try {
-		const response = await axiosConfig.get("/request-producer", {
+		const response = await axiosConfig.post("/v1/producerRequest/send", data, {
 			signal: axiosControler.signal,
 			headers: {
 				"Content-Type": "application/json",
@@ -15,7 +15,13 @@ export async function requestToBeProducer(token: string, axiosControler: AbortCo
 		return userData;
 	} catch (error) {
 		if (axios.isAxiosError(error)) {
-			throw new Error(error.message);
+			if (error.response?.status === 409) {
+				throw new Error("409");
+			} else if (error.response?.status === 501) {
+				throw new Error("501");
+			} else {
+				throw new Error(error.message);
+			}
 		}
 	}
 }
