@@ -20,6 +20,7 @@ function RegisterProducerForm({ handleSubmit }: RegisterProducerFormProps) {
 	const noSpaceAtStartRegex = /^\S/g;
 	const noSpaceEndingRegex = /\S$/g;
 	const noSpecialCharacterRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ,.\s0-9]*$/g;
+	const trueValueRegex = /true/g;
 
 	const initialValues = {
 		gardenName: "",
@@ -54,7 +55,9 @@ function RegisterProducerForm({ handleSubmit }: RegisterProducerFormProps) {
 			.matches(noSpecialCharacterRegex, "No se admiten caracteres especiales")
 			.max(140, "Máximo 140 caracteres"),
 
-		termsAccepted: Yup.string().required("Debes aceptar las condiciones")
+		termsAccepted: Yup.string()
+			.required("Debes aceptar las condiciones")
+			.matches(trueValueRegex, "Debes aceptar las condiciones")
 	});
 
 	const formik = useFormik({
