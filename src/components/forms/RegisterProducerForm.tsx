@@ -3,14 +3,7 @@ import * as Yup from "yup";
 import Button from "../button/Button";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-
-export type RegisterProducerFormValuesType = {
-	gardenName: string;
-	gardenAddress: string;
-	gardenSize: string;
-	description: string;
-	termsAccepted: string;
-};
+import { RegisterProducerFormValuesType } from "./formsTypes";
 
 type RegisterProducerFormProps = {
 	handleSubmit: (formValues: RegisterProducerFormValuesType) => void;
