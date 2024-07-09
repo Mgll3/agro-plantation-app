@@ -20,6 +20,7 @@ import TermsAndConditions from "./components/placeholders/TermsAndConditions";
 import PrivacyDeclaration from "./components/placeholders/PrivacyDeclaration";
 import AdminPublicationDetails from "./pages/admin/AdminPublicationDetails";
 import ProtectedRouteProducer from "./components/protectRoutes/ProtectedRouteProducer";
+import CreatePublication from "./pages/producers/CreatePublication";
 
 function App() {
 	return (
@@ -48,11 +49,10 @@ function App() {
 
 				{/* PRODUCER RUTES */}
 				<Route element={<ProtectedRouteProducer />}>
-					<Route path="/producer/publications/createPublication" element={<UserPublications />} />
+					<Route path="/producer/publications/createPublication" element={<CreatePublication />} />
 				</Route>
 
 				{/* ADMIN RUTES */}
-
 				<Route element={<ProtectedRouteAdmin />}>
 					<Route path="/admin/publications" element={<AdminPublications />} />
 					<Route path="/admin/publications/:id" element={<AdminPublications />} />

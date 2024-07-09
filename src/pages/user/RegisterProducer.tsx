@@ -74,9 +74,9 @@ function RegisterProducer() {
 				<button
 					type="button"
 					onClick={() => navigate("/")}
-					className="flex items-center py-[10px] px-[16px] mb-[64px] text-[16px] font-semibold border-2 border-brandingYellow"
+					className="flex items-center py-[10px] px-[16px] mb-[64px] text-[16px] font-semibold border-2 border-brandingYellow rounded-md"
 				>
-					<img alt="" src="/icons/Shape@2x.png" className="w-[17px] mr-8" />
+					<img alt="" src="/icons/Shape@2x.png" className="w-[10px] h-[17px] mr-[20px]" />
 					Volver
 				</button>
 

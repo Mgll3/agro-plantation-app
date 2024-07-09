@@ -8,7 +8,7 @@ function ProducerBanner() {
 	const buttonPaddingY = "py-3.5";
 	const buttonFuncionality = {
 		linkText: "Publicar Ahora",
-		linkUrl: "/publications/createPublication"
+		linkUrl: "/producer/publications/createPublication"
 	};
 
 	return (
