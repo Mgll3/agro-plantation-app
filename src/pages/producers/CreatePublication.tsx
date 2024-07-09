@@ -2,9 +2,14 @@ import { useNavigate } from "react-router-dom";
 import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
 import CreatePublicationForm from "../../components/forms/CreatePublicationForm";
+import { NewPublicationType } from "../../components/forms/formsTypes";
 
 function CreatePublication() {
 	const navigate = useNavigate();
+
+	function handleSubmit(formValues: NewPublicationType) {
+		console.log(formValues);
+	}
 
 	return (
 		<>
@@ -29,7 +34,7 @@ function CreatePublication() {
 				</p>
 
 				<div className="flex flex-col px-[109px] py-[20px]">
-					<CreatePublicationForm />
+					<CreatePublicationForm handleSubmit={handleSubmit} />
 				</div>
 			</main>
 

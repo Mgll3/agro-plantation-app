@@ -38,7 +38,10 @@ export default {
 				brightRed: "#FF0000",
 				redError: "#FD0303",
 				green300: "#AAC46A",
-				grey300: "#DAD9D9"
+				grey300: "#DAD9D9",
+				grey400: "#CECDCD",
+				grey500: "#C2C0C0",
+				brown150: "#F7F4E6"
 			},
 			spacing: {
 				53: "13.25rem"

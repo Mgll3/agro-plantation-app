@@ -24,16 +24,25 @@ export type RegisterFormFieldsToSendType = {
 	address: string;
 };
 
+//REGISTER NEW PRODUCER
+
+export type RegisterProducerFormValuesType = {
+	gardenName: string;
+	gardenAddress: string;
+	gardenSize: string;
+	description: string;
+	termsAccepted: string;
+};
+
 // CREATE NEW PUBLICATION
 
 export type NewPublicationType = {
+	files: File[];
 	title: string;
-	plantation: {
-		area: string;
-		harvestType: string;
-		irrigationType: string;
-		productionType: string;
-		details: string;
-	};
-	visibility: false;
+	details: string;
+	area: string;
+	harvestType: string;
+	irrigationType: string;
+	productionType: string;
+	address: string;
 };

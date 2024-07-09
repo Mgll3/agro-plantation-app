@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import Footer from "../../components/footer/Footer";
-import RegisterProducerForm, { RegisterProducerFormValuesType } from "../../components/forms/RegisterProducerForm";
+import RegisterProducerForm from "../../components/forms/RegisterProducerForm";
 import Header from "../../components/header/Header";
 import GenericModal from "../../components/modals/GenericModal";
 import useLoadingState from "../../hooks/useLoadingState";
@@ -9,6 +9,7 @@ import { useRef } from "react";
 import { getStoredToken } from "../../utils/getStoredToken";
 import { requestToBeProducer } from "../../interfaces/users/requestToBeProducer";
 import NetworkError from "../../components/modals/NetworkError";
+import { RegisterProducerFormValuesType } from "../../components/forms/formsTypes";
 
 type ProducerRequestDataToSendType = {
 	gardenName: string;
