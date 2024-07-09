@@ -61,8 +61,6 @@ public class Publication {
     public Publication(PublicationSaveDTO publicationDTO){
         this.title = publicationDTO.getTitle();
         this.plantation = publicationDTO.getPlantation();
-        this.visibility = publicationDTO.isVisibility();
-        
     }
 
     public Publication(PublicationUpdDTO publicationDTO){

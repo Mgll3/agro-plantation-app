@@ -31,7 +31,6 @@ public class UserService implements IUserService {
 
         // Asignar el tipo de usuario 1 en base de datos osea "USER"
         user.setUserType(new UserType(1L));
-        user.setTotalAuthorization(false);
 
         // Guardar el usuario en la base de datos
         return userRepository.save(user);

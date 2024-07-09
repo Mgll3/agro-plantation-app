@@ -1,5 +1,7 @@
 package com.gardengroup.agroplantationapp.model.dto.publication;
 
+import org.hibernate.validator.constraints.Length;
+
 import com.gardengroup.agroplantationapp.model.entity.Plantation;
 
 import jakarta.validation.constraints.*;
@@ -13,8 +15,5 @@ public class PublicationSaveDTO {
 
     @NotNull(message = "Plantation is mandatory")
     private Plantation plantation;
-
-    @NotNull(message = "Visibility must not be null")
-    private boolean visibility;
 
 }

@@ -41,9 +41,6 @@ public class User {
 
     @Column(name = "password", length = 100 , nullable = false)
     private String password;
-    
-    @Column(columnDefinition = "BOOLEAN DEFAULT false")
-    private Boolean totalAuthorization;
 
     @ManyToOne
     @JoinColumn(nullable = false)
