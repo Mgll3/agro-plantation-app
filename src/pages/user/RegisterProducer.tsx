@@ -84,10 +84,10 @@ function RegisterProducer() {
 					¡Te damos la bienvenida a nuestra comunidad de productores agrícolas!
 				</h1>
 
-				<h2 className="w-[65%] mb-20 text-[20px]">
+				<p className="w-[65%] mb-20 text-[20px]">
 					Completa este breve formulario para acceder a diversos beneficios como dar a conocer tu huerta, publicar
 					artículos sobre tus sembrados, cosecha y mucho más.
-				</h2>
+				</p>
 
 				<RegisterProducerForm handleSubmit={submitForm} />
 			</main>

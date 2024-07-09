@@ -37,7 +37,8 @@ export default {
 				blueLink: "#6F86FF",
 				brightRed: "#FF0000",
 				redError: "#FD0303",
-				green300: "#AAC46A"
+				green300: "#AAC46A",
+				grey300: "#DAD9D9"
 			},
 			spacing: {
 				53: "13.25rem"

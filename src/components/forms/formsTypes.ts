@@ -23,3 +23,17 @@ export type RegisterFormFieldsToSendType = {
 	lastname: string;
 	address: string;
 };
+
+// CREATE NEW PUBLICATION
+
+export type NewPublicationType = {
+	title: string;
+	plantation: {
+		area: string;
+		harvestType: string;
+		irrigationType: string;
+		productionType: string;
+		details: string;
+	};
+	visibility: false;
+};
