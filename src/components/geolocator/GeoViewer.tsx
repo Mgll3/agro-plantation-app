@@ -15,12 +15,20 @@ L.Marker.prototype.options.icon = DefaultIcon;
 
 type GeoViewerProps = {
 	addressString: string;
-	addressCoordinates: CoordinatesType;
+	addressCoordinates?: CoordinatesType;
 	plantationName: string;
 };
 
 export default function GeoViewer({ addressString, addressCoordinates, plantationName }: GeoViewerProps) {
-	const { lat, lon } = addressCoordinates;
+	let lat: number, lon: number;
+	if (addressCoordinates) {
+		lat = addressCoordinates.lat;
+		lon = addressCoordinates.lon;
+	} else {
+		lat = 1500;
+		lon = 1500;
+	}
+
 	return (
 		<MapContainer center={[lat, lon]} zoom={13} style={{ height: "100%", width: "100%" }}>
 			<TileLayer

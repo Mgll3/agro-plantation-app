@@ -373,12 +373,8 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 
 						{/* LOCATION MAP */}
 
-						<div>
-							<GeoViewer
-								addressCoordinates={}
-								addressString={formik.values.address}
-								plantationName={formik.values.title}
-							/>
+						<div className="w-[90%] h-[265px]">
+							<GeoViewer addressString={formik.values.address} plantationName={formik.values.title} />
 						</div>
 					</div>
 				</div>
