@@ -89,7 +89,6 @@ public class SecurityConfig {
         // Agrega el filtro personalizado JwtAuthenticationFilter antes del filtro de autenticación de nombre de usuario y contraseña
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
-        // Construye y devuelve la cadena de filtros de seguridad configurada
         return http.build();
     }
 }

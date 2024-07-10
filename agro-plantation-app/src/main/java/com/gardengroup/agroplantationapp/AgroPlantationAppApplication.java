@@ -9,7 +9,7 @@ public class AgroPlantationAppApplication {
 		SpringApplication.run(AgroPlantationAppApplication.class, args);
 		
 		/*
-		mvn package
+		mvn package -DskipTests
 		docker build -t agro-plantation:1.59 .
 		docker pull mysql:8.1
 		docker run --name mysql-standalone -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=agroplantationapp -e MYSQL_USER=dev -e MYSQL_PASSWORD=dev -p 3306:3306 -d mysql:8.1

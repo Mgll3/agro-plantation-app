@@ -1,8 +1,10 @@
 package com.gardengroup.agroplantationapp.model.dto.user;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
-@Data//lombok get y set
+@AllArgsConstructor
+@Data
 public class LoginDTO {
     private String email;
     private String password;
