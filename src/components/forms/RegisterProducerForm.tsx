@@ -88,7 +88,7 @@ function RegisterProducerForm({ handleSubmit }: RegisterProducerFormProps) {
 							id="gardenName"
 							placeholder="Por ejemplo: Huerta del sol"
 							{...formik.getFieldProps("gardenName")}
-							className="outline-none  p-[8px_8px_4px] w-full placeholder-[#666]"
+							className="outline-none  p-[8px_8px_4px] w-full placeholder-grey500"
 						/>
 
 						{formik.touched.gardenName && formik.errors.gardenName ? (
@@ -106,7 +106,7 @@ function RegisterProducerForm({ handleSubmit }: RegisterProducerFormProps) {
 							id="gardenAddress"
 							placeholder="Por ejemplo: Bermejo 356, Mendoza, Argentina"
 							{...formik.getFieldProps("gardenAddress")}
-							className="outline-none  p-[8px_8px_4px] w-full placeholder-[#666]"
+							className="outline-none  p-[8px_8px_4px] w-full placeholder-grey500"
 						/>
 
 						{formik.touched.gardenAddress && formik.errors.gardenAddress ? (
@@ -195,7 +195,9 @@ function RegisterProducerForm({ handleSubmit }: RegisterProducerFormProps) {
 				</p>
 
 				<div className="relative w-[70%] mt-6 p-2 border border-black border-solid rounded-md">
-					<label className="absolute top-[-12px] left-[15px] px-2 text-[16px] bg-white">Descripción</label>
+					<label htmlFor="description" className="absolute top-[-12px] left-[15px] px-2 text-[16px] bg-white">
+						Descripción
+					</label>
 
 					<textarea
 						ref={textAreaElement}
@@ -204,7 +206,7 @@ function RegisterProducerForm({ handleSubmit }: RegisterProducerFormProps) {
 						maxLength={140}
 						rows={6}
 						{...formik.getFieldProps("description")}
-						className="outline-none  p-[8px_8px_4px] w-full placeholder-[#666]"
+						className="outline-none  p-[8px_8px_4px] w-full placeholder-grey500"
 					/>
 
 					{formik.touched.description && formik.errors.description ? (
