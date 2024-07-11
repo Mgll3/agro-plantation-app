@@ -1,19 +1,15 @@
 package com.gardengroup.agroplantationapp.PublicationTests;
 
-import java.time.LocalDateTime;
-
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mockito;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.test.annotation.DirtiesContext;
@@ -29,20 +25,21 @@ import com.gardengroup.agroplantationapp.model.dto.publication.PublicationSaveDT
 import com.gardengroup.agroplantationapp.model.dto.user.LoginDTO;
 import com.gardengroup.agroplantationapp.model.dto.user.RegisterDTO;
 import com.gardengroup.agroplantationapp.model.entity.Plantation;
-import com.gardengroup.agroplantationapp.model.entity.Publication;
-import com.gardengroup.agroplantationapp.model.entity.StateRequest;
 import com.gardengroup.agroplantationapp.model.entity.User;
-import com.gardengroup.agroplantationapp.service.IUserService;
+
 
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)   //limpiar bd despues de pruebas
+@TestInstance(Lifecycle.PER_CLASS)  //Para que se ejecute el BeforeAll
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)   //limpiar bd despues de pruebas
 //@ActiveProfiles("test")
 public class PublicationTest {
-    
+   
     private User producerUser = new User();
-    
+    private String accessToken = null;
+    PublicationSaveDTO publicationSaveDto = new PublicationSaveDTO();
+
     @Autowired
     private MockMvc mockMvc;                 //Simular peticiones HTTP
 
@@ -51,44 +48,45 @@ public class PublicationTest {
 
 
 
-    // @BeforeAll
-    // public void registerUser(){
-        
-        
-
-    // }
-
-    @DisplayName("Guardar una publicación en el sistema")
-    @Test
-    public void shouldCanSavePublication() throws Exception{
-
+    @BeforeAll
+    public void registerAndLoginUser() throws Exception{
         //Inicializar usuario
         RegisterDTO registerDto = new RegisterDTO("mgl@gmail.com", "1","Miguel", 
             "Alvarez", "Calle 123");
         
         //Guardar usuario por medio del endpoint
-        mockMvc.perform(post("/auth/registro")
+        ResultActions userResponse = mockMvc.perform(post("/auth/registro")
             .with(SecurityMockMvcRequestPostProcessors.csrf())  //TOKEN CSRF de seguridad
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(registerDto)));
+
+        //Extraer usuario guardado
+        MvcResult result = userResponse.andExpect(status().isCreated()).andReturn();
+        String responseBody1 = result.getResponse().getContentAsString();
+        JsonNode jsonNode1 = objectMapper.readTree(responseBody1);
+        producerUser.setAddress(jsonNode1.get("address").asText());
+        producerUser.setName(jsonNode1.get("name").asText());
+        producerUser.setEmail(registerDto.getEmail());
+        producerUser.setLastname(jsonNode1.get("lastname").asText());
+        producerUser.setId(jsonNode1.get("id").asLong());
 
         //Inicializar loggeo
         LoginDTO loginDto = new LoginDTO("mgl@gmail.com","1");
 
         //Loggear usuario desde el endpoint
-        ResultActions userResponse = mockMvc.perform(post("/auth/login")
+        ResultActions loginResponse = mockMvc.perform(post("/auth/login")
             .with(SecurityMockMvcRequestPostProcessors.csrf())  //TOKEN CSRF de seguridad
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(loginDto)));
 
         //Extraer el Token de JWT
-        MvcResult result = userResponse.andExpect(status().isOk()).andReturn();
-        String responseBody = result.getResponse().getContentAsString();
-        JsonNode jsonNode = objectMapper.readTree(responseBody);
-        String accessToken = jsonNode.get("accessToken").asText();
+        MvcResult resultLog = loginResponse.andExpect(status().isOk()).andReturn();
+        String responseBody2 = resultLog.getResponse().getContentAsString();
+        JsonNode jsonNode2 = objectMapper.readTree(responseBody2);
+        accessToken = jsonNode2.get("accessToken").asText();
 
         //Crear publicación
-        PublicationSaveDTO publicationSaveDto = new PublicationSaveDTO();
+        
         publicationSaveDto.setTitle("Publication 1");
         Plantation plantation = new Plantation();
         plantation.setArea("100 sqm");
@@ -97,6 +95,11 @@ public class PublicationTest {
         plantation.setProductionType("type1");
         plantation.setDetails("semillas de tomate para cultivo en verano, condiciones de riego: cada 2 días, condiciones de temperatura: 25-30°C");
         publicationSaveDto.setPlantation(plantation);
+    }
+
+    @DisplayName("Guardar una publicación en el sistema")
+    @Test
+    public void shouldCanSavePublication() throws Exception{
 
         ResultActions response = mockMvc.perform(post("/v1/publication/save")
             .with(SecurityMockMvcRequestPostProcessors.csrf())  //TOKEN CSRF de seguridad
@@ -107,8 +110,82 @@ public class PublicationTest {
         response.andExpect(status().isCreated())
         .andExpect(jsonPath("$.id", Matchers.notNullValue()))
         .andExpect(jsonPath("$.title", Matchers.is(publicationSaveDto.getTitle())))
-        .andExpect(jsonPath("$.author.name", Matchers.is(registerDto.getName())));
-}
+        .andExpect(jsonPath("$.author.name", Matchers.is(producerUser.getName())));
+    }
+
+    @DisplayName("Obtener publicaciones aleatorias con minimo 1 y maximo 16 publicaciones y paginaciones correctas")
+    @Test
+    public void shouldCanGetPublicationsByAleatory() throws Exception{
+
+        //Crear 136 publicaciones para testear, + 6 precreadas = 142 publicaciones
+        
+        for(int i=0; i<136; i++){
+            mockMvc.perform(post("/v1/publication/save")
+                .with(SecurityMockMvcRequestPostProcessors.csrf())  //TOKEN CSRF de seguridad
+                .contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", "Bearer " + accessToken)   //Agrego el token JWT
+                .content(objectMapper.writeValueAsString(publicationSaveDto)));
+        }
+
+        ResultActions response1 = mockMvc.perform(get("/v1/publication/aleatory/1")
+            .with(SecurityMockMvcRequestPostProcessors.csrf())  //TOKEN CSRF de seguridad
+            .contentType(MediaType.APPLICATION_JSON));
+
+        response1.andExpect(status().isOk())
+            .andExpect(jsonPath("$.publications", Matchers.notNullValue()))
+            .andExpect(jsonPath("$.publications", Matchers.hasSize(Matchers.lessThanOrEqualTo(15))))
+            .andExpect(jsonPath("$.pagination", Matchers.lessThanOrEqualTo(3)));
+
+        //Verificar paginacion en pagina 3
+        ResultActions response2 = mockMvc.perform(get("/v1/publication/aleatory/3")
+            .with(SecurityMockMvcRequestPostProcessors.csrf())  //TOKEN CSRF de seguridad
+            .contentType(MediaType.APPLICATION_JSON));
+
+        response2.andExpect(status().isOk())
+        .andExpect(jsonPath("$.publications", Matchers.notNullValue()))
+        .andExpect(jsonPath("$.publications", Matchers.hasSize(Matchers.lessThanOrEqualTo(15))))
+        .andExpect(jsonPath("$.pagination", Matchers.lessThanOrEqualTo(3)));
+        //Verificar paginaciones en las ultimas paginas
+        ResultActions response3 = mockMvc.perform(get("/v1/publication/aleatory/10")
+            .with(SecurityMockMvcRequestPostProcessors.csrf())  //TOKEN CSRF de seguridad
+            .contentType(MediaType.APPLICATION_JSON));
+
+        response3.andExpect(status().isOk())
+        .andExpect(jsonPath("$.publications", Matchers.notNullValue()))
+        .andExpect(jsonPath("$.publications", Matchers.hasSize(Matchers.lessThanOrEqualTo(15))))
+        .andExpect(jsonPath("$.pagination", Matchers.equalTo(0)));
+
+        //Verificar paginaciones penultima pagina
+        ResultActions response4 = mockMvc.perform(get("/v1/publication/aleatory/9")
+            .with(SecurityMockMvcRequestPostProcessors.csrf())  //TOKEN CSRF de seguridad
+            .contentType(MediaType.APPLICATION_JSON));
+
+        response4.andExpect(status().isOk())
+        .andExpect(jsonPath("$.publications", Matchers.notNullValue()))
+        .andExpect(jsonPath("$.publications", Matchers.hasSize(Matchers.lessThanOrEqualTo(15))))
+        .andExpect(jsonPath("$.pagination", Matchers.equalTo(1)));
+
+        //Verificar paginaciones en antepenultima pagina
+        ResultActions response5 = mockMvc.perform(get("/v1/publication/aleatory/8")
+            .with(SecurityMockMvcRequestPostProcessors.csrf())  //TOKEN CSRF de seguridad
+            .contentType(MediaType.APPLICATION_JSON));
+
+        response5.andExpect(status().isOk())
+        .andExpect(jsonPath("$.publications", Matchers.notNullValue()))
+        .andExpect(jsonPath("$.publications", Matchers.hasSize(Matchers.lessThanOrEqualTo(15))))
+        .andExpect(jsonPath("$.pagination", Matchers.equalTo(2)));
+
+        //Verificar paginacion en 3 paginas antes que la ultima pagina
+        ResultActions response6 = mockMvc.perform(get("/v1/publication/aleatory/7")
+            .with(SecurityMockMvcRequestPostProcessors.csrf())  //TOKEN CSRF de seguridad
+            .contentType(MediaType.APPLICATION_JSON));
+
+        response6.andExpect(status().isOk())
+        .andExpect(jsonPath("$.publications", Matchers.notNullValue()))
+        .andExpect(jsonPath("$.publications", Matchers.hasSize(Matchers.lessThanOrEqualTo(15))))
+        .andExpect(jsonPath("$.pagination", Matchers.equalTo(3)));
+       
+    }
 
 
 }

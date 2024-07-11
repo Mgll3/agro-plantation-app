@@ -26,7 +26,7 @@ public class ProducerRequest {
     private User user;
     @Column(columnDefinition = "DATETIME")
     private Date date;
-    @Column(length = 15, nullable = false)
+    @Column(length = 40, nullable = false)
     private String gardenName;
     @Column(length = 15, nullable = false)
     private String gardenSize;

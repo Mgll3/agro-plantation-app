@@ -313,7 +313,7 @@ public class PublicationService implements IPublicationService {
             throw new IllegalArgumentException(Constants.PAGE_INVALID);
         }
 
-        int pagTop = pag * 15 + 31;
+        int pagTop = 46;
 
         // Busco si hay 3 paginaciones más adelante de la actual (1 Paginacion = 15)
         if (pag == 1) {
@@ -350,7 +350,7 @@ public class PublicationService implements IPublicationService {
             throw new IllegalArgumentException(Constants.PAGE_INVALID);
         }
 
-        int pagTop = pag * 15 + 31;
+        int pagTop = 46;
 
         // Busco si hay 3 paginaciones más adelante de la actual (1 Paginacion = 15)
         if (pag == 1) {
@@ -387,7 +387,7 @@ public class PublicationService implements IPublicationService {
             throw new IllegalArgumentException(Constants.PAGE_INVALID);
         }
 
-        int pagTop = pag * 15 + 31;
+        int pagTop = 46;
 
         // Busco si hay 3 paginaciones más adelante de la actual (1 Paginacion = 15)
         if (pag == 1) {
@@ -424,7 +424,7 @@ public class PublicationService implements IPublicationService {
             throw new IllegalArgumentException(Constants.PAGE_INVALID);
         }
 
-        int pagTop = pag * 15 + 31;
+        int pagTop = 46;
 
         // Busco si hay 3 paginaciones más adelante de la actual (1 Paginacion = 15)
         if (pag == 1) {
@@ -460,7 +460,7 @@ public class PublicationService implements IPublicationService {
             throw new IllegalArgumentException(Constants.PAGE_INVALID);
         }
 
-        int pagTop = pag * 15 + 31;
+        int pagTop = 46;
 
         // Busco si hay 3 paginaciones más adelante de la actual (1 Paginacion = 15)
         if (pag == 1) {
@@ -493,7 +493,7 @@ public class PublicationService implements IPublicationService {
             throw new IllegalArgumentException(Constants.PAGE_INVALID);
         }
 
-        int pagTop = pag * 15 + 31;
+        int pagTop = 46;
 
         // Busco si hay 3 paginaciones más adelante de la actual (1 Paginacion = 15)
         if (pag == 1) {
