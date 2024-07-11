@@ -50,9 +50,9 @@ public class UserService implements IUserService {
     
 
     @Transactional
-    public AthAnswerDTO authenticate(LoginDTO LoginDTO) {
-        String token = securityService.authenticate(LoginDTO);
-        User user = userRepository.findByEmail(LoginDTO.getEmail()).orElseThrow(() -> new DataAccessException("User not found") {
+    public AthAnswerDTO authenticate(LoginDTO loginDTO) {
+        String token = securityService.authenticate(loginDTO);
+        User user = userRepository.findByEmail(loginDTO.getEmail()).orElseThrow(() -> new DataAccessException("User not found") {
         });
         return new AthAnswerDTO(token, user.getName(), user.getLastname(), user.getUserType().getType());
     }
@@ -64,8 +64,9 @@ public class UserService implements IUserService {
         User user = userRepository.findByEmail(email)
             .orElseThrow(() -> new DataAccessException("User not found") {
         });
-        AthAnswerDTO answer = new AthAnswerDTO(user.getName(), user.getLastname(), user.getUserType().getType());
-        return answer;
+        
+        return new AthAnswerDTO(user.getName(), user.getLastname(), user.getUserType().getType());
+        
     }
 
 }

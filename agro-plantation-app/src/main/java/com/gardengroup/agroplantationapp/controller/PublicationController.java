@@ -50,7 +50,7 @@ public class PublicationController {
             @ApiResponse(responseCode = "400", description = "Error de validación en los campos de la publicación")
     })
     @PostMapping("/save")
-    public ResponseEntity<?> savePublication(@Valid @RequestBody PublicationSaveDTO publication, HttpServletRequest request) {
+    public ResponseEntity<Publication> savePublication(@Valid @RequestBody PublicationSaveDTO publication, HttpServletRequest request) {
         try {
             String email = securityService.getEmail(request);
             //Validar si existe correo
@@ -75,7 +75,7 @@ public class PublicationController {
         @ApiResponse(responseCode = "404", description = "Publicación no encontrada")
     })
     @PostMapping("/saveImages")
-    public ResponseEntity<?> saveImages(
+    public ResponseEntity<Void> saveImages(
             @RequestParam("images") List<MultipartFile> files,
             @RequestParam("publicationId") Long publicationId,
             @RequestParam("mainImage") MultipartFile mainFile) {
@@ -129,7 +129,7 @@ public class PublicationController {
             @ApiResponse(responseCode = "500", description = "Error al obtener la publicación")
     })
     @GetMapping("/{id}")
-    public ResponseEntity<?> getPublication(@PathVariable Long id) {
+    public ResponseEntity<Publication> getPublication(@PathVariable Long id) {
         try {
             Publication publication = publicationService.getPublication(id);
             return new ResponseEntity<>(publication, HttpStatus.OK);
@@ -153,7 +153,7 @@ public class PublicationController {
             @ApiResponse(responseCode = "500", description = "Error al obtener las publicaciones")
     })
     @GetMapping("/email/{email}")
-    public ResponseEntity<?> PublicationsByEmail(@PathVariable String email) {
+    public ResponseEntity<List<Publication>> publicationsByEmail(@PathVariable String email) {
         try {
             List<Publication> publication = publicationService.publicationsByEmail(email);
             return new ResponseEntity<>(publication, HttpStatus.OK);
@@ -177,7 +177,7 @@ public class PublicationController {
             @ApiResponse(responseCode = "304", description = "Error al actualizar la publicación, No se modificó ningún campo")
     })
     @PutMapping()
-    public ResponseEntity<?> updatePublication(@RequestBody PublicationUpdDTO publicationUpdDTO) {
+    public ResponseEntity<Void> updatePublication(@RequestBody PublicationUpdDTO publicationUpdDTO) {
         try {
             publicationService.updatePublication(publicationUpdDTO);
             return ResponseEntity.status(HttpStatus.OK).build();
@@ -199,7 +199,7 @@ public class PublicationController {
             @ApiResponse(responseCode = "501", description = "Error interno al eliminar la publicación")
     })
     @DeleteMapping("{id}")
-    public ResponseEntity<?> deletePublication(@PathVariable Long id) {
+    public ResponseEntity<Void> deletePublication(@PathVariable Long id) {
         try {
             publicationService.deletePublication(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -399,7 +399,6 @@ public class PublicationController {
             if (e.getMessage().equals(Constants.PS_NOT_FOUND)) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             } else {
-                System.out.println(e.getMessage());
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
             }
         }
@@ -455,7 +454,7 @@ public class PublicationController {
     
     //Temporal, cambiar publicacion de estado a pendiente
     @PutMapping("/changeToPending/{publicationId}")
-    public ResponseEntity<?> changeToPending(@PathVariable Long publicationId) {
+    public ResponseEntity<Void> changeToPending(@PathVariable Long publicationId) {
         try {
             publicationService.changeToPending(publicationId);
             return new ResponseEntity<>(HttpStatus.OK);

@@ -33,12 +33,12 @@ public class UserController {
                     content = @Content(schema = @Schema(implementation = String.class)))
     })
     @GetMapping("/userSession")
-    public ResponseEntity<?> userSession(HttpServletRequest request) {
+    public ResponseEntity<AthAnswerDTO> userSession(HttpServletRequest request) {
         try {
             AthAnswerDTO answer = userService.getUserSession(request);
             return ResponseEntity.ok(answer);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
         
         

@@ -12,7 +12,7 @@ public interface IUserService {
     public User createUser(RegisterDTO dtoRegistrer);
     public User findByname(String name);
     public Boolean existsEmail(String email);
-    public AthAnswerDTO authenticate(LoginDTO LoginDTO);
+    public AthAnswerDTO authenticate(LoginDTO loginDTO);
     public AthAnswerDTO getUserSession(HttpServletRequest request);
     
 }

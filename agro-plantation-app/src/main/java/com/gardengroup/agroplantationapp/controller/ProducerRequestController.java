@@ -42,12 +42,12 @@ public class ProducerRequestController {
             @ApiResponse(responseCode = "500", description = "Error en el servidor al obtener las solicitudes de productores pendientes")
     })
     @GetMapping("/pending")
-    public ResponseEntity<?> getProducerRequests() {
+    public ResponseEntity<List<ProducerRequest>> getProducerRequests() {
         try {
             List<ProducerRequest> producerRequests = producerRequestService.getPendingProducerRequests();
             return ResponseEntity.ok(producerRequests);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error en el servidor" );
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
@@ -62,7 +62,7 @@ public class ProducerRequestController {
     })
     //@PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/approve/{producerRequestId}")
-    public ResponseEntity<?> approveProducerRequest(@PathVariable Long producerRequestId) {
+    public ResponseEntity<Void> approveProducerRequest(@PathVariable Long producerRequestId) {
         try {
             producerRequestService.approve(producerRequestId);
             return new ResponseEntity<>(HttpStatus.OK);
@@ -81,7 +81,7 @@ public class ProducerRequestController {
             @ApiResponse(responseCode = "501", description = "Error al rechazar la solicitud del productor")
     })
     @PostMapping("/reject/{producerRequestId}")
-    public ResponseEntity<?> rejectProducerRequest(@PathVariable Long producerRequestId) {
+    public ResponseEntity<Void> rejectProducerRequest(@PathVariable Long producerRequestId) {
         try {
             producerRequestService.reject(producerRequestId);
             return new ResponseEntity<>(HttpStatus.OK);
@@ -100,7 +100,7 @@ public class ProducerRequestController {
                     content = @Content(schema = @Schema(implementation = String.class)))
     })
     @PostMapping("/send")
-    public ResponseEntity<?> requestToBecomeProducer(HttpServletRequest request, @RequestBody ProducerRequestSaveDTO producerRequest) {
+    public ResponseEntity<ProducerRequest> requestToBecomeProducer(HttpServletRequest request, @RequestBody ProducerRequestSaveDTO producerRequest) {
         try {
             String email = securityService.getEmail(request);
             ProducerRequest requestSaved = producerRequestService.sendProducerRequest(email, producerRequest);

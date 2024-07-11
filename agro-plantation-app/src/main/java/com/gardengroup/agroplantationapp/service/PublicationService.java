@@ -156,7 +156,7 @@ public class PublicationService implements IPublicationService {
 
         final List<Publication> publications = publicationRepository.publicationsByEmail(email);
 
-        if (publications.size() > 0) {
+        if (!publications.isEmpty()) {
             return publications;
         } else {
             throw new DataAccessException(Constants.PS_NOT_FOUND) {
@@ -175,9 +175,9 @@ public class PublicationService implements IPublicationService {
             throw new DataAccessException(Constants.P_NOT_FOUND) {
             };
         } else {
-            Publication PublicationSaved = publicationRepository.findById(publication.getId()).get();
-            PublicationSaved.updateInfo(publication);
-            publicationRepository.save(PublicationSaved);
+            Publication publicationSaved = publicationRepository.findById(publication.getId()).get();
+            publicationSaved.updateInfo(publication);
+            publicationRepository.save(publicationSaved);
         }
 
     }
@@ -334,8 +334,8 @@ public class PublicationService implements IPublicationService {
                 publications = publications.subList(0, 15);
             } 
 
-            PublicationFilterDTO publicationsDTO = new PublicationFilterDTO(publications, pagination);
-            return publicationsDTO;
+            return  new PublicationFilterDTO(publications, pagination);
+            
 
         } else {
             throw new DataAccessException(Constants.PS_NOT_FOUND) {
@@ -371,8 +371,8 @@ public class PublicationService implements IPublicationService {
                 publications = publications.subList(0, 15);
             } 
 
-            PublicationFilterDTO publicationsDTO = new PublicationFilterDTO(publications, pagination);
-            return publicationsDTO;
+            return new PublicationFilterDTO(publications, pagination);
+            
 
         } else {
             throw new DataAccessException(Constants.PS_NOT_FOUND) {
@@ -408,8 +408,8 @@ public class PublicationService implements IPublicationService {
                 publications = publications.subList(0, 15);
             } 
 
-            PublicationFilterDTO publicationsDTO = new PublicationFilterDTO(publications, pagination);
-            return publicationsDTO;
+            return new PublicationFilterDTO(publications, pagination);
+            
 
         } else {
             throw new DataAccessException(Constants.PS_NOT_FOUND) {
@@ -444,8 +444,7 @@ public class PublicationService implements IPublicationService {
                 publications = publications.subList(0, 15);
             } 
 
-            PublicationFilterDTO publicationsDTO = new PublicationFilterDTO(publications, pagination);
-            return publicationsDTO;
+            return new PublicationFilterDTO(publications, pagination);
 
         } else {
             throw new DataAccessException(Constants.PS_NOT_FOUND) {
@@ -477,8 +476,8 @@ public class PublicationService implements IPublicationService {
         int pagination = (int) (Math.ceil(paginationDouble)-1);
 
         if (!publications.isEmpty()) {
-            PublicationFilterDTO publicationsDTO = new PublicationFilterDTO(publications, pagination);
-            return publicationsDTO;
+            return new PublicationFilterDTO(publications, pagination);
+            
         } else {
             throw new DataAccessException(Constants.PS_NOT_FOUND) {
             };
@@ -514,8 +513,8 @@ public class PublicationService implements IPublicationService {
                 publications = publications.subList(0, 15);
             } 
 
-            PublicationFilterDTO publicationsDTO = new PublicationFilterDTO(publications, pagination);
-            return publicationsDTO;
+            return new PublicationFilterDTO(publications, pagination);
+            
 
         } else {
             throw new DataAccessException(Constants.PS_NOT_FOUND) {

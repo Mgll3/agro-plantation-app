@@ -28,9 +28,8 @@ public class SecurityService {
 
     
     public String getEmail(HttpServletRequest request) {
-        String Token = jwtAuthenticationFilter.getRequestToken(request);
-        String email = jwtTokenProvider.getJwtUser(Token);
-        return email;
+        String token = jwtAuthenticationFilter.getRequestToken(request);
+        return jwtTokenProvider.getJwtUser(token);
     }
 
     public String passwordEncoder(String password) {
@@ -40,8 +39,8 @@ public class SecurityService {
     public String authenticate(LoginDTO dtoLogin) { 
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(dtoLogin.getEmail(), dtoLogin.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String token = jwtTokenProvider.generateToken(authentication);
-        return token;
+        return jwtTokenProvider.generateToken(authentication);
+        
     }
     
 }

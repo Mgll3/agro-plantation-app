@@ -62,9 +62,9 @@ public class AuthController {
                     content = @Content(schema = @Schema(implementation = AthAnswerDTO.class)))
     })
     @PostMapping("/login")
-    public ResponseEntity<AthAnswerDTO> login(@RequestBody LoginDTO LoginDto) {
+    public ResponseEntity<AthAnswerDTO> login(@RequestBody LoginDTO loginDto) {
         try {
-            AthAnswerDTO answer = userService.authenticate(LoginDto);
+            AthAnswerDTO answer = userService.authenticate(loginDto);
             return new ResponseEntity<>(answer, HttpStatus.OK);
         } catch (Exception e) {
             if (e.getMessage().equals("User not found")) {

@@ -22,6 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gardengroup.agroplantationapp.model.dto.publication.PublicationSaveDTO;
+import com.gardengroup.agroplantationapp.model.dto.publication.PublicationUpdDTO;
 import com.gardengroup.agroplantationapp.model.dto.user.LoginDTO;
 import com.gardengroup.agroplantationapp.model.dto.user.RegisterDTO;
 import com.gardengroup.agroplantationapp.model.entity.Plantation;
@@ -99,7 +100,7 @@ public class PublicationTest {
 
     @DisplayName("Guardar una publicación en el sistema")
     @Test
-    public void shouldCanSavePublication() throws Exception{
+    public void shouldSavePublication() throws Exception{
 
         ResultActions response = mockMvc.perform(post("/v1/publication/save")
             .with(SecurityMockMvcRequestPostProcessors.csrf())  //TOKEN CSRF de seguridad
@@ -113,12 +114,72 @@ public class PublicationTest {
         .andExpect(jsonPath("$.author.name", Matchers.is(producerUser.getName())));
     }
 
+    @DisplayName("Guardar una publicación en el sistema")
+    //@Test         //TODO: Falta terminar
+    public void shouldGetOnePublication() throws Exception{
+        //Guardar la publicación
+        ResultActions saveResponse = mockMvc.perform(post("/v1/publication/save")
+            .with(SecurityMockMvcRequestPostProcessors.csrf())  //TOKEN CSRF de seguridad
+            .contentType(MediaType.APPLICATION_JSON)
+            .header("Authorization", "Bearer " + accessToken)   //Agrego el token JWT
+            .content(objectMapper.writeValueAsString(publicationSaveDto)));
+        
+        //Obtengo el id de la publicación guardada
+        MvcResult result = saveResponse.andExpect(status().isCreated()).andReturn();
+        String responseBody = result.getResponse().getContentAsString();
+        JsonNode jsonNode = objectMapper.readTree(responseBody);
+        Long publicationId = jsonNode.get("id").asLong();
+
+        ResultActions response = mockMvc.perform(get("/v1/publication/" + publicationId)
+        .with(SecurityMockMvcRequestPostProcessors.csrf())  //TOKEN CSRF de seguridad
+        .contentType(MediaType.APPLICATION_JSON));
+        
+        response.andExpect(status().isOk())
+        .andExpect(jsonPath("$.id", Matchers.is(publicationId.intValue())))
+        .andExpect(jsonPath("$.title", Matchers.is(publicationSaveDto.getTitle())))
+        .andExpect(jsonPath("$.author.name", Matchers.is(producerUser.getName())));
+
+    }
+
+    @DisplayName("Actualizar una publicación")
+    @Test
+    public void shouldUpdatePublication() throws Exception{
+        //Guardar publicación
+        ResultActions saveResponse = mockMvc.perform(post("/v1/publication/save")
+            .with(SecurityMockMvcRequestPostProcessors.csrf())  //TOKEN CSRF de seguridad
+            .contentType(MediaType.APPLICATION_JSON)
+            .header("Authorization", "Bearer " + accessToken)   //Agrego el token JWT
+            .content(objectMapper.writeValueAsString(publicationSaveDto)));
+        
+        //Obtengo el id de la publicación guardada
+        MvcResult result = saveResponse.andExpect(status().isCreated()).andReturn();
+        String responseBody = result.getResponse().getContentAsString();
+        JsonNode jsonNode = objectMapper.readTree(responseBody);
+        Long publicationId = jsonNode.get("id").asLong();
+
+        PublicationUpdDTO publicationUpdDto = new PublicationUpdDTO();
+        publicationUpdDto.setId(publicationId);
+        publicationUpdDto.setTitle("Publication 2");
+        Plantation plantation = publicationSaveDto.getPlantation();
+        plantation.setArea("200 sqm");
+        publicationUpdDto.setPlantation(plantation);
+
+        ResultActions response = mockMvc.perform(put("/v1/publication/")
+            .with(SecurityMockMvcRequestPostProcessors.csrf())  //TOKEN CSRF de seguridad
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(publicationUpdDto)));
+            
+        response.andExpect(status().isOk())
+            .andExpect(jsonPath("$.title", Matchers.is(publicationUpdDto.getTitle())))
+            .andExpect(jsonPath("$.author.name", Matchers.is(producerUser.getName())));
+
+    }
+
     @DisplayName("Obtener publicaciones aleatorias con minimo 1 y maximo 15 publicaciones y paginaciones correctas")
     @Test
-    public void shouldCanGetPublicationsByAleatory() throws Exception{
+    public void shouldGetPublicationsByAleatory() throws Exception{
 
         //Crear 136 publicaciones para testear, + 6 precreadas = 142 publicaciones
-        
         for(int i=0; i<136; i++){
             mockMvc.perform(post("/v1/publication/save")
                 .with(SecurityMockMvcRequestPostProcessors.csrf())  //TOKEN CSRF de seguridad
