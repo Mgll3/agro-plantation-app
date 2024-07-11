@@ -8,12 +8,14 @@ import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import GeoViewer from "../geolocator/GeoViewer";
 import { CoordinatesType } from "../../pages/admin/AdminPublicationDetails";
 import { getAddressCoordinates } from "../../interfaces/geolocation/getAddressCoordinates";
+import PublicationPreview from "../admin/createPublication/PublicationPreview";
 
 type CreatePublicationFormProps = {
 	handleSubmit: (formValues: NewPublicationType) => void;
 };
 
 function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
+	const [previewVisibility, setPreviewVisibility] = useState(false);
 	const [numberOfImages, setNumberOfImages] = useState<number>(0);
 	const [dragActive, setDragActive] = useState(false);
 	const [addressCoordinates, setAddressCoordinates] = useState<CoordinatesType | undefined>({
@@ -28,9 +30,22 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 	const axiosController = useRef<AbortController>();
 	const changeGeoMapTimeout = useRef<number>(0);
 
+	const previewButtonFuncionality = {
+		actionText: "Vista Previa",
+		handleClick: showPreview
+	};
+
 	const submitButtonFuncionality = {
 		submitText: "Publicar"
 	};
+
+	function showPreview() {
+		setPreviewVisibility(true);
+	}
+
+	function hidePreview() {
+		setPreviewVisibility(false);
+	}
 
 	function clickInput() {
 		inputFileElement.current?.click();
@@ -376,7 +391,7 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 
 				{/* FOURTH SECTION */}
 
-				<div className="w-full mt-[40px] pt-[24px] pb-[50px] px-[50px] border-grey300 border-[1px] border-solid rounded-md">
+				<div className="w-full mt-[40px] pt-[24px] pb-[11px] px-[50px] border-grey300 border-[1px] border-solid rounded-md">
 					<h2 className="text-[32px] font-bold">Detalles de la publicación</h2>
 					<p className="text-[16px] mt-[1rem]">
 						Información adicional sobre la huerta, es opcional si quiere sumar mas información sobre tu publicación
@@ -404,7 +419,7 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 
 					{/* LOCATION MAP */}
 
-					<div className="w-[100%] h-[265px] mt-[32px]">
+					<div className="z-0 w-[97%] h-[265px] mt-[32px]">
 						<GeoViewer
 							addressString={formik.values.address}
 							plantationName={formik.values.title}
@@ -413,7 +428,15 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 					</div>
 				</div>
 
-				<div className="flex justify-center w-full mt-20">
+				<div className="flex justify-between mx-auto w-[70%] mt-20">
+					<Button
+						buttonColor="yellow"
+						buttonFontSize="text-[24px]"
+						buttonPaddingY="py-[16px]"
+						buttonWidth="w-[208px]"
+						buttonFuncionality={previewButtonFuncionality}
+					/>
+
 					<Button
 						buttonColor="yellow"
 						buttonFontSize="text-[24px]"
@@ -423,6 +446,16 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 					/>
 				</div>
 			</form>
+
+			{previewVisibility === true && (
+				<PublicationPreview
+					handleClose={hidePreview}
+					mainImage={formik.values.files[0]}
+					title={formik.values.title}
+					productionType={formik.values.productionType}
+					mainText={formik.values.details}
+				/>
+			)}
 		</div>
 	);
 }
