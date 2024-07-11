@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AgroPlantationAppApplication.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">agro-plantation-app</a> &gt; <a href="index.source.html" class="el_package">com.gardengroup.agroplantationapp</a> &gt; <span class="el_source">AgroPlantationAppApplication.java</span></div><h1>AgroPlantationAppApplication.java</h1><pre class="source lang-java linenums">package com.gardengroup.agroplantationapp;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+<span class="fc" id="L7">public class AgroPlantationAppApplication {</span>
+	public static void main(String[] args) {
+<span class="nc" id="L9">		SpringApplication.run(AgroPlantationAppApplication.class, args);</span>
+		
+		/*
+		mvn package -DskipTests
+		docker build -t agro-plantation:1.59 .
+		docker pull mysql:8.1
+		docker run --name mysql-standalone -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=agroplantationapp -e MYSQL_USER=dev -e MYSQL_PASSWORD=dev -p 3306:3306 -d mysql:8.1
+		docker run -d -p 8080:8080 --name agro-plantation --link mysql-standalone:mysql aedf1f496cef
+
+
+
+
+
+
+
+
+		docker image ls
+
+		docker commit nombre_del_contenedor nombre_de_la_imagen
+		docker commit 925ec13322ac agro-plantation
+		docker commit 36b6f8129087 mysql-standalone
+
+		docker tag nombre_de_la_imagen usuario_dockerhub/nombre_del_repositorio
+		docker tag agro-plantation:1.59 mgll3/agro-plantation-app:Api-v1.59
+		docker tag mysql-standalone mgll3/agro-plantation-app:Mysql-v1.1
+
+		docker push mgll3/agro-plantation-app:Api-v1.59
+		docker push mgll3/agro-plantation-app:Mysql-v1.1
+		*/
+
+<span class="nc" id="L39">	}</span>
+
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

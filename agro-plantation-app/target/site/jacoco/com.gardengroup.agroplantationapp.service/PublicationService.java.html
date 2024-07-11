@@ -1,0 +1,539 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PublicationService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">agro-plantation-app</a> &gt; <a href="index.source.html" class="el_package">com.gardengroup.agroplantationapp.service</a> &gt; <span class="el_source">PublicationService.java</span></div><h1>PublicationService.java</h1><pre class="source lang-java linenums">package com.gardengroup.agroplantationapp.service;
+
+import com.gardengroup.agroplantationapp.model.dto.publication.PublicationFilterDTO;
+import com.gardengroup.agroplantationapp.model.dto.publication.PublicationSaveDTO;
+import com.gardengroup.agroplantationapp.model.dto.publication.PublicationUpdDTO;
+import com.gardengroup.agroplantationapp.model.entity.*;
+import com.gardengroup.agroplantationapp.model.repository.PublicationRepository;
+import com.gardengroup.agroplantationapp.model.repository.StateRequestRepository;
+import com.gardengroup.agroplantationapp.model.repository.UserRepository;
+import com.gardengroup.agroplantationapp.model.repository.VoteRepository;
+import com.gardengroup.agroplantationapp.utils.Constants;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import jakarta.transaction.Transactional;
+
+import java.time.LocalDateTime;
+import java.util.*;
+import java.util.stream.Collectors;
+
+@Service
+<span class="fc" id="L25">public class PublicationService implements IPublicationService {</span>
+
+    @Autowired
+    private PublicationRepository publicationRepository;
+    @Autowired
+    private CloudinaryService cloudinaryService;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    StateRequestRepository stateRequestRepository;
+    @Autowired
+    VoteRepository voteRepository;
+
+
+    //crea la publicacion y ya pone su estado de la autorizacion en pendiente
+    @Transactional
+    public Publication savePublication(PublicationSaveDTO publicationDTO, String email) {
+
+<span class="fc" id="L43">        Publication publication = new Publication(publicationDTO);</span>
+
+<span class="fc" id="L45">        User user = userRepository.findByEmail(email)</span>
+<span class="pc" id="L46">            .orElseThrow(() -&gt; new DataAccessException(Constants.U_NOT_FOUND) {</span>
+        });
+
+<span class="fc" id="L49">        publication.setAuthor(user);</span>
+
+        //Asignaciones de parametros default
+<span class="fc" id="L52">        publication.setVisibility(false);</span>
+<span class="fc" id="L53">        publication.setScore(0);</span>
+        //Inicializo la publicacion con estado rechazado
+<span class="fc" id="L55">        publication.setAuthorizationStatus(new StateRequest(3L));</span>
+<span class="fc" id="L56">        publication.setPublicationDate(LocalDateTime.now());</span>
+<span class="fc" id="L57">        publication.setPlantation(publication.getPlantation());</span>
+
+<span class="fc" id="L59">        return publicationRepository.save(publication);</span>
+    }
+
+    @Transactional
+    public void saveImages(MultipartFile mainFile, List&lt;MultipartFile&gt; files, Long publicationId) {
+<span class="nc" id="L64">        String folder = &quot;publications&quot;;</span>
+
+        //Busqueda de publicacion que vamos a modificar
+<span class="nc" id="L67">        Publication publication = publicationRepository.findById(publicationId)</span>
+<span class="nc" id="L68">            .orElseThrow(() -&gt; new DataAccessException(Constants.P_NOT_FOUND) {</span>
+        });
+
+        //Revisar si hay imagen principal y luego guardarla
+<span class="nc bnc" id="L72" title="All 2 branches missed.">        if (mainFile.getOriginalFilename() != &quot;&quot;){</span>
+<span class="nc" id="L73">            Map result = cloudinaryService.upload(mainFile, folder);</span>
+    
+<span class="nc" id="L75">            Image mainImage = new Image(result.get(&quot;public_id&quot;).toString(), </span>
+<span class="nc" id="L76">            result.get(&quot;secure_url&quot;).toString());</span>
+<span class="nc" id="L77">            publication.setMainImage(mainImage);</span>
+<span class="nc" id="L78">        } else{</span>
+<span class="nc" id="L79">            throw new DataAccessException(&quot;Main image not found&quot;) {</span>
+            };
+        }
+<span class="nc" id="L82">        List&lt;Image&gt; images = new ArrayList&lt;Image&gt;();</span>
+        //Revisar si hay imagenes secundarias y luego guardarlas
+<span class="nc bnc" id="L84" title="All 2 branches missed.">        if (files.get(0).getOriginalFilename() != &quot;&quot;) {</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">            for (MultipartFile file : files) {</span>
+                //Posible montaje simultaneo de imagenes para mayor velocidad
+<span class="nc" id="L87">                Map resultC = cloudinaryService.upload(file, folder);</span>
+<span class="nc" id="L88">                Image image = new Image(resultC.get(&quot;public_id&quot;).toString(), </span>
+<span class="nc" id="L89">                    resultC.get(&quot;secure_url&quot;).toString());</span>
+<span class="nc" id="L90">                images.add(image);</span>
+<span class="nc" id="L91">            }</span>
+<span class="nc" id="L92">            publication.setImages(images);</span>
+        } 
+        
+<span class="nc" id="L95">        publicationRepository.save(publication);</span>
+<span class="nc" id="L96">    }</span>
+
+    @Transactional
+    public Publication updateVisibility(Long publicationId, String email) {
+        
+<span class="nc" id="L101">        User user = userRepository.findByEmail(email)</span>
+<span class="nc" id="L102">            .orElseThrow(() -&gt; new DataAccessException(Constants.U_NOT_FOUND) {</span>
+        });
+
+<span class="nc" id="L105">        Optional&lt;Publication&gt; optionalPublication = publicationRepository.findById(publicationId);</span>
+
+<span class="nc bnc" id="L107" title="All 2 branches missed.">        if (optionalPublication.isPresent()) {</span>
+<span class="nc" id="L108">            Publication publication = optionalPublication.get();</span>
+
+            // Verificar si el usuario es el autor de la publicación
+<span class="nc bnc" id="L111" title="All 2 branches missed.">            if (user.equals(publication.getAuthor())) {</span>
+                // Verificar si la publicación está autorizada
+<span class="nc bnc" id="L113" title="All 2 branches missed.">                if (publication.getAuthorizationStatus().getState().equals(&quot;ACCEPTED&quot;)) {</span>
+<span class="nc" id="L114">                    publication.setVisibility(true);</span>
+<span class="nc" id="L115">                    return publicationRepository.save(publication);</span>
+                } else {
+<span class="nc" id="L117">                    return null;</span>
+                }
+            } else {
+<span class="nc" id="L120">                return null;</span>
+            }
+        } else {
+<span class="nc" id="L123">            return null;</span>
+        }
+    }
+
+    
+    public List&lt;Publication&gt; getTopPublications() {
+        
+<span class="nc" id="L130">        List&lt;Publication&gt; allPublications = publicationRepository.findTop6ByOrderByScoreDesc();</span>
+
+<span class="nc bnc" id="L132" title="All 2 branches missed.">        if (allPublications.isEmpty()) {</span>
+<span class="nc" id="L133">            throw new DataAccessException(Constants.PS_NOT_FOUND) {</span>
+            };
+        }
+        // Limitar la cantidad de publicaciones devueltas a exactamente 6
+<span class="nc" id="L137">        return allPublications.stream().limit(6).collect(Collectors.toList());</span>
+    }
+
+    @Transactional
+    public Publication getPublication(Long id) {
+
+<span class="nc" id="L143">        Optional&lt;Publication&gt; publication = publicationRepository.findById(id);</span>
+
+<span class="nc bnc" id="L145" title="All 2 branches missed.">        if (publication.isPresent()) {</span>
+<span class="nc" id="L146">            return publication.get();</span>
+        } else {
+<span class="nc" id="L148">            throw new DataAccessException(Constants.P_NOT_FOUND) {</span>
+            };
+        }
+
+    }
+
+    @Transactional
+    public List&lt;Publication&gt; publicationsByEmail(String email) {
+
+<span class="nc" id="L157">        final List&lt;Publication&gt; publications = publicationRepository.publicationsByEmail(email);</span>
+
+<span class="nc bnc" id="L159" title="All 2 branches missed.">        if (publications.size() &gt; 0) {</span>
+<span class="nc" id="L160">            return publications;</span>
+        } else {
+<span class="nc" id="L162">            throw new DataAccessException(Constants.PS_NOT_FOUND) {</span>
+            };
+        }
+
+    }
+
+
+    @Transactional
+    public void updatePublication(PublicationUpdDTO publicationUpdDTO) {
+
+<span class="nc" id="L172">        Publication publication = new Publication(publicationUpdDTO);</span>
+
+<span class="nc bnc" id="L174" title="All 2 branches missed.">        if (!publicationRepository.existsById(publication.getId())) {</span>
+<span class="nc" id="L175">            throw new DataAccessException(Constants.P_NOT_FOUND) {</span>
+            };
+        } else {
+<span class="nc" id="L178">            Publication PublicationSaved = publicationRepository.findById(publication.getId()).get();</span>
+<span class="nc" id="L179">            PublicationSaved.updateInfo(publication);</span>
+<span class="nc" id="L180">            publicationRepository.save(PublicationSaved);</span>
+        }
+
+<span class="nc" id="L183">    }</span>
+
+    @Transactional
+    public void deletePublication(Long id) {
+<span class="nc" id="L187">        Publication publicationSaved = publicationRepository.findById(id)</span>
+<span class="nc" id="L188">            .orElseThrow(() -&gt; new DataAccessException(Constants.P_NOT_FOUND) {</span>
+        });
+
+        //Comprobaciones, existencia de las imagenes
+<span class="nc bnc" id="L192" title="All 2 branches missed.">        if (publicationSaved.getMainImage() != null) {</span>
+<span class="nc" id="L193">            cloudinaryService.delete(publicationSaved.getMainImage().getId());</span>
+        }
+<span class="nc bnc" id="L195" title="All 2 branches missed.">        if (publicationSaved.getImages() != null) {</span>
+            
+<span class="nc bnc" id="L197" title="All 2 branches missed.">            for (Image image : publicationSaved.getImages()) {</span>
+<span class="nc" id="L198">                cloudinaryService.delete(image.getId());</span>
+<span class="nc" id="L199">            }</span>
+        }
+        
+<span class="nc" id="L202">        publicationRepository.deleteById(id);</span>
+
+<span class="nc" id="L204">    }</span>
+
+    @Transactional
+    public List&lt;Publication&gt; pendingPublications() {
+<span class="nc" id="L208">        return publicationRepository.findAllPendingPublications();</span>
+    }
+
+    @Transactional
+    public void approvePublication(Long publicationId) {
+<span class="nc" id="L213">        Optional&lt;Publication&gt; optionalPublication = publicationRepository.findById(publicationId);</span>
+
+<span class="nc bnc" id="L215" title="All 2 branches missed.">        if (optionalPublication.isPresent()) {</span>
+<span class="nc" id="L216">            Publication publication = optionalPublication.get();</span>
+
+<span class="nc bnc" id="L218" title="All 2 branches missed.">            if (&quot;PENDING&quot;.equals(publication.getAuthorizationStatus().getState())) {</span>
+
+                // Buscar el estado &quot;ACCEPTED&quot; en la tabla StateRequest
+<span class="nc" id="L221">                StateRequest acceptedState = stateRequestRepository.findByState(&quot;ACCEPTED&quot;)</span>
+<span class="nc" id="L222">                        .orElseThrow(() -&gt; new RuntimeException(&quot;Estado 'ACCEPTED' no encontrado&quot;));</span>
+                
+                // Asignar el estado &quot;ACCEPTED&quot; a la publicación
+<span class="nc" id="L225">                publication.setAuthorizationStatus(acceptedState);</span>
+
+<span class="nc" id="L227">                publicationRepository.save(publication);</span>
+
+<span class="nc" id="L229">            } else {</span>
+<span class="nc" id="L230">                throw new IllegalStateException(&quot;La publicación con ID &quot; + publicationId + &quot; no está en estado PENDIENTE&quot;);</span>
+            }
+<span class="nc" id="L232">        } else {</span>
+<span class="nc" id="L233">            throw new IllegalArgumentException(Constants.P_NOT_FOUND);</span>
+        }
+<span class="nc" id="L235">    }</span>
+
+    @Transactional
+    public void rejectPublication(Long publicationId) {
+<span class="nc" id="L239">        Optional&lt;Publication&gt; optionalPublication = publicationRepository.findById(publicationId);</span>
+
+<span class="nc bnc" id="L241" title="All 2 branches missed.">        if (optionalPublication.isPresent()) {</span>
+<span class="nc" id="L242">            Publication publication = optionalPublication.get();</span>
+
+<span class="nc bnc" id="L244" title="All 2 branches missed.">            if (&quot;PENDING&quot;.equals(publication.getAuthorizationStatus().getState())) {</span>
+                // Buscar el estado &quot;DECLINED&quot; en la tabla StateRequest
+<span class="nc" id="L246">                StateRequest declinedState = stateRequestRepository.findByState(&quot;DECLINED&quot;)</span>
+<span class="nc" id="L247">                        .orElseThrow(() -&gt; new RuntimeException(&quot;Estado 'DECLINED' no encontrado&quot;));</span>
+
+                // Asignar el estado &quot;DECLINED&quot; a la publicación
+<span class="nc" id="L250">                publication.setAuthorizationStatus(declinedState);</span>
+
+                // Guardar la publicación actualizada en la base de datos
+<span class="nc" id="L253">                publicationRepository.save(publication);</span>
+<span class="nc" id="L254">            } else {</span>
+<span class="nc" id="L255">                throw new IllegalStateException(&quot;La publicación con ID &quot; + publicationId + &quot; no está en estado PENDIENTE&quot;);</span>
+            }
+<span class="nc" id="L257">        } else {</span>
+<span class="nc" id="L258">            throw new IllegalArgumentException(&quot;Publicación con ID &quot; + publicationId + &quot; no encontrada.&quot;);</span>
+        }
+<span class="nc" id="L260">    }</span>
+
+
+    @Transactional
+    public Vote toggleVote(Long publicationId, String userEmail) {
+
+<span class="nc" id="L266">        Publication publication = publicationRepository.findById(publicationId)</span>
+<span class="nc" id="L267">                .orElseThrow(() -&gt; new IllegalArgumentException(Constants.P_NOT_FOUND));</span>
+
+        // Verificar si el usuario ya ha votado en esta publicación
+<span class="nc" id="L270">        Vote existingVote = voteRepository.findByUserEmailAndPublicationId(userEmail, publicationId);</span>
+
+<span class="nc bnc" id="L272" title="All 2 branches missed.">        if (existingVote != null) {</span>
+            // El usuario ya ha votado, cambiar el estado del voto
+<span class="nc bnc" id="L274" title="All 2 branches missed.">            existingVote.setState(!existingVote.isState()); // Cambiar el estado del voto</span>
+
+            // Actualizar el puntaje de la publicación en función del cambio de estado del voto
+<span class="nc bnc" id="L277" title="All 2 branches missed.">            int scoreChange = existingVote.isState() ? 1 : -1; // Sumar 1 al puntaje si se vota positivamente, restar 1 si se quita el voto positivo</span>
+<span class="nc" id="L278">            int newScore = publication.getScore() + scoreChange; // Calcular el nuevo puntaje</span>
+<span class="nc" id="L279">            publication.setScore(newScore);</span>
+
+            // Guardar el voto actualizado en la base de datos
+<span class="nc" id="L282">            voteRepository.save(existingVote);</span>
+<span class="nc" id="L283">        } else {</span>
+            // El usuario no ha votado antes, se crea un nuevo voto
+<span class="nc" id="L285">            User user = userRepository.findByEmail(userEmail)</span>
+<span class="nc" id="L286">                .orElseThrow(() -&gt; new DataAccessException(Constants.U_NOT_FOUND) {</span>
+            });
+
+<span class="nc" id="L289">            Vote newVote = new Vote();</span>
+<span class="nc" id="L290">            newVote.setUser(user);</span>
+<span class="nc" id="L291">            newVote.setPublication(publication);</span>
+<span class="nc" id="L292">            newVote.setState(true); // Indica que el usuario votó positivamente</span>
+
+            // Actualizar el puntaje de la publicación sumando 1 al puntaje actual
+<span class="nc" id="L295">            int newScore = publication.getScore() + 1; // Sumar 1 al puntaje</span>
+<span class="nc" id="L296">            publication.setScore(newScore);</span>
+
+            // Guardar el nuevo voto en la base de datos
+<span class="nc" id="L299">            voteRepository.save(newVote);</span>
+        }
+
+        // Guardar la publicación con el puntaje actualizado
+<span class="nc" id="L303">        publicationRepository.save(publication);</span>
+
+<span class="nc" id="L305">        return existingVote;</span>
+    }
+
+
+    @Transactional
+    public PublicationFilterDTO getPublicationsByLike(int pag){
+        
+<span class="nc bnc" id="L312" title="All 2 branches missed.">        if (pag &lt; 1) {</span>
+<span class="nc" id="L313">            throw new IllegalArgumentException(Constants.PAGE_INVALID);</span>
+        }
+
+<span class="nc" id="L316">        int pagTop = pag * 15 + 31;</span>
+
+        // Busco si hay 3 paginaciones más adelante de la actual (1 Paginacion = 15)
+<span class="nc bnc" id="L319" title="All 2 branches missed.">        if (pag == 1) {</span>
+<span class="nc" id="L320">            pag = 0;</span>
+        } else {
+<span class="nc" id="L322">            pag = (pag-1) * 15;</span>
+        }
+        
+
+<span class="nc" id="L326">        List&lt;Publication&gt; publications = publicationRepository.publicationsBylike(pag, pagTop);</span>
+        //Calculo número posible de paginaciones que hay en base de datos
+<span class="nc" id="L328">        Double paginationDouble = (double) publications.size() / 15;</span>
+<span class="nc" id="L329">        int pagination = (int) (Math.ceil(paginationDouble)-1);</span>
+
+<span class="nc bnc" id="L331" title="All 2 branches missed.">        if (!publications.isEmpty()) {</span>
+<span class="nc bnc" id="L332" title="All 2 branches missed.">            if (publications.size() &gt; 15) {</span>
+                //Envio solo 15 publicaciones que necesita el front
+<span class="nc" id="L334">                publications = publications.subList(0, 15);</span>
+            } 
+
+<span class="nc" id="L337">            PublicationFilterDTO publicationsDTO = new PublicationFilterDTO(publications, pagination);</span>
+<span class="nc" id="L338">            return publicationsDTO;</span>
+
+        } else {
+<span class="nc" id="L341">            throw new DataAccessException(Constants.PS_NOT_FOUND) {</span>
+            };
+        }
+    }
+
+    @Transactional
+    public PublicationFilterDTO getPublicationsByUser(int pag){
+
+<span class="nc bnc" id="L349" title="All 2 branches missed.">        if (pag &lt; 1) {</span>
+<span class="nc" id="L350">            throw new IllegalArgumentException(Constants.PAGE_INVALID);</span>
+        }
+
+<span class="nc" id="L353">        int pagTop = pag * 15 + 31;</span>
+
+        // Busco si hay 3 paginaciones más adelante de la actual (1 Paginacion = 15)
+<span class="nc bnc" id="L356" title="All 2 branches missed.">        if (pag == 1) {</span>
+<span class="nc" id="L357">            pag = 0;</span>
+        } else {
+<span class="nc" id="L359">            pag = (pag-1) * 15;</span>
+        }
+        
+
+<span class="nc" id="L363">        List&lt;Publication&gt; publications = publicationRepository.publicationsByUser(pag, pagTop);</span>
+        //Calculo número posible de paginaciones que hay en base de datos
+<span class="nc" id="L365">        Double paginationDouble = (double) publications.size() / 15;</span>
+<span class="nc" id="L366">        int pagination = (int) (Math.ceil(paginationDouble)-1);</span>
+
+<span class="nc bnc" id="L368" title="All 2 branches missed.">        if (!publications.isEmpty()) {</span>
+<span class="nc bnc" id="L369" title="All 2 branches missed.">            if (publications.size() &gt; 15) {</span>
+                //Envio solo 15 publicaciones que necesita el front
+<span class="nc" id="L371">                publications = publications.subList(0, 15);</span>
+            } 
+
+<span class="nc" id="L374">            PublicationFilterDTO publicationsDTO = new PublicationFilterDTO(publications, pagination);</span>
+<span class="nc" id="L375">            return publicationsDTO;</span>
+
+        } else {
+<span class="nc" id="L378">            throw new DataAccessException(Constants.PS_NOT_FOUND) {</span>
+            };
+        }
+    }
+
+    @Transactional
+    public PublicationFilterDTO getPublicationsByDate(int pag){
+        
+<span class="nc bnc" id="L386" title="All 2 branches missed.">        if (pag &lt; 1) {</span>
+<span class="nc" id="L387">            throw new IllegalArgumentException(Constants.PAGE_INVALID);</span>
+        }
+
+<span class="nc" id="L390">        int pagTop = pag * 15 + 31;</span>
+
+        // Busco si hay 3 paginaciones más adelante de la actual (1 Paginacion = 15)
+<span class="nc bnc" id="L393" title="All 2 branches missed.">        if (pag == 1) {</span>
+<span class="nc" id="L394">            pag = 0;</span>
+        } else {
+<span class="nc" id="L396">            pag = (pag-1) * 15;</span>
+        }
+        
+
+<span class="nc" id="L400">        List&lt;Publication&gt; publications = publicationRepository.publicationsByDate(pag, pagTop);</span>
+        //Calculo número posible de paginaciones que hay en base de datos
+<span class="nc" id="L402">        Double paginationDouble = (double) publications.size() / 15;</span>
+<span class="nc" id="L403">        int pagination = (int) (Math.ceil(paginationDouble)-1);</span>
+
+<span class="nc bnc" id="L405" title="All 2 branches missed.">        if (!publications.isEmpty()) {</span>
+<span class="nc bnc" id="L406" title="All 2 branches missed.">            if (publications.size() &gt; 15) {</span>
+                //Envio solo 15 publicaciones que necesita el front
+<span class="nc" id="L408">                publications = publications.subList(0, 15);</span>
+            } 
+
+<span class="nc" id="L411">            PublicationFilterDTO publicationsDTO = new PublicationFilterDTO(publications, pagination);</span>
+<span class="nc" id="L412">            return publicationsDTO;</span>
+
+        } else {
+<span class="nc" id="L415">            throw new DataAccessException(Constants.PS_NOT_FOUND) {</span>
+            };
+        }
+    }
+
+    @Transactional
+    public PublicationFilterDTO getPublicationsByAleatory(int pag){
+        
+<span class="nc bnc" id="L423" title="All 2 branches missed.">        if (pag &lt; 1) {</span>
+<span class="nc" id="L424">            throw new IllegalArgumentException(Constants.PAGE_INVALID);</span>
+        }
+
+<span class="nc" id="L427">        int pagTop = pag * 15 + 31;</span>
+
+        // Busco si hay 3 paginaciones más adelante de la actual (1 Paginacion = 15)
+<span class="nc bnc" id="L430" title="All 2 branches missed.">        if (pag == 1) {</span>
+<span class="nc" id="L431">            pag = 0;</span>
+        } else {
+<span class="nc" id="L433">            pag = (pag-1) * 15;</span>
+        }
+        
+<span class="nc" id="L436">        List&lt;Publication&gt; publications = publicationRepository.publicationsByAleatory(pag, pagTop);</span>
+        //Calculo número posible de paginaciones que hay en base de datos
+<span class="nc" id="L438">        Double paginationDouble = (double) publications.size() / 15;</span>
+<span class="nc" id="L439">        int pagination = (int) (Math.ceil(paginationDouble)-1);</span>
+
+<span class="nc bnc" id="L441" title="All 2 branches missed.">        if (!publications.isEmpty()) {</span>
+<span class="nc bnc" id="L442" title="All 2 branches missed.">            if (publications.size() &gt; 15) {</span>
+                //Envio solo 15 publicaciones que necesita el front
+<span class="nc" id="L444">                publications = publications.subList(0, 15);</span>
+            } 
+
+<span class="nc" id="L447">            PublicationFilterDTO publicationsDTO = new PublicationFilterDTO(publications, pagination);</span>
+<span class="nc" id="L448">            return publicationsDTO;</span>
+
+        } else {
+<span class="nc" id="L451">            throw new DataAccessException(Constants.PS_NOT_FOUND) {</span>
+            };
+        }
+    }
+
+    @Transactional
+    public PublicationFilterDTO getPublicationsByPending(int pag){
+        
+<span class="nc bnc" id="L459" title="All 2 branches missed.">        if (pag &lt; 1) {</span>
+<span class="nc" id="L460">            throw new IllegalArgumentException(Constants.PAGE_INVALID);</span>
+        }
+
+<span class="nc" id="L463">        int pagTop = pag * 15 + 31;</span>
+
+        // Busco si hay 3 paginaciones más adelante de la actual (1 Paginacion = 15)
+<span class="nc bnc" id="L466" title="All 2 branches missed.">        if (pag == 1) {</span>
+<span class="nc" id="L467">            pag = 0;</span>
+            
+        } else {
+<span class="nc" id="L470">            pag = (pag-1) * 15;</span>
+        }
+        
+
+<span class="nc" id="L474">        final List&lt;Publication&gt; publications = publicationRepository.publicationsByPending(pag, pagTop);</span>
+        //Calculo número posible de paginaciones que hay en base de datos
+<span class="nc" id="L476">        Double paginationDouble = (double) publicationRepository.countPublicationsByPending() / 15;</span>
+<span class="nc" id="L477">        int pagination = (int) (Math.ceil(paginationDouble)-1);</span>
+
+<span class="nc bnc" id="L479" title="All 2 branches missed.">        if (!publications.isEmpty()) {</span>
+<span class="nc" id="L480">            PublicationFilterDTO publicationsDTO = new PublicationFilterDTO(publications, pagination);</span>
+<span class="nc" id="L481">            return publicationsDTO;</span>
+        } else {
+<span class="nc" id="L483">            throw new DataAccessException(Constants.PS_NOT_FOUND) {</span>
+            };
+        }
+
+    }
+
+    @Transactional
+    public PublicationFilterDTO getPublicationsByQuantity(int pag){
+        
+<span class="nc bnc" id="L492" title="All 2 branches missed.">        if (pag &lt; 1) {</span>
+<span class="nc" id="L493">            throw new IllegalArgumentException(Constants.PAGE_INVALID);</span>
+        }
+
+<span class="nc" id="L496">        int pagTop = pag * 15 + 31;</span>
+
+        // Busco si hay 3 paginaciones más adelante de la actual (1 Paginacion = 15)
+<span class="nc bnc" id="L499" title="All 2 branches missed.">        if (pag == 1) {</span>
+<span class="nc" id="L500">            pag = 0;</span>
+        } else {
+<span class="nc" id="L502">            pag = (pag-1) * 15;</span>
+        }
+        
+        
+<span class="nc" id="L506">        List&lt;Publication&gt; publications = publicationRepository.publicationsByQuantity(pag, pagTop);</span>
+        //Calculo número posible de paginaciones que hay en base de datos
+<span class="nc" id="L508">        Double paginationDouble = (double) publications.size() / 15;</span>
+<span class="nc" id="L509">        int pagination = (int) (Math.ceil(paginationDouble)-1);</span>
+
+<span class="nc bnc" id="L511" title="All 2 branches missed.">        if (!publications.isEmpty()) {</span>
+<span class="nc bnc" id="L512" title="All 2 branches missed.">            if (publications.size() &gt; 15) {</span>
+                //Envio solo 15 publicaciones que necesita el front
+<span class="nc" id="L514">                publications = publications.subList(0, 15);</span>
+            } 
+
+<span class="nc" id="L517">            PublicationFilterDTO publicationsDTO = new PublicationFilterDTO(publications, pagination);</span>
+<span class="nc" id="L518">            return publicationsDTO;</span>
+
+        } else {
+<span class="nc" id="L521">            throw new DataAccessException(Constants.PS_NOT_FOUND) {</span>
+            };
+        }
+    }
+
+    //Temporal
+    @Transactional
+    public void changeToPending(Long publicationId) {
+<span class="nc" id="L529">        Publication publication = publicationRepository.findById(publicationId).orElseThrow(() -&gt; new DataAccessException(Constants.P_NOT_FOUND) {</span>
+        });
+<span class="nc" id="L531">        publication.setAuthorizationStatus(new StateRequest(1L));</span>
+        
+<span class="nc" id="L533">        publicationRepository.save(publication);</span>
+    
+<span class="nc" id="L535">    }</span>
+    
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

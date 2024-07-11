@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JwtAuthenticationFilter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">agro-plantation-app</a> &gt; <a href="index.source.html" class="el_package">com.gardengroup.agroplantationapp.security</a> &gt; <span class="el_source">JwtAuthenticationFilter.java</span></div><h1>JwtAuthenticationFilter.java</h1><pre class="source lang-java linenums">package com.gardengroup.agroplantationapp.security;
+
+
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.util.StringUtils;
+import org.springframework.web.filter.OncePerRequestFilter;
+
+import java.io.IOException;
+import java.util.Collection;
+
+<span class="fc" id="L21">public class JwtAuthenticationFilter extends OncePerRequestFilter {</span>
+
+    @Autowired
+    private CustomUsersDetailsService customUsersDetailsService;
+
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
+
+    @Override
+    protected void doFilterInternal(@NonNull HttpServletRequest request,
+                                    @NonNull HttpServletResponse response,
+                                    @NonNull FilterChain filterChain) throws ServletException, IOException {
+
+<span class="fc" id="L34">        String token = getRequestToken(request);</span>
+
+        try {
+<span class="pc bpc" id="L37" title="1 of 4 branches missed.">            if (StringUtils.hasText(token) &amp;&amp; jwtTokenProvider.validateToken(token)) {</span>
+<span class="fc" id="L38">                String email = jwtTokenProvider.getJwtUser(token);</span>
+
+<span class="fc" id="L40">                UserDetails userDetails = customUsersDetailsService.loadUserByUsername(email);</span>
+
+<span class="pc bpc" id="L42" title="1 of 2 branches missed.">                if (userDetails != null) {</span>
+<span class="fc" id="L43">                    Collection&lt;? extends GrantedAuthority&gt; authorities = userDetails.getAuthorities();</span>
+
+                    // Puedes verificar si el usuario tiene las autoridades necesarias aquí
+                    // authorities.contains(new SimpleGrantedAuthority(&quot;ROLE_USER&quot;))
+
+<span class="fc" id="L48">                    UsernamePasswordAuthenticationToken authentication =</span>
+                            new UsernamePasswordAuthenticationToken(userDetails, null, authorities);
+
+<span class="fc" id="L51">                    authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));</span>
+
+<span class="fc" id="L53">                    SecurityContextHolder.getContext().setAuthentication(authentication);</span>
+                }
+            }
+<span class="nc" id="L56">        } catch (Exception e) {</span>
+            // Manejar errores de validación de token, por ejemplo, token expirado
+            // Puedes devolver un código de estado HTTP específico o un mensaje de error
+<span class="nc" id="L59">            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, &quot;Token inválido o expirado&quot;);</span>
+<span class="nc" id="L60">            return;</span>
+<span class="fc" id="L61">        }</span>
+
+<span class="fc" id="L63">        filterChain.doFilter(request, response);</span>
+<span class="fc" id="L64">    }</span>
+
+    public String getRequestToken(HttpServletRequest httpServletRequest) {
+<span class="fc" id="L67">        String bearerToken = httpServletRequest.getHeader(&quot;Authorization&quot;);</span>
+
+<span class="pc bpc" id="L69" title="1 of 4 branches missed.">        if (StringUtils.hasText(bearerToken) &amp;&amp; bearerToken.startsWith(&quot;Bearer &quot;)) {</span>
+<span class="fc" id="L70">            return bearerToken.substring(7);</span>
+        }
+
+<span class="fc" id="L73">        return null;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

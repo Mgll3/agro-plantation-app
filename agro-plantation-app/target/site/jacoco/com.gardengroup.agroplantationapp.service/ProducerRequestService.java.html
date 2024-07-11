@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ProducerRequestService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">agro-plantation-app</a> &gt; <a href="index.source.html" class="el_package">com.gardengroup.agroplantationapp.service</a> &gt; <span class="el_source">ProducerRequestService.java</span></div><h1>ProducerRequestService.java</h1><pre class="source lang-java linenums">package com.gardengroup.agroplantationapp.service;
+
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.gardengroup.agroplantationapp.model.dto.request.ProducerRequestSaveDTO;
+import com.gardengroup.agroplantationapp.model.entity.ProducerRequest;
+import com.gardengroup.agroplantationapp.model.entity.StateRequest;
+import com.gardengroup.agroplantationapp.model.entity.User;
+import com.gardengroup.agroplantationapp.model.entity.UserType;
+import com.gardengroup.agroplantationapp.model.repository.ProducerRequestRepository;
+import com.gardengroup.agroplantationapp.model.repository.UserRepository;
+
+
+
+@Service
+<span class="fc" id="L22">public class ProducerRequestService implements IProducerRequestService{</span>
+
+    @Autowired
+    private ProducerRequestRepository producerRequestRepository;
+    @Autowired
+    private UserRepository userRepository;
+
+    @Transactional(readOnly = true)
+    public List&lt;ProducerRequest&gt; getPendingProducerRequests() {
+        // Buscar con estado &quot;PENDING&quot; (1L) en la base de datos
+<span class="nc" id="L32">        return producerRequestRepository.findByStaterequest(new StateRequest(1L));</span>
+    }
+
+    @Transactional
+    public void approve(Long producerRequestId) {
+        // Obtener la solicitud del productor por ID
+<span class="nc" id="L38">        ProducerRequest producerRequest = producerRequestRepository.findById(producerRequestId)</span>
+<span class="nc" id="L39">                .orElseThrow(() -&gt; new RuntimeException(&quot;Solicitud del productor no encontrada&quot;));</span>
+
+        // Verificar si la solicitud está en estado &quot;PENDING&quot;
+<span class="nc bnc" id="L42" title="All 2 branches missed.">        if (&quot;PENDING&quot;.equals(producerRequest.getStaterequest().getState())) {</span>
+            
+            // Actualizar el estado de la solicitud a &quot;ACCEPTED&quot;
+<span class="nc" id="L45">            producerRequest.setStaterequest(new StateRequest(2L));</span>
+
+<span class="nc" id="L47">            User user = producerRequest.getUser();</span>
+
+            // Cambiar el tipo de usuario a &quot;productor&quot; (3L)
+<span class="nc" id="L50">            user.setUserType(new UserType(3L));</span>
+
+            // Guardar los cambios en la base de datos
+<span class="nc" id="L53">            producerRequestRepository.save(producerRequest);</span>
+<span class="nc" id="L54">            userRepository.save(user);</span>
+
+<span class="nc" id="L56">        } else {</span>
+<span class="nc" id="L57">            throw new RuntimeException(&quot;La solicitud no está en estado 'PENDING'&quot;);</span>
+        }
+<span class="nc" id="L59">    }</span>
+
+    @Transactional
+    public void reject(Long producerRequestId) {
+        // Obtener la solicitud del productor por ID
+<span class="nc" id="L64">        ProducerRequest producerRequest = producerRequestRepository.findById(producerRequestId)</span>
+<span class="nc" id="L65">                .orElseThrow(() -&gt; new RuntimeException(&quot;Solicitud del productor no encontrada&quot;));</span>
+        
+        // Verificar si la solicitud está en estado &quot;PENDING&quot;
+<span class="nc bnc" id="L68" title="All 2 branches missed.">        if (&quot;PENDING&quot;.equals(producerRequest.getStaterequest().getState())) {</span>
+            // Actualizar el estado de la solicitud a &quot;DECLINED&quot;
+<span class="nc" id="L70">            producerRequest.setStaterequest(new StateRequest(3L));</span>
+
+            // Guardar los cambios en la base de datos
+<span class="nc" id="L73">            producerRequestRepository.save(producerRequest);</span>
+
+        } else {
+<span class="nc" id="L76">            throw new IllegalStateException(&quot;La solicitud no está en estado 'PENDING'&quot;);</span>
+        }
+<span class="nc" id="L78">    }</span>
+
+    @Transactional
+    public ProducerRequest sendProducerRequest(String userEmail, ProducerRequestSaveDTO producerDTO ) {
+        
+<span class="nc" id="L83">        ProducerRequest producerRequest = new ProducerRequest(producerDTO);</span>
+        
+<span class="nc" id="L85">        User user = userRepository.findByEmail(userEmail)</span>
+<span class="nc" id="L86">            .orElseThrow(() -&gt; new DataAccessException(&quot;User not found&quot;) {</span>
+        });
+        
+<span class="nc" id="L89">        producerRequest.setUser(user);</span>
+<span class="nc" id="L90">        producerRequest.setDate(new Date());</span>
+        //Guardo el estado de la solicitud en &quot;PENDING&quot;
+<span class="nc" id="L92">        producerRequest.setStaterequest(new StateRequest(1L));</span>
+        
+<span class="nc" id="L94">        return producerRequestRepository.save(producerRequest);</span>
+        
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

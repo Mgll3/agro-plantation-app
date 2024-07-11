@@ -1,0 +1,55 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+agro-plantation-app,com.gardengroup.agroplantationapp.model.dto.publication,PublicationSaveDTO,98,17,22,0,0,3,15,5,4,5
+agro-plantation-app,com.gardengroup.agroplantationapp.model.dto.publication,PublicationFilterDTO,104,0,16,0,7,0,17,0,9,0
+agro-plantation-app,com.gardengroup.agroplantationapp.model.dto.publication,PublicationUpdDTO,195,0,38,0,5,0,32,0,13,0
+agro-plantation-app,com.gardengroup.agroplantationapp.controller,AuthController,37,32,3,1,7,6,2,3,0,3
+agro-plantation-app,com.gardengroup.agroplantationapp.controller,ProducerRequestController,63,3,0,0,17,1,4,1,4,1
+agro-plantation-app,com.gardengroup.agroplantationapp.controller,UserController,7,11,0,0,2,3,0,2,0,2
+agro-plantation-app,com.gardengroup.agroplantationapp.controller,PublicationController,458,22,33,1,115,5,37,2,20,2
+agro-plantation-app,com.gardengroup.agroplantationapp.service,PublicationService,967,48,86,0,202,11,70,2,27,2
+agro-plantation-app,com.gardengroup.agroplantationapp.service,UserService.new DataAccessException() {...},7,0,0,0,1,0,1,0,1,0
+agro-plantation-app,com.gardengroup.agroplantationapp.service,ProducerRequestService,141,3,4,0,26,1,9,1,7,1
+agro-plantation-app,com.gardengroup.agroplantationapp.service,CloudinaryService,59,44,4,0,11,3,4,1,2,1
+agro-plantation-app,com.gardengroup.agroplantationapp.service,UserService.new DataAccessException() {...},7,0,0,0,1,0,1,0,1,0
+agro-plantation-app,com.gardengroup.agroplantationapp.service,PublicationService.new DataAccessException() {...},7,0,0,0,1,0,1,0,1,0
+agro-plantation-app,com.gardengroup.agroplantationapp.service,PublicationService.new DataAccessException() {...},7,0,0,0,1,0,1,0,1,0
+agro-plantation-app,com.gardengroup.agroplantationapp.service,ProducerRequestService.new DataAccessException() {...},7,0,0,0,1,0,1,0,1,0
+agro-plantation-app,com.gardengroup.agroplantationapp.service,SecurityService,0,41,0,0,0,9,0,4,0,4
+agro-plantation-app,com.gardengroup.agroplantationapp.service,UserService,17,103,0,0,1,18,3,5,3,5
+agro-plantation-app,com.gardengroup.agroplantationapp.service,PublicationService.new DataAccessException() {...},7,0,0,0,1,0,1,0,1,0
+agro-plantation-app,com.gardengroup.agroplantationapp.service,PublicationService.new DataAccessException() {...},7,0,0,0,1,0,1,0,1,0
+agro-plantation-app,com.gardengroup.agroplantationapp.service,PublicationService.new DataAccessException() {...},7,0,0,0,1,0,1,0,1,0
+agro-plantation-app,com.gardengroup.agroplantationapp.service,PublicationService.new DataAccessException() {...},7,0,0,0,1,0,1,0,1,0
+agro-plantation-app,com.gardengroup.agroplantationapp.service,PublicationService.new DataAccessException() {...},7,0,0,0,1,0,1,0,1,0
+agro-plantation-app,com.gardengroup.agroplantationapp.service,PublicationService.new DataAccessException() {...},7,0,0,0,1,0,1,0,1,0
+agro-plantation-app,com.gardengroup.agroplantationapp.service,PublicationService.new DataAccessException() {...},7,0,0,0,1,0,1,0,1,0
+agro-plantation-app,com.gardengroup.agroplantationapp.service,PublicationService.new DataAccessException() {...},7,0,0,0,1,0,1,0,1,0
+agro-plantation-app,com.gardengroup.agroplantationapp.service,PublicationService.new DataAccessException() {...},7,0,0,0,1,0,1,0,1,0
+agro-plantation-app,com.gardengroup.agroplantationapp.service,PublicationService.new DataAccessException() {...},7,0,0,0,1,0,1,0,1,0
+agro-plantation-app,com.gardengroup.agroplantationapp.service,PublicationService.new DataAccessException() {...},7,0,0,0,1,0,1,0,1,0
+agro-plantation-app,com.gardengroup.agroplantationapp.service,PublicationService.new DataAccessException() {...},7,0,0,0,1,0,1,0,1,0
+agro-plantation-app,com.gardengroup.agroplantationapp.service,PublicationService.new DataAccessException() {...},7,0,0,0,1,0,1,0,1,0
+agro-plantation-app,com.gardengroup.agroplantationapp.service,PublicationService.new DataAccessException() {...},7,0,0,0,1,0,1,0,1,0
+agro-plantation-app,com.gardengroup.agroplantationapp.service,PublicationService.new DataAccessException() {...},7,0,0,0,1,0,1,0,1,0
+agro-plantation-app,com.gardengroup.agroplantationapp,AgroPlantationAppApplication,5,3,0,0,2,1,1,1,1,1
+agro-plantation-app,com.gardengroup.agroplantationapp.model.entity,Publication,437,68,98,0,13,16,59,18,10,18
+agro-plantation-app,com.gardengroup.agroplantationapp.model.entity,User,267,48,62,0,2,9,36,14,5,14
+agro-plantation-app,com.gardengroup.agroplantationapp.model.entity,MultipartConfig,0,7,0,0,0,2,0,2,0,2
+agro-plantation-app,com.gardengroup.agroplantationapp.model.entity,Vote,179,3,34,0,7,1,29,1,12,1
+agro-plantation-app,com.gardengroup.agroplantationapp.model.entity,ProducerRequest,371,0,70,0,17,0,56,0,21,0
+agro-plantation-app,com.gardengroup.agroplantationapp.model.entity,StateRequest,106,15,22,0,3,6,17,4,6,4
+agro-plantation-app,com.gardengroup.agroplantationapp.model.entity,Plantation,14,45,0,0,1,8,1,13,1,13
+agro-plantation-app,com.gardengroup.agroplantationapp.model.entity,UserType,106,15,22,0,1,7,17,4,6,4
+agro-plantation-app,com.gardengroup.agroplantationapp.model.entity,Image,124,0,22,0,9,0,21,0,10,0
+agro-plantation-app,com.gardengroup.agroplantationapp.utils,Constants,3,0,0,0,1,0,1,0,1,0
+agro-plantation-app,com.gardengroup.agroplantationapp.model.dto.request,ProducerRequestSaveDTO,195,0,38,0,5,0,32,0,13,0
+agro-plantation-app,com.gardengroup.agroplantationapp.security,SecurityConfig,0,142,0,0,0,29,0,6,0,6
+agro-plantation-app,com.gardengroup.agroplantationapp.security,JwtAuthenticationFilter,6,71,3,7,3,17,3,5,0,3
+agro-plantation-app,com.gardengroup.agroplantationapp.security,CustomUsersDetailsService,14,35,2,2,2,10,3,3,1,3
+agro-plantation-app,com.gardengroup.agroplantationapp.security,CustomUsersDetailsService.new DataAccessException() {...},7,0,0,0,1,0,1,0,1,0
+agro-plantation-app,com.gardengroup.agroplantationapp.security,JwtAuthenticationEntryPoint,6,3,0,0,2,1,1,1,1,1
+agro-plantation-app,com.gardengroup.agroplantationapp.security,JwtTokenProvider,11,52,0,0,3,18,0,4,0,4
+agro-plantation-app,com.gardengroup.agroplantationapp.security,ConstantSecurity,3,0,0,0,1,0,1,0,1,0
+agro-plantation-app,com.gardengroup.agroplantationapp.model.dto.user,RegisterDTO,197,56,46,0,0,8,27,12,4,12
+agro-plantation-app,com.gardengroup.agroplantationapp.model.dto.user,LoginDTO,106,15,22,0,1,3,17,3,6,3
+agro-plantation-app,com.gardengroup.agroplantationapp.model.dto.user,AthAnswerDTO,186,39,38,0,4,15,28,6,9,6
