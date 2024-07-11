@@ -6,6 +6,8 @@ import Button from "../button/Button";
 import { ReactNode, useEffect, useRef, useState } from "react";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import GeoViewer from "../geolocator/GeoViewer";
+import { CoordinatesType } from "../../pages/admin/AdminPublicationDetails";
+import { getAddressCoordinates } from "../../interfaces/geolocation/getAddressCoordinates";
 
 type CreatePublicationFormProps = {
 	handleSubmit: (formValues: NewPublicationType) => void;
@@ -14,15 +16,21 @@ type CreatePublicationFormProps = {
 function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 	const [numberOfImages, setNumberOfImages] = useState<number>(0);
 	const [dragActive, setDragActive] = useState(false);
+	const [addressCoordinates, setAddressCoordinates] = useState<CoordinatesType | undefined>({
+		lat: -34.61315,
+		lon: -58.37723
+	});
 	const [textAreaCharacters, setTextAreaCharacters] = useState(0);
 	const textAreaElement = useRef<HTMLTextAreaElement>(null);
 	const textAreaCharactersLeft = 3000 - textAreaCharacters;
+	const inputFileElement = useRef<HTMLInputElement>(null);
+
+	const axiosController = useRef<AbortController>();
+	const changeGeoMapTimeout = useRef<number>(0);
 
 	const submitButtonFuncionality = {
 		submitText: "Publicar"
 	};
-
-	const inputFileElement = useRef<HTMLInputElement>(null);
 
 	function clickInput() {
 		inputFileElement.current?.click();
@@ -130,6 +138,28 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 			setTextAreaCharacters(textAreaElement.current.value.length);
 		}
 	}, [formik.values.files, textAreaElement.current?.value.length]);
+
+	useEffect(() => {
+		axiosController.current = new AbortController();
+
+		if (formik.values.address.length > 6) {
+			clearTimeout(changeGeoMapTimeout.current);
+
+			changeGeoMapTimeout.current = window.setTimeout(() => {
+				getAddressCoordinates(axiosController.current!, formik.values.address)
+					.then((coordinates) => {
+						setAddressCoordinates(coordinates);
+					})
+					.catch(() => {
+						setAddressCoordinates(undefined);
+					});
+			}, 3000);
+		}
+
+		return () => {
+			clearTimeout(changeGeoMapTimeout.current);
+		};
+	}, [formik.values.address]);
 
 	return (
 		<div className="flex flex-col w-full">
@@ -370,12 +400,16 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 						{formik.touched.address && formik.errors.address ? (
 							<p className="absolute bottom-[-25px] text-[14px] text-red-600 ml-4">{formik.errors.address}</p>
 						) : null}
+					</div>
 
-						{/* LOCATION MAP */}
+					{/* LOCATION MAP */}
 
-						<div className="w-[90%] h-[265px]">
-							<GeoViewer addressString={formik.values.address} plantationName={formik.values.title} />
-						</div>
+					<div className="w-[100%] h-[265px] mt-[32px]">
+						<GeoViewer
+							addressString={formik.values.address}
+							plantationName={formik.values.title}
+							addressCoordinates={addressCoordinates}
+						/>
 					</div>
 				</div>
 
