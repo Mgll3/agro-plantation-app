@@ -113,7 +113,7 @@ public class PublicationTest {
         .andExpect(jsonPath("$.author.name", Matchers.is(producerUser.getName())));
     }
 
-    @DisplayName("Obtener publicaciones aleatorias con minimo 1 y maximo 16 publicaciones y paginaciones correctas")
+    @DisplayName("Obtener publicaciones aleatorias con minimo 1 y maximo 15 publicaciones y paginaciones correctas")
     @Test
     public void shouldCanGetPublicationsByAleatory() throws Exception{
 
