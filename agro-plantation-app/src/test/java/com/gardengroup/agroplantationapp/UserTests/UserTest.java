@@ -10,26 +10,36 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
 
 import org.hamcrest.Matchers;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gardengroup.agroplantationapp.controller.AuthController;
+import com.gardengroup.agroplantationapp.model.dto.user.AthAnswerDTO;
 import com.gardengroup.agroplantationapp.model.dto.user.LoginDTO;
 import com.gardengroup.agroplantationapp.model.dto.user.RegisterDTO;
 import com.gardengroup.agroplantationapp.model.entity.User;
 import com.gardengroup.agroplantationapp.service.IProducerRequestService;
 import com.gardengroup.agroplantationapp.service.IUserService;
 import com.gardengroup.agroplantationapp.service.SecurityService;
+
+import jakarta.transaction.Transactional;
 
 //Ejecutar el script importTest.sql antes de ejecutar las pruebas
 @SqlGroup({
@@ -39,6 +49,7 @@ import com.gardengroup.agroplantationapp.service.SecurityService;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)   //limpiar bd despues de pruebas
 //@ActiveProfiles("test")
 public class UserTest {
     
@@ -49,13 +60,10 @@ public class UserTest {
 
     @Autowired
     private ObjectMapper objectMapper;      //Convertir objetos a JSON
-
     
-    
-    @DisplayName("Guardar un usuario en el sistema")
-    @Test
-    @Order(1)
-    public void  shouldCanSaveUser() throws Exception{
+    @DisplayName("Registrar un usuario en el sistema")
+    @Test 
+    public void shouldCanRegisterUser() throws Exception{
         //Inicializar usuario
         RegisterDTO registerDto = new RegisterDTO("mgl@gmail.com", "1","Miguel", 
             "Alvarez", "Calle 123");
@@ -76,7 +84,7 @@ public class UserTest {
 
     @DisplayName("Loggear un usuario ya creado")
     @Test
-    public void  shouldCanLoginAnUser() throws Exception{
+    public void shouldCanLoginAnUser() throws Exception{
         //Inicializar usuario
         RegisterDTO registerDto = new RegisterDTO("mgl@gmail.com", "1","Miguel", 
             "Alvarez", "Calle 123");
@@ -104,6 +112,49 @@ public class UserTest {
             .andExpect(jsonPath("$.accessToken", Matchers.notNullValue()))
             .andExpect(jsonPath("$.name", Matchers.is(registerDto.getName())))
             .andExpect(jsonPath("$.lastname", Matchers.is(registerDto.getLastname())));
+    }
+
+    @DisplayName("Obtener sesión de usuario")
+    @Test
+    public void shouldCanGetUserSession () throws Exception{
+        //Inicializar usuario
+        RegisterDTO registerDto = new RegisterDTO("mgl@gmail.com", "1","Miguel", 
+            "Alvarez", "Calle 123");
+        
+        //Guardar usuario por medio del endpoint
+        mockMvc.perform(post("/auth/registro")
+            .with(SecurityMockMvcRequestPostProcessors.csrf())  //TOKEN CSRF de seguridad
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(registerDto)));
+
+    
+        //Inicializar loggeo
+        LoginDTO loginDto = new LoginDTO("mgl@gmail.com","1");
+
+        //Loggear usuario desde el endpoint
+        ResultActions loginResponse = mockMvc.perform(post("/auth/login")
+            .with(SecurityMockMvcRequestPostProcessors.csrf())  //TOKEN CSRF de seguridad
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(loginDto)));
+
+        //Extraer el Token de JWT
+        MvcResult result = loginResponse.andExpect(status().isOk()).andReturn();
+        String responseBody = result.getResponse().getContentAsString();
+        JsonNode jsonNode = objectMapper.readTree(responseBody);
+        String accessToken = jsonNode.get("accessToken").asText();
+
+        
+        ResultActions response = mockMvc.perform(get("/v1/user/userSession")
+            .with(SecurityMockMvcRequestPostProcessors.csrf())  //TOKEN CSRF de seguridad
+            .contentType(MediaType.APPLICATION_JSON)
+            .header("Authorization", "Bearer " + accessToken));   //Se Agrega el token JWT
+            
+
+        //Verificar loggeo correcto con token de acceso y datos del usuario
+        response.andExpect(status().isOk())
+            .andExpect(jsonPath("$.name", Matchers.is(registerDto.getName())))
+            .andExpect(jsonPath("$.lastname", Matchers.is(registerDto.getLastname())))
+            .andExpect(jsonPath("$.userType", Matchers.notNullValue()));
     }
 
 }

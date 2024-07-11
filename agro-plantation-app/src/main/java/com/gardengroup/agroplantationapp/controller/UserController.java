@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -27,13 +28,19 @@ public class UserController {
     description = "Endpoint para obtener la sesión de usuario con el token de autenticación", tags = {"User"})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Sesión de usuario obtenida con éxito",
-                    content = @Content(schema = @Schema(implementation = AthAnswerDTO.class)))
+                    content = @Content(schema = @Schema(implementation = AthAnswerDTO.class))),
+            @ApiResponse(responseCode = "401", description = "No autorizado - Token de autenticación inválido",
+                    content = @Content(schema = @Schema(implementation = String.class)))
     })
     @GetMapping("/userSession")
     public ResponseEntity<?> userSession(HttpServletRequest request) {
+        try {
+            AthAnswerDTO answer = userService.getUserSession(request);
+            return ResponseEntity.ok(answer);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+        }
         
-        AthAnswerDTO answer = userService.getUserSession(request);
-        return ResponseEntity.ok(answer);
         
     }
 

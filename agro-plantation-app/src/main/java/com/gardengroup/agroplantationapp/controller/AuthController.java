@@ -29,7 +29,7 @@ public class AuthController {
     @Operation(summary = "Registrar usuario", description = "Endpoint para registrar un nuevo usuario", tags = {"Auth"})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Usuario registrado correctamente",
-                    content = @Content(schema = @Schema(implementation = String.class))),
+                    content = @Content(schema = @Schema(implementation = User.class))),
             @ApiResponse(responseCode = "409", description = "Conflicto - Este correo electrónico ya está registrado",
                     content = @Content(schema = @Schema(implementation = String.class))),
             @ApiResponse(responseCode = "501", description = "Error al procesar la solicitud",
