@@ -89,6 +89,7 @@ public class PublicationController {
             if (e.getMessage().equals(Constants.P_NOT_FOUND)) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             } else {
+                System.out.println(e.getMessage());
                 return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
             }
         }

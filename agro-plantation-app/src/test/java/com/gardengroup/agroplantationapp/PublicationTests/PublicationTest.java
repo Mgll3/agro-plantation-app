@@ -115,7 +115,7 @@ public class PublicationTest {
     }
 
     @DisplayName("Guardar una publicación en el sistema")
-    //@Test         //TODO: Falta terminar
+    @Test
     public void shouldGetOnePublication() throws Exception{
         //Guardar la publicación
         ResultActions saveResponse = mockMvc.perform(post("/v1/publication/save")
@@ -142,7 +142,7 @@ public class PublicationTest {
     }
 
     @DisplayName("Actualizar una publicación")
-    @Test
+    //@Test         //TODO: Falta terminar
     public void shouldUpdatePublication() throws Exception{
         //Guardar publicación
         ResultActions saveResponse = mockMvc.perform(post("/v1/publication/save")

@@ -1,27 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.gardengroup.agroplantationapp.model.entity;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-
+import lombok.Data;
 
 @Entity
 @Table(name ="user")
-@Getter
-@Setter
-@ToString
-@EqualsAndHashCode
+@Data
 public class User {
 
     @Id

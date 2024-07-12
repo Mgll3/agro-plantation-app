@@ -1,9 +1,6 @@
 package com.gardengroup.agroplantationapp.model.dto.publication;
 
-import org.hibernate.validator.constraints.Length;
-
 import com.gardengroup.agroplantationapp.model.entity.Plantation;
-
 import jakarta.validation.constraints.*;
 import lombok.Data;
 

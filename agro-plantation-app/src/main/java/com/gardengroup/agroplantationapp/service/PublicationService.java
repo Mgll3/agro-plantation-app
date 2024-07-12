@@ -35,7 +35,6 @@ public class PublicationService implements IPublicationService {
     @Autowired
     VoteRepository voteRepository;
 
-
     //crea la publicacion y ya pone su estado de la autorizacion en pendiente
     @Transactional
     public Publication savePublication(PublicationSaveDTO publicationDTO, String email) {
@@ -69,7 +68,7 @@ public class PublicationService implements IPublicationService {
         });
 
         //Revisar si hay imagen principal y luego guardarla
-        if (mainFile.getOriginalFilename() != ""){
+        if (!mainFile.getOriginalFilename().isEmpty()){
             Map result = cloudinaryService.upload(mainFile, folder);
     
             Image mainImage = new Image(result.get("public_id").toString(), 
@@ -79,9 +78,9 @@ public class PublicationService implements IPublicationService {
             throw new DataAccessException("Main image not found") {
             };
         }
-        List<Image> images = new ArrayList<Image>();
-        //Revisar si hay imagenes secundarias y luego guardarlas
-        if (files.get(0).getOriginalFilename() != "") {
+        List<Image> images = new ArrayList<>();
+        //Chequeo si hay imagenes secundarias y luego guardarlas
+        if (!files.get(0).getOriginalFilename().isEmpty()) {
             for (MultipartFile file : files) {
                 //Posible montaje simultaneo de imagenes para mayor velocidad
                 Map resultC = cloudinaryService.upload(file, folder);
