@@ -10,7 +10,14 @@ type PublicationPreviewProps = {
 
 function PublicationPreview({ mainImage, title, productionType, mainText, handleClose }: PublicationPreviewProps) {
 	const [imageSrc, setImageSrc] = useState<string | ArrayBuffer | null>(null);
+	let shortenedMainText = "";
+	if (mainText.length > 80) {
+		shortenedMainText = mainText.slice(0, 80) + "...";
+	} else {
+		shortenedMainText = mainText;
+	}
 
+	console.log(shortenedMainText);
 	useEffect(() => {
 		if (mainImage) {
 			const reader = new FileReader();
@@ -36,14 +43,12 @@ function PublicationPreview({ mainImage, title, productionType, mainText, handle
 				</div>
 
 				<div className="px-[27px] my-[26px]">
-					<h3 className="text-[33.54px] font-semibold leading-tight">
-						{title ? title : "No has cumplimentado este campo"}
-					</h3>
+					<h3 className="text-[33.54px] font-semibold leading-tight">{title ? title : "Campo sin cumpliimentar"}</h3>
 					<p className="mt-[5px] text-[20.12px] font-semibold">
-						{productionType ? productionType : "No has cumplimentado este campo"}
+						{productionType ? productionType : "Campo sin cumpliimentar"}
 					</p>
 					<p className="mt-[27px] text-[20.12px] font-normal">
-						{mainText ? mainText : "No has cumplimentado este campo"}
+						{mainText ? shortenedMainText : "Campo sin cumpliimentar"}
 					</p>
 				</div>
 			</div>

@@ -34,7 +34,7 @@ export type RegisterProducerFormValuesType = {
 	termsAccepted: string;
 };
 
-// CREATE NEW PUBLICATION
+// CREATE NEW PUBLICATION (DATA USED IN THE FORM)
 
 export type NewPublicationType = {
 	files: File[];

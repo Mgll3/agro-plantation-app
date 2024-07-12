@@ -7,6 +7,7 @@ export type LoadingStateType =
 	| "sending"
 	| "sent"
 	| "errorServer"
+	| "errorServer2"
 	| "errorCredentials"
 	| "errorUserExists"
 	| "modalLoading"

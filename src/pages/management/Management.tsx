@@ -3,7 +3,7 @@ import Button from "../../components/button/Button";
 import { ButtonColorType } from "../../components/button/buttonTypes";
 import Header from "../../components/header/Header";
 import { registerUser } from "../../interfaces/users/registerUser";
-import { LoginFormValuesType, RegiserFormFieldsToSendType } from "../../components/forms/formsTypes";
+import { LoginFormValuesType, RegisterFormFieldsToSendType } from "../../components/forms/formsTypes";
 import { useUserRoleContext } from "../../context/UserRoleContext";
 import { logInUser } from "../../interfaces/users/logInUser";
 import { UserDataType } from "../commonTypes";
@@ -145,7 +145,7 @@ export default function Management() {
 
 	////////////////////////////////////////////////////////////////////////////   DATOS DE LOS USUARIOS
 
-	const user1Data: RegiserFormFieldsToSendType = {
+	const user1Data: RegisterFormFieldsToSendType = {
 		email: "pedritoaldas2@gmail.com",
 		password: "oem$TP5",
 		name: "Pedro",
@@ -155,7 +155,7 @@ export default function Management() {
 
 	const user1DataJson = JSON.stringify(user1Data);
 
-	const user2Data: RegiserFormFieldsToSendType = {
+	const user2Data: RegisterFormFieldsToSendType = {
 		email: "velezmarcocontacto@gmail.com",
 		password: "fito$TP6",
 		name: "Marcos",
@@ -165,7 +165,7 @@ export default function Management() {
 
 	const user2DataJson = JSON.stringify(user2Data);
 
-	const producer1Data: RegiserFormFieldsToSendType = {
+	const producer1Data: RegisterFormFieldsToSendType = {
 		email: "lorenita16tat@gmail.com",
 		password: "A%ldo1se",
 		name: "Lorena",
@@ -175,7 +175,7 @@ export default function Management() {
 
 	const producer1DataJson = JSON.stringify(producer1Data);
 
-	const producer2Data: RegiserFormFieldsToSendType = {
+	const producer2Data: RegisterFormFieldsToSendType = {
 		email: "gabymoratrabajo@gmail.com",
 		password: "A%lco6$e",
 		name: "Gabriel",
@@ -185,7 +185,7 @@ export default function Management() {
 
 	const producer2DataJson = JSON.stringify(producer2Data);
 
-	const producer3Data: RegiserFormFieldsToSendType = {
+	const producer3Data: RegisterFormFieldsToSendType = {
 		email: "sanchezangelbarraco@gmail.com",
 		password: "A%lco6$e",
 		name: "Angel",
@@ -195,7 +195,7 @@ export default function Management() {
 
 	const producer3DataJson = JSON.stringify(producer3Data);
 
-	const admin1Data: RegiserFormFieldsToSendType = {
+	const admin1Data: RegisterFormFieldsToSendType = {
 		email: "antoniolopez12@gmail.com",
 		password: "Tut$oms6",
 		name: "Antonio",

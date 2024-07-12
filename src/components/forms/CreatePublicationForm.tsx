@@ -83,33 +83,53 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 
 		title: Yup.string()
 			.required("Debes completar este campo")
-			.max(30, "Máximo 30 caracteres")
+			.max(50, "Máximo 50 caracteres")
 			.matches(noSpaceAtStartRegex, "No puede comenzar con un espacio")
 			.matches(noSpaceEndingRegex, "No puede terminar con un espacio")
 			.matches(noSpecialCharacterRegex, "No se admiten caracteres especiales")
-			.min(2, "Al menos 2 caracteres"),
+			.min(6, "Al menos 6 caracteres"),
 
 		details: Yup.string()
 			.required("Debes completar este campo")
-			.max(120, "Máximo 120 caracteres")
+			.max(3000, "Máximo 3000 caracteres")
 			.matches(noSpaceAtStartRegex, "No puede comenzar con un espacio")
 			.matches(noSpaceEndingRegex, "No puede terminar con un espacio")
-			.min(8, "Al menos 8 caracteres")
+			.min(15, "Al menos 15 caracteres"),
 
-		// area: Yup.string().required("Debes completar este campo"),
+		area: Yup.string()
+			.required("Debes completar este campo")
+			.max(15, "Máximo 15 caracteres")
+			.matches(noSpaceAtStartRegex, "No puede comenzar con un espacio")
+			.matches(noSpaceEndingRegex, "No puede terminar con un espacio")
+			.min(2, "Al menos 2 caracteres"),
 
-		// harvestType: Yup.string()
-		// 	.required("Debes completar este campo")
-		// 	.matches(noSpaceAtStartRegex, "No puede comenzar con un espacio")
-		// 	.matches(noSpaceEndingRegex, "No puede terminar con un espacio")
-		// 	.matches(noSpecialCharacterRegex, "No se admiten caracteres especiales")
-		// 	.max(140, "Máximo 140 caracteres"),
+		harvestType: Yup.string()
+			.required("Debes completar este campo")
+			.matches(noSpaceAtStartRegex, "No puede comenzar con un espacio")
+			.matches(noSpaceEndingRegex, "No puede terminar con un espacio")
+			.matches(noSpecialCharacterRegex, "No se admiten caracteres especiales")
+			.max(15, "Máximo 15 caracteres"),
 
-		// irrigationType: Yup.string().required("Debes aceptar las condiciones"),
+		irrigationType: Yup.string()
+			.required("Debes completar este campo")
+			.matches(noSpaceAtStartRegex, "No puede comenzar con un espacio")
+			.matches(noSpaceEndingRegex, "No puede terminar con un espacio")
+			.matches(noSpecialCharacterRegex, "No se admiten caracteres especiales")
+			.max(15, "Máximo 15 caracteres"),
 
-		// productionType: Yup.string().required("Debes aceptar las condiciones"),
+		productionType: Yup.string()
+			.required("Debes completar este campo")
+			.matches(noSpaceAtStartRegex, "No puede comenzar con un espacio")
+			.matches(noSpaceEndingRegex, "No puede terminar con un espacio")
+			.matches(noSpecialCharacterRegex, "No se admiten caracteres especiales")
+			.max(15, "Máximo 15 caracteres"),
 
-		// address: Yup.string().required("Debes aceptar las condiciones")
+		address: Yup.string()
+			.required("Debes completar este campo")
+			.matches(noSpaceAtStartRegex, "No puede comenzar con un espacio")
+			.matches(noSpaceEndingRegex, "No puede terminar con un espacio")
+			.matches(noSpecialCharacterRegex, "No se admiten caracteres especiales")
+			.max(50, "Máximo 50 caracteres")
 	});
 
 	//YUP VALIDATION END
@@ -168,7 +188,7 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 					.catch(() => {
 						setAddressCoordinates(undefined);
 					});
-			}, 3000);
+			}, 2000);
 		}
 
 		return () => {
@@ -223,7 +243,7 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 							</button>
 
 							{formik.touched.files && formik.errors.files ? (
-								<p className="absolute bottom-[-23%] w-full text-center text-[14px] text-red-600">
+								<p className="absolute bottom-[20px] right-[-240px] w-full text-center text-[14px] text-red-600">
 									{formik.errors.files as ReactNode}
 								</p>
 							) : null}
@@ -270,7 +290,9 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 						/>
 
 						{formik.touched.title && formik.errors.title ? (
-							<p className="absolute bottom-[-25px] text-[14px] text-red-600 ml-4">{formik.errors.title}</p>
+							<p className="absolute bottom-[15px] right-[-220px] text-[14px] text-red-600 ml-4">
+								{formik.errors.title}
+							</p>
 						) : null}
 					</div>
 
@@ -292,7 +314,7 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 						/>
 
 						{formik.touched.details && formik.errors.details ? (
-							<p className="absolute bottom-[-40px] left-[40%] text-[14px] text-red-600 ml-4">
+							<p className="absolute bottom-[-30px] left-[40%] text-[14px] text-red-600 ml-4">
 								{formik.errors.details}
 							</p>
 						) : null}
@@ -324,7 +346,9 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 						/>
 
 						{formik.touched.area && formik.errors.area ? (
-							<p className="absolute bottom-[-25px] text-[14px] text-red-600 ml-4">{formik.errors.area}</p>
+							<p className="absolute bottom-[15px] right-[-220px] text-[14px] text-red-600 ml-4">
+								{formik.errors.area}
+							</p>
 						) : null}
 					</div>
 
@@ -344,7 +368,9 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 						/>
 
 						{formik.touched.harvestType && formik.errors.harvestType ? (
-							<p className="absolute bottom-[-25px] text-[14px] text-red-600 ml-4">{formik.errors.harvestType}</p>
+							<p className="absolute bottom-[15px] right-[-220px] text-[14px] text-red-600 ml-4">
+								{formik.errors.harvestType}
+							</p>
 						) : null}
 					</div>
 
@@ -364,7 +390,9 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 						/>
 
 						{formik.touched.irrigationType && formik.errors.irrigationType ? (
-							<p className="absolute bottom-[-25px] text-[14px] text-red-600 ml-4">{formik.errors.irrigationType}</p>
+							<p className="absolute bottom-[15px] right-[-220px] text-[14px] text-red-600 ml-4">
+								{formik.errors.irrigationType}
+							</p>
 						) : null}
 					</div>
 
@@ -384,7 +412,9 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 						/>
 
 						{formik.touched.productionType && formik.errors.productionType ? (
-							<p className="absolute bottom-[-25px] text-[14px] text-red-600 ml-4">{formik.errors.productionType}</p>
+							<p className="absolute bottom-[15px] right-[-220px] text-[14px] text-red-600 ml-4">
+								{formik.errors.productionType}
+							</p>
 						) : null}
 					</div>
 				</div>
@@ -413,7 +443,9 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 						/>
 
 						{formik.touched.address && formik.errors.address ? (
-							<p className="absolute bottom-[-25px] text-[14px] text-red-600 ml-4">{formik.errors.address}</p>
+							<p className="absolute bottom-[15px] right-[-220px] text-[14px] text-red-600 ml-4">
+								{formik.errors.address}
+							</p>
 						) : null}
 					</div>
 

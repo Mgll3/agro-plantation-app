@@ -3,13 +3,127 @@ import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
 import CreatePublicationForm from "../../components/forms/CreatePublicationForm";
 import { NewPublicationType } from "../../components/forms/formsTypes";
+import useLoadingState from "../../hooks/useLoadingState";
+import Loading from "../../components/modals/Loading";
+import GenericModal from "../../components/modals/GenericModal";
+import NetworkError from "../../components/modals/NetworkError";
+import { useEffect, useRef } from "react";
+import { getStoredToken } from "../../utils/getStoredToken";
+import { useUserRoleContext } from "../../context/UserRoleContext";
+import { createPublication } from "../../interfaces/createPublication";
+import { uploadPublicationsImages } from "../../interfaces/uploadPublicationsImages";
 
 function CreatePublication() {
+	const [createPublicationState, setCreatePublicationState] = useLoadingState("init");
+	const { userRole } = useUserRoleContext();
 	const navigate = useNavigate();
+
+	const axiosController1 = useRef<AbortController>();
+	const axiosController2 = useRef<AbortController>();
+
+	function acceptCredentialsErrorModal() {
+		navigate("/login", { replace: true });
+	}
+
+	//Used for errors creating publication
+	function acceptErrorServerModal() {
+		setCreatePublicationState("init", undefined, 1);
+	}
+
+	// Used for errors uploading publication images
+	function acceptErrorServer2Modal() {
+		setCreatePublicationState("init", undefined, 1);
+	}
+
+	function acceptFormSentModal() {
+		navigate("/");
+	}
+
+	type NewPublicationDataServerFormattedType = {
+		title: string;
+		plantation: {
+			area: string;
+			harvestType: string;
+			irrigationType: string;
+			productionType: string;
+			details: string;
+		};
+		visibility: boolean;
+		score: number;
+	};
 
 	function handleSubmit(formValues: NewPublicationType) {
 		console.log(formValues);
+		setCreatePublicationState("sending", "sending", 1);
+
+		axiosController1.current = new AbortController();
+		const storedToken = getStoredToken();
+
+		if ((userRole === "PRODUCER" || userRole === "PRODUCER_VIP") && storedToken) {
+			const publicationDataToSend: NewPublicationDataServerFormattedType = {
+				title: formValues.title,
+				plantation: {
+					area: formValues.area,
+					harvestType: formValues.harvestType,
+					irrigationType: formValues.irrigationType,
+					productionType: formValues.productionType,
+					details: formValues.details
+				},
+				visibility: false,
+				score: 0
+			};
+
+			const publicationDataToSendJSON: Stringified<NewPublicationDataServerFormattedType> =
+				JSON.stringify(publicationDataToSend);
+
+			createPublication(storedToken, publicationDataToSendJSON, axiosController1.current)
+				.then((response) => {
+					const formData = new FormData();
+					const publicationId = String(response.id);
+
+					if (formValues.files.length >= 2) {
+						for (let i = 1; i < formValues.files.length; i++) {
+							const secondaryImgName = formValues.files[i].name;
+							const secondaryImgBlob = formValues.files[i];
+							formData.append("images", secondaryImgBlob, secondaryImgName);
+						}
+					}
+
+					if (formValues.files.length >= 1) {
+						const mainImgName = formValues.files[0].name;
+						const mainImgBlob = formValues.files[0];
+
+						formData.append("publicationId", publicationId);
+						formData.append("mainImage", mainImgBlob, mainImgName);
+
+						axiosController2.current = new AbortController();
+
+						uploadPublicationsImages(storedToken, formData, axiosController2.current)
+							.then(() => {
+								setCreatePublicationState("sent", "sending");
+							})
+							.catch((error) => {
+								console.log(`Error al subir las imágenes de la publicación ${publicationId}: ${error}`);
+								setCreatePublicationState("errorServer2", "sending");
+							});
+					} else {
+						setCreatePublicationState("sent", "sending");
+					}
+				})
+				.catch(() => {
+					setCreatePublicationState("errorServer", "sending");
+				});
+		} else {
+			setCreatePublicationState("errorCredentials", "sending");
+		}
 	}
+
+	useEffect(() => {
+		return () => {
+			axiosController1.current?.abort();
+			axiosController2.current?.abort();
+		};
+	});
 
 	return (
 		<>
@@ -39,6 +153,40 @@ function CreatePublication() {
 			</main>
 
 			<Footer />
+
+			{createPublicationState === "sending" && <Loading />}
+			{createPublicationState === "sent" && (
+				<GenericModal
+					buttonText="Aceptar"
+					mainText="Se envió con éxito la petición"
+					secondaryText="El administrador en un plazo de 24 a 72 hs aprobará tu publicacion. "
+					handleClick={acceptFormSentModal}
+				/>
+			)}
+			{createPublicationState === "errorCredentials" && (
+				<GenericModal
+					buttonText="Aceptar"
+					mainText="Error de autenticación"
+					secondaryText="Sólo los productores pueden crear publicaciones. Por favor, lógese correctamente para poder continuar"
+					handleClick={acceptCredentialsErrorModal}
+				/>
+			)}
+			{/* Used for errors creating publication */}
+			{createPublicationState === "errorServer" && (
+				<NetworkError
+					buttonText="Aceptar"
+					failedAction="registrar tu publicación. Por favor, inténtalo de nuevo."
+					handleClose={acceptErrorServerModal}
+				/>
+			)}
+			{/* Used for errors uploading publication images */}
+			{createPublicationState === "errorServer2" && (
+				<NetworkError
+					buttonText="Aceptar"
+					failedAction="adjuntar las imágenes de tu publicación."
+					handleClose={acceptErrorServer2Modal}
+				/>
+			)}
 		</>
 	);
 }
