@@ -4,7 +4,7 @@ type PublicationStateModifiedProps = {
 
 function PublicationStateModified({ newState }: PublicationStateModifiedProps) {
 	return (
-		<div className="z-50 fixed top-0 left-0 flex justify-center items-center w-screen bg-screenDarkening h-screen">
+		<div className="z-[1000] fixed top-0 left-0 flex justify-center items-center w-screen bg-screenDarkening h-screen">
 			<div className="flex items-center flex-col justify-between w-[500px] py-[4rem] px-[2rem] bg-white text-center text-black font-sans rounded-xl">
 				<div className="w-[160px]">
 					{newState === "rejected" ? (

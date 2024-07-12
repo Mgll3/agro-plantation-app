@@ -2,7 +2,7 @@ import { CircularProgress } from "@mui/material";
 
 function Loading() {
 	return (
-		<div className="z-50 fixed top-0 left-0 flex justify-center items-center w-screen bg-screenDarkening h-screen">
+		<div className="z-[1000] fixed top-0 left-0 flex justify-center items-center w-screen bg-screenDarkening h-screen">
 			<div className="flex items-center flex-col justify-between bg-brandingLightYellow w-[30vw] h-[58vh] text-center text-black font-sans rounded-xl shadow-[0_6px_16px_#94B447] p-[2rem_2rem]">
 				<h3 className="text-size2 font-light pt-2">
 					ESPERANDO RESPUESTA <br /> DEL SERVIDOR
