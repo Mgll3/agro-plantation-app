@@ -17,7 +17,6 @@ function PublicationPreview({ mainImage, title, productionType, mainText, handle
 		shortenedMainText = mainText;
 	}
 
-	console.log(shortenedMainText);
 	useEffect(() => {
 		if (mainImage) {
 			const reader = new FileReader();

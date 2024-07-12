@@ -12,9 +12,12 @@ import { getStoredToken } from "../../utils/getStoredToken";
 import { useUserRoleContext } from "../../context/UserRoleContext";
 import { createPublication } from "../../interfaces/createPublication";
 import { uploadPublicationsImages } from "../../interfaces/uploadPublicationsImages";
+import { getPublicationsDemoIds } from "../management/getPublicationsDemoIds";
+import { storePublicationsDemoIds } from "../management/storePublicationsDemoIds";
 
 function CreatePublication() {
 	const [createPublicationState, setCreatePublicationState] = useLoadingState("init");
+	const publicationsIdsToStore = useRef<number[]>([]);
 	const { userRole } = useUserRoleContext();
 	const navigate = useNavigate();
 
@@ -53,7 +56,6 @@ function CreatePublication() {
 	};
 
 	function handleSubmit(formValues: NewPublicationType) {
-		console.log(formValues);
 		setCreatePublicationState("sending", "sending", 1);
 
 		axiosController1.current = new AbortController();
@@ -78,23 +80,31 @@ function CreatePublication() {
 
 			createPublication(storedToken, publicationDataToSendJSON, axiosController1.current)
 				.then((response) => {
+					//This section saves the id of the created publication in the cache, so that it can be deleted from Management.tsx
+					const storedPublicationsIdStringify = getPublicationsDemoIds();
+					if (storedPublicationsIdStringify) {
+						publicationsIdsToStore.current = JSON.parse(storedPublicationsIdStringify);
+					}
+					publicationsIdsToStore.current.push(response.id);
+					const publicationsIdsToStoreJSON = JSON.stringify(publicationsIdsToStore.current);
+					storePublicationsDemoIds(publicationsIdsToStoreJSON);
+					//Section End ***
+
 					const formData = new FormData();
 					const publicationId = String(response.id);
 
 					if (formValues.files.length >= 2) {
 						for (let i = 1; i < formValues.files.length; i++) {
-							const secondaryImgName = formValues.files[i].name;
-							const secondaryImgBlob = formValues.files[i];
-							formData.append("images", secondaryImgBlob, secondaryImgName);
+							const secondaryImg = formValues.files[i];
+							formData.append("images", secondaryImg);
 						}
 					}
 
 					if (formValues.files.length >= 1) {
-						const mainImgName = formValues.files[0].name;
-						const mainImgBlob = formValues.files[0];
+						const mainImg = formValues.files[0];
 
 						formData.append("publicationId", publicationId);
-						formData.append("mainImage", mainImgBlob, mainImgName);
+						formData.append("mainImage", mainImg);
 
 						axiosController2.current = new AbortController();
 
@@ -123,7 +133,7 @@ function CreatePublication() {
 			axiosController1.current?.abort();
 			axiosController2.current?.abort();
 		};
-	});
+	}, []);
 
 	return (
 		<>

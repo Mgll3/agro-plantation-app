@@ -13,15 +13,15 @@ function ProducerBanner() {
 
 	return (
 		<div className="relative flex justify-between w-full h-[100%] p-0 bg-white font-sans">
-			<div className="w-[50%]">
+			<div className="w-[58.4%]">
 				<img className="w-full" src="images/banners/ProducerBanner.jpg" alt="" />
 			</div>
 
-			<div className="w-[50%]"></div>
+			<div className="w-[41.6%]"></div>
 
-			<div className="absolute top-[16%] right-0 w-[53%] h-[70%] p-10 bg-[#F9F8F8] rounded-2xl">
-				<h2>¡Compartí tus conocimientos!</h2>
-				<p>Publica sobre tu huerta o comparte tus mejores tips de jardinería.</p>
+			<div className="absolute top-[16%] right-0 w-[53%] h-[70%] p-10 text-grey700 bg-[#F9F8F8] rounded-2xl">
+				<h2 className="text-[36.49px]">¡Compartí tus conocimientos!</h2>
+				<p className="text-[16px]">Publica sobre tu huerta o comparte tus mejores tips de jardinería.</p>
 				<Button
 					buttonColor={buttonColor}
 					buttonFontSize={buttonFontSize}

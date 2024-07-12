@@ -124,7 +124,7 @@ export default function Home() {
 				)}
 
 				{userRole === "PRODUCER" || userRole === "PRODUCER_VIP" ? (
-					<div className="px-[6vw] pt-[3vh]">
+					<div className="px-[7.8vw] pt-[3vh]">
 						<ProducerBanner />
 					</div>
 				) : null}
@@ -143,7 +143,7 @@ export default function Home() {
 				)}
 
 				{publicationsState === "loaded" && (
-					<div className="w-full px-[10vw] py-[10vh]">
+					<div className="w-full px-[12.15vw] py-[10vh]">
 						<PublicationsPreviewList bestPublicationsArray={bestPublicationsArray.current} />
 					</div>
 				)}

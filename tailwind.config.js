@@ -41,7 +41,9 @@ export default {
 				grey300: "#DAD9D9",
 				grey400: "#CECDCD",
 				grey500: "#C2C0C0",
+				grey600: "#9C9999",
 				grey700: "#6B6B6B",
+				grey800: "#4E4C4C",
 				brown150: "#F7F4E6"
 			},
 			spacing: {
