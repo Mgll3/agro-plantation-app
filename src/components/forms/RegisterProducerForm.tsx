@@ -3,14 +3,7 @@ import * as Yup from "yup";
 import Button from "../button/Button";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-
-export type RegisterProducerFormValuesType = {
-	gardenName: string;
-	gardenAddress: string;
-	gardenSize: string;
-	description: string;
-	termsAccepted: string;
-};
+import { RegisterProducerFormValuesType } from "./formsTypes";
 
 type RegisterProducerFormProps = {
 	handleSubmit: (formValues: RegisterProducerFormValuesType) => void;
@@ -27,6 +20,7 @@ function RegisterProducerForm({ handleSubmit }: RegisterProducerFormProps) {
 	const noSpaceAtStartRegex = /^\S/g;
 	const noSpaceEndingRegex = /\S$/g;
 	const noSpecialCharacterRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ,.\s0-9]*$/g;
+	const trueValueRegex = /true/g;
 
 	const initialValues = {
 		gardenName: "",
@@ -61,7 +55,9 @@ function RegisterProducerForm({ handleSubmit }: RegisterProducerFormProps) {
 			.matches(noSpecialCharacterRegex, "No se admiten caracteres especiales")
 			.max(140, "Máximo 140 caracteres"),
 
-		termsAccepted: Yup.string().required("Debes aceptar las condiciones")
+		termsAccepted: Yup.string()
+			.required("Debes aceptar las condiciones")
+			.matches(trueValueRegex, "Debes aceptar las condiciones")
 	});
 
 	const formik = useFormik({
@@ -92,7 +88,7 @@ function RegisterProducerForm({ handleSubmit }: RegisterProducerFormProps) {
 							id="gardenName"
 							placeholder="Por ejemplo: Huerta del sol"
 							{...formik.getFieldProps("gardenName")}
-							className="outline-none  p-[8px_8px_4px] w-full placeholder-[#666]"
+							className="outline-none  p-[8px_8px_4px] w-full placeholder-grey500"
 						/>
 
 						{formik.touched.gardenName && formik.errors.gardenName ? (
@@ -110,7 +106,7 @@ function RegisterProducerForm({ handleSubmit }: RegisterProducerFormProps) {
 							id="gardenAddress"
 							placeholder="Por ejemplo: Bermejo 356, Mendoza, Argentina"
 							{...formik.getFieldProps("gardenAddress")}
-							className="outline-none  p-[8px_8px_4px] w-full placeholder-[#666]"
+							className="outline-none  p-[8px_8px_4px] w-full placeholder-grey500"
 						/>
 
 						{formik.touched.gardenAddress && formik.errors.gardenAddress ? (
@@ -199,7 +195,9 @@ function RegisterProducerForm({ handleSubmit }: RegisterProducerFormProps) {
 				</p>
 
 				<div className="relative w-[70%] mt-6 p-2 border border-black border-solid rounded-md">
-					<label className="absolute top-[-12px] left-[15px] px-2 text-[16px] bg-white">Descripción</label>
+					<label htmlFor="description" className="absolute top-[-12px] left-[15px] px-2 text-[16px] bg-white">
+						Descripción
+					</label>
 
 					<textarea
 						ref={textAreaElement}
@@ -208,7 +206,7 @@ function RegisterProducerForm({ handleSubmit }: RegisterProducerFormProps) {
 						maxLength={140}
 						rows={6}
 						{...formik.getFieldProps("description")}
-						className="outline-none  p-[8px_8px_4px] w-full placeholder-[#666]"
+						className="outline-none  p-[8px_8px_4px] w-full placeholder-grey500"
 					/>
 
 					{formik.touched.description && formik.errors.description ? (

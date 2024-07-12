@@ -61,6 +61,7 @@ function ProtectedRouteProducer() {
 
 		return () => {
 			clearTimeout(navigateTimer);
+			clearTimeout(resetUserCredentialsTimer);
 		};
 	}, [isAuthorized]);
 

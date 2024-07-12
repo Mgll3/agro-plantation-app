@@ -232,6 +232,8 @@ function AdminPublicationDetails() {
 
 		return () => {
 			clearTimeout(redirectToPendingTimeout.current);
+			axiosController.current?.abort();
+			axiosController2.current?.abort();
 		};
 	}, []);
 
