@@ -1,7 +1,14 @@
 import { Link } from "react-router-dom";
 import { ButtonProps } from "./buttonTypes";
 
-function Button({ buttonColor, buttonFontSize, buttonWidth, buttonPaddingY, buttonFuncionality }: ButtonProps) {
+function Button({
+	buttonColor,
+	buttonFontSize,
+	buttonWidth,
+	buttonPaddingY,
+	buttonFuncionality,
+	otherStyles
+}: ButtonProps) {
 	let bgColor: string = "";
 	let textColor: string = "";
 
@@ -35,7 +42,7 @@ function Button({ buttonColor, buttonFontSize, buttonWidth, buttonPaddingY, butt
 			<button
 				type="button"
 				onClick={buttonFuncionality.handleClick}
-				className={`${buttonWidth} ${buttonPaddingY} ${buttonFontSize} ${bgColor} ${textColor} shadow-md rounded-lg font-sans cursor-pointer font-bold tracking-widest hover:bg-brandingDarkGreen transition-all hover:text-[#F6C915]`}
+				className={`${buttonWidth} ${buttonPaddingY} ${buttonFontSize} ${bgColor} ${textColor} shadow-md rounded-lg font-sans cursor-pointer font-bold tracking-widest hover:bg-brandingDarkGreen transition-all hover:text-[#F6C915] ${otherStyles}`}
 			>
 				{buttonFuncionality.actionText}
 			</button>
@@ -44,7 +51,7 @@ function Button({ buttonColor, buttonFontSize, buttonWidth, buttonPaddingY, butt
 		return (
 			<button
 				type="submit"
-				className={`${buttonWidth} ${buttonPaddingY} ${buttonFontSize} ${bgColor} ${textColor} shadow-md rounded-lg font-sans cursor-pointer font-bold hover:bg-opacity-80 transition-all`}
+				className={`${buttonWidth} ${buttonPaddingY} ${buttonFontSize} ${bgColor} ${textColor} shadow-md rounded-lg font-sans cursor-pointer font-bold hover:bg-opacity-80 transition-all ${otherStyles}`}
 			>
 				{buttonFuncionality.submitText}
 			</button>
@@ -53,7 +60,7 @@ function Button({ buttonColor, buttonFontSize, buttonWidth, buttonPaddingY, butt
 		return (
 			<Link to={buttonFuncionality.linkUrl} className={`inline-block ${buttonWidth}`}>
 				<button
-					className={`${buttonPaddingY} ${buttonFontSize} ${bgColor} ${textColor} w-[100%] shadow-md rounded-lg font-sans cursor-pointer font-bold hover:bg-brandingDarkGreen transition-all hover:text-[#F6C915]`}
+					className={`${buttonPaddingY} ${buttonFontSize} ${bgColor} ${textColor} w-[100%] shadow-md rounded-lg font-sans cursor-pointer font-bold hover:bg-brandingDarkGreen transition-all hover:text-[#F6C915] ${otherStyles}`}
 				>
 					{buttonFuncionality.linkText}
 				</button>
