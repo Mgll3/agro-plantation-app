@@ -26,27 +26,26 @@ function Header() {
 		headerBg = "bg-headerBgAdmin";
 	}
 
-
 	function handleOpenMustLoginWarning() {
 		setMustLoginWarningState("visible");
 	}
 
-	function handleCloseMustLoginWarning() {
-		setMustLoginWarningState("hidden");
+	function handleCloseMustLoginWarning(e: React.MouseEvent<HTMLDivElement>) {
+		if (e.target === e.currentTarget) {
+			setMustLoginWarningState("hidden");
+		}
 	}
-
 
 	function handleLogoutClick() {
 		setUserProfileState("loading");
 
-		logoutTimeout = window.setTimeout( () => {
+		logoutTimeout = window.setTimeout(() => {
 			resetUserData(setUserRole);
 			setUserProfileState("logout");
 		}, 1500);
 	}
 
 	useEffect(() => {
-
 		return () => {
 			clearTimeout(logoutTimeout);
 		};
@@ -54,7 +53,6 @@ function Header() {
 
 	useEffect(() => {
 		if (userProfileState === "logout") {
-
 			setUserProfileState("init");
 			navigate("/", { replace: true });
 		}
@@ -63,46 +61,41 @@ function Header() {
 	return (
 		<>
 			<header className="w-full">
-				<div className={`${headerBg} h-[30vh] bg-cover bg-center bg-no-repeat relative flex justify-center items-center py-5`}>
-
+				<div
+					className={`${headerBg} h-[30vh] bg-cover bg-center bg-no-repeat relative flex justify-center items-center py-5`}
+				>
 					<Link to="/management" className="absolute top-0 left-0 w-[40px] text-3xl">
-						<DvrIcon fontSize="inherit"/>
+						<DvrIcon fontSize="inherit" />
 					</Link>
-					
-					{
-						userRole === "ADMIN"
-							?	<img src="/images/logos/Logo_original_Plant-In.png" alt="" className="w-1/12" />
-							: <img src="/images/logos/Logo_fondo_verde.png" alt="" className="w-1/12" />
-					}
 
+					{userRole === "ADMIN" ? (
+						<img src="/images/logos/Logo_original_Plant-In.png" alt="" className="w-1/12" />
+					) : (
+						<img src="/images/logos/Logo_fondo_verde.png" alt="" className="w-1/12" />
+					)}
 
 					<div className="absolute right-4 top-2">
-
-						{
-							userRole === "visitor"
-								?	<SecondaryNav />
-								:	<UserProfile userProfileState={userProfileState} handleLogoutClick={handleLogoutClick} />
-						}
-
+						{userRole === "visitor" ? (
+							<SecondaryNav />
+						) : (
+							<UserProfile userProfileState={userProfileState} handleLogoutClick={handleLogoutClick} />
+						)}
 					</div>
 				</div>
 
 				<div className="flex justify-center bg-brandingLightGreen py-4">
-
-					{
-						userRole === "ADMIN"
-							? <AdminNav />
-							: handleOpenMustLoginWarning
-								? <MainNav handleOpenMustLoginWarning={handleOpenMustLoginWarning} />
-								: <MainNav />
-					}
-
+					{userRole === "ADMIN" ? (
+						<AdminNav />
+					) : handleOpenMustLoginWarning ? (
+						<MainNav handleOpenMustLoginWarning={handleOpenMustLoginWarning} />
+					) : (
+						<MainNav />
+					)}
 				</div>
 
-				{
-					mustLoginWarningState === "visible"
-					&& <MustLoginWarning handleCloseMustLoginWarning={handleCloseMustLoginWarning} />
-				}
+				{mustLoginWarningState === "visible" && (
+					<MustLoginWarning handleCloseMustLoginWarning={handleCloseMustLoginWarning} />
+				)}
 			</header>
 		</>
 	);
