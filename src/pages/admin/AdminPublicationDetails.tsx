@@ -266,22 +266,30 @@ function AdminPublicationDetails() {
 							</div>
 
 							<div className="flex justify-center gap-[5%] w-[100%] mb-[5rem]">
+								<Button
+									buttonColor="yellow"
+									buttonFontSize="text-[20px]"
+									buttonPaddingY="py-[0.5rem] px-[6.5rem]"
+									buttonWidth="w-[30%]"
+									buttonFuncionality={buttonBackToPreviousPageFunctionality}
+								/>
+
 								{publicationData.authorizationStatus.state === "PENDING" && (
 									<>
-										<Button
-											buttonColor="yellow"
-											buttonFontSize="text-[20px]"
-											buttonPaddingY="py-[0.5rem] px-[5rem]"
-											buttonWidth="w-[30%]"
-											buttonFuncionality={buttonApproveFunctionality}
-										/>
-
 										<Button
 											buttonColor="red"
 											buttonFontSize="text-[20px]"
 											buttonPaddingY="py-[0.5rem] px-[5rem]"
 											buttonWidth="w-[30%]"
 											buttonFuncionality={buttonRejectFunctionality}
+										/>
+
+										<Button
+											buttonColor="yellow"
+											buttonFontSize="text-[20px]"
+											buttonPaddingY="py-[0.5rem] px-[5rem]"
+											buttonWidth="w-[30%]"
+											buttonFuncionality={buttonApproveFunctionality}
 										/>
 									</>
 								)}
@@ -295,14 +303,6 @@ function AdminPublicationDetails() {
 										buttonFuncionality={buttonChangeToPendingFunctionality}
 									/>
 								)}
-
-								<Button
-									buttonColor="yellow"
-									buttonFontSize="text-[20px]"
-									buttonPaddingY="py-[0.5rem] px-[6.5rem]"
-									buttonWidth="w-[30%]"
-									buttonFuncionality={buttonBackToPreviousPageFunctionality}
-								/>
 							</div>
 
 							{loadingState === "modalLoading" && <Loading />}
