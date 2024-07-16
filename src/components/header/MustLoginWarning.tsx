@@ -37,7 +37,7 @@ function MustLoginWarning({ handleCloseMustLoginWarning }: MustLoginWarningProps
 				</div>
 				<p className="mt-[16px] text-[19.78px] font-light">
 					Si ya estás registrado, por favor{" "}
-					<span className="text-brandingDarkGreen font-semibold" role="button" onClick={() => navigate("/register")}>
+					<span className="text-brandingDarkGreen font-semibold" role="button" onClick={() => navigate("/login")}>
 						inicia sesión
 					</span>
 				</p>
