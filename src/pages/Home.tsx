@@ -118,7 +118,7 @@ export default function Home() {
 				)}
 
 				{userRole === "USER" && (
-					<div className="px-[6vw] pt-[3vh]">
+					<div className="px-[5.18vw] pt-[3vh]">
 						<UserBanner />
 					</div>
 				)}

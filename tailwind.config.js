@@ -7,6 +7,7 @@ export default {
 				loginFont: "Macondo",
 				plantInFont: "sans-serif",
 				sans: ["Sora", "sans-serif"],
+				openSans: ["Open Sans", "sans-serif"],
 				niramit: ["Niramit", "sans-serif"],
 				montserrat: ["Montserrat", "sans-serif"],
 				lato: ["Lato", "sans-serif"]
