@@ -294,7 +294,7 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 				</div>
 
 				{registerState === "loading" && <Loading />}
-				{registerState === "logged" && <RegisterOk />}
+				{(registerState === "logged" || registerState === "init") && <RegisterOk />}
 				{registerState === "registerErrorEmailExists" && (
 					<RegisterKo errorText="El email introducido ya existe. Por favor, introduce otro." />
 				)}
