@@ -62,16 +62,16 @@ function Header() {
 		<>
 			<header className="w-full">
 				<div
-					className={`${headerBg} h-[30vh] bg-cover bg-center bg-no-repeat relative flex justify-center items-center py-5`}
+					className={`flex justify-center items-center h-[239px] ${headerBg} bg-cover bg-center bg-no-repeat relative`}
 				>
 					<Link to="/management" className="absolute top-0 left-0 w-[40px] text-3xl">
 						<DvrIcon fontSize="inherit" />
 					</Link>
 
 					{userRole === "ADMIN" ? (
-						<img src="/images/logos/Logo_original_Plant-In.png" alt="" className="w-1/12" />
+						<img src="/images/logos/Logo_original_Plant-In.png" alt="" className="w-[128px]" />
 					) : (
-						<img src="/images/logos/Logo_fondo_verde.png" alt="" className="w-1/12" />
+						<img src="/images/logos/Logo_fondo_verde.png" alt="" className="w-[128px]" />
 					)}
 
 					<div className="absolute right-4 top-2">
@@ -83,7 +83,7 @@ function Header() {
 					</div>
 				</div>
 
-				<div className="flex justify-center bg-brandingLightGreen py-4">
+				<div className="flex justify-center bg-brandingLightGreen py-[18px]">
 					{userRole === "ADMIN" ? (
 						<AdminNav />
 					) : handleOpenMustLoginWarning ? (

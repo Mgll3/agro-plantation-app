@@ -52,7 +52,7 @@ export default {
 			},
 			backgroundImage: {
 				headerBg: "url('@/images/backgrounds/header_background.avif')",
-				headerBgAdmin: "url('@/images/backgrounds/Header2.png')",
+				headerBgAdmin: "url('@/images/backgrounds/header_background_admin.png')",
 				login: "url('@/images/backgrounds/inicio_y_registro.jpg')",
 				publicationCardsBg: "url('@/images/backgrounds/cards-background.jpg')"
 			},

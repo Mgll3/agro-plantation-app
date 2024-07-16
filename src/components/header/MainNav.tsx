@@ -13,9 +13,9 @@ function MainNav({ handleOpenMustLoginWarning }: MainNavProps) {
 
 	const buttonColor: ButtonColorType = "yellow";
 	const buttonColor2: ButtonColorType = "green";
-	const buttonFontSize = "text-base";
-	const buttonWidth = "w-[200px]";
-	const buttonPaddingY = "py-2.5";
+	const buttonFontSize = "text-[1.978rem]";
+	const buttonWidth = "w-[212px]";
+	const buttonPaddingY = "py-[0.767rem]";
 
 	return (
 		<nav aria-label="Navegación principal" className="flex justify-center w-[100%]">

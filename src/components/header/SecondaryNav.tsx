@@ -2,11 +2,10 @@ import Button from "../button/Button";
 import { ButtonColorType } from "../button/buttonTypes";
 
 function SecondaryNav() {
-
 	const buttonColor: ButtonColorType = "yellow";
-	const buttonFontSize = "text-base";
-	const buttonWidth = "w-44";
-	const buttonPaddingY = "p-[2px_0]";
+	const buttonFontSize = "text-[1.978rem]";
+	const buttonWidth = "w-[160px]";
+	const buttonPaddingY = "py-[0.27rem]";
 
 	return (
 		<nav aria-label="Login y registro" className="">
@@ -17,8 +16,8 @@ function SecondaryNav() {
 						buttonFontSize={buttonFontSize}
 						buttonWidth={buttonWidth}
 						buttonPaddingY={buttonPaddingY}
-						buttonFuncionality={{ linkText: "Ingresar", linkUrl: "/login" }}>
-					</Button>
+						buttonFuncionality={{ linkText: "Ingresa", linkUrl: "/login" }}
+					></Button>
 				</li>
 
 				<li className="">
@@ -27,8 +26,8 @@ function SecondaryNav() {
 						buttonFontSize={buttonFontSize}
 						buttonWidth={buttonWidth}
 						buttonPaddingY={buttonPaddingY}
-						buttonFuncionality={{ linkText: "Regístrate", linkUrl: "/register" }}>
-					</Button>
+						buttonFuncionality={{ linkText: "Regístrate", linkUrl: "/register" }}
+					></Button>
 				</li>
 			</ul>
 		</nav>
