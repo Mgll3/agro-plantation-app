@@ -19,7 +19,6 @@ public class Publication {
     private Long id;
     @Column(length = 50, nullable = false)
     private String title;
-    //CascadeType.ALL: Si se elimina la publicación, se elimina la plantación, igual para crearse
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(nullable = false)
     private Plantation plantation;
@@ -34,7 +33,7 @@ public class Publication {
     private Image mainImage;
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Image> images;
-    //private List<Comment> comments;
+    //private List<Comment> comments;  proximamente
     @Column(columnDefinition = "INTEGER DEFAULT 0")
     private Integer score;
     @ManyToOne(fetch = FetchType.EAGER)

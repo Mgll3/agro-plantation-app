@@ -10,6 +10,8 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/auth")
 @CrossOrigin(origins = "*")
+@Slf4j
 public class AuthController {
 
     @Autowired
@@ -50,6 +53,7 @@ public class AuthController {
 
             return new ResponseEntity<>(user, HttpStatus.CREATED);
             } catch (Exception e) {
+                log.error(e.getMessage());
                 return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(e.getMessage());
         }
     }
@@ -67,6 +71,7 @@ public class AuthController {
             AthAnswerDTO answer = userService.authenticate(loginDto);
             return new ResponseEntity<>(answer, HttpStatus.OK);
         } catch (Exception e) {
+            log.error(e.getMessage());
             if (e.getMessage().equals("User not found")) {
                 return new ResponseEntity<>(new AthAnswerDTO("User not found"), HttpStatus.UNAUTHORIZED);
             }else {

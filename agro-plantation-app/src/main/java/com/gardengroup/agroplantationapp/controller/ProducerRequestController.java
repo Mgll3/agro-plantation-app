@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @CrossOrigin(origins = "*")
 @RequestMapping("/v1/producerRequest")
+@Slf4j
 public class ProducerRequestController {
     
     @Autowired
@@ -47,6 +49,7 @@ public class ProducerRequestController {
             List<ProducerRequest> producerRequests = producerRequestService.getPendingProducerRequests();
             return ResponseEntity.ok(producerRequests);
         } catch (Exception e) {
+            log.error(e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
@@ -67,6 +70,7 @@ public class ProducerRequestController {
             producerRequestService.approve(producerRequestId);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
+            log.error(e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
         }
     }
@@ -86,6 +90,7 @@ public class ProducerRequestController {
             producerRequestService.reject(producerRequestId);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
+            log.error(e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
         }
     }
@@ -107,6 +112,7 @@ public class ProducerRequestController {
             return new ResponseEntity<>(requestSaved, HttpStatus.CREATED);
             
         } catch (Exception e) {
+            log.error(e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
         }
     }

@@ -95,6 +95,7 @@ public class PublicationTest {
         plantation.setIrrigationType("drip");
         plantation.setProductionType("type1");
         plantation.setDetails("semillas de tomate para cultivo en verano, condiciones de riego: cada 2 días, condiciones de temperatura: 25-30°C");
+        plantation.setAddress("Carrera 29 b");
         publicationSaveDto.setPlantation(plantation);
     }
 

@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,6 +35,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 @RestController
 @RequestMapping("/v1/publication")
 @CrossOrigin(origins = "*")
+@Slf4j
 public class PublicationController {
     @Autowired
     private IPublicationService publicationService;
@@ -60,6 +62,7 @@ public class PublicationController {
             Publication publicationSaved = publicationService.savePublication(publication, email);
             return new ResponseEntity<>(publicationSaved, HttpStatus.CREATED);
         } catch (Exception e) {
+            log.error(e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
         }
     }
@@ -86,10 +89,10 @@ public class PublicationController {
             return new ResponseEntity<>(HttpStatus.OK);
 
         } catch (Exception e) {
+            log.error(e.getMessage());
             if (e.getMessage().equals(Constants.P_NOT_FOUND)) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             } else {
-                System.out.println(e.getMessage());
                 return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
             }
         }
@@ -117,6 +120,7 @@ public class PublicationController {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
             }
         } catch (Exception e) {
+            log.error(e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
         }
     }
@@ -135,6 +139,7 @@ public class PublicationController {
             Publication publication = publicationService.getPublication(id);
             return new ResponseEntity<>(publication, HttpStatus.OK);
         } catch (Exception e) {
+            log.error(e.getMessage());
             if (e.getMessage().equals(Constants.P_NOT_FOUND)) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             } else {
@@ -159,6 +164,7 @@ public class PublicationController {
             List<Publication> publication = publicationService.publicationsByEmail(email);
             return new ResponseEntity<>(publication, HttpStatus.OK);
         } catch (Exception e) {
+            log.error(e.getMessage());
             if (e.getMessage().equals(Constants.PS_NOT_FOUND)) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             } else {
@@ -183,6 +189,7 @@ public class PublicationController {
             publicationService.updatePublication(publicationUpdDTO);
             return ResponseEntity.status(HttpStatus.OK).build();
         } catch (Exception e) {
+            log.error(e.getMessage());
             if (e.getMessage().equals(Constants.P_NOT_FOUND)) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             } else {
@@ -205,6 +212,7 @@ public class PublicationController {
             publicationService.deletePublication(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
+            log.error(e.getMessage());
             if (e.getMessage().equals(Constants.P_NOT_FOUND)) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             } else {
@@ -230,6 +238,7 @@ public class PublicationController {
             List<Publication> topPublications = publicationService.getTopPublications();
             return new ResponseEntity<>(topPublications, HttpStatus.OK);
         } catch (Exception e) {
+            log.error(e.getMessage());
             if (e.getMessage().equals(Constants.PS_NOT_FOUND)) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             } else {
@@ -254,6 +263,7 @@ public class PublicationController {
             return ResponseEntity.status(HttpStatus.CREATED).body(vote);
 
         } catch (Exception e) {
+            log.error(e.getMessage());
             if (e.getMessage().equals(Constants.P_NOT_FOUND)) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             } else {
@@ -289,6 +299,7 @@ public class PublicationController {
             publicationService.approvePublication(publicationId);
             return ResponseEntity.ok("La solicitud de publicación ha sido aprobada con éxito.");
         } catch (Exception e) {
+            log.error(e.getMessage());
             if (e.getMessage().equals(Constants.P_NOT_FOUND)) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             } else {
@@ -309,6 +320,7 @@ public class PublicationController {
             publicationService.rejectPublication(publicationId);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
+            log.error(e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
         }
     }
@@ -328,6 +340,7 @@ public class PublicationController {
             PublicationFilterDTO publications = publicationService.getPublicationsByLike(pag);
             return new ResponseEntity<>(publications, HttpStatus.OK);
         } catch (Exception e) {
+            log.error(e.getMessage());
             if (e.getMessage().equals(Constants.PS_NOT_FOUND)) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             } else {
@@ -351,6 +364,7 @@ public class PublicationController {
             PublicationFilterDTO publications = publicationService.getPublicationsByUser(pag);
             return new ResponseEntity<>(publications, HttpStatus.OK);
         } catch (Exception e) {
+            log.error(e.getMessage());
             if (e.getMessage().equals(Constants.PS_NOT_FOUND)) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             } else {
@@ -374,6 +388,7 @@ public class PublicationController {
             PublicationFilterDTO publications = publicationService.getPublicationsByDate(pag);
             return new ResponseEntity<>(publications, HttpStatus.OK);
         } catch (Exception e) {
+            log.error(e.getMessage());
             if (e.getMessage().equals(Constants.PS_NOT_FOUND)) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             } else {
@@ -397,6 +412,7 @@ public class PublicationController {
             PublicationFilterDTO publications = publicationService.getPublicationsByAleatory(pag);
             return new ResponseEntity<>(publications, HttpStatus.OK);
         } catch (Exception e) {
+            log.error(e.getMessage());
             if (e.getMessage().equals(Constants.PS_NOT_FOUND)) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             } else {
@@ -422,6 +438,7 @@ public class PublicationController {
 
             return new ResponseEntity<>(publications, HttpStatus.OK);
         } catch (Exception e) {
+            log.error(e.getMessage());
             if (e.getMessage().equals(Constants.PS_NOT_FOUND)) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             } else {
@@ -445,6 +462,7 @@ public class PublicationController {
             PublicationFilterDTO publications = publicationService.getPublicationsByQuantity(pag);
             return new ResponseEntity<>(publications, HttpStatus.OK);
         } catch (Exception e) {
+            log.error(e.getMessage());
             if (e.getMessage().equals(Constants.PS_NOT_FOUND)) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             } else {
@@ -460,6 +478,7 @@ public class PublicationController {
             publicationService.changeToPending(publicationId);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
+            log.error(e.getMessage());
             if (e.getMessage().equals(Constants.P_NOT_FOUND)) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             } else {
