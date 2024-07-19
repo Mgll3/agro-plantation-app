@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
 import CreatePublicationForm from "../../components/forms/CreatePublicationForm";
-import { NewPublicationType } from "../../components/forms/formsTypes";
+import { NewPublicationDataServerFormattedType, NewPublicationType } from "../../components/forms/formsTypes";
 import useLoadingState from "../../hooks/useLoadingState";
 import Loading from "../../components/modals/Loading";
 import GenericModal from "../../components/modals/GenericModal";
@@ -42,19 +42,6 @@ function CreatePublication() {
 		navigate("/");
 	}
 
-	type NewPublicationDataServerFormattedType = {
-		title: string;
-		plantation: {
-			area: string;
-			harvestType: string;
-			irrigationType: string;
-			productionType: string;
-			details: string;
-		};
-		visibility: boolean;
-		score: number;
-	};
-
 	function handleSubmit(formValues: NewPublicationType) {
 		setCreatePublicationState("sending", "sending", 1);
 
@@ -69,10 +56,9 @@ function CreatePublication() {
 					harvestType: formValues.harvestType,
 					irrigationType: formValues.irrigationType,
 					productionType: formValues.productionType,
-					details: formValues.details
-				},
-				visibility: false,
-				score: 0
+					details: formValues.details,
+					address: formValues.address
+				}
 			};
 
 			const publicationDataToSendJSON: Stringified<NewPublicationDataServerFormattedType> =
@@ -93,15 +79,15 @@ function CreatePublication() {
 					const formData = new FormData();
 					const publicationId = String(response.id);
 
-					if (formValues.files.length >= 2) {
-						for (let i = 1; i < formValues.files.length; i++) {
-							const secondaryImg = formValues.files[i];
+					if (formValues.images.length >= 1) {
+						for (let i = 1; i < formValues.images.length; i++) {
+							const secondaryImg = formValues.images[i];
 							formData.append("images", secondaryImg);
 						}
 					}
 
-					if (formValues.files.length >= 1) {
-						const mainImg = formValues.files[0];
+					if (formValues.mainImg.length >= 1) {
+						const mainImg = formValues.mainImg[0];
 
 						formData.append("publicationId", publicationId);
 						formData.append("mainImage", mainImg);
@@ -117,7 +103,7 @@ function CreatePublication() {
 								setCreatePublicationState("errorServer2", "sending");
 							});
 					} else {
-						setCreatePublicationState("sent", "sending");
+						setCreatePublicationState("errorServer2", "sending");
 					}
 				})
 				.catch(() => {
@@ -168,8 +154,8 @@ function CreatePublication() {
 			{createPublicationState === "sent" && (
 				<GenericModal
 					buttonText="Aceptar"
-					mainText="Se envió con éxito la petición"
-					secondaryText="El administrador en un plazo de 24 a 72 hs aprobará tu publicacion. "
+					mainText="Se guardó con éxito tu publicación"
+					secondaryText='Ahora puedes hacerla pública desde el apartado "Mis Publicaciones".'
 					handleClick={acceptFormSentModal}
 				/>
 			)}

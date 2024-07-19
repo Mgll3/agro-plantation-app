@@ -37,7 +37,8 @@ export type RegisterProducerFormValuesType = {
 // CREATE NEW PUBLICATION (DATA USED IN THE FORM)
 
 export type NewPublicationType = {
-	files: File[];
+	mainImg: File[];
+	images: File[];
 	title: string;
 	details: string;
 	area: string;
@@ -45,4 +46,17 @@ export type NewPublicationType = {
 	irrigationType: string;
 	productionType: string;
 	address: string;
+};
+
+//CREATE NEW PUBLICATION (DATA SEND TO SERVER)
+export type NewPublicationDataServerFormattedType = {
+	title: string;
+	plantation: {
+		area: string;
+		harvestType: string;
+		irrigationType: string;
+		productionType: string;
+		details: string;
+		address: string;
+	};
 };

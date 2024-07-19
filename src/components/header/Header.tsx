@@ -64,7 +64,7 @@ function Header() {
 				<div
 					className={`flex justify-center items-center h-[239px] ${headerBg} bg-cover bg-center bg-no-repeat relative`}
 				>
-					<Link to="/management" className="absolute top-0 left-0 w-[40px] text-3xl">
+					<Link to="/management" className="absolute top-0 left-0 w-[40px] pl-[1rem] text-[4rem]">
 						<DvrIcon fontSize="inherit" />
 					</Link>
 
