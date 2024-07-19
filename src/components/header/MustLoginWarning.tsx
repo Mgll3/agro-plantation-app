@@ -1,33 +1,29 @@
 import { useNavigate } from "react-router-dom";
 import Button from "../button/Button";
 import { ButtonColorType } from "../button/buttonTypes";
-import CloseIcon from "@mui/icons-material/Close";
 
 type MustLoginWarningProps = {
-	handleCloseMustLoginWarning: () => void;
+	handleCloseMustLoginWarning: (e: React.MouseEvent<HTMLDivElement>) => void;
 };
 
 function MustLoginWarning({ handleCloseMustLoginWarning }: MustLoginWarningProps) {
 	const buttonColor: ButtonColorType = "yellow";
-	const buttonFontSize = "text-base";
-	const buttonWidth = "w-53";
-	const buttonPaddingY = "py-2.5";
+	const buttonFontSize = "text-[24px]";
+	const buttonWidth = "w-[192px]";
+	const buttonPaddingY = "py-[6.5px]";
+	const otherStyles = "mt-[60px]";
 	const navigate = useNavigate();
 
-
 	return (
-		<div className="absolute top-0 flex justify-center items-center bg-screenDarkening w-screen h-screen">
-			<div className="relative bg-brandingLightYellow p-3 flex flex-col items-center gap-y-2 max-w-[450px] 
-			max-[650px]:max-w-[350px] text-center shadow-[0_3px_12px_#94B447] transition-all">
-				<div className="absolute -top-3 -right-3 flex justify-center items-center border border-black text-xl bg-white rounded-full w-8 h-8 cursor-pointer" onClick={handleCloseMustLoginWarning}>
-					<CloseIcon fontSize="inherit" />
-				</div>
-
-				<h2 className="text-2xl">TE PEDIMOS DISCULPAS!</h2>
-				<p>Lamentablemente los links a donde quieres ingresar son links exclusivos de nuestros usuarios registrados.</p>
-				<p>Si seguis interesado en conocernos, te invitamos a registrarte.</p>
-
-				<img src="images/logos/LogoVerde.png" alt="" className="w-[130px] m-[1rem_0]" />
+		<div
+			className="z-50 fixed top-0 flex justify-center items-center bg-screenDarkening w-screen h-screen"
+			onClick={handleCloseMustLoginWarning}
+		>
+			<div className="flex flex-col items-center w-[709px] p-[60px_32px] rounded-2xl bg-white text-center transition-all">
+				<img src="images/logos/LogoVerde.png" alt="" className="w-[133px]" />
+				<h2 className="my-[30px] text-[49px]">¡Hola!</h2>
+				<p className="text-[24px]">Los enlaces son exclusivos para usuarios registrados.</p>
+				<p className="mt-[3px] text-[24px]">¡Regístrate y accede al contenido especial!</p>
 
 				<div>
 					<Button
@@ -35,13 +31,17 @@ function MustLoginWarning({ handleCloseMustLoginWarning }: MustLoginWarningProps
 						buttonFontSize={buttonFontSize}
 						buttonWidth={buttonWidth}
 						buttonPaddingY={buttonPaddingY}
-						buttonFuncionality={{ linkText: "Registrate", linkUrl: "/register" }}>
-					</Button>
-
+						buttonFuncionality={{ linkText: "Registrate", linkUrl: "/register" }}
+						otherStyles={otherStyles}
+					></Button>
 				</div>
-				<p>Si ya estás registrado, por favor <span className="text-brandingLightGreen mt-2" role="button" onClick={() => navigate("/register")}>INICIA SESIÓN</span></p>
+				<p className="mt-[16px] text-[19.78px] font-light">
+					Si ya estás registrado, por favor{" "}
+					<span className="text-brandingDarkGreen font-semibold" role="button" onClick={() => navigate("/login")}>
+						inicia sesión
+					</span>
+				</p>
 			</div>
-
 		</div>
 	);
 }

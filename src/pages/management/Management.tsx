@@ -61,7 +61,7 @@ export default function Management() {
 
 	const buttonColorYellow: ButtonColorType = "yellow";
 	const buttonColorGreen: ButtonColorType = "green";
-	const buttonFontSize = "text-base";
+	const buttonFontSize = "text-[1.6rem]";
 	const buttonWidth = "w-[250px]";
 	const buttonWidthSmall = "w-[180px]";
 	const buttonPaddingY = "py-3.5";

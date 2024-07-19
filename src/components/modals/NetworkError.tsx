@@ -9,9 +9,10 @@ type NetworkErrorProps = {
 
 function NetworkError({ failedAction, buttonText, handleClose }: NetworkErrorProps) {
 	const buttonColorYellow: ButtonColorType = "yellow";
-	const buttonFontSize = "text-base";
-	const buttonWidth = "w-[200px]";
-	const buttonPaddingY = "py-3.5";
+	const buttonFontSize = "text-[24px]";
+	const buttonWidth = "w-[243px]";
+	const buttonPaddingY = "py-[6.5px]";
+	const otherStyles = "tracking-normal";
 
 	const buttonFuncionality = {
 		actionText: buttonText,
@@ -20,14 +21,14 @@ function NetworkError({ failedAction, buttonText, handleClose }: NetworkErrorPro
 
 	return (
 		<div className="z-[1000] fixed left-0 top-0 flex justify-center items-center w-screen  h-screen bg-screenDarkening">
-			<div className="flex items-center flex-col justify-between bg-brandingLightYellow w-[30vw] h-[58vh] text-center text-black font-sans rounded-xl shadow-[0_6px_16px_#94B447] p-[.5rem_1rem]">
+			<div className="flex items-center flex-col justify-center w-[709px] h-[489px] p-[64px_32px] bg-white text-center text-black font-sans rounded-2xl ">
 				<div className="">
-					<img src="/icons/modals/error-oops.png" className="w-[120px]" />
+					<img src="/icons/modals/error-oops.png" className="w-[150px]" />
 				</div>
 
-				<h3 className="text-size2 font-light">Hubo un problema al intentar {failedAction}</h3>
+				<h3 className="mt-[32px] text-[24px]">Hubo un problema al intentar {failedAction}</h3>
 
-				<p className="text-size3 font-light p-[2rem_0]">Por favor, revisa tu conexión e inténtalo de nuevo</p>
+				<p className="mt-[12px] mb-[64px] text-[24px]">Por favor, revisa tu conexión e inténtalo de nuevo.</p>
 
 				<div className="p-[1rem_0]">
 					<Button
@@ -36,6 +37,7 @@ function NetworkError({ failedAction, buttonText, handleClose }: NetworkErrorPro
 						buttonWidth={buttonWidth}
 						buttonPaddingY={buttonPaddingY}
 						buttonFuncionality={buttonFuncionality}
+						otherStyles={otherStyles}
 					/>
 				</div>
 			</div>

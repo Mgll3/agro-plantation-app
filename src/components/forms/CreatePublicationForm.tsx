@@ -15,9 +15,11 @@ type CreatePublicationFormProps = {
 };
 
 function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
-	const [previewVisibility, setPreviewVisibility] = useState(false);
-	const [numberOfImages, setNumberOfImages] = useState<number>(0);
-	const [dragActive, setDragActive] = useState(false);
+	const [previewVisibility, setPreviewVisibility] = useState(false); //Show / hide the PublicationPreview component
+	const [numberOfMainImages, setNumberOfMainImages] = useState<number>(0); //Used to show the number of main pictures uploaded in the form
+	const [numberOfSecondaryImages, setNumberOfSecondaryImages] = useState<number>(0); //Used to show the number of secondary pictures uploaded in the form
+	const [mainImgDragActive, setMainImgDragActive] = useState(false); //Used to modify the styles of the input used to upload the main picture on dragover
+	const [secondaryImgsDragActive, setSecondaryImgsDragActive] = useState(false); //Used to modify the styles of the input used to upload the secondary pictures on dragover
 	const [addressCoordinates, setAddressCoordinates] = useState<CoordinatesType | undefined>({
 		lat: -34.61315,
 		lon: -58.37723
@@ -25,9 +27,11 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 	const [textAreaCharacters, setTextAreaCharacters] = useState(0);
 	const textAreaElement = useRef<HTMLTextAreaElement>(null);
 	const textAreaCharactersLeft = 3000 - textAreaCharacters;
-	const inputFileElement = useRef<HTMLInputElement>(null);
+	const inputMainImgElement = useRef<HTMLInputElement>(null);
+	const inputSecondaryImgsElement = useRef<HTMLInputElement>(null);
 
 	const axiosController = useRef<AbortController>();
+
 	const changeGeoMapTimeout = useRef<number>(0);
 
 	const previewButtonFuncionality = {
@@ -36,7 +40,7 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 	};
 
 	const submitButtonFuncionality = {
-		submitText: "Publicar"
+		submitText: "Guardar"
 	};
 
 	function showPreview() {
@@ -47,12 +51,17 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 		setPreviewVisibility(false);
 	}
 
-	function clickInput() {
-		inputFileElement.current?.click();
+	function clickInputMainImg() {
+		inputMainImgElement.current?.click();
+	}
+
+	function clickInputSecondaryImgs() {
+		inputSecondaryImgsElement.current?.click();
 	}
 
 	const initialValues: NewPublicationType = {
-		files: [],
+		mainImg: [],
+		images: [],
 		title: "",
 		details: "",
 		area: "",
@@ -69,9 +78,20 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 	const noSpecialCharacterRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ,.\s0-9]*$/g;
 
 	const validationSchema = Yup.object({
-		files: Yup.array()
+		mainImg: Yup.array()
+			.min(1, "Debes añadir una imagen principal")
+			.test(
+				"fileSize",
+				"El archivo supera los 10 MB",
+				(files) => files!.every((file) => file.size <= 1024 * 1024) // 1MB size limit
+			)
+			.test("fileType", "El formato del archivo no está soportado", (files) =>
+				files!.every((file) => ["image/jpeg", "image/png", "application/pdf"].includes(file.type))
+			),
+
+		images: Yup.array()
 			.min(1, "Debes añadir al menos una imagen")
-			.max(10, "Máximo 10 imágenes")
+			.max(9, "Máximo 9 imágenes secundarias")
 			.test(
 				"fileSize",
 				"Alguno de los archivos supera los 10 MB",
@@ -134,30 +154,54 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 
 	//YUP VALIDATION END
 
-	const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+	const handleMainImgChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		if (event.currentTarget.files) {
-			const newFiles = Array.from(event.currentTarget.files);
-			const updatedFiles = [...formik.values.files, ...newFiles];
-			formik.setFieldValue("files", updatedFiles);
+			const newFile = Array.from(event.currentTarget.files);
+			formik.setFieldValue("mainImg", newFile);
 		}
 	};
 
-	const handleDragOver = (event: React.DragEvent<HTMLButtonElement>) => {
-		event.preventDefault();
-		setDragActive(true);
+	const handleSecondaryImgsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		if (event.currentTarget.files) {
+			const newFiles = Array.from(event.currentTarget.files);
+			const updatedFiles = [...formik.values.images, ...newFiles];
+			formik.setFieldValue("images", updatedFiles);
+		}
 	};
 
-	const handleDragLeave = (event: React.DragEvent<HTMLButtonElement>) => {
+	const handleMainImgDragOver = (event: React.DragEvent<HTMLButtonElement>) => {
 		event.preventDefault();
-		setDragActive(false);
+		setMainImgDragActive(true);
 	};
 
-	const handleDrop = (event: React.DragEvent<HTMLButtonElement>) => {
+	const handleSecondaryImgsDragOver = (event: React.DragEvent<HTMLButtonElement>) => {
 		event.preventDefault();
-		setDragActive(false);
+		setSecondaryImgsDragActive(true);
+	};
+
+	const handleMainImgDragLeave = (event: React.DragEvent<HTMLButtonElement>) => {
+		event.preventDefault();
+		setMainImgDragActive(false);
+	};
+
+	const handleSecondaryImgsDragLeave = (event: React.DragEvent<HTMLButtonElement>) => {
+		event.preventDefault();
+		setSecondaryImgsDragActive(false);
+	};
+
+	const handleMainImgDrop = (event: React.DragEvent<HTMLButtonElement>) => {
+		event.preventDefault();
+		setMainImgDragActive(false);
+		const newFile = Array.from(event.dataTransfer.files);
+		formik.setFieldValue("mainImg", newFile);
+	};
+
+	const handleSecondaryImgsDrop = (event: React.DragEvent<HTMLButtonElement>) => {
+		event.preventDefault();
+		setSecondaryImgsDragActive(false);
 		const newFiles = Array.from(event.dataTransfer.files);
-		const updatedFiles = [...formik.values.files, ...newFiles];
-		formik.setFieldValue("files", updatedFiles);
+		const updatedFiles = [...formik.values.images, ...newFiles];
+		formik.setFieldValue("images", updatedFiles);
 	};
 
 	const formik = useFormik({
@@ -168,11 +212,12 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 	});
 
 	useEffect(() => {
-		setNumberOfImages(formik.values.files.length);
+		setNumberOfMainImages(formik.values.mainImg.length);
+		setNumberOfSecondaryImages(formik.values.images.length);
 		if (textAreaElement.current?.value.length) {
 			setTextAreaCharacters(textAreaElement.current.value.length);
 		}
-	}, [formik.values.files, textAreaElement.current?.value.length]);
+	}, [formik.values.images, formik.values.mainImg, textAreaElement.current?.value.length]);
 
 	useEffect(() => {
 		axiosController.current = new AbortController();
@@ -196,6 +241,12 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 		};
 	}, [formik.values.address]);
 
+	useEffect(() => {
+		return () => {
+			axiosController.current?.abort();
+		};
+	}, []);
+
 	return (
 		<div className="flex flex-col w-full">
 			<form name="createPublicationForm" onSubmit={formik.handleSubmit} noValidate className="">
@@ -212,41 +263,80 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 						</div>
 						<p className="mt-[22px] text-[24px] font-semibold">arrastra y coloca una imagen o</p>
 
-						{/* UPLOAD PICTURES BUTTON */}
+						<div className="flex justify-center items-center gap-x-[2.6rem]">
+							{/* UPLOAD MAIN PICTURE BUTTON */}
 
-						<div className="relative flex flex-col items-center w-full">
-							<button
-								type="button"
-								className={`relative flex flex-col items-center justify-end w-[190px] h-[65px] mt-[32px] ${dragActive ? "cursor-help opacity-60 scale-110" : "cursor-pointer"} border-[1px] border-grey700 border-solid rounded-lg bg-white duration-300`}
-								onClick={clickInput}
-								onDragOver={handleDragOver}
-								onDragLeave={handleDragLeave}
-								onDrop={handleDrop}
-							>
-								<div className="flex">
-									<div className="text-black text-[18px]">
-										<ImageOutlinedIcon color="inherit" fontSize="inherit" />
+							<div className="relative flex flex-col items-center w-full">
+								<button
+									type="button"
+									className={`relative flex flex-col items-center justify-end w-[280px] h-[65px] mt-[32px] ${mainImgDragActive ? "cursor-help opacity-60 scale-110" : "cursor-pointer"} border-[1px] border-grey700 border-solid rounded-lg bg-white duration-300`}
+									onClick={clickInputMainImg}
+									onDragOver={handleMainImgDragOver}
+									onDragLeave={handleMainImgDragLeave}
+									onDrop={handleMainImgDrop}
+								>
+									<div className="flex">
+										<div className="text-black text-[18px]">
+											<ImageOutlinedIcon color="inherit" fontSize="inherit" />
+										</div>
+										<p className="text-[19.78px] font-semibold p-0">Cargar Imagen Principal</p>
 									</div>
-									<p className="text-[19.78px] font-semibold p-0">Cargar Imagen</p>
-								</div>
-								<p className="mb-[3px] mt-[-5px] text-[12px] font-semibold">{`(${numberOfImages})`}</p>
+									<p className="mb-[3px] mt-[-5px] text-[12px] font-semibold">{`(${numberOfMainImages})`}</p>
 
-								<input
-									ref={inputFileElement}
-									className={`absolute top-[0px] left-[0px] w-[1px] h-[1px] text-[1px] opacity-0  ${dragActive ? "cursor-move" : "cursor-pointer"}`}
-									id="files"
-									name="files"
-									type="file"
-									multiple
-									onChange={handleFileChange}
-								></input>
-							</button>
+									<input
+										ref={inputMainImgElement}
+										className={`absolute top-[0px] left-[0px] w-[1px] h-[1px] text-[1px] opacity-0  ${mainImgDragActive ? "cursor-move" : "cursor-pointer"}`}
+										id="mainImg"
+										name="mainImg"
+										type="file"
+										multiple
+										onChange={handleMainImgChange}
+									></input>
+								</button>
 
-							{formik.touched.files && formik.errors.files ? (
-								<p className="absolute bottom-[20px] right-[-240px] w-full text-center text-[14px] text-red-600">
-									{formik.errors.files as ReactNode}
-								</p>
-							) : null}
+								{formik.touched.mainImg && formik.errors.mainImg ? (
+									<p className="absolute bottom-[-23px] right-[0px] w-full text-center text-[14px] text-red-600">
+										{formik.errors.mainImg as ReactNode}
+									</p>
+								) : null}
+							</div>
+
+							{/* UPLOAD SECONDARY PICTURES BUTTON */}
+
+							<div className="relative flex flex-col items-center w-full">
+								<button
+									type="button"
+									className={`relative flex flex-col items-center justify-end w-[340px] h-[65px] mt-[32px] ${secondaryImgsDragActive ? "cursor-help opacity-60 scale-110" : "cursor-pointer"} border-[1px] border-grey700 border-solid rounded-lg bg-white duration-300`}
+									onClick={clickInputSecondaryImgs}
+									onDragOver={handleSecondaryImgsDragOver}
+									onDragLeave={handleSecondaryImgsDragLeave}
+									onDrop={handleSecondaryImgsDrop}
+								>
+									<div className="flex">
+										<div className="text-black text-[18px]">
+											<ImageOutlinedIcon color="inherit" fontSize="inherit" />
+										</div>
+										<p className="text-[19.78px] font-semibold p-0">Cargar Imágenes Secundarias</p>
+									</div>
+									<p className="mb-[3px] mt-[-5px] text-[12px] font-semibold">{`(${numberOfSecondaryImages})`}</p>
+
+									<input
+										ref={inputSecondaryImgsElement}
+										className={`absolute top-[0px] left-[0px] w-[1px] h-[1px] text-[1px] opacity-0  ${secondaryImgsDragActive ? "cursor-move" : "cursor-pointer"}`}
+										id="images"
+										name="images"
+										type="file"
+										multiple
+										onChange={handleSecondaryImgsChange}
+									></input>
+								</button>
+
+								{formik.touched.images && formik.errors.images ? (
+									<p className="absolute bottom-[-23px] right-[0px] w-full text-center text-[14px] text-red-600">
+										{formik.errors.images as ReactNode}
+									</p>
+								) : null}
+							</div>
 						</div>
 
 						<div className="flex justify-between w-full mt-[32px] text-[14px] font-light">
@@ -290,7 +380,7 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 						/>
 
 						{formik.touched.title && formik.errors.title ? (
-							<p className="absolute bottom-[15px] right-[-220px] text-[14px] text-red-600 ml-4">
+							<p className="absolute bottom-[15px] right-[-280px] text-[14px] text-red-600 ml-4">
 								{formik.errors.title}
 							</p>
 						) : null}
@@ -346,7 +436,7 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 						/>
 
 						{formik.touched.area && formik.errors.area ? (
-							<p className="absolute bottom-[15px] right-[-220px] text-[14px] text-red-600 ml-4">
+							<p className="absolute bottom-[15px] right-[-280px] text-[14px] text-red-600 ml-4">
 								{formik.errors.area}
 							</p>
 						) : null}
@@ -368,7 +458,7 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 						/>
 
 						{formik.touched.harvestType && formik.errors.harvestType ? (
-							<p className="absolute bottom-[15px] right-[-220px] text-[14px] text-red-600 ml-4">
+							<p className="absolute bottom-[15px] right-[-280px] text-[14px] text-red-600 ml-4">
 								{formik.errors.harvestType}
 							</p>
 						) : null}
@@ -390,7 +480,7 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 						/>
 
 						{formik.touched.irrigationType && formik.errors.irrigationType ? (
-							<p className="absolute bottom-[15px] right-[-220px] text-[14px] text-red-600 ml-4">
+							<p className="absolute bottom-[15px] right-[-280px] text-[14px] text-red-600 ml-4">
 								{formik.errors.irrigationType}
 							</p>
 						) : null}
@@ -403,16 +493,19 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 							Tipo de producción
 						</label>
 
-						<input
-							type="text"
+						<select
 							id="productionType"
-							placeholder="Por ejemplo: Consumo familiar"
 							{...formik.getFieldProps("productionType")}
-							className="outline-none  p-[8px_8px_4px] w-full placeholder-grey500"
-						/>
+							className="outline-none  p-[8px_8px_4px] w-full"
+						>
+							<option value=""> </option>
+							<option value="Familiar">Familiar</option>
+							<option value="Comunitaria">Comunitaria</option>
+							<option value="Comerciales">Comerciales</option>
+						</select>
 
 						{formik.touched.productionType && formik.errors.productionType ? (
-							<p className="absolute bottom-[15px] right-[-220px] text-[14px] text-red-600 ml-4">
+							<p className="absolute bottom-[15px] right-[-280px] text-[14px] text-red-600 ml-4">
 								{formik.errors.productionType}
 							</p>
 						) : null}
@@ -443,7 +536,7 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 						/>
 
 						{formik.touched.address && formik.errors.address ? (
-							<p className="absolute bottom-[15px] right-[-220px] text-[14px] text-red-600 ml-4">
+							<p className="absolute bottom-[15px] right-[-280px] text-[14px] text-red-600 ml-4">
 								{formik.errors.address}
 							</p>
 						) : null}
@@ -482,7 +575,7 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 			{previewVisibility === true && (
 				<PublicationPreview
 					handleClose={hidePreview}
-					mainImage={formik.values.files[0]}
+					mainImage={formik.values.mainImg[0]}
 					title={formik.values.title}
 					productionType={formik.values.productionType}
 					mainText={formik.values.details}
