@@ -195,7 +195,7 @@ export default function Home() {
 					<Testimonials />
 				</div>
 
-				<div className="px-[10vw] mt-20 mb-0">
+				<div className="my-[8.8rem]">
 					<SocialNetworks />
 				</div>
 			</main>
