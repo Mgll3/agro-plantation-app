@@ -80,7 +80,7 @@ function CreatePublication() {
 					const publicationId = String(response.id);
 
 					if (formValues.images.length >= 1) {
-						for (let i = 1; i < formValues.images.length; i++) {
+						for (let i = 0; i < formValues.images.length; i++) {
 							const secondaryImg = formValues.images[i];
 							formData.append("images", secondaryImg);
 						}

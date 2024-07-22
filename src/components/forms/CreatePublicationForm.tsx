@@ -135,7 +135,7 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 			.matches(noSpaceAtStartRegex, "No puede comenzar con un espacio")
 			.matches(noSpaceEndingRegex, "No puede terminar con un espacio")
 			.matches(noSpecialCharacterRegex, "No se admiten caracteres especiales")
-			.max(15, "Máximo 15 caracteres"),
+			.max(20, "Máximo 20 caracteres"),
 
 		productionType: Yup.string()
 			.required("Debes completar este campo")
@@ -471,13 +471,18 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 							Tipo de riego
 						</label>
 
-						<input
-							type="text"
+						<select
 							id="irrigationType"
-							placeholder="Por ejemplo: Por goteo, sistema casero"
 							{...formik.getFieldProps("irrigationType")}
 							className="outline-none  p-[8px_8px_4px] w-full placeholder-grey500"
-						/>
+						>
+							<option value=""> </option>
+							<option value="Riego por goteo">Riego por goteo</option>
+							<option value="Riego por aspersión">Riego por aspersión</option>
+							<option value="Riego por superficie">Riego por superficie</option>
+							<option value="Riego hidropónico">Riego hidropónico</option>
+							<option value="Riego manual">Riego manual</option>
+						</select>
 
 						{formik.touched.irrigationType && formik.errors.irrigationType ? (
 							<p className="absolute bottom-[15px] right-[-280px] text-[14px] text-red-600 ml-4">
@@ -501,7 +506,7 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 							<option value=""> </option>
 							<option value="Familiar">Familiar</option>
 							<option value="Comunitaria">Comunitaria</option>
-							<option value="Comerciales">Comerciales</option>
+							<option value="Comerciales">Comercial</option>
 						</select>
 
 						{formik.touched.productionType && formik.errors.productionType ? (
