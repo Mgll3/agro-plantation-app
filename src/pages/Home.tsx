@@ -191,7 +191,7 @@ export default function Home() {
 					}
 				</div> */}
 
-				<div className="px-[10vw] pt-[3vh]">
+				<div className={`px-[18.4rem] pt-[2.4rem] pb-[4.4rem] ${userRole !== "visitor" && "bg-terciary300"}`}>
 					<Testimonials />
 				</div>
 
