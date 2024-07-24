@@ -24,13 +24,13 @@ import CreatePublication from "./pages/producers/CreatePublication";
 import UserForum from "./pages/user/UserForum";
 import ProducerPublications from "./pages/producers/ProducerPublications";
 import ProducerForum from "./pages/producers/ProducerForum";
+import ProtectedRouteNonAdmin from "./components/protectRoutes/ProtectedRouteNonAdmin";
 
 function App() {
 	return (
 		<>
 			<Routes>
 				<Route path="*" element={<WrongPath />} />
-				<Route path="/" element={<Home />} />
 				<Route path="/login" element={<LoginRegisterPage focus="login" />} />
 				<Route path="/register" element={<LoginRegisterPage focus="register" />} />
 				<Route path="/copyright" element={<Copyright />} />
@@ -42,6 +42,11 @@ function App() {
 				<Route path="/privacy" element={<PrivacyDeclaration />} />
 
 				{/* PROTECTED ROUTES */}
+
+				{/* NON ADMIN RUTES */}
+				<Route element={<ProtectedRouteNonAdmin />}>
+					<Route path="/" element={<Home />} />
+				</Route>
 
 				{/* USER RUTES */}
 				<Route element={<ProtectedRouteUser />}>
