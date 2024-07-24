@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useUserRoleContext } from "../../context/UserRoleContext";
 import MainNav from "./MainNav";
 import SecondaryNav from "./SecondaryNav";
@@ -18,8 +18,9 @@ function Header() {
 	const [mustLoginWarningState, setMustLoginWarningState] = useState<MustLoginWarningStateType>("hidden");
 	const [userProfileState, setUserProfileState] = useState<userProfileStateType>("init");
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+	const [mobileNavStyles, setMobileNavStyles] = useState<"mounting" | "unmounting">("mounting");
 	const { userRole, setUserRole } = useUserRoleContext();
-	let logoutTimeout: number;
+	const logoutTimeout = useRef<number>();
 	const navigate = useNavigate();
 
 	// Used to show the main section where the user is now (mobile version) ***START
@@ -34,8 +35,19 @@ function Header() {
 	if (regexForum.test(location.pathname)) actualSection = "Foro";
 	// Used to show the main section where the user is now (mobile version) ***END
 
+	const mobileMenuStylesTimeout = useRef<number>(0);
+
 	function toggleMobileMenuVisibility() {
-		setIsMobileMenuOpen(!isMobileMenuOpen);
+		if (isMobileMenuOpen === false) {
+			setMobileNavStyles("mounting");
+			setIsMobileMenuOpen(true);
+		} else {
+			setMobileNavStyles("unmounting");
+
+			mobileMenuStylesTimeout.current = window.setTimeout(() => {
+				setIsMobileMenuOpen(false);
+			}, 1000);
+		}
 	}
 
 	//Fondo del Header. Varía según el rol del usuario.
@@ -58,7 +70,7 @@ function Header() {
 	function handleLogoutClick() {
 		setUserProfileState("loading");
 
-		logoutTimeout = window.setTimeout(() => {
+		logoutTimeout.current = window.setTimeout(() => {
 			resetUserData(setUserRole);
 			setUserProfileState("logout");
 		}, 1500);
@@ -66,7 +78,8 @@ function Header() {
 
 	useEffect(() => {
 		return () => {
-			clearTimeout(logoutTimeout);
+			clearTimeout(logoutTimeout.current);
+			clearTimeout(mobileMenuStylesTimeout.current);
 		};
 	}, []);
 
@@ -90,13 +103,17 @@ function Header() {
 					{/* MOBILE MENU ICON */}
 					<div
 						onClick={toggleMobileMenuVisibility}
-						className="absolute top-[0px] left-[16px] text-[4.2rem] text-yellow500 custom-800:hidden"
+						className="absolute top-[0px] left-[16px] text-[4.2rem] text-yellow500 custom-800:hidden cursor-pointer"
 					>
 						<MenuRoundedIcon color="inherit" fontSize="inherit" />
 					</div>
 
 					{isMobileMenuOpen === true ? (
-						<MobileNav toggleMobileMenuVisibility={toggleMobileMenuVisibility} handleLogoutClick={handleLogoutClick} />
+						<MobileNav
+							toggleMobileMenuVisibility={toggleMobileMenuVisibility}
+							handleLogoutClick={handleLogoutClick}
+							mobileNavStyles={mobileNavStyles}
+						/>
 					) : null}
 
 					{userRole === "ADMIN" ? (
