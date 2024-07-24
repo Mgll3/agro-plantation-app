@@ -21,6 +21,9 @@ import PrivacyDeclaration from "./components/placeholders/PrivacyDeclaration";
 import AdminPublicationDetails from "./pages/admin/AdminPublicationDetails";
 import ProtectedRouteProducer from "./components/protectRoutes/ProtectedRouteProducer";
 import CreatePublication from "./pages/producers/CreatePublication";
+import UserForum from "./pages/user/UserForum";
+import ProducerPublications from "./pages/producers/ProducerPublications";
+import ProducerForum from "./pages/producers/ProducerForum";
 
 function App() {
 	return (
@@ -45,11 +48,15 @@ function App() {
 					<Route path="/user/publications" element={<UserPublications />} />
 					<Route path="/user/publications/:id" element={<UserPublications />} />
 					<Route path="/user/registerProducer" element={<RegisterProducer />} />
+					<Route path="/user/forum" element={<UserForum />} />
 				</Route>
 
 				{/* PRODUCER RUTES */}
 				<Route element={<ProtectedRouteProducer />}>
+					<Route path="/producer/publications" element={<ProducerPublications />} />
+					<Route path="/producer/publications/:id" element={<ProducerPublications />} />
 					<Route path="/producer/publications/createPublication" element={<CreatePublication />} />
+					<Route path="/producer/forum" element={<ProducerForum />} />
 				</Route>
 
 				{/* ADMIN RUTES */}

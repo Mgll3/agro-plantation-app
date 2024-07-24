@@ -52,8 +52,6 @@ function PictureSlider({ sliderInfo, handleImageOnClick }: PictureSliderProps) {
 
 			prevImgElementTimeout.current = window.setTimeout(() => {
 				setMainImg(prevImg);
-				// prevImgElement.current!.classList.remove("animate-sliderPrevImgGoRight");
-				// mainImgElement.current!.classList.remove("animate-sliderMainImgGoRight");
 			}, 750);
 		}
 	}
@@ -65,8 +63,6 @@ function PictureSlider({ sliderInfo, handleImageOnClick }: PictureSliderProps) {
 
 			nextImgElementTimeout.current = window.setTimeout(() => {
 				setMainImg(nextImg);
-				// nextImgElement.current!.classList.remove("animate-sliderNextImgGoLeft");
-				// mainImgElement.current!.classList.remove("animate-sliderMainImgGoLeft");
 			}, 750);
 		}
 	}

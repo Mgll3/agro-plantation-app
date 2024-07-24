@@ -1,14 +1,14 @@
 import Header from "../../components/header/Header";
 
-function UserPublications() {
+function UserForum() {
 	return (
 		<>
 			<div className="w-full">
 				<Header />
 			</div>
-			ESTÁS EN PUBLICACIONES (VERSIÓN USUARIO REGISTRADO)
+			ESTÁS EN EL FORO (VERSIÓN USUARIO REGISTRADO)
 		</>
 	);
 }
 
-export default UserPublications;
+export default UserForum;
