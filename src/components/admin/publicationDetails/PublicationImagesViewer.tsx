@@ -9,9 +9,9 @@ type PublicationImagesViewerProps = {
 
 function PublicationImagesViewer({ mainImg, secondaryImages, handleImageOnClick }: PublicationImagesViewerProps) {
 	const mainPicture = mainImg?.url ? mainImg : null;
-	let secondaryPicture1 = null;
-	let secondaryPicture2 = null;
-	let secondaryPicture3 = null;
+	let secondaryPicture1: MainImageType | null = null;
+	let secondaryPicture2: MainImageType | null = null;
+	let secondaryPicture3: MainImageType | null = null;
 	let leftPicturesNumber = 0;
 
 	if (secondaryImages) {
@@ -64,7 +64,7 @@ function PublicationImagesViewer({ mainImg, secondaryImages, handleImageOnClick 
 							className="w-[100%] cursor-pointer"
 							src={secondaryPicture1.url}
 							alt=""
-							onClick={() => handleImageOnClick(secondaryPicture1.id)}
+							onClick={() => handleImageOnClick((secondaryPicture1 as MainImageType).id)}
 						/>
 					) : (
 						<NoPhotographyIcon fontSize="inherit" />
@@ -78,7 +78,7 @@ function PublicationImagesViewer({ mainImg, secondaryImages, handleImageOnClick 
 							className="w-[100%] cursor-pointer"
 							src={secondaryPicture2.url}
 							alt=""
-							onClick={() => handleImageOnClick(secondaryPicture2.id)}
+							onClick={() => handleImageOnClick((secondaryPicture2 as MainImageType).id!)}
 						/>
 					) : (
 						<NoPhotographyIcon fontSize="inherit" />
@@ -92,7 +92,7 @@ function PublicationImagesViewer({ mainImg, secondaryImages, handleImageOnClick 
 							className="w-[100%] cursor-pointer"
 							src={secondaryPicture3.url}
 							alt=""
-							onClick={() => handleImageOnClick(secondaryPicture3.id)}
+							onClick={() => handleImageOnClick((secondaryPicture3 as MainImageType).id!)}
 						/>
 					) : (
 						<NoPhotographyIcon fontSize="inherit" />
