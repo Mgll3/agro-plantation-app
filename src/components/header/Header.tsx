@@ -3,7 +3,7 @@ import { useUserRoleContext } from "../../context/UserRoleContext";
 import MainNav from "./MainNav";
 import SecondaryNav from "./SecondaryNav";
 import UserProfile from "./UserProfile";
-import { userProfileStateType } from "./headerTypes";
+import { loginStateType } from "./headerTypes";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import AdminNav from "./AdminNav";
 import MustLoginWarning from "./MustLoginWarning";
@@ -11,12 +11,13 @@ import DvrIcon from "@mui/icons-material/Dvr";
 import { resetUserData } from "../../utils/resetUserData";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import MobileNav from "./MobileNav";
+import Loading from "../modals/Loading";
 
 type MustLoginWarningStateType = "visible" | "hidden";
 
 function Header() {
 	const [mustLoginWarningState, setMustLoginWarningState] = useState<MustLoginWarningStateType>("hidden");
-	const [userProfileState, setUserProfileState] = useState<userProfileStateType>("init");
+	const [loginState, setLoginState] = useState<loginStateType>("init");
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 	const [mobileNavStyles, setMobileNavStyles] = useState<"mounting" | "unmounting">("mounting");
 	const { userRole, setUserRole } = useUserRoleContext();
@@ -37,16 +38,16 @@ function Header() {
 
 	const mobileMenuStylesTimeout = useRef<number>(0);
 
-	function toggleMobileMenuVisibility() {
+	function toggleMobileMenuVisibility(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
 		if (isMobileMenuOpen === false) {
 			setMobileNavStyles("mounting");
 			setIsMobileMenuOpen(true);
-		} else {
+		} else if (event.target === event.currentTarget) {
 			setMobileNavStyles("unmounting");
 
 			mobileMenuStylesTimeout.current = window.setTimeout(() => {
 				setIsMobileMenuOpen(false);
-			}, 1000);
+			}, 700);
 		}
 	}
 
@@ -68,12 +69,23 @@ function Header() {
 	}
 
 	function handleLogoutClick() {
-		setUserProfileState("loading");
+		setLoginState("loading");
 
 		logoutTimeout.current = window.setTimeout(() => {
 			resetUserData(setUserRole);
-			setUserProfileState("logout");
+			setLoginState("logout");
 		}, 1500);
+	}
+
+	//Uses handleLogoutClick, but also closes the mobile menu
+	function handleLogoutClickMobile() {
+		setMobileNavStyles("unmounting");
+
+		mobileMenuStylesTimeout.current = window.setTimeout(() => {
+			setIsMobileMenuOpen(false);
+		}, 700);
+
+		handleLogoutClick();
 	}
 
 	useEffect(() => {
@@ -84,11 +96,11 @@ function Header() {
 	}, []);
 
 	useEffect(() => {
-		if (userProfileState === "logout") {
-			setUserProfileState("init");
+		if (loginState === "logout") {
+			setLoginState("init");
 			navigate("/", { replace: true });
 		}
-	}, [userProfileState]);
+	}, [loginState]);
 
 	return (
 		<>
@@ -100,7 +112,7 @@ function Header() {
 						<DvrIcon fontSize="inherit" />
 					</Link>
 
-					{/* MOBILE MENU ICON */}
+					{/* MOBILE MENU ***START */}
 					<div
 						onClick={toggleMobileMenuVisibility}
 						className="absolute top-[0px] left-[16px] text-[4.2rem] text-yellow500 custom-800:hidden cursor-pointer"
@@ -111,10 +123,11 @@ function Header() {
 					{isMobileMenuOpen === true ? (
 						<MobileNav
 							toggleMobileMenuVisibility={toggleMobileMenuVisibility}
-							handleLogoutClick={handleLogoutClick}
+							handleLogoutClickMobile={handleLogoutClickMobile}
 							mobileNavStyles={mobileNavStyles}
 						/>
 					) : null}
+					{/* MOBILE MENU ***END */}
 
 					{userRole === "ADMIN" ? (
 						<img
@@ -131,11 +144,7 @@ function Header() {
 					)}
 
 					<div className="hidden absolute right-4 top-2 custom-800:block">
-						{userRole === "visitor" ? (
-							<SecondaryNav />
-						) : (
-							<UserProfile userProfileState={userProfileState} handleLogoutClick={handleLogoutClick} />
-						)}
+						{userRole === "visitor" ? <SecondaryNav /> : <UserProfile handleLogoutClick={handleLogoutClick} />}
 					</div>
 				</div>
 
@@ -150,6 +159,8 @@ function Header() {
 				{mustLoginWarningState === "visible" && (
 					<MustLoginWarning handleCloseMustLoginWarning={handleCloseMustLoginWarning} />
 				)}
+
+				{loginState === "loading" && <Loading />}
 			</header>
 		</>
 	);
