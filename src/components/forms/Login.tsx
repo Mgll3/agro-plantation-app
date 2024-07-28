@@ -6,6 +6,7 @@ import * as Yup from "yup";
 import { LoginFormValuesType } from "./formsTypes.ts";
 import Loading from "../modals/Loading.tsx";
 import NetworkError from "../modals/NetworkError.tsx";
+import classNames from "classnames";
 
 type LoginProps = {
 	handleSubmit: (formValues: LoginFormValuesType) => void;
@@ -30,35 +31,51 @@ export default function Login({ handleSubmit, handleRegisterClick, loginState, c
 	});
 
 	return (
-		<div className="w-[100%] max-[767px]:flex max-[767px]:flex-col-reverse font-sans md:flex md:h-[100vh] items-center md:justify-center text-[#eaefd4f2] max-[767px]:overflow-hidden overflow-x-hidden">
-			<aside className="w-full h-[30vh] md:w-[35vw] md:h-[100vh] ">
-
-				<div className="bg-loginMobile max-[767px]:relative md:bg-login w-[100%] md:h-[100vh] max-[767px]:0%] md:bg-center max-[767px]:bg-center bg-cover  bg-no-repeat md:flex md:justify-end md:items-center max-[767px]:flex max-[767px]:flex-col max-[767px]:justify-end max-[767px]:gap-2 max-[767px]:items-center max-[767px]:h-full">
-
+		// TAILWINDCSS => MOBILE FIRST
+		<div className={classNames(
+			"w-[100%] font-sans items-center text-[#eaefd4f2] overflow-x-hidden",
+			"max-[767px]:flex max-[767px]:flex-col-reverse max-[767px]:overflow-hidden" ,
+			"md:flex md:h-[100vh]  md:justify-center"
+		)}>
+			
+			<aside className="w-full h-[30vh] 
+			md:w-[35vw] md:h-[100vh]">
+				{/*First line, Mobile First */}
+				<div className={classNames(
+					"w-[100%] bg-loginMobile bg-cover bg-no-repeat",
+					"max-[767px]:relative max-[767px]:bg-center max-[767px]:justify-end max-[767px]:items-center max-[767px]:flex max-[767px]:flex-col max-[767px]:h-full max-[767px]:gap-2",
+					"md:bg-login md:h-[100vh] md:bg-center md:flex md:justify-end md:items-center "
+				)}>
+					{/* Capa sobre imagen Mobile */}
 					<div className="max-[767px]:absolute max-[767px]:inset-0 max-[767px]:bg-gradient-to-b max-[767px]:from-[#4b9742] max-[767px]:to-[#0b7115] max-[767px]:opacity-55 max-[767px]:z-0"></div>
 
-					<h1 className="bg-[#EAE3C0] text-black font-semibold md:text-2xl font-sans md:p-[1rem_5rem] rounded-2xl md:translate-x-[14px] md:translate-y-[-20px] max-[767px]:p-[.1rem_4rem] max-[767px]:z-20 ">
+					<h1 className="bg-[#EAE3C0] text-black font-semibold rounded-2xl font-sans 
+					max-[767px]:p-[.1rem_4rem] max-[767px]:z-20 
+					md:text-2xl  md:p-[1rem_5rem]  md:translate-x-[14px] md:translate-y-[-20px] ">
 						Ingreso
 					</h1>
 
 					<Link
 						to="/copyright"
-						className=" md:absolute md:bottom-0 md:p-[4px_4px] md:m-[1rem] bg-[#94B447] text-[#1B7E25] text-center text-[15px] rounded-md md:max-w-[32vw] max-[767px]:z-20 max-[767px]:w-[80%] mb-4 max-[767px]:text-[1.15rem] max-[767px]:text-black"
+						className="bg-[#93b447b5] text-[#1B7E25] text-center text-[15px] rounded-md
+						md:absolute md:bottom-0 md:p-[4px_4px] md:m-[1rem]  md:max-w-[32vw] 
+						max-[767px]:z-20 max-[767px]:w-[80%] mb-4 max-[767px]:text-[1.15rem] max-[767px]:text-black"
 					>
 						Todos los derechos reservados para PLANT-IN <s className="max-[767px]:text-[#1B7E25]">&copy;</s>
 						<small >Marzo 2024</small>
 					</Link>
 				</div>
 			</aside>
-			{/*absolute bottom-0 p-[4px_4px] m-[1rem_1.7rem] bg-[#94B447] text-[#1B7E25] text-center text-[15px] rounded-md*/}
-			<div className="md:w-[max-content] md:h-[100vh] w-full h-[70vh] ">
+			{/*absolute bottom-0 p-[4px_4px] m-[1rem_1.7rem] bg-[#94B447] text-[#1B7E25] text-center text-[15px] rounded-md* *NO ME ACUERDO SI SERVÍA*/}
+			<div className="w-full h-[70vh] 
+				md:w-[max-content] md:h-[100vh]  ">
 				<Formik initialValues={initialValues} validationSchema={registerSchema} onSubmit={handleSubmit}>
 					<Form
 						name="loginForm"
 						id="loginForm"
 						encType="multipart/form-data"
-						className="md:w-[65vw] md:h-[100vh] border-solid text-center flex flex-col max-[767px]:gap-4 justify-around items-center bg-[#EAE3C0] p-4 
-								h-full	"
+						className="border-solid text-center flex flex-col  justify-around items-center bg-[#EAE3C0] p-4 
+						h-full max-[767px]:gap-4 md:w-[65vw] md:h-[100vh]"
 					>
 						<div className="flex justify-center items-center gap-4 rounded-2xl text-2xl">
 							<abbr title="Ir a la página principal">
