@@ -110,8 +110,8 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 	return (
 		<>
 			<div className="relative md:w-[100vw] md:flex-row font-loginFont flex flex-col-reverse h-[100%] text-[#eaefd4f2] bg-[#EAE3C0]">
-				<aside className="w-[100vw] h-[20vh] relative md:w-[30vw] md:h-[100vh]">
-					<div className="md:bg-login bg-loginMobile w-[100%] h-[100%] bg-center bg-cover bg-no-repeat flex justify-center items-center font-sans">
+				<aside className="w-[100vw] h-[30vh] relative md:w-[30vw] md:h-[100vh]">
+					<div className="md:bg-login bg-loginMobile w-[100%] h-[100%] bg-center bg-cover bg-no-repeat flex justify-center md:justify-end items-center font-sans">
 						{/* Capa sobre imagen Mobile */}
 						<div className="max-[767px]:absolute max-[767px]:inset-0 max-[767px]:bg-gradient-to-b max-[767px]:from-[#4b9742] max-[767px]:to-[#0b7115] max-[767px]:opacity-55 max-[767px]:z-0"></div>
 						<h2 className="bg-[#EAE3C0] text-black font-semibold text-2xl md:md:p-[1rem_4rem] rounded-2xl md:translate-x-[14px] md:translate-y-[30px] z-10 p-[.1rem_4rem]">
@@ -119,16 +119,16 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 						</h2>
 						<Link
 							to="/copyright"
-							className="absolute bottom-0 p-[4px_4px] m-[1rem] bg-[#93b447b5] text-[#1B7E25] text-center md:text-[15px] text-[1.2rem] rounded-md z-10"
+							className="absolute bottom-0 p-[4px_4px] m-[1rem] bg-[#93b447b5] text-[#1B7E25] text-center md:text-[15px] text-[1.2rem] rounded-md z-10 max-[767px]:text-black"
 						>
-							Todos los derechos reservados para Plant-In &copy;
-							<small>Marzo 2024</small>
+							Todos los derechos reservados para PLANT-IN <s className="max-[767px]:text-[#1B7E25]">&copy;</s>
+							<small >Marzo 2024</small>
 						</Link>
 					</div>
 				</aside>
 
-				<div className=" max-h-[80vh] md:overflow-x-hidden md:max-h-[100vh]">
-					<div className="flex flex-col justify-center items-center gap-1 rounded-2xl text-2xl text-black font-sans mt-[2rem]">
+				<div className=" max-h-[70vh] md:overflow-x-hidden md:max-h-[100vh] overflow-scroll ">
+					<div className="flex flex-col justify-center items-center gap-1 rounded-2xl text-2xl text-black font-sans md:mt-[2rem] mt-[2rem]">
 						<h1 className="max-[767px]:hidden">Bienvenido a</h1>
 						<button type="button" onClick={() => navigate("/")}>
 							<img src="images/logos/LogoVerde.png" alt="logo" className=" w-[120px] h-[150px] mb-5" />
