@@ -45,7 +45,8 @@ export default {
 				grey600: "#9C9999",
 				grey700: "#6B6B6B",
 				grey800: "#4E4C4C",
-				brown150: "#F7F4E6"
+				brown150: "#F7F4E6",
+				terciary300: "#BFD390"
 			},
 			spacing: {
 				53: "13.25rem"

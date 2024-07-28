@@ -5,9 +5,9 @@ import { ButtonColorType } from "../button/buttonTypes";
 function AdminNav() {
 	const buttonColor: ButtonColorType = "yellow";
 	const buttonColor2: ButtonColorType = "green";
-	const buttonFontSize = "text-base";
-	const buttonWidth = "w-53";
-	const buttonPaddingY = "py-2.5";
+	const buttonFontSize = "text-[1.978rem]";
+	const buttonWidth = "w-[21.2rem]";
+	const buttonPaddingY = "py-[0.77rem]";
 	const location = useLocation();
 	const regex = /^\/admin\/publications/;
 

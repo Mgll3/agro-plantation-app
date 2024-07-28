@@ -30,6 +30,10 @@ function AdminPublicationDetails() {
 	const [sliderVisibility, setSliderVisibility] = useState(false);
 	const [publicationData, setPublicationData] = useState<PublicationInfoType | null>(null);
 
+	const buttonFontSize = "text-[1.978rem]";
+	const buttonPaddingY = "py-[2.017rem]";
+	const buttonWidth = "w-[28.81%]";
+
 	//A "PictureSlider" le pasamos un objeto con todas las imágenes (no necesita diferenciar entre la principal y el resto) y el id de la imagen pulsada (la que debe mostrarse en primer lugar)
 
 	const sliderInfo = useRef<SliderInfoType>({
@@ -268,9 +272,9 @@ function AdminPublicationDetails() {
 							<div className="flex justify-center gap-[5%] w-[100%] mb-[5rem]">
 								<Button
 									buttonColor="yellow"
-									buttonFontSize="text-[20px]"
-									buttonPaddingY="py-[0.5rem] px-[6.5rem]"
-									buttonWidth="w-[30%]"
+									buttonFontSize={buttonFontSize}
+									buttonPaddingY={buttonPaddingY}
+									buttonWidth={buttonWidth}
 									buttonFuncionality={buttonBackToPreviousPageFunctionality}
 								/>
 
@@ -278,17 +282,17 @@ function AdminPublicationDetails() {
 									<>
 										<Button
 											buttonColor="red"
-											buttonFontSize="text-[20px]"
-											buttonPaddingY="py-[0.5rem] px-[5rem]"
-											buttonWidth="w-[30%]"
+											buttonFontSize={buttonFontSize}
+											buttonPaddingY={buttonPaddingY}
+											buttonWidth={buttonWidth}
 											buttonFuncionality={buttonRejectFunctionality}
 										/>
 
 										<Button
 											buttonColor="yellow"
-											buttonFontSize="text-[20px]"
-											buttonPaddingY="py-[0.5rem] px-[5rem]"
-											buttonWidth="w-[30%]"
+											buttonFontSize={buttonFontSize}
+											buttonPaddingY={buttonPaddingY}
+											buttonWidth={buttonWidth}
 											buttonFuncionality={buttonApproveFunctionality}
 										/>
 									</>

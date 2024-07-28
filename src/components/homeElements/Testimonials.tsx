@@ -1,15 +1,17 @@
 import { useEffect, useRef, useState } from "react";
 import { testimonialsData } from "../../data/testimonialsData";
+import { useUserRoleContext } from "../../context/UserRoleContext";
 
 export type TestimonialsDataType = {
-	header: string,
-	mainText: string,
-	imageUrl: string,
-	imageAlt: string
-}
+	header: string;
+	mainText: string;
+	imageUrl: string;
+	imageAlt: string;
+};
 
 function Testimonials() {
 	const [selectedTestimonial, setSelectedTestimonial] = useState<number>(2);
+	const { userRole } = useUserRoleContext();
 	const prevTestimonialElement = useRef<HTMLDivElement>(null);
 	const nextTestimonialElement = useRef<HTMLDivElement>(null);
 	const prevTestimonialTimeout = useRef<number>();
@@ -19,7 +21,6 @@ function Testimonials() {
 	let prevTestimonialIndex2: number;
 	let nextTestimonialIndex1: number;
 	let nextTestimonialIndex2: number;
-
 
 	if (selectedTestimonial < testimonialsData.length - 1) {
 		selectedTestimonial2 = selectedTestimonial + 1;
@@ -51,13 +52,12 @@ function Testimonials() {
 		prevTestimonialIndex1 = testimonialsData.length - 1;
 	}
 
-
-	function prevClick () {
+	function prevClick() {
 		prevTestimonialElement.current!.classList.add("duration-700");
 		prevTestimonialElement.current!.classList.remove("left-[-100%]");
 		prevTestimonialElement.current!.classList.add("left-[0%]");
 
-		prevTestimonialTimeout.current = window.setTimeout( () => {
+		prevTestimonialTimeout.current = window.setTimeout(() => {
 			prevTestimonialElement.current!.classList.remove("duration-700");
 			prevTestimonialElement.current!.classList.remove("left-[0%]");
 			prevTestimonialElement.current!.classList.add("left-[-100%]");
@@ -69,133 +69,136 @@ function Testimonials() {
 			} else if (selectedTestimonial === 0) {
 				setSelectedTestimonial(testimonialsData.length - 2);
 			}
-
-		},800);
+		}, 800);
 	}
 
-
-	function nextClick () {
+	function nextClick() {
 		nextTestimonialElement.current!.classList.add("duration-700");
 		nextTestimonialElement.current!.classList.remove("right-[-100%]");
 		nextTestimonialElement.current!.classList.add("right-[0%]");
 
-		nextTestimonialTimeout.current = window.setTimeout( () => {
+		nextTestimonialTimeout.current = window.setTimeout(() => {
 			nextTestimonialElement.current!.classList.remove("duration-700");
 			nextTestimonialElement.current!.classList.remove("right-[0%]");
 			nextTestimonialElement.current!.classList.add("right-[-100%]");
 
-			if ((testimonialsData.length - 1) - selectedTestimonial >= 2) {
+			if (testimonialsData.length - 1 - selectedTestimonial >= 2) {
 				setSelectedTestimonial(selectedTestimonial + 2);
-			} else if ((testimonialsData.length - 1) - selectedTestimonial === 1) {
+			} else if (testimonialsData.length - 1 - selectedTestimonial === 1) {
 				setSelectedTestimonial(0);
-			} else if ((testimonialsData.length - 1) - selectedTestimonial === 0) {
+			} else if (testimonialsData.length - 1 - selectedTestimonial === 0) {
 				setSelectedTestimonial(1);
 			}
-
-		},800);
+		}, 800);
 	}
 
-
-	useEffect( () => {
+	useEffect(() => {
 		return () => {
 			clearTimeout(prevTestimonialTimeout.current);
 			clearTimeout(nextTestimonialTimeout.current);
 		};
 	});
 
-
 	return (
-		<div className="relative w-full h-[70vh]">
-			<h2 className="w-full mb-[2vh] text-center text-3xl font-sans">Testimonios de nuestros usuarios</h2>
+		<div className="relative w-full">
+			<h2 className="w-full mb-[3.6rem] text-center text-[3.5rem] font-sans">Testimonios de nuestros usuarios</h2>
 
 			{/* BOTONES */}
-			<button className="absolute z-20 top-[50%] -left-20 text-brandingDarkGreen text-[77px] font-light"
-				onClick={prevClick}
-			>
-				<img src="icons/arrow.png" alt="To left arrow" 
-					className=""
-				/>
+			<button className="absolute z-20 top-[50%] -left-20 w-[2.6rem]" onClick={prevClick}>
+				<img src="icons/arrow2.png" alt="To left arrow" className="rotate-180 hover:scale-125 duration-300" />
 			</button>
 
-			<button className="absolute z-20 top-[50%] -right-20 text-brandingDarkGreen text-[77px] font-light"
-				onClick={nextClick}
-			>
-				<img src="icons/arrow.png" alt="To left arrow"
-					className="rotate-180"
-				/>
+			<button className="absolute z-20 top-[50%] -right-20 w-[2.6rem]" onClick={nextClick}>
+				<img src="icons/arrow2.png" alt="To left arrow" className="hover:scale-125 duration-300" />
 			</button>
-				
+
 			<div className="relative flex w-full h-full overflow-hidden">
 				{/* TESTIMONIOS */}
 				<div className="flex justify-between w-full h-full">
 					{/* TESTIMONIO A LA IZQUIERDA */}
-					<div className="absolute left-[-100%] z-10 flex items-center justify-center gap-10 w-[100%] h-full bg-white"
+					<div
+						className={`absolute left-[-100%] z-10 flex items-center justify-center gap-x-[3.15rem] w-[100%] h-full ${userRole !== "visitor" && "bg-terciary300"}`}
 						ref={prevTestimonialElement}
 					>
-						<div className="w-[45%] h-full text-[19.78px]">
-							<img src={testimonialsData[prevTestimonialIndex1].imageUrl} alt={testimonialsData[prevTestimonialIndex1].imageAlt}
-								className="w-full"
+						<div className="overflow-hidden w-[45%] h-full text-[19.78px] bg-white rounded-2xl">
+							<img
+								src={testimonialsData[prevTestimonialIndex1].imageUrl}
+								alt={testimonialsData[prevTestimonialIndex1].imageAlt}
+								className="w-full rounded-none"
 							/>
-							<div className="">
-								<h3 className="font-bold">{testimonialsData[prevTestimonialIndex1].header}</h3>
-								<p className="">{testimonialsData[prevTestimonialIndex1].mainText}</p>
+							<div className="p-[5.014rem_5.5rem]">
+								<h3 className="font-normal text-[2rem]">{testimonialsData[prevTestimonialIndex1].header}</h3>
+								<p className="mt-[1.87rem] text-[1.6rem]">{testimonialsData[prevTestimonialIndex1].mainText}</p>
 							</div>
 						</div>
 
-						<div className="w-[45%] h-full text-[19.78px]">
-							<img src={testimonialsData[prevTestimonialIndex2].imageUrl} alt={testimonialsData[prevTestimonialIndex2].imageAlt}
-								className="w-full"
+						<div className="overflow-hidden w-[45%] h-full text-[19.78px] bg-white rounded-2xl">
+							<img
+								src={testimonialsData[prevTestimonialIndex2].imageUrl}
+								alt={testimonialsData[prevTestimonialIndex2].imageAlt}
+								className="w-full rounded-none"
 							/>
-							<div className="">
-								<h3 className="font-bold">{testimonialsData[prevTestimonialIndex2].header}</h3>
-								<p className="">{testimonialsData[prevTestimonialIndex2].mainText}</p>
+							<div className="p-[5.014rem_5.5rem]">
+								<h3 className="font-normal text-[2rem]">{testimonialsData[prevTestimonialIndex2].header}</h3>
+								<p className="mt-[1.87rem] text-[1.6rem]">{testimonialsData[prevTestimonialIndex2].mainText}</p>
 							</div>
 						</div>
 					</div>
 
 					{/* TESTIMONIO VISIBLE */}
-					<div className="flex items-center justify-center gap-10 w-[100%] h-full bg-white">
-						<div className="w-[45%] h-full text-[19.78px]">
-							<img src={testimonialsData[selectedTestimonial].imageUrl} alt={testimonialsData[selectedTestimonial].imageAlt}
-								className="w-full"
+					<div
+						className={`flex items-center justify-center gap-x-[3.15rem] w-[100%] h-full ${userRole !== "visitor" && "bg-terciary300"}`}
+					>
+						<div className="overflow-hidden w-[45%] h-full text-[19.78px] bg-white rounded-2xl">
+							<img
+								src={testimonialsData[selectedTestimonial].imageUrl}
+								alt={testimonialsData[selectedTestimonial].imageAlt}
+								className="w-full rounded-none"
 							/>
-							<div className="">
-								<h3 className="font-bold">{testimonialsData[selectedTestimonial].header}</h3>
-								<p className="">{testimonialsData[selectedTestimonial].mainText}</p>
+							<div className="p-[5.014rem_5.5rem]">
+								<h3 className="font-normal text-[2rem]">{testimonialsData[selectedTestimonial].header}</h3>
+								<p className="mt-[1.87rem] text-[1.6rem]">{testimonialsData[selectedTestimonial].mainText}</p>
 							</div>
 						</div>
-						<div className="w-[45%] h-full text-[19.78px]">
-							<img src={testimonialsData[selectedTestimonial2].imageUrl} alt={testimonialsData[selectedTestimonial2].imageAlt}
-								className="w-full"
+						<div className="overflow-hidden w-[45%] h-full text-[19.78px] bg-white rounded-2xl">
+							<img
+								src={testimonialsData[selectedTestimonial2].imageUrl}
+								alt={testimonialsData[selectedTestimonial2].imageAlt}
+								className="w-full rounded-none"
 							/>
-							<div className="">
-								<h3 className="font-bold">{testimonialsData[selectedTestimonial2].header}</h3>
-								<p className="">{testimonialsData[selectedTestimonial2].mainText}</p>
+							<div className="p-[5.014rem_5.5rem]">
+								<h3 className="font-normal text-[2rem]">{testimonialsData[selectedTestimonial2].header}</h3>
+								<p className="mt-[1.87rem] text-[1.6rem]">{testimonialsData[selectedTestimonial2].mainText}</p>
 							</div>
 						</div>
 					</div>
 
 					{/* TESTIMONIO A LA DERECHA */}
-					<div className="absolute right-[-100%] z-10 flex items-center justify-center gap-10 w-[100%] h-full bg-white"
+					<div
+						className={`absolute right-[-100%] z-10 flex items-center justify-center gap-x-[3.15rem] w-[100%] h-full ${userRole !== "visitor" && "bg-terciary300"}`}
 						ref={nextTestimonialElement}
 					>
-						<div className="w-[45%] h-full text-[19.78px]">
-							<img src={testimonialsData[nextTestimonialIndex1].imageUrl} alt={testimonialsData[nextTestimonialIndex1].imageAlt}
-								className="w-full"
+						<div className="overflow-hidden w-[45%] h-full text-[19.78px] bg-white rounded-2xl">
+							<img
+								src={testimonialsData[nextTestimonialIndex1].imageUrl}
+								alt={testimonialsData[nextTestimonialIndex1].imageAlt}
+								className="w-full rounded-none"
 							/>
-							<div className="">
-								<h3 className="font-bold">{testimonialsData[nextTestimonialIndex1].header}</h3>
-								<p className="">{testimonialsData[nextTestimonialIndex1].mainText}</p>
+							<div className="p-[5.014rem_5.5rem]">
+								<h3 className="font-normal text-[2rem]">{testimonialsData[nextTestimonialIndex1].header}</h3>
+								<p className="mt-[1.87rem] text-[1.6rem]">{testimonialsData[nextTestimonialIndex1].mainText}</p>
 							</div>
 						</div>
 
-						<div className="w-[45%] h-full text-[19.78px]">
-							<img src={testimonialsData[nextTestimonialIndex2].imageUrl} alt={testimonialsData[nextTestimonialIndex2].imageAlt}
-								className="w-full"
+						<div className="overflow-hidden w-[45%] h-full text-[19.78px] bg-white rounded-2xl">
+							<img
+								src={testimonialsData[nextTestimonialIndex2].imageUrl}
+								alt={testimonialsData[nextTestimonialIndex2].imageAlt}
+								className="w-full rounded-none"
 							/>
-							<div className="">
-								<h3 className="font-bold">{testimonialsData[nextTestimonialIndex2].header}</h3>
-								<p className="">{testimonialsData[nextTestimonialIndex2].mainText}</p>
+							<div className="p-[5.014rem_5.5rem]">
+								<h3 className="font-normal text-[2rem]">{testimonialsData[nextTestimonialIndex2].header}</h3>
+								<p className="mt-[1.87rem] text-[1.6rem]">{testimonialsData[nextTestimonialIndex2].mainText}</p>
 							</div>
 						</div>
 					</div>
