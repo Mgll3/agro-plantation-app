@@ -54,6 +54,7 @@ export default {
 				headerBg: "url('@/images/backgrounds/header_background.avif')",
 				headerBgAdmin: "url('@/images/backgrounds/header_background_admin.png')",
 				login: "url('@/images/backgrounds/inicio_y_registro.jpg')",
+				loginMobile: "url('@/images/backgrounds/inicio_y_registro_mobile.jpg')",
 				publicationCardsBg: "url('@/images/backgrounds/cards-background.jpg')"
 			},
 			gridTemplateColumns: {

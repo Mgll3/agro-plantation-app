@@ -183,10 +183,10 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 
 	return (
 		<>
-			<main ref={mainContainerElement} className="flex absolute transition-all left-0 duration-1000">
+			<main ref={mainContainerElement} className="flex absolute transition-all left-0 duration-1000 overflow-y-hidden">
 				{focus === "login" ? (
 					<>
-						<div className="w-screen">
+						<div className="w-screen h-screen">
 							<Login
 								handleSubmit={submitLoginForm}
 								handleRegisterClick={changeForm}

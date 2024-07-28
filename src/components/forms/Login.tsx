@@ -30,29 +30,35 @@ export default function Login({ handleSubmit, handleRegisterClick, loginState, c
 	});
 
 	return (
-		<div className="w-[100%] font-sans flex h-[100vh] items-center justify-center text-[#eaefd4f2] overflow-x-hidden">
-			<aside className="w-[35vw] h-[100vh] ">
-				<div className="bg-login w-[100%] h-[100%] bg-center bg-cover bg-no-repeat flex justify-end items-center">
-					<h1 className="bg-[#EAE3C0] text-black font-semibold text-2xl font-sans p-[1rem_5rem] rounded-2xl translate-x-[14px] translate-y-[-20px]">
+		<div className="w-[100%] max-[767px]:flex max-[767px]:flex-col-reverse font-sans md:flex md:h-[100vh] items-center md:justify-center text-[#eaefd4f2] max-[767px]:overflow-hidden overflow-x-hidden">
+			<aside className="w-full h-[30vh] md:w-[35vw] md:h-[100vh] ">
+
+				<div className="bg-loginMobile max-[767px]:relative md:bg-login w-[100%] md:h-[100vh] max-[767px]:0%] md:bg-center max-[767px]:bg-center bg-cover  bg-no-repeat md:flex md:justify-end md:items-center max-[767px]:flex max-[767px]:flex-col max-[767px]:justify-end max-[767px]:gap-2 max-[767px]:items-center max-[767px]:h-full">
+
+					<div className="max-[767px]:absolute max-[767px]:inset-0 max-[767px]:bg-gradient-to-b max-[767px]:from-[#4b9742] max-[767px]:to-[#0b7115] max-[767px]:opacity-55 max-[767px]:z-0"></div>
+
+					<h1 className="bg-[#EAE3C0] text-black font-semibold md:text-2xl font-sans md:p-[1rem_5rem] rounded-2xl md:translate-x-[14px] md:translate-y-[-20px] max-[767px]:p-[.1rem_4rem] max-[767px]:z-20 ">
 						Ingreso
 					</h1>
+
 					<Link
 						to="/copyright"
-						className=" absolute bottom-0 p-[4px_4px] m-[1rem] bg-[#94B447] text-[#1B7E25] text-center text-[15px] rounded-md max-w-[32vw]"
+						className=" md:absolute md:bottom-0 md:p-[4px_4px] md:m-[1rem] bg-[#94B447] text-[#1B7E25] text-center text-[15px] rounded-md md:max-w-[32vw] max-[767px]:z-20 max-[767px]:w-[80%] mb-4 max-[767px]:text-[1.15rem] max-[767px]:text-black"
 					>
-						Todos los derechos reservados para Plant-In &copy;
-						<small>Marzo 2024</small>
+						Todos los derechos reservados para PLANT-IN <s className="max-[767px]:text-[#1B7E25]">&copy;</s>
+						<small >Marzo 2024</small>
 					</Link>
 				</div>
 			</aside>
 			{/*absolute bottom-0 p-[4px_4px] m-[1rem_1.7rem] bg-[#94B447] text-[#1B7E25] text-center text-[15px] rounded-md*/}
-			<div className="w-[max-content] h-[100vh] ">
+			<div className="md:w-[max-content] md:h-[100vh] w-full h-[70vh] ">
 				<Formik initialValues={initialValues} validationSchema={registerSchema} onSubmit={handleSubmit}>
 					<Form
 						name="loginForm"
 						id="loginForm"
 						encType="multipart/form-data"
-						className="w-[65vw] h-[100vh] border-solid text-center flex flex-col justify-around items-center bg-[#EAE3C0] p-4 "
+						className="md:w-[65vw] md:h-[100vh] border-solid text-center flex flex-col max-[767px]:gap-4 justify-around items-center bg-[#EAE3C0] p-4 
+								h-full	"
 					>
 						<div className="flex justify-center items-center gap-4 rounded-2xl text-2xl">
 							<abbr title="Ir a la página principal">
