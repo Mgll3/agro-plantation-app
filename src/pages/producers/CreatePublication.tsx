@@ -127,23 +127,25 @@ function CreatePublication() {
 				<Header />
 			</div>
 
-			<main className="w-full p-[5vw] font-sans">
-				<button
-					type="button"
-					onClick={() => navigate("/")}
-					className="flex items-center py-[10px] px-[16px] mb-[25px] text-[12px] font-semibold border-2 border-brandingYellow rounded-md text-brandingYellow"
-				>
-					<img alt="" src="/icons/Shape@2x.png" className="w-[5px] h-[8px] mr-[20px]" />
-					Volver a Home
-				</button>
+			<main className="flex flex-col items-center w-full pt-[8.8rem] pb-[13.6rem] font-sans">
+				<div className="w-[1281px]">
+					<button
+						type="button"
+						onClick={() => navigate("/")}
+						className="flex items-center py-[11px] pr-[16px] pl-[2.1rem] mb-[25px] text-[1.2rem] font-semibold border-2 border-brandingYellow rounded-xl text-brandingYellow"
+					>
+						<img alt="" src="/icons/Shape@2x.png" className="w-[5px] h-[8px] mr-[1.4rem]" />
+						Volver a Home
+					</button>
 
-				<h1 className="font-bold mb-[14px] text-[35px]">Crea tu publicación</h1>
+					<h1 className="font-bold mb-[14px] text-[35px]">Crea tu publicación</h1>
 
-				<p className="w-[65%] mb-20 text-[16px]">
-					Agregá todos los detalles de tu publicación para que los lectores sepan qué esperar
-				</p>
+					<p className="w-[65%] mb-20 text-[16px]">
+						Agregá todos los detalles de tu publicación para que los lectores sepan qué esperar
+					</p>
+				</div>
 
-				<div className="flex flex-col px-[109px] py-[20px]">
+				<div className="flex w-[1063px] py-[20px]">
 					<CreatePublicationForm handleSubmit={handleSubmit} />
 				</div>
 			</main>

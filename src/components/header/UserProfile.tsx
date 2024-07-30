@@ -31,7 +31,11 @@ function UserProfile({ handleLogoutClick }: UserProfileProps) {
 					<img src="/icons/black-plant.png" alt="" className="mr-[6px]" />
 				) : null}
 
-				<p role="button" onClick={showHideProfileOptions} className="mr-[18px] font-semibold font-sans text-[19.78px]">
+				<p
+					role="button"
+					onClick={showHideProfileOptions}
+					className="mr-[18px] font-semibold font-sans text-[19.78px] custom-2000:text-[3rem]"
+				>
 					{user.name}
 				</p>
 
@@ -49,11 +53,11 @@ function UserProfile({ handleLogoutClick }: UserProfileProps) {
 				ref={userProfile}
 				className="min-w-[15vw] opacity-0 duration-300 w-3/4 m-auto mt-4 bg-brandingLightYellow shadow-lg rounded-lg text-brandingDarkGreen z-10 overflow-hidden"
 			>
-				<p className="text-2xl text-center py-3">Mi Perfil</p>
+				<p className="text-[2.4rem] custom-2000:text-[3.3rem] text-center py-3">Mi Perfil</p>
 
 				<div className="border-b border-brandingLightBlue mx-2 mb-3"></div>
 
-				<div className="flex flex-col gap-y-0">
+				<div className="flex flex-col gap-y-0 text-[1.8rem] custom-2000:text-[2.5rem]">
 					<Link to="" className="px-4 py-2 hover:font-bold hover:bg-brandingYellow duration-200">
 						Opción 1
 					</Link>
@@ -68,7 +72,7 @@ function UserProfile({ handleLogoutClick }: UserProfileProps) {
 				<div className="border-b border-brandingLightBlue mx-2 mb-2"></div>
 
 				<p
-					className="px-4 py-2 mb-2 cursor-pointer hover:font-bold hover:bg-brandingYellow duration-200"
+					className="px-4 py-2 mb-2 text-[1.8rem] custom-2000:text-[2.5rem] cursor-pointer hover:font-bold hover:bg-brandingYellow duration-200"
 					role="link"
 					onClick={handleLogoutClick}
 				>

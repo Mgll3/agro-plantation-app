@@ -19,7 +19,7 @@ function Header() {
 	const [mustLoginWarningState, setMustLoginWarningState] = useState<MustLoginWarningStateType>("hidden");
 	const [loginState, setLoginState] = useState<loginStateType>("init");
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-	const [mobileNavStyles, setMobileNavStyles] = useState<"mounting" | "unmounting">("mounting");
+	const [mobileNavStyles, setMobileNavStyles] = useState<"mounting" | "unmounting">("mounting"); //Used to trigger the fade-in / fade-out animations of the mobile menu
 	const { userRole, setUserRole } = useUserRoleContext();
 	const logoutTimeout = useRef<number>();
 	const navigate = useNavigate();
@@ -125,6 +125,7 @@ function Header() {
 							toggleMobileMenuVisibility={toggleMobileMenuVisibility}
 							handleLogoutClickMobile={handleLogoutClickMobile}
 							mobileNavStyles={mobileNavStyles}
+							handleOpenMustLoginWarning={handleOpenMustLoginWarning}
 						/>
 					) : null}
 					{/* MOBILE MENU ***END */}

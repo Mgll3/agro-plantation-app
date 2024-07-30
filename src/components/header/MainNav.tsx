@@ -13,8 +13,8 @@ function MainNav({ handleOpenMustLoginWarning }: MainNavProps) {
 
 	const buttonColor: ButtonColorType = "yellow";
 	const buttonColor2: ButtonColorType = "green";
-	const buttonFontSize = "text-[1.978rem]";
-	const buttonWidth = "w-[212px]";
+	const buttonFontSize = "text-[1.978rem] tracking-wide custom-2000:text-[3rem]";
+	const buttonWidth = "w-[212px] custom-2000:w-[280px]";
 	const buttonPaddingY = "py-[0.767rem]";
 
 	//ROUTES FOR DIFFERENT USER ROLES ***START
@@ -29,7 +29,7 @@ function MainNav({ handleOpenMustLoginWarning }: MainNavProps) {
 
 	return (
 		<nav aria-label="Navegación principal" className="flex justify-center w-[100%]">
-			<ul className="flex gap-x-4">
+			<ul className="flex gap-x-4 custom-2000:gap-x-8">
 				<li className="">
 					<Button
 						buttonColor={location.pathname === "/" ? buttonColor2 : buttonColor}

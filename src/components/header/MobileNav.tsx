@@ -7,9 +7,15 @@ type MobileNavProps = {
 	toggleMobileMenuVisibility: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 	handleLogoutClickMobile: (e: React.MouseEvent<HTMLDivElement>) => void;
 	mobileNavStyles: "mounting" | "unmounting";
+	handleOpenMustLoginWarning: () => void;
 };
 
-function MobileNav({ toggleMobileMenuVisibility, handleLogoutClickMobile, mobileNavStyles }: MobileNavProps) {
+function MobileNav({
+	toggleMobileMenuVisibility,
+	handleLogoutClickMobile,
+	mobileNavStyles,
+	handleOpenMustLoginWarning
+}: MobileNavProps) {
 	const { userRole } = useUserRoleContext();
 	const mainDivElement = useRef<HTMLDivElement>(null);
 	const contentDivElement = useRef<HTMLDivElement>(null);
@@ -47,7 +53,7 @@ function MobileNav({ toggleMobileMenuVisibility, handleLogoutClickMobile, mobile
 		<div
 			ref={mainDivElement}
 			onClick={toggleMobileMenuVisibility}
-			className={`z-[1000] fixed top-0 left-0 w-screen h-screen transition-all duration-700 ${mobileNavStyles === "mounting" ? "bg-transparent" : "bg-screenDarkening"} `}
+			className={`z-[900] fixed top-0 left-0 w-screen h-screen transition-all duration-700 ${mobileNavStyles === "mounting" ? "bg-transparent" : "bg-screenDarkening"} `}
 		>
 			<div
 				ref={contentDivElement}
@@ -88,9 +94,15 @@ function MobileNav({ toggleMobileMenuVisibility, handleLogoutClickMobile, mobile
 					<svg className="fill-current w-[24px]" viewBox="0 0 20 18" xmlns="http://www.w3.org/2000/svg">
 						<path d="M4 0H16V1.5H4V0ZM2.5 2.25H17.5V3.75H2.5V2.25ZM19.75 18H0.25V4.5H19.75V18Z" fill="currentColor" />
 					</svg>
-					<Link to={publicationsRoute} className="ml-[0.8rem] text-[2rem]">
-						Publicaciones
-					</Link>
+					{userRole === "visitor" ? (
+						<p onClick={handleOpenMustLoginWarning} className="ml-[0.8rem] text-[2rem]">
+							Publicaciones
+						</p>
+					) : (
+						<Link to={publicationsRoute} className="ml-[0.8rem] text-[2rem]">
+							Publicaciones
+						</Link>
+					)}
 				</div>
 
 				<div className="flex justify-start items-center w-full mb-[1.6rem] px-[0.4rem] py-[0.8rem] text-brandingDarkGreen hover:text-yellow500 hover:bg-brandingDarkGreen cursor-pointer">
@@ -100,9 +112,15 @@ function MobileNav({ toggleMobileMenuVisibility, handleLogoutClickMobile, mobile
 							fill="currentColor"
 						/>
 					</svg>
-					<Link to={forumRoute} className="ml-[0.8rem] text-[2rem]">
-						Foro
-					</Link>
+					{userRole === "visitor" ? (
+						<p onClick={handleOpenMustLoginWarning} className="ml-[0.8rem] text-[2rem]">
+							Foro
+						</p>
+					) : (
+						<Link to={forumRoute} className="ml-[0.8rem] text-[2rem]">
+							Foro
+						</Link>
+					)}
 				</div>
 
 				<hr className="w-[100%] my-[1.6rem] border-brandingDarkGreen" />

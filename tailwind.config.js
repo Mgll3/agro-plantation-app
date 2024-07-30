@@ -63,7 +63,9 @@ export default {
 				form: "repeat(auto-fit, minmax(300px, 1fr))"
 			},
 			dropShadow: {
-				custom: "0 3px 3px rgba(0, 0, 0, 0.55)"
+				custom: "0 3px 3px rgba(0, 0, 0, 0.55)",
+				bigText: "0 2px 2px rgba(0, 0, 0, 0.45)",
+				smallText: "0 2px 1px rgba(0, 0, 0, 0.35)"
 			},
 			boxShadow: {
 				"below-light": "2px 2px 5px rgba(0, 0, 0, 0.2)",
@@ -83,7 +85,8 @@ export default {
 				"custom-900": "900px",
 				"custom-950": "950px",
 				"custom-1000": "1000px",
-				"custom-1200": "1200px"
+				"custom-1200": "1200px",
+				"custom-2000": "2000px"
 			},
 			animation: {
 				sliderMainImgGoLeft: "moveLeftFromCenter 0.7s ease-in-out forwards",
