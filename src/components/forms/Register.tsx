@@ -127,7 +127,7 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 					</div>
 				</aside>
 
-				<div className=" max-h-[70vh] md:overflow-x-hidden md:max-h-[100vh] overflow-scroll ">
+				<div className="md:w-[70vw] max-[767px]:max-h-[70vh] md:overflow-x-hidden md:max-h-[100vh] max-[767px]:overflow-scroll ">
 					<div className="flex flex-col justify-center items-center gap-1 rounded-2xl text-2xl text-black font-sans md:mt-[2rem] mt-[2rem]">
 						<h1 className="max-[767px]:hidden">Bienvenido a</h1>
 						<button type="button" onClick={() => navigate("/")}>
@@ -141,7 +141,7 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 						action=""
 						encType="multipart/form-data"
 						onSubmit={formik.handleSubmit}
-						className="md:w-[65vw] w-[100vw] max-h-[100%] text-center justify-around items-center bg-[#EAE3C0] text-black md:p-[1rem_6rem_2rem] p-[1.5rem] font-sans"
+						className="md:w-[100%] w-[100vw] max-h-[100%] text-center justify-around items-center bg-[#EAE3C0] text-black md:p-[1rem_6rem_2rem] p-[1.5rem] font-sans"
 					>
 						<div className="flex flex-col pb-2 w-full">
 							<div className="grid grid-cols-1 md:grid-cols-2 md:gap-4 gap-4 text-base md:width-[100%] w-full">
