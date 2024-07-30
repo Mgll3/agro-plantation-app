@@ -87,7 +87,8 @@ export default {
 				"custom-950": "950px",
 				"custom-1000": "1000px",
 				"custom-1200": "1200px",
-				"custom-2000": "2000px"
+				"custom-2000": "2000px",
+				"custom-3000": "3000px"
 			},
 			animation: {
 				sliderMainImgGoLeft: "moveLeftFromCenter 0.7s ease-in-out forwards",

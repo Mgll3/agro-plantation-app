@@ -106,7 +106,7 @@ function Header() {
 		<>
 			<header className="w-full">
 				<div
-					className={`flex justify-center items-center h-[98px] custom-800:h-[239px] ${headerBg} bg-cover bg-center bg-no-repeat relative`}
+					className={`flex justify-center items-center h-[98px] custom-800:h-[239px] custom-2000:h-[270px] custom-3000:h-[320px] ${headerBg} bg-cover bg-center bg-no-repeat relative`}
 				>
 					<Link to="/management" className="absolute bottom-[0px] left-0 w-[40px] pl-[1rem] text-[4rem]">
 						<DvrIcon fontSize="inherit" />
@@ -134,17 +134,17 @@ function Header() {
 						<img
 							src="/images/logos/Logo_original_Plant-In.png"
 							alt=""
-							className="w-[66px] custom-800:w-[90px] custom-950:w-[128px]"
+							className="w-[66px] custom-800:w-[90px] custom-950:w-[128px] custom-2000:w-[170px] custom-3000:w-[200px]"
 						/>
 					) : (
 						<img
 							src="/images/logos/Logo_fondo_verde.png"
 							alt=""
-							className="w-[66px] custom-800:w-[90px] custom-950:w-[128px]"
+							className="w-[66px] custom-800:w-[90px] custom-950:w-[128px] custom-2000:w-[170px] custom-3000:w-[200px]"
 						/>
 					)}
 
-					<div className="hidden absolute right-4 top-2 custom-800:block">
+					<div className="hidden absolute right-[43px] top-[40px] custom-800:block">
 						{userRole === "visitor" ? <SecondaryNav /> : <UserProfile handleLogoutClick={handleLogoutClick} />}
 					</div>
 				</div>

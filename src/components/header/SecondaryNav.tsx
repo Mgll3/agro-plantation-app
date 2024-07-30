@@ -3,8 +3,8 @@ import { ButtonColorType } from "../button/buttonTypes";
 
 function SecondaryNav() {
 	const buttonColor: ButtonColorType = "yellow";
-	const buttonFontSize = "text-[1.978rem] custom-2000:text-[3rem]";
-	const buttonWidth = "w-[160px] custom-2000:w-[240px]";
+	const buttonFontSize = "text-[1.978rem] custom-2000:text-[3.2rem] custom-3000:text-[3.8rem]";
+	const buttonWidth = "w-[160px] custom-2000:w-[260px] custom-3000:w-[350px]";
 	const buttonPaddingY = "py-[0.27rem] custom-2000:py-[0.5rem]";
 
 	return (

@@ -26,15 +26,19 @@ function UserProfile({ handleLogoutClick }: UserProfileProps) {
 
 	return (
 		<div aria-label="Mi perfil" className="w-full">
-			<div className="flex justify-center items-center py-[10px] px-[12px] rounded-lg bg-brandingYellow">
+			<div className="flex justify-center items-center py-[10px] custom-2000:px-[2rem] px-[12px] rounded-3xl bg-brandingYellow">
 				{userRole === "PRODUCER" || userRole === "PRODUCER_VIP" ? (
-					<img src="/icons/black-plant.png" alt="" className="mr-[6px]" />
+					<img
+						src="/icons/black-plant.png"
+						alt=""
+						className="custom-2000:w-[3.2rem] custom-3000:w-[3.8rem] mr-[0.8rem] custom-3000:mr-[1.2rem]"
+					/>
 				) : null}
 
 				<p
 					role="button"
 					onClick={showHideProfileOptions}
-					className="mr-[18px] font-semibold font-sans text-[19.78px] custom-2000:text-[3rem]"
+					className="mr-[1.8rem] custom-3000:mr-[2.5rem] font-semibold font-sans text-[19.78px] custom-2000:text-[3.2rem] custom-3000:text-[3.8rem]"
 				>
 					{user.name}
 				</p>
@@ -44,7 +48,7 @@ function UserProfile({ handleLogoutClick }: UserProfileProps) {
 					onClick={showHideProfileOptions}
 					ref={expandProfileIcon}
 				>
-					<img src="/icons/arrow-black.png" alt="" className="" />
+					<img src="/icons/arrow-black.png" alt="" className="custom-2000:w-[2.1rem] custom-3000:w-[2.5rem]" />
 				</div>
 			</div>
 
