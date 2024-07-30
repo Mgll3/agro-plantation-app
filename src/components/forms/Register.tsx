@@ -109,29 +109,31 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 
 	return (
 		<>
-			<div className="relative w-[100vw] font-loginFont flex h-[100%] text-[#eaefd4f2] bg-[#EAE3C0]">
-				<aside className="w-[35vw] h-[100vh] relative">
-					<div className="bg-login w-[100%] h-[100%] bg-center bg-cover bg-no-repeat flex justify-end items-center font-sans">
-						<h2 className="bg-[#EAE3C0] text-black font-semibold text-2xl p-[1rem_4rem] rounded-2xl translate-x-[14px] translate-y-[30px]">
+			<div className="relative md:w-[100vw] md:flex-row font-loginFont flex flex-col-reverse h-[100%] text-[#eaefd4f2] bg-[#EAE3C0]">
+				<aside className="w-[100vw] h-[30vh] relative md:w-[30vw] md:h-[100vh]">
+					<div className="md:bg-login bg-loginMobile w-[100%] h-[100%] bg-center bg-cover bg-no-repeat flex justify-center md:justify-end items-center font-sans">
+						{/* Capa sobre imagen Mobile */}
+						<div className="max-[767px]:absolute max-[767px]:inset-0 max-[767px]:bg-gradient-to-b max-[767px]:from-[#4b9742] max-[767px]:to-[#0b7115] max-[767px]:opacity-55 max-[767px]:z-0"></div>
+						<h2 className="bg-[#EAE3C0] text-black font-semibold text-2xl md:md:p-[1rem_4rem] rounded-2xl md:translate-x-[14px] md:translate-y-[30px] z-10 p-[.1rem_4rem]">
 							Registro
 						</h2>
 						<Link
 							to="/copyright"
-							className="absolute bottom-0 p-[4px_4px] m-[1rem] bg-[#94B447] text-[#1B7E25] text-center text-[15px] rounded-md"
+							className="absolute bottom-0 p-[4px_4px] m-[1rem] bg-[#93b447b5] text-[#1B7E25] text-center md:text-[15px] text-[1.2rem] rounded-md z-10 max-[767px]:text-black"
 						>
-							Todos los derechos reservados para Plant-In &copy;
-							<small>Marzo 2024</small>
+							Todos los derechos reservados para PLANT-IN <s className="max-[767px]:text-[#1B7E25]">&copy;</s>
+							<small >Marzo 2024</small>
 						</Link>
 					</div>
 				</aside>
 
-				<div className=" max-h-[100vh] overflow-x-hidden ">
-					<div className="flex flex-col justify-center items-center gap-1 rounded-2xl text-2xl text-black font-sans mt-[2rem]">
-						<h1>Bienvenido a</h1>
+				<div className="md:w-[70vw] max-[767px]:max-h-[70vh] md:overflow-x-hidden md:max-h-[100vh] max-[767px]:overflow-scroll ">
+					<div className="flex flex-col justify-center items-center gap-1 rounded-2xl text-2xl text-black font-sans md:mt-[2rem] mt-[2rem]">
+						<h1 className="max-[767px]:hidden">Bienvenido a</h1>
 						<button type="button" onClick={() => navigate("/")}>
 							<img src="images/logos/LogoVerde.png" alt="logo" className=" w-[120px] h-[150px] mb-5" />
 						</button>
-						<h2>Por favor, completa el formulario</h2>
+						<h2 className="max-[767px]:hidden">Por favor, completa el formulario</h2>
 					</div>
 
 					<form
@@ -139,16 +141,16 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 						action=""
 						encType="multipart/form-data"
 						onSubmit={formik.handleSubmit}
-						className="w-[65vw] max-h-[100vh] border-solid text-center justify-around items-center bg-[#EAE3C0] text-black p-[1rem_6rem_2rem] font-sans"
+						className="md:w-[100%] w-[100vw] max-h-[100%] text-center justify-around items-center bg-[#EAE3C0] text-black md:p-[1rem_6rem_2rem] p-[1.5rem] font-sans"
 					>
-						<div className="flex flex-col pb-2">
-							<div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start text-base text-left font-light width-[100%]">
-								<div className="relative mb-4">
+						<div className="flex flex-col pb-2 w-full">
+							<div className="grid grid-cols-1 md:grid-cols-2 md:gap-4 gap-4 text-base md:width-[100%] w-full">
+								<div className="relative">
 									<label htmlFor="userName">
 										<input
 											type="text"
 											id="userName"
-											placeholder="Nombre"
+											placeholder="Nombre/s"
 											{...formik.getFieldProps("userName")}
 											className="bg-[#00000011] outline-none  border-b-[2px] rounded-md border-b-[#00000052] p-[8px_8px_4px] w-full placeholder-[#666]"
 										/>
@@ -159,12 +161,12 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 									) : null}
 								</div>
 
-								<div className="relative mb-4">
+								<div className="relative ">
 									<label htmlFor="userLastName">
 										<input
 											type="text"
 											id="userLastName"
-											placeholder="Apellidos"
+											placeholder="Apellido/s"
 											{...formik.getFieldProps("userLastName")}
 											className="bg-[#00000011] outline-none  border-b-[2px] rounded-md border-b-[#00000052] w-full placeholder-[#666] p-[8px_8px_4px]"
 										/>
@@ -175,7 +177,7 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 									) : null}
 								</div>
 
-								<div className="relative mb-4 md:col-span-2">
+								<div className="relative  md:col-span-2">
 									<label htmlFor="userEmail">
 										<input
 											type="email"
@@ -191,7 +193,7 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 									) : null}
 								</div>
 
-								{/* <div className="relative mb-4">
+								{/* <div className="relative ">
 										<label htmlFor="userAddressStreet">
 											<input type="text" id="userAddressStreet" name="userAddressStreet" placeholder="Dirección" { ...formik.getFieldProps("userAddressStreet") }
 												className="bg-[#00000011] outline-none  border-b-[2px] rounded-sm border-b-[#00000038] p-[0_12px] w-[300px]" />
@@ -201,7 +203,7 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 										</ErrorMessage>
 									</div> */}
 
-								<div className="relative mb-4">
+								<div className="relative ">
 									<label htmlFor="userAddressCity">
 										<input
 											type="text"
@@ -217,7 +219,7 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 									) : null}
 								</div>
 
-								<div className="relative mb-4">
+								<div className="relative ">
 									<label htmlFor="userAddressProvince">
 										<input
 											type="text"
@@ -233,7 +235,7 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 									) : null}
 								</div>
 
-								<div className="relative mb-4">
+								<div className="relative ">
 									<label htmlFor="userPassword">
 										<input
 											type="password"
@@ -249,7 +251,7 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 									) : null}
 								</div>
 
-								<div className="relative mb-4">
+								<div className="relative ">
 									<label htmlFor="userPasswordConfirm">
 										<input
 											type="password"
@@ -269,7 +271,7 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 							{formik.isValid && formik.dirty ? (
 								<button
 									type="submit"
-									className="w-[94%] text-base py-2.5 m-[3rem_auto] shadow-md rounded-lg font-sans text-brandingYellow cursor-pointer font-bold bg-brandingDarkGreen hover:bg-opacity-80 transition-all"
+									className="w-[100%] text-base py-2.5 m-[3rem_auto] shadow-md rounded-lg font-sans text-brandingYellow cursor-pointer font-bold bg-brandingDarkGreen hover:bg-opacity-80 transition-all"
 								>
 									Regístrate
 								</button>
@@ -277,13 +279,13 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 								<button
 									type="submit"
 									disabled
-									className="w-[94%] text-base py-2.5 m-[3rem_auto] shadow-md rounded-lg font-sans text-black cursor-pointer font-bold bg-brandingYellow hover:bg-opacity-80 transition-all"
+									className="w-[94%] text-base py-2.5 m-[2rem_auto] shadow-md rounded-lg font-sans text-black cursor-pointer font-bold bg-brandingYellow hover:bg-opacity-80 transition-all"
 								>
 									Regístrate
 								</button>
 							)}
 
-							<p>
+							<p className="text-[1.2rem]">
 								Si ya estás registrado, por favor{" "}
 								<span onClick={handleLoginClick} className="text-brandingLightGreen mt-2" role="button">
 									INICIA SESIÓN
