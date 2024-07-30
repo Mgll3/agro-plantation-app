@@ -16,7 +16,7 @@ function MustLoginWarning({ handleCloseMustLoginWarning }: MustLoginWarningProps
 
 	return (
 		<div
-			className="z-50 fixed top-0 flex justify-center items-center bg-screenDarkening w-screen h-screen"
+			className="z-[950] fixed top-0 flex justify-center items-center bg-screenDarkening w-screen h-screen"
 			onClick={handleCloseMustLoginWarning}
 		>
 			<div className="flex flex-col items-center w-[709px] p-[60px_32px] rounded-2xl bg-white text-center transition-all">

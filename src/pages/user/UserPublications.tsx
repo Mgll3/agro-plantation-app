@@ -6,7 +6,7 @@ function UserPublications() {
 			<div className="w-full">
 				<Header />
 			</div>
-			PUBLICATIONS!
+			ESTÁS EN PUBLICACIONES (VERSIÓN USUARIO REGISTRADO)
 		</>
 	);
 }

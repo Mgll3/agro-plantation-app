@@ -1,17 +1,14 @@
 import Header from "../../components/header/Header";
 
-function AdminForum() {
+function ProducerPublications() {
 	return (
 		<>
 			<div className="w-full">
 				<Header />
 			</div>
-
-			<nav>HERRAMIENTAS DE ADMINISTRADOR</nav>
-
-			<main>FORO</main>
+			ESTÁS EN PUBLICACIONES (VERSIÓN PRODUCTOR)
 		</>
 	);
 }
 
-export default AdminForum;
+export default ProducerPublications;

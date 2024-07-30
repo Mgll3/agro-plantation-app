@@ -46,6 +46,8 @@ export default {
 				grey700: "#6B6B6B",
 				grey800: "#4E4C4C",
 				brown150: "#F7F4E6",
+				yellow500: "#F6C915",
+				terciary150: "#D4E2B5",
 				terciary300: "#BFD390"
 			},
 			spacing: {
@@ -62,13 +64,30 @@ export default {
 				form: "repeat(auto-fit, minmax(300px, 1fr))"
 			},
 			dropShadow: {
-				custom: "0 3px 3px rgba(0, 0, 0, 0.55)"
+				custom: "0 3px 3px rgba(0, 0, 0, 0.55)",
+				bigText: "0 2px 2px rgba(0, 0, 0, 0.45)",
+				smallText: "0 2px 1px rgba(0, 0, 0, 0.35)"
 			},
 			boxShadow: {
 				"below-light": "2px 2px 5px rgba(0, 0, 0, 0.2)",
 				"below-dark": "0px 4px 4px rgba(0, 0, 0, 0.5)",
 				"around-light": "0px 0px 10px rgba(0, 0, 0, 0.2)",
 				"around-dark": "0px 0px 5px rgba(0, 0, 0, 0.5)"
+			},
+			screens: {
+				"custom-500": "500px",
+				"custom-550": "550px",
+				"custom-600": "600px",
+				"custom-650": "650px",
+				"custom-700": "700px",
+				"custom-750": "750px",
+				"custom-800": "800px",
+				"custom-850": "850px",
+				"custom-900": "900px",
+				"custom-950": "950px",
+				"custom-1000": "1000px",
+				"custom-1200": "1200px",
+				"custom-2000": "2000px"
 			},
 			animation: {
 				sliderMainImgGoLeft: "moveLeftFromCenter 0.7s ease-in-out forwards",

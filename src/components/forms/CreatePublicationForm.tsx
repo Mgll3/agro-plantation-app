@@ -4,7 +4,6 @@ import ImageOutlinedIcon from "@mui/icons-material/ImageOutlined";
 import { useFormik } from "formik";
 import Button from "../button/Button";
 import { ReactNode, useEffect, useRef, useState } from "react";
-import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import GeoViewer from "../geolocator/GeoViewer";
 import { CoordinatesType } from "../../pages/admin/AdminPublicationDetails";
 import { getAddressCoordinates } from "../../interfaces/geolocation/getAddressCoordinates";
@@ -251,37 +250,33 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 		<div className="flex flex-col w-full">
 			<form name="createPublicationForm" onSubmit={formik.handleSubmit} noValidate className="">
 				{/* FIRST SECTION */}
+				<div className="w-full py-[20px] pl-[50px] pr-[36px] border-grey300 border-[1px] border-solid rounded-lg shadow-below-light">
+					<h2 className="text-[49px] font-semibold drop-shadow-bigText">Agregar imágenes</h2>
+					<p className="text-[24px] font-normal drop-shadow-smallText">Imágenes</p>
+					<p className="text-[16px] mt-[1rem] drop-shadow-smallText">
+						Incorpora algunas fotos para dar a conocer tu huerta
+					</p>
 
-				<div className="w-full py-[20px] px-[50px] border-grey300 border-[1px] border-solid rounded-md">
-					<h2 className="text-[49px] font-semibold">Agregar imágenes</h2>
-					<p className="text-[24px] font-normal">Imágenes</p>
-					<p className="text-[16px] mt-[1rem]">Incorpora algunas fotos para dar a conocer tu huerta</p>
-
-					<div className="flex flex-col items-center mt-[32px] px-[48px] py-[32px] bg-brown150 rounded-md">
+					<div className="flex flex-col items-center mt-[32px] px-[51px] py-[32px] bg-brown150 rounded-lg shadow-below-dark">
 						<div className="mt-[-1.5rem] text-grey500 text-[87px]">
 							<ImageOutlinedIcon color="inherit" fontSize="inherit" />
 						</div>
 						<p className="mt-[22px] text-[24px] font-semibold">arrastra y coloca una imagen o</p>
 
-						<div className="flex justify-center items-center gap-x-[2.6rem]">
+						<div className="flex justify-between items-center w-full text-brandingDarkGreen text-[2rem] font-semibold">
 							{/* UPLOAD MAIN PICTURE BUTTON */}
 
-							<div className="relative flex flex-col items-center w-full">
+							<div className="relative flex items-center">
 								<button
 									type="button"
-									className={`relative flex flex-col items-center justify-end w-[280px] h-[65px] mt-[32px] ${mainImgDragActive ? "cursor-help opacity-60 scale-110" : "cursor-pointer"} border-[1px] border-grey700 border-solid rounded-lg bg-white duration-300`}
+									className={`relative flex flex-col items-center justify-end w-[34.2rem] py-[0.95rem] mt-[32px] ${mainImgDragActive ? "cursor-help opacity-60 scale-110" : "cursor-pointer"} border-[2px] border-brandingDarkGreen border-solid rounded-lg bg-transparent duration-300`}
 									onClick={clickInputMainImg}
 									onDragOver={handleMainImgDragOver}
 									onDragLeave={handleMainImgDragLeave}
 									onDrop={handleMainImgDrop}
 								>
-									<div className="flex">
-										<div className="text-black text-[18px]">
-											<ImageOutlinedIcon color="inherit" fontSize="inherit" />
-										</div>
-										<p className="text-[19.78px] font-semibold p-0">Cargar Imagen Principal</p>
-									</div>
-									<p className="mb-[3px] mt-[-5px] text-[12px] font-semibold">{`(${numberOfMainImages})`}</p>
+									<p className="p-0">Cargar imagen principal</p>
+									<p className="mb-[3px] mt-[-5px]">{`(${numberOfMainImages})`}</p>
 
 									<input
 										ref={inputMainImgElement}
@@ -303,22 +298,17 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 
 							{/* UPLOAD SECONDARY PICTURES BUTTON */}
 
-							<div className="relative flex flex-col items-center w-full">
+							<div className="relative flex items-center">
 								<button
 									type="button"
-									className={`relative flex flex-col items-center justify-end w-[340px] h-[65px] mt-[32px] ${secondaryImgsDragActive ? "cursor-help opacity-60 scale-110" : "cursor-pointer"} border-[1px] border-grey700 border-solid rounded-lg bg-white duration-300`}
+									className={`relative flex flex-col items-center justify-end w-[34.2rem] py-[0.95rem] mt-[32px] ${secondaryImgsDragActive ? "cursor-help opacity-60 scale-110" : "cursor-pointer"} border-[2px] border-brandingDarkGreen border-solid rounded-lg bg-transparent duration-300`}
 									onClick={clickInputSecondaryImgs}
 									onDragOver={handleSecondaryImgsDragOver}
 									onDragLeave={handleSecondaryImgsDragLeave}
 									onDrop={handleSecondaryImgsDrop}
 								>
-									<div className="flex">
-										<div className="text-black text-[18px]">
-											<ImageOutlinedIcon color="inherit" fontSize="inherit" />
-										</div>
-										<p className="text-[19.78px] font-semibold p-0">Cargar Imágenes Secundarias</p>
-									</div>
-									<p className="mb-[3px] mt-[-5px] text-[12px] font-semibold">{`(${numberOfSecondaryImages})`}</p>
+									<p className="p-0">Cargar imágenes secundarias</p>
+									<p className="mb-[3px] mt-[-5px]">{`(${numberOfSecondaryImages})`}</p>
 
 									<input
 										ref={inputSecondaryImgsElement}
@@ -345,28 +335,20 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 							<p>. Archivos de imagen compatibles: JPEG o PNG</p>
 						</div>
 					</div>
-
-					<div className="flex items-start mt-[32px] text-brightRed text-[20px]">
-						<ErrorOutlineIcon color="inherit" fontSize="inherit" className="mt-[2px]" />
-						<p className="ml-[5px] text-[16px] text-black">
-							Importante: Recuerda que la primera foto que subas aparecerá como la principal. Las siguientes fotos
-							tendrán menor relevancia.
-						</p>
-					</div>
 				</div>
 
 				{/* SECOND SECTION */}
 
-				<div className="w-full mt-[40px] pt-[24px] pb-[12px] px-[50px] border-grey300 border-[1px] border-solid rounded-md">
-					<h2 className="text-[49px] font-semibold">Descripción general de la publicación</h2>
-					<p className="text-[24px] font-normal">Nombre de la publicación</p>
-					<p className="text-[16px] mt-[1rem]">
+				<div className="w-full mt-[40px] pt-[24px] pb-[12px] px-[50px] border-grey300 border-[1px] border-solid rounded-lg shadow-below-light">
+					<h2 className="text-[49px] font-semibold drop-shadow-bigText">Descripción general de la publicación</h2>
+					<p className="text-[24px] font-normal drop-shadow-smallText">Nombre de la publicación</p>
+					<p className="text-[16px] mt-[1rem] drop-shadow-smallText">
 						Escribí un título claro y descriptivo para indicar de qué se trata la publicación.
 					</p>
 
 					{/* TITLE INPUT */}
 
-					<div className="relative w-[46%] mt-[45px] p-2 border border-black border-solid rounded-md">
+					<div className="relative w-[46%] mt-[45px] p-2 border border-black border-solid rounded-md shadow-below-light">
 						<label htmlFor="title" className="absolute top-[-12px] left-[15px] px-2 text-[16px] bg-white">
 							Título
 						</label>
@@ -388,7 +370,7 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 
 					{/* DETAILS TEXTAREA */}
 
-					<div className="relative w-[90%] mt-6 p-2 border border-black border-solid rounded-md">
+					<div className="relative w-[90%] mt-6 p-2 border border-black border-solid rounded-md shadow-below-light">
 						<label htmlFor="details" className="absolute top-[-12px] left-[15px] px-2 text-[16px] bg-white">
 							Descripción
 						</label>
@@ -409,20 +391,20 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 							</p>
 						) : null}
 					</div>
-					<p className="mt-2 text-darkGrayText text-[18px]">{`${textAreaCharacters} / ${textAreaCharactersLeft}`}</p>
+					<p className="mt-2 text-darkGrayText text-[1.8rem] drop-shadow-smallText">{`${textAreaCharacters} / ${textAreaCharactersLeft}`}</p>
 				</div>
 
 				{/* THIRD SECTION */}
 
-				<div className="w-full mt-[40px] pt-[24px] pb-[50px] px-[50px] border-grey300 border-[1px] border-solid rounded-md">
-					<h2 className="text-[35px] font-semibold">Detalles de la publicación</h2>
-					<p className="text-[16px] mt-[1rem]">
+				<div className="w-full mt-[40px] pt-[24px] pb-[50px] px-[50px] border-grey300 border-[1px] border-solid rounded-lg shadow-below-light">
+					<h2 className="text-[35px] font-semibold drop-shadow-bigText">Detalles de la publicación</h2>
+					<p className="text-[16px] mt-[1rem] drop-shadow-smallText">
 						Información adicional sobre la huerta, es opcional si quiere sumar mas información sobre tu publicación
 					</p>
 
 					{/* AREA INPUT */}
 
-					<div className="relative w-[46%] mt-[45px] p-2 border border-black border-solid rounded-md">
+					<div className="relative w-[46%] mt-[45px] p-2 border border-black border-solid rounded-md shadow-below-light">
 						<label htmlFor="area" className="absolute top-[-12px] left-[15px] px-2 text-[16px] bg-white">
 							Superficie
 						</label>
@@ -444,7 +426,7 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 
 					{/* HARVEST TYPE INPUT */}
 
-					<div className="relative w-[46%] mt-[45px] p-2 border border-black border-solid rounded-md">
+					<div className="relative w-[46%] mt-[45px] p-2 border border-black border-solid rounded-md shadow-below-light">
 						<label htmlFor="harvestType" className="absolute top-[-12px] left-[15px] px-2 text-[16px] bg-white">
 							Tipo de cosecha
 						</label>
@@ -466,7 +448,7 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 
 					{/* IRRIGATION INPUT */}
 
-					<div className="relative w-[46%] mt-[45px] p-2 border border-black border-solid rounded-md">
+					<div className="relative w-[46%] mt-[45px] p-2 border border-black border-solid rounded-md shadow-below-light">
 						<label htmlFor="irrigationType" className="absolute top-[-12px] left-[15px] px-2 text-[16px] bg-white">
 							Tipo de riego
 						</label>
@@ -493,7 +475,7 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 
 					{/* PRODUCTION INPUT */}
 
-					<div className="relative w-[46%] mt-[45px] p-2 border border-black border-solid rounded-md">
+					<div className="relative w-[46%] mt-[45px] p-2 border border-black border-solid rounded-md shadow-below-light">
 						<label htmlFor="productionType" className="absolute top-[-12px] left-[15px] px-2 text-[16px] bg-white">
 							Tipo de producción
 						</label>
@@ -519,15 +501,15 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 
 				{/* FOURTH SECTION */}
 
-				<div className="w-full mt-[40px] pt-[24px] pb-[11px] px-[50px] border-grey300 border-[1px] border-solid rounded-md">
-					<h2 className="text-[32px] font-bold">Detalles de la publicación</h2>
-					<p className="text-[16px] mt-[1rem]">
+				<div className="w-full mt-[40px] pt-[24px] pb-[11px] px-[50px] border-grey300 border-[1px] border-solid rounded-lg shadow-below-light">
+					<h2 className="text-[32px] font-bold drop-shadow-bigText">Detalles de la publicación</h2>
+					<p className="text-[16px] mt-[1rem] drop-shadow-smallText">
 						Información adicional sobre la huerta, es opcional si quiere sumar mas información sobre tu publicación
 					</p>
 
 					{/* ADDRESS INPUT */}
 
-					<div className="relative w-[46%] mt-[45px] p-2 border border-black border-solid rounded-md">
+					<div className="relative w-[46%] mt-[45px] p-2 border border-black border-solid rounded-md shadow-below-light">
 						<label htmlFor="address" className="absolute top-[-12px] left-[15px] px-2 text-[16px] bg-white">
 							Ubicación
 						</label>
@@ -549,7 +531,7 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 
 					{/* LOCATION MAP */}
 
-					<div className="z-0 w-[97%] h-[265px] mt-[32px]">
+					<div className="z-0 w-[97%] h-[265px] mt-[32px] shadow-below-dark">
 						<GeoViewer
 							addressString={formik.values.address}
 							plantationName={formik.values.title}

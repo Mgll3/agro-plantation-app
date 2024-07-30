@@ -120,7 +120,7 @@ function Testimonials() {
 						className={`absolute left-[-100%] z-10 flex items-center justify-center gap-x-[3.15rem] w-[100%] h-full ${userRole !== "visitor" && "bg-terciary300"}`}
 						ref={prevTestimonialElement}
 					>
-						<div className="overflow-hidden w-[45%] h-full text-[19.78px] bg-white rounded-2xl">
+						<div className="overflow-hidden w-[48%] h-[560px] text-[19.78px] bg-white rounded-2xl">
 							<img
 								src={testimonialsData[prevTestimonialIndex1].imageUrl}
 								alt={testimonialsData[prevTestimonialIndex1].imageAlt}
@@ -132,7 +132,7 @@ function Testimonials() {
 							</div>
 						</div>
 
-						<div className="overflow-hidden w-[45%] h-full text-[19.78px] bg-white rounded-2xl">
+						<div className="overflow-hidden w-[48%] h-[560px] text-[19.78px] bg-white rounded-2xl">
 							<img
 								src={testimonialsData[prevTestimonialIndex2].imageUrl}
 								alt={testimonialsData[prevTestimonialIndex2].imageAlt}
@@ -149,7 +149,7 @@ function Testimonials() {
 					<div
 						className={`flex items-center justify-center gap-x-[3.15rem] w-[100%] h-full ${userRole !== "visitor" && "bg-terciary300"}`}
 					>
-						<div className="overflow-hidden w-[45%] h-full text-[19.78px] bg-white rounded-2xl">
+						<div className="overflow-hidden w-[48%] h-[560px] text-[19.78px] bg-white rounded-2xl">
 							<img
 								src={testimonialsData[selectedTestimonial].imageUrl}
 								alt={testimonialsData[selectedTestimonial].imageAlt}
@@ -160,7 +160,7 @@ function Testimonials() {
 								<p className="mt-[1.87rem] text-[1.6rem]">{testimonialsData[selectedTestimonial].mainText}</p>
 							</div>
 						</div>
-						<div className="overflow-hidden w-[45%] h-full text-[19.78px] bg-white rounded-2xl">
+						<div className="overflow-hidden w-[48%] h-[560px] text-[19.78px] bg-white rounded-2xl">
 							<img
 								src={testimonialsData[selectedTestimonial2].imageUrl}
 								alt={testimonialsData[selectedTestimonial2].imageAlt}
@@ -178,7 +178,7 @@ function Testimonials() {
 						className={`absolute right-[-100%] z-10 flex items-center justify-center gap-x-[3.15rem] w-[100%] h-full ${userRole !== "visitor" && "bg-terciary300"}`}
 						ref={nextTestimonialElement}
 					>
-						<div className="overflow-hidden w-[45%] h-full text-[19.78px] bg-white rounded-2xl">
+						<div className="overflow-hidden w-[48%] h-[560px] text-[19.78px] bg-white rounded-2xl">
 							<img
 								src={testimonialsData[nextTestimonialIndex1].imageUrl}
 								alt={testimonialsData[nextTestimonialIndex1].imageAlt}
@@ -190,7 +190,7 @@ function Testimonials() {
 							</div>
 						</div>
 
-						<div className="overflow-hidden w-[45%] h-full text-[19.78px] bg-white rounded-2xl">
+						<div className="overflow-hidden w-[48%] h-[560px] text-[19.78px] bg-white rounded-2xl">
 							<img
 								src={testimonialsData[nextTestimonialIndex2].imageUrl}
 								alt={testimonialsData[nextTestimonialIndex2].imageAlt}

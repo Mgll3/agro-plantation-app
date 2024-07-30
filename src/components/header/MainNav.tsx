@@ -4,7 +4,7 @@ import Button from "../button/Button";
 import { ButtonColorType } from "../button/buttonTypes";
 
 type MainNavProps = {
-	handleOpenMustLoginWarning?: () => void;
+	handleOpenMustLoginWarning: () => void;
 };
 
 function MainNav({ handleOpenMustLoginWarning }: MainNavProps) {
@@ -13,13 +13,23 @@ function MainNav({ handleOpenMustLoginWarning }: MainNavProps) {
 
 	const buttonColor: ButtonColorType = "yellow";
 	const buttonColor2: ButtonColorType = "green";
-	const buttonFontSize = "text-[1.978rem]";
-	const buttonWidth = "w-[212px]";
+	const buttonFontSize = "text-[1.978rem] tracking-wide custom-2000:text-[3rem]";
+	const buttonWidth = "w-[212px] custom-2000:w-[280px]";
 	const buttonPaddingY = "py-[0.767rem]";
+
+	//ROUTES FOR DIFFERENT USER ROLES ***START
+	let publicationsRoute = "/user/publications";
+	let forumRoute = "/user/forum";
+
+	if (userRole === "PRODUCER" || userRole === "PRODUCER_VIP") {
+		publicationsRoute = "/producer/publications";
+		forumRoute = "/producer/forum";
+	}
+	//ROUTES FOR DIFFERENT USER ROLES ***END
 
 	return (
 		<nav aria-label="Navegación principal" className="flex justify-center w-[100%]">
-			<ul className="flex gap-x-4">
+			<ul className="flex gap-x-4 custom-2000:gap-x-8">
 				<li className="">
 					<Button
 						buttonColor={location.pathname === "/" ? buttonColor2 : buttonColor}
@@ -31,15 +41,7 @@ function MainNav({ handleOpenMustLoginWarning }: MainNavProps) {
 				</li>
 
 				<li className="">
-					{!handleOpenMustLoginWarning ? (
-						<Button
-							buttonColor={location.pathname === "/publications" ? buttonColor2 : buttonColor}
-							buttonFontSize={buttonFontSize}
-							buttonWidth={buttonWidth}
-							buttonPaddingY={buttonPaddingY}
-							buttonFuncionality={{ linkText: "Publicaciones", linkUrl: "/publications" }}
-						></Button>
-					) : userRole === "visitor" ? (
+					{userRole === "visitor" ? (
 						<Button
 							buttonColor={location.pathname === "/publications" ? buttonColor2 : buttonColor}
 							buttonFontSize={buttonFontSize}
@@ -53,21 +55,13 @@ function MainNav({ handleOpenMustLoginWarning }: MainNavProps) {
 							buttonFontSize={buttonFontSize}
 							buttonWidth={buttonWidth}
 							buttonPaddingY={buttonPaddingY}
-							buttonFuncionality={{ linkText: "Publicaciones", linkUrl: "/publications" }}
+							buttonFuncionality={{ linkText: "Publicaciones", linkUrl: publicationsRoute }}
 						></Button>
 					)}
 				</li>
 
 				<li className="">
-					{!handleOpenMustLoginWarning ? (
-						<Button
-							buttonColor={location.pathname === "/forum" ? buttonColor2 : buttonColor}
-							buttonFontSize={buttonFontSize}
-							buttonWidth={buttonWidth}
-							buttonPaddingY={buttonPaddingY}
-							buttonFuncionality={{ linkText: "Foro", linkUrl: "/forums" }}
-						></Button>
-					) : userRole === "visitor" ? (
+					{userRole === "visitor" ? (
 						<Button
 							buttonColor={location.pathname === "/forum" ? buttonColor2 : buttonColor}
 							buttonFontSize={buttonFontSize}
@@ -81,7 +75,7 @@ function MainNav({ handleOpenMustLoginWarning }: MainNavProps) {
 							buttonFontSize={buttonFontSize}
 							buttonWidth={buttonWidth}
 							buttonPaddingY={buttonPaddingY}
-							buttonFuncionality={{ linkText: "Foro", linkUrl: "/forums" }}
+							buttonFuncionality={{ linkText: "Foro", linkUrl: forumRoute }}
 						></Button>
 					)}
 				</li>

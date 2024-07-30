@@ -1,16 +1,13 @@
 import { useRef } from "react";
 import { user } from "../../data/userData";
 import { Link } from "react-router-dom";
-import { userProfileStateType } from "./headerTypes";
-import Loading from "../modals/Loading";
 import { useUserRoleContext } from "../../context/UserRoleContext";
 
 type UserProfileProps = {
-	userProfileState: userProfileStateType,
-	handleLogoutClick: () => void
-}
+	handleLogoutClick: () => void;
+};
 
-function UserProfile({ userProfileState, handleLogoutClick }: UserProfileProps) {
+function UserProfile({ handleLogoutClick }: UserProfileProps) {
 	const { userRole } = useUserRoleContext();
 	const expandProfileIcon = useRef(null);
 	const userProfile = useRef(null);
@@ -30,51 +27,57 @@ function UserProfile({ userProfileState, handleLogoutClick }: UserProfileProps) 
 	return (
 		<div aria-label="Mi perfil" className="w-full">
 			<div className="flex justify-center items-center py-[10px] px-[12px] rounded-lg bg-brandingYellow">
-				{
-					userRole === "PRODUCER" || userRole === "PRODUCER_VIP"
-						? (
-							<img src="/icons/black-plant.png" alt=""
-								className="mr-[6px]"
-							/>
-						)
-						: null
-				}
+				{userRole === "PRODUCER" || userRole === "PRODUCER_VIP" ? (
+					<img src="/icons/black-plant.png" alt="" className="mr-[6px]" />
+				) : null}
 
-				<p role="button" onClick={showHideProfileOptions} className="mr-[18px] font-semibold font-sans text-[19.78px]">
+				<p
+					role="button"
+					onClick={showHideProfileOptions}
+					className="mr-[18px] font-semibold font-sans text-[19.78px] custom-2000:text-[3rem]"
+				>
 					{user.name}
 				</p>
 
-				<div className="flex items-center cursor-pointer duration-200" onClick={showHideProfileOptions} ref={expandProfileIcon}>
-					<img src="/icons/arrow-black.png" alt=""
-						className=""
-					/>
+				<div
+					className="flex items-center cursor-pointer duration-200"
+					onClick={showHideProfileOptions}
+					ref={expandProfileIcon}
+				>
+					<img src="/icons/arrow-black.png" alt="" className="" />
 				</div>
 			</div>
 
-			<nav aria-label="Navegación Secundaria" ref={userProfile}
+			<nav
+				aria-label="Navegación Secundaria"
+				ref={userProfile}
 				className="min-w-[15vw] opacity-0 duration-300 w-3/4 m-auto mt-4 bg-brandingLightYellow shadow-lg rounded-lg text-brandingDarkGreen z-10 overflow-hidden"
 			>
-				<p className="text-2xl text-center py-3">
-					Mi Perfil
-				</p>
+				<p className="text-[2.4rem] custom-2000:text-[3.3rem] text-center py-3">Mi Perfil</p>
 
 				<div className="border-b border-brandingLightBlue mx-2 mb-3"></div>
 
-				<div className="flex flex-col gap-y-0">
-					<Link to="" className="px-4 py-2 hover:font-bold hover:bg-brandingYellow duration-200">Opción 1</Link>
-					<Link to="" className="px-4 py-2 hover:font-bold hover:bg-brandingYellow duration-200">Opción 2</Link>
-					<Link to="" className="px-4 py-2 mb-2 hover:font-bold hover:bg-brandingYellow duration-200">Opción 3</Link>
+				<div className="flex flex-col gap-y-0 text-[1.8rem] custom-2000:text-[2.5rem]">
+					<Link to="" className="px-4 py-2 hover:font-bold hover:bg-brandingYellow duration-200">
+						Opción 1
+					</Link>
+					<Link to="" className="px-4 py-2 hover:font-bold hover:bg-brandingYellow duration-200">
+						Opción 2
+					</Link>
+					<Link to="" className="px-4 py-2 mb-2 hover:font-bold hover:bg-brandingYellow duration-200">
+						Opción 3
+					</Link>
 				</div>
 
 				<div className="border-b border-brandingLightBlue mx-2 mb-2"></div>
 
-				<p className="px-4 py-2 mb-2 cursor-pointer hover:font-bold hover:bg-brandingYellow duration-200" role="link" onClick={handleLogoutClick} >
+				<p
+					className="px-4 py-2 mb-2 text-[1.8rem] custom-2000:text-[2.5rem] cursor-pointer hover:font-bold hover:bg-brandingYellow duration-200"
+					role="link"
+					onClick={handleLogoutClick}
+				>
 					Cerrar Sesión
 				</p>
-
-				{
-					userProfileState === "loading" && <Loading />
-				}
 			</nav>
 		</div>
 	);

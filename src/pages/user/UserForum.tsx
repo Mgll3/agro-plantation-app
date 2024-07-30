@@ -1,17 +1,14 @@
 import Header from "../../components/header/Header";
 
-function AdminForum() {
+function UserForum() {
 	return (
 		<>
 			<div className="w-full">
 				<Header />
 			</div>
-
-			<nav>HERRAMIENTAS DE ADMINISTRADOR</nav>
-
-			<main>FORO</main>
+			ESTÁS EN EL FORO (VERSIÓN USUARIO REGISTRADO)
 		</>
 	);
 }
 
-export default AdminForum;
+export default UserForum;

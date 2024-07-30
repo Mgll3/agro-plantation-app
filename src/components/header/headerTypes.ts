@@ -1,1 +1,1 @@
-export type userProfileStateType = "init" | "loading" | "logout"
+export type loginStateType = "init" | "loading" | "logout";
