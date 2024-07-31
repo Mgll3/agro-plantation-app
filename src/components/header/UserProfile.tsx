@@ -11,6 +11,7 @@ function UserProfile({ handleLogoutClick }: UserProfileProps) {
 	const { userRole } = useUserRoleContext();
 	const expandProfileIcon = useRef(null);
 	const userProfile = useRef(null);
+	const userFirstName = user.name.split(" ")[0] + " " + user.name.split(" ")[1][0] + ".";
 
 	function showHideProfileOptions() {
 		if ((userProfile.current! as HTMLDivElement).classList.contains("opacity-0")) {
@@ -25,26 +26,30 @@ function UserProfile({ handleLogoutClick }: UserProfileProps) {
 	}
 
 	return (
-		<div aria-label="Mi perfil" className="w-full">
-			<div className="flex justify-center items-center py-[10px] custom-2000:px-[2rem] px-[12px] rounded-3xl bg-brandingYellow">
+		<div aria-label="Mi perfil" className="">
+			<div className="flex justify-center items-center w-fit py-[0px] custom-800:py-[6px] custom-1000:py-[10px] px-[9px] custom-1000:px-[12px] custom-2000:px-[2rem] rounded-lg custom-2000:rounded-3xl bg-brandingYellow">
 				{userRole === "PRODUCER" || userRole === "PRODUCER_VIP" ? (
 					<img
 						src="/icons/black-plant.png"
 						alt=""
-						className="custom-2000:w-[3.2rem] custom-3000:w-[3.8rem] mr-[0.8rem] custom-3000:mr-[1.2rem]"
+						className="hidden custom-800:block custom-2000:w-[3.2rem] custom-3000:w-[3.8rem] mr-[0.8rem] custom-3000:mr-[1.2rem]"
 					/>
 				) : null}
 
 				<p
 					role="button"
 					onClick={showHideProfileOptions}
-					className="mr-[1.8rem] custom-3000:mr-[2.5rem] font-semibold font-sans text-[19.78px] custom-2000:text-[3.2rem] custom-3000:text-[3.8rem]"
+					className="hidden custom-800:inline mr-[1.8rem] custom-3000:mr-[2.5rem] font-sans font-normal custom-1000:font-semibold text-[1.6rem] custom-1000:text-[19.78px] custom-2000:text-[3.2rem] custom-3000:text-[3.8rem]"
 				>
 					{user.name}
 				</p>
 
+				<p role="button" className="custom-800:hidden font-sans font-normal text-[1.2rem]">
+					{userFirstName}
+				</p>
+
 				<div
-					className="flex items-center cursor-pointer duration-200"
+					className="hidden custom-800:flex items-center cursor-pointer duration-200"
 					onClick={showHideProfileOptions}
 					ref={expandProfileIcon}
 				>

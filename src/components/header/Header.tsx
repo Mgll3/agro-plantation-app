@@ -106,7 +106,7 @@ function Header() {
 		<>
 			<header className="w-full">
 				<div
-					className={`flex justify-center items-center h-[98px] custom-800:h-[239px] custom-2000:h-[270px] custom-3000:h-[320px] ${headerBg} bg-cover bg-center bg-no-repeat relative`}
+					className={`relative flex justify-center items-center w-[100vw] h-[98px] custom-1000:h-[239px] custom-2000:h-[270px] custom-3000:h-[320px] ${headerBg} bg-cover bg-center bg-no-repeat`}
 				>
 					<Link to="/management" className="absolute bottom-[0px] left-0 w-[40px] pl-[1rem] text-[4rem]">
 						<DvrIcon fontSize="inherit" />
@@ -134,18 +134,21 @@ function Header() {
 						<img
 							src="/images/logos/Logo_original_Plant-In.png"
 							alt=""
-							className="w-[66px] custom-800:w-[90px] custom-950:w-[128px] custom-2000:w-[170px] custom-3000:w-[200px]"
+							className="w-[66px] custom-1000:w-[128px] custom-2000:w-[170px] custom-3000:w-[200px]"
 						/>
 					) : (
 						<img
 							src="/images/logos/Logo_fondo_verde.png"
 							alt=""
-							className="w-[66px] custom-800:w-[90px] custom-950:w-[128px] custom-2000:w-[170px] custom-3000:w-[200px]"
+							className="w-[66px] custom-1000:w-[128px] custom-2000:w-[170px] custom-3000:w-[200px]"
 						/>
 					)}
 
-					<div className="hidden absolute right-[43px] top-[40px] custom-800:block">
+					<div className="hidden absolute right-[30px] top-[10px] custom-1000:right-[43px] custom-1000:top-[28px] custom-800:block">
 						{userRole === "visitor" ? <SecondaryNav /> : <UserProfile handleLogoutClick={handleLogoutClick} />}
+					</div>
+					<div className="absolute right-[-60px] top-[5px] custom-800:right-[30px] custom-800:top-[10px] custom-1000:right-[43px] custom-1000:top-[28px] custom-800:hidden">
+						{userRole !== "visitor" && <UserProfile handleLogoutClick={handleLogoutClick} />}
 					</div>
 				</div>
 

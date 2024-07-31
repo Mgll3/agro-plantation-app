@@ -13,8 +13,9 @@ function MainNav({ handleOpenMustLoginWarning }: MainNavProps) {
 
 	const buttonColor: ButtonColorType = "yellow";
 	const buttonColor2: ButtonColorType = "green";
-	const buttonFontSize = "text-[1.978rem] tracking-wide custom-2000:text-[3.4rem] custom-3000:text-[4.2rem]";
-	const buttonWidth = "w-[212px] custom-2000:w-[350px] custom-3000:w-[500px]";
+	const buttonFontSize =
+		"tracking-wide text-[1.7rem] custom-1000:text-[1.978rem] custom-2000:text-[3.4rem] custom-3000:text-[4.2rem]";
+	const buttonWidth = "w-[180px] custom-1000:w-[212px] custom-2000:w-[350px] custom-3000:w-[500px]";
 	const buttonPaddingY = "py-[0.767rem]";
 
 	//ROUTES FOR DIFFERENT USER ROLES ***START

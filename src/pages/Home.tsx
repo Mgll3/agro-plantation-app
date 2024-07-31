@@ -110,7 +110,7 @@ export default function Home() {
 				<Header />
 			</div>
 
-			<main className="w-full py-8">
+			<main className="flex flex-col items-center w-full py-[66px]">
 				{userRole === "visitor" && (
 					<div className="px-[10vw] pt-[3vh]">
 						<VisitorBanner />
@@ -118,7 +118,7 @@ export default function Home() {
 				)}
 
 				{userRole === "USER" && (
-					<div className="px-[5.18vw] pt-[3vh]">
+					<div className="">
 						<UserBanner />
 					</div>
 				)}
