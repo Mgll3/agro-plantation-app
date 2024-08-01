@@ -75,6 +75,7 @@ export default {
 				"around-dark": "0px 0px 5px rgba(0, 0, 0, 0.5)"
 			},
 			screens: {
+				"custom-420": "420px",
 				"custom-500": "500px",
 				"custom-550": "550px",
 				"custom-600": "600px",
@@ -87,7 +88,12 @@ export default {
 				"custom-950": "950px",
 				"custom-1000": "1000px",
 				"custom-1200": "1200px",
+				"custom-1300": "1300px",
+				"custom-1400": "1400px",
+				"custom-1500": "1500px",
+				"custom-1900": "1900px",
 				"custom-2000": "2000px",
+				"custom-2500": "2500px",
 				"custom-3000": "3000px"
 			},
 			animation: {

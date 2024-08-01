@@ -1,7 +1,4 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-{
-	/*useState*/
-}
 import Header from "../components/header/Header";
 import { user } from "../data/userData";
 import { useUserRoleContext } from "../context/UserRoleContext";
@@ -22,6 +19,7 @@ import ProducerBanner from "../components/homeElements/ProducerBanner";
 import { getStoredRole } from "../utils/getStoredRole";
 import { updateUserData } from "../utils/updateUserData";
 import { resetUserData } from "../utils/resetUserData";
+import styles from "./Home.module.scss";
 
 type LoadingStateType = "loading" | "loaded" | "error";
 
@@ -110,15 +108,15 @@ export default function Home() {
 				<Header />
 			</div>
 
-			<main className="flex flex-col items-center w-full py-[66px]">
+			<main className={`${styles.main} flex flex-col items-center w-full`}>
 				{userRole === "visitor" && (
-					<div className="px-[10vw] pt-[3vh]">
+					<div className="px-[7px] custom-420:px-[17px] custom-800:px-[40px] custom-1200:px-[80px] custom-1400:px-[159px] custom-2000:px-[12vw]">
 						<VisitorBanner />
 					</div>
 				)}
 
 				{userRole === "USER" && (
-					<div className="">
+					<div className="px-[10vw] pt-[3vh]">
 						<UserBanner />
 					</div>
 				)}
