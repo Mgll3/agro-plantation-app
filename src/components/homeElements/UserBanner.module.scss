@@ -1,0 +1,47 @@
+.h2 {
+	font-size: clamp(20px, 4.5vw, 32px);
+}
+
+.mainParagraph {
+	font-size: clamp(16px, 3.7vw, 20px);
+}
+
+.h3 {
+	font-size: 20px;
+}
+
+.secondaryParagraph {
+	font-size: 16px;
+}
+
+.button {
+	font-size: clamp(13px, 3vw, 24px);
+}
+
+@media (min-width: 800px) {
+	.h3 {
+		font-size: 18px;
+	}
+}
+
+@media (min-width: 2000px) {
+	.h2 {
+		font-size: clamp(32px, 2.3vw, 70px);
+	}
+
+	.mainParagraph {
+		font-size: clamp(20px, 2.3vw, 40px);
+	}
+
+	.h3 {
+		font-size: clamp(20px, 1.5vw, 45px);
+	}
+
+	.secondaryParagraph {
+		font-size: clamp(25px, 4.5vw, 35px);
+	}
+
+	.button {
+		font-size: clamp(24px, 2vw, 35px);
+	}
+}

@@ -116,7 +116,7 @@ export default function Home() {
 				)}
 
 				{userRole === "USER" && (
-					<div className="px-[10vw] pt-[3vh]">
+					<div className="w-full px-[7px] custom-420:px-[17px] custom-800:px-[40px] custom-1200:px-[80px] custom-1400:px-[103px] custom-2000:px-[11vw]">
 						<UserBanner />
 					</div>
 				)}

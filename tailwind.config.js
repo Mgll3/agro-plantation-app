@@ -88,6 +88,7 @@ export default {
 				"custom-950": "950px",
 				"custom-1000": "1000px",
 				"custom-1200": "1200px",
+				"custom-1250": "1250px",
 				"custom-1300": "1300px",
 				"custom-1400": "1400px",
 				"custom-1500": "1500px",
