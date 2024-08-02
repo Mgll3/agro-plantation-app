@@ -110,19 +110,19 @@ export default function Home() {
 
 			<main className={`${styles.main} flex flex-col items-center w-full`}>
 				{userRole === "visitor" && (
-					<div className="px-[7px] custom-420:px-[17px] custom-800:px-[40px] custom-1200:px-[80px] custom-1400:px-[159px] custom-2000:px-[12vw]">
+					<div className="px-[7px] custom-420:px-[17px] custom-800:px-[40px] custom-1200:px-[80px] custom-1400:px-[159px] custom-1600:px-[7vw] custom-2000:px-[5vw]">
 						<VisitorBanner />
 					</div>
 				)}
 
 				{userRole === "USER" && (
-					<div className="w-full px-[7px] custom-420:px-[17px] custom-800:px-[40px] custom-1200:px-[80px] custom-1400:px-[103px] custom-2000:px-[11vw]">
+					<div className="w-full px-[7px] custom-420:px-[17px] custom-800:px-[40px] custom-1200:px-[80px] custom-1400:px-[103px] custom-1600:px-[17vw]">
 						<UserBanner />
 					</div>
 				)}
 
 				{userRole === "PRODUCER" || userRole === "PRODUCER_VIP" ? (
-					<div className="w-full px-[7px] custom-420:px-[17px] custom-800:px-[40px] custom-1200:px-[80px] custom-1400:px-[120px] custom-1900:px-[17vw]">
+					<div className="w-full px-[7px] custom-420:px-[17px] custom-800:px-[40px] custom-1200:px-[80px] custom-1400:px-[120px] custom-1600:px-[17vw]">
 						<ProducerBanner />
 					</div>
 				) : null}
@@ -147,7 +147,7 @@ export default function Home() {
 				)}
 
 				{userRole === "visitor" && (
-					<div className="py-12">
+					<div className="w-full pt-[2rem] pb-[3.2rem] custom-1000:py-[8.8rem]">
 						<CallToAction />
 					</div>
 				)}

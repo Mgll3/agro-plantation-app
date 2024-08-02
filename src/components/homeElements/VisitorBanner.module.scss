@@ -1,51 +1,51 @@
 .h2ClampText {
-	font-size: clamp(20px, 4.6vw, 51.78px);
+	font-size: clamp(2rem, 4.6vw, 5.178rem);
 }
 
 .h2LogoClampText {
-	font-size: clamp(35px, 8.12vw, 51.78px);
+	font-size: clamp(3.5rem, 8.12vw, 5.178rem);
 }
 
 .mainTextLogo {
-	font-size: clamp(12px, 2.77vw, 24px);
+	font-size: clamp(1.2rem, 2.77vw, 2.4rem);
 }
 
 .mainText {
-	font-size: clamp(10px, 2.32vw, 19.78px);
+	font-size: clamp(1rem, 2.32vw, 1.978rem);
 }
 
 @media (max-width: 420px) {
 	.h2LogoClampText {
-		font-size: 20px;
+		font-size: 2rem;
 	}
 }
 
 @media (min-width: 1900px) {
 	.h2ClampText,
 	.h2LogoClampText {
-		font-size: clamp(51.78px, 4.6vw, 80px);
+		font-size: clamp(5.178rem, 4.6vw, 8rem);
 	}
 
 	.mainTextLogo {
-		font-size: clamp(24px, 2.77vw, 30px);
+		font-size: clamp(2.4rem, 2.77vw, 3rem);
 	}
 
 	.mainText {
-		font-size: clamp(19.78px, 2.32vw, 27px);
+		font-size: clamp(1.978rem, 2.32vw, 2.7rem);
 	}
 }
 
 @media (min-width: 2500px) {
 	.h2ClampText,
 	.h2LogoClampText {
-		font-size: clamp(100px, 4.6vw, 140px);
+		font-size: clamp(10rem, 4.6vw, 14rem);
 	}
 
 	.mainTextLogo {
-		font-size: 44px;
+		font-size: 4.4rem;
 	}
 
 	.mainText {
-		font-size: clamp(33px, 1.3vw, 55px);
+		font-size: clamp(3.3rem, 1.3vw, 5.5rem);
 	}
 }

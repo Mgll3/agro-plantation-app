@@ -76,6 +76,7 @@ export default {
 			},
 			screens: {
 				"custom-390": "390px",
+				"custom-400": "400px",
 				"custom-420": "420px",
 				"custom-500": "500px",
 				"custom-550": "550px",
@@ -93,10 +94,12 @@ export default {
 				"custom-1300": "1300px",
 				"custom-1400": "1400px",
 				"custom-1500": "1500px",
+				"custom-1600": "1600px",
 				"custom-1900": "1900px",
 				"custom-2000": "2000px",
 				"custom-2500": "2500px",
-				"custom-3000": "3000px"
+				"custom-3000": "3000px",
+				"custom-3500": "3500px"
 			},
 			animation: {
 				sliderMainImgGoLeft: "moveLeftFromCenter 0.7s ease-in-out forwards",
