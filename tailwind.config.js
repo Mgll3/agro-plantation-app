@@ -75,6 +75,7 @@ export default {
 				"around-dark": "0px 0px 5px rgba(0, 0, 0, 0.5)"
 			},
 			screens: {
+				"custom-390": "390px",
 				"custom-420": "420px",
 				"custom-500": "500px",
 				"custom-550": "550px",

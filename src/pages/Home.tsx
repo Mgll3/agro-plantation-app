@@ -122,7 +122,7 @@ export default function Home() {
 				)}
 
 				{userRole === "PRODUCER" || userRole === "PRODUCER_VIP" ? (
-					<div className="px-[7.8vw] pt-[3vh]">
+					<div className="w-full px-[7px] custom-420:px-[17px] custom-800:px-[40px] custom-1200:px-[80px] custom-1400:px-[120px] custom-1900:px-[17vw]">
 						<ProducerBanner />
 					</div>
 				) : null}
