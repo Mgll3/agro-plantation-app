@@ -110,11 +110,11 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 	return (
 		<>
 			<div className="relative md:w-[100vw] md:flex-row font-loginFont flex flex-col-reverse h-[100%] text-[#eaefd4f2] bg-[#EAE3C0]">
-				<aside className="w-[100vw] h-[30vh] relative md:w-[30vw] md:h-[100vh]">
+				<aside className="w-[100vw] h-[30vh] relative md:w-[35vw] md:h-[100vh]">
 					<div className="md:bg-login bg-loginMobile w-[100%] h-[100%] bg-center bg-cover bg-no-repeat flex justify-center md:justify-end items-center font-sans">
 						{/* Capa sobre imagen Mobile */}
 						<div className="max-[767px]:absolute max-[767px]:inset-0 max-[767px]:bg-gradient-to-b max-[767px]:from-[#4b9742] max-[767px]:to-[#0b7115] max-[767px]:opacity-55 max-[767px]:z-0"></div>
-						<h2 className="bg-[#EAE3C0] text-black font-semibold text-2xl md:md:p-[1rem_4rem] rounded-2xl md:translate-x-[14px] md:translate-y-[30px] z-10 p-[.1rem_4rem]">
+						<h2 className="bg-[#EAE3C0] text-black font-semibold text-2xl md:md:p-[1rem_4rem] rounded-2xl md:translate-x-[14px] md:translate-y-[30px] z-10 p-[.1rem_4rem] min-[1921px]:text-4xl">
 							Registro
 						</h2>
 						<Link
@@ -127,8 +127,10 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 					</div>
 				</aside>
 
-				<div className="md:w-[70vw] max-[767px]:max-h-[70vh] md:overflow-x-hidden md:max-h-[100vh] max-[767px]:overflow-scroll ">
-					<div className="flex flex-col justify-center items-center gap-1 rounded-2xl text-2xl text-black font-sans md:mt-[2rem] mt-[2rem]">
+				<div className="max-[767px]:max-h-[70vh] max-[767px]:overflow-scroll 
+				md:max-h-[max-content] md:w-[65vw] md:overflow-x-hidden md:flex md:flex-col md:gap-y-[6rem] 
+				lg:gap-y-0 min-[1921px]:justify-center min-[1921px]:gap-y-[20rem]">
+					<div className="flex flex-col justify-center items-center gap-8 rounded-2xl text-2xl min-[1921px]:text-4xl text-black font-sans md:mt-[2rem] mt-[2rem]">
 						<h1 className="max-[767px]:hidden">Bienvenido a</h1>
 						<button type="button" onClick={() => navigate("/")}>
 							<img src="images/logos/LogoVerde.png" alt="logo" className=" w-[120px] h-[150px] mb-5" />
@@ -141,10 +143,11 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 						action=""
 						encType="multipart/form-data"
 						onSubmit={formik.handleSubmit}
-						className="md:w-[100%] w-[100vw] max-h-[100%] text-center justify-around items-center bg-[#EAE3C0] text-black md:p-[1rem_6rem_2rem] p-[1.5rem] font-sans"
+						className="md:w-[100%] w-[100vw] max-h-[100%] text-center justify-around items-center bg-[#EAE3C0] text-black p-[1.5rem] font-sans md:p-[1rem_3rem_2rem] min-[1921px]:p-[1rem_10rem_3rem]"
 					>
-						<div className="flex flex-col pb-2 w-full">
-							<div className="grid grid-cols-1 md:grid-cols-2 md:gap-4 gap-4 text-base md:width-[100%] w-full">
+						<div className="flex flex-col pb-2 w-full md:gap-10 md:mt-10">
+							<div className="w-full grid grid-cols-1 gap-4 text-xl min-[1921px]:text-3xl 
+								md:width-[100%] md:h-[max-content] md:grid-cols-2 md:gap-8 ">
 								<div className="relative">
 									<label htmlFor="userName">
 										<input
@@ -271,7 +274,7 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 							{formik.isValid && formik.dirty ? (
 								<button
 									type="submit"
-									className="w-[100%] text-base py-2.5 m-[3rem_auto] shadow-md rounded-lg font-sans text-brandingYellow cursor-pointer font-bold bg-brandingDarkGreen hover:bg-opacity-80 transition-all"
+									className="w-[100%] text-base py-2.5 m-[3rem_auto] shadow-md rounded-lg font-sans text-brandingYellow cursor-pointer font-bold bg-brandingDarkGreen hover:bg-opacity-80 transition-all min-[1921px]:text-3xl"
 								>
 									Regístrate
 								</button>
@@ -279,13 +282,13 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 								<button
 									type="submit"
 									disabled
-									className="w-[94%] text-base py-2.5 m-[2rem_auto] shadow-md rounded-lg font-sans text-black cursor-pointer font-bold bg-brandingYellow hover:bg-opacity-80 transition-all"
+									className="w-[94%] text-base py-2.5 m-[2rem_auto] shadow-md rounded-lg font-sans text-black cursor-pointer font-bold bg-brandingYellow hover:bg-opacity-80 transition-all min-[1921px]:text-3xl"
 								>
 									Regístrate
 								</button>
 							)}
 
-							<p className="text-[1.2rem]">
+							<p className="text-[1.2rem] min-[1921px]:text-2xl">
 								Si ya estás registrado, por favor{" "}
 								<span onClick={handleLoginClick} className="text-brandingLightGreen mt-2" role="button">
 									INICIA SESIÓN

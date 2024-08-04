@@ -34,10 +34,10 @@ export default function Login({ handleSubmit, handleRegisterClick, loginState, c
 		// TAILWINDCSS => MOBILE FIRST
 		<div className={classNames(
 			"w-[100%] font-sans items-center text-[#eaefd4f2] overflow-x-hidden",
-			"max-[767px]:flex max-[767px]:flex-col-reverse max-[767px]:overflow-hidden" ,
+			"max-[767px]:flex max-[767px]:flex-col-reverse max-[767px]:overflow-hidden",
 			"md:flex md:h-[100vh]  md:justify-center"
 		)}>
-			
+
 			<aside className="w-full h-[30vh] 
 			md:w-[35vw] md:h-[100vh]">
 				{/*First line, Mobile First */}
@@ -47,7 +47,7 @@ export default function Login({ handleSubmit, handleRegisterClick, loginState, c
 					"md:bg-login md:h-[100vh] md:bg-center md:flex md:justify-end md:items-center "
 				)}>
 					{/* Capa sobre imagen Mobile */}
-					<div className="max-[767px]:absolute max-[767px]:inset-0 max-[767px]:bg-gradient-to-b max-[767px]:from-[#4b9742] max-[767px]:to-[#0b7115] max-[767px]:opacity-55 max-[767px]:z-0"></div>
+					<div className="max-[767px]:absolute max-[767px]:inset-0 max-[767px]:bg-gradient-to-b max-[767px]:from-[#4b9742] max-[767px]:to-[#0b7115] max-[767px]:opacity-55 max-[767px]:z-0 md:hidden"></div>
 
 					<h1 className="bg-[#EAE3C0] text-black font-semibold rounded-2xl font-sans 
 					max-[767px]:p-[.1rem_4rem] max-[767px]:z-20 
