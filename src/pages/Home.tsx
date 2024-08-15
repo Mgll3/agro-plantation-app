@@ -110,9 +110,9 @@ export default function Home() {
 				<Header />
 			</div>
 
-			<main className="flex flex-col items-center w-full py-[66px]">
+			<main className="flex flex-col items-center w-full py-[20px]">
 				{userRole === "visitor" && (
-					<div className="px-[10vw] pt-[3vh]">
+					<div className="px-[4vw]">
 						<VisitorBanner />
 					</div>
 				)}
@@ -136,9 +136,9 @@ export default function Home() {
 				)}
 
 				{publicationsState === "error" && (
-					<div className="px-[10vw] py-20 font-sans text-center text-2xl">
+					<div className="px-[10vw] py-20 font-sans text-center text-3xl">
 						<p className="">No se han podido cargar las publicaciones más votadas.</p>
-						<p className="mt-2 text-xl">Por favor, compruebe su conexión y refresque la página.</p>
+						<p className="mt-2 text-2xl">Por favor, compruebe su conexión y refresque la página.</p>
 					</div>
 				)}
 
