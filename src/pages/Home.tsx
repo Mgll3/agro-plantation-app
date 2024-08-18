@@ -191,11 +191,11 @@ export default function Home() {
 					}
 				</div> */}
 
-				<div className={`px-[2rem] md:px-[8.4rem] pt-[2.4rem] pb-[4.4rem] ${userRole !== "visitor" && "bg-terciary300"}`}>
+				<div className={`px-[2rem] md:px-[8.4rem] pt-[2.4rem] md:pb-[4.4rem] ${userRole !== "visitor" && "bg-terciary300"}`}>
 					<Testimonials />
 				</div>
 
-				<div className="my-[8.8rem]">
+				<div className="m-[3rem_0_1rem] md:my-[8.8rem]">
 					<SocialNetworks />
 				</div>
 			</main>
