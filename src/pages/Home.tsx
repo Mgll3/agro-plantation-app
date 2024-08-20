@@ -189,11 +189,14 @@ export default function Home() {
 					}
 				</div> */}
 
-				<div className={`px-[18.4rem] pt-[2.4rem] pb-[4.4rem] ${userRole !== "visitor" && "bg-terciary300"}`}>
+				<div className={`px-[18.4rem] pt-[2.4rem] ${userRole !== "visitor" && "bg-terciary300"}`}>
 					<Testimonials />
 				</div>
 
-				<div className="my-[8.8rem]">
+				<div
+					className="w-full px-[10px] mt-[3.2rem]
+					custom-600:mt-[6rem] custom-1000:mt-[8rem] custom-1400:mt-[10.5rem] custom-1900:mt-[15rem] custom-2500:mt-[22rem] custom-3000:mt-[27rem]"
+				>
 					<SocialNetworks />
 				</div>
 			</main>
