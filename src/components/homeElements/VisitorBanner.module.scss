@@ -23,29 +23,29 @@
 @media (min-width: 1900px) {
 	.h2ClampText,
 	.h2LogoClampText {
-		font-size: clamp(5.178rem, 4.6vw, 8rem);
+		font-size: clamp(4.178rem, 3.5vw, 7rem);
 	}
 
 	.mainTextLogo {
-		font-size: clamp(2.4rem, 2.77vw, 3rem);
+		font-size: clamp(2rem, 1.5vw, 3rem);
 	}
 
 	.mainText {
-		font-size: clamp(1.978rem, 2.32vw, 2.7rem);
+		font-size: clamp(1.6rem, 1.2vw, 2.7rem);
 	}
 }
 
 @media (min-width: 2500px) {
 	.h2ClampText,
 	.h2LogoClampText {
-		font-size: clamp(10rem, 4.6vw, 14rem);
+		font-size: clamp(9rem, 4vw, 15rem);
 	}
 
 	.mainTextLogo {
-		font-size: 4.4rem;
+		font-size: 3.2rem;
 	}
 
 	.mainText {
-		font-size: clamp(3.3rem, 1.3vw, 5.5rem);
+		font-size: clamp(2.8rem, 1.1vw, 5rem);
 	}
 }
