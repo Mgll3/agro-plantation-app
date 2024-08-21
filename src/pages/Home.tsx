@@ -110,7 +110,7 @@ export default function Home() {
 
 			<main className={`${styles.main} flex flex-col items-center w-full`}>
 				{userRole === "visitor" && (
-					<div className="px-[7px] custom-420:px-[17px] custom-800:px-[40px] custom-1200:px-[80px] custom-1400:px-[159px] custom-1600:px-[7vw] custom-2000:px-[5vw]">
+					<div className="px-[7px] custom-420:px-[17px] custom-800:px-[40px] custom-1200:px-[80px] custom-1400:px-[159px] custom-1600:px-[12vw]">
 						<VisitorBanner />
 					</div>
 				)}
@@ -147,7 +147,7 @@ export default function Home() {
 				)}
 
 				{userRole === "visitor" && (
-					<div className="w-full pt-[2rem] pb-[3.2rem] custom-1000:py-[8.8rem]">
+					<div className="w-full pt-[2rem] custom-1000:pt-[4.8rem] custom-1400:pt-[8.8rem]">
 						<CallToAction />
 					</div>
 				)}
@@ -189,7 +189,11 @@ export default function Home() {
 					}
 				</div> */}
 
-				<div className={`px-[18.4rem] pt-[2.4rem] ${userRole !== "visitor" && "bg-terciary300"}`}>
+				<div
+					className={`px-[1.434rem] pt-[3.2rem] ${userRole !== "visitor" && "bg-terciary300"}
+					custom-900:px-[4rem] custom-1000:px-[8rem] custom-1200:px-[10rem] custom-1400:px-[13.156rem] custom-1900:px-[15vw]
+					custom-1400:pt-[8.8rem]`}
+				>
 					<Testimonials />
 				</div>
 

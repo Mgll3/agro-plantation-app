@@ -81,6 +81,7 @@ export default {
 				"custom-500": "500px",
 				"custom-550": "550px",
 				"custom-600": "600px",
+				"custom-640": "640px",
 				"custom-650": "650px",
 				"custom-700": "700px",
 				"custom-750": "750px",
