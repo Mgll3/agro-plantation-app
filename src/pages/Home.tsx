@@ -4,7 +4,7 @@ import { user } from "../data/userData";
 import { useUserRoleContext } from "../context/UserRoleContext";
 import { checkOpenSession } from "../interfaces/users/checkOpenSession";
 import { getBestPublications } from "../interfaces/getBestPublications";
-import PublicationsPreviewList from "../components/publicationsList/PublicationsPreviewList";
+import PublicationsPreviewList from "../components/homeElements/publicationsList/PublicationsPreviewList";
 import { UserDataType } from "./commonTypes";
 import { getStoredToken } from "../utils/getStoredToken";
 import Footer from "../components/footer/Footer";
@@ -12,7 +12,7 @@ import VisitorBanner from "../components/homeElements/VisitorBanner";
 import CallToAction from "../components/homeElements/CallToAction";
 import SocialNetworks from "../components/homeElements/SocialNetworks";
 import { getStoredName } from "../utils/getStoredName";
-import { PublicationType } from "../components/publicationsList/publicationsListTypes";
+import { PublicationType } from "../components/homeElements/publicationsList/publicationsListTypes";
 import Testimonials from "../components/homeElements/Testimonials";
 import UserBanner from "../components/homeElements/UserBanner";
 import ProducerBanner from "../components/homeElements/ProducerBanner";
@@ -20,6 +20,7 @@ import { getStoredRole } from "../utils/getStoredRole";
 import { updateUserData } from "../utils/updateUserData";
 import { resetUserData } from "../utils/resetUserData";
 import styles from "./Home.module.scss";
+import PublicationsPreviewMobile from "../components/homeElements/publicationsList/PublicationsPreviewMobile";
 
 type LoadingStateType = "loading" | "loaded" | "error";
 
@@ -29,15 +30,38 @@ type LoadingStateType = "loading" | "loaded" | "error";
 // 	mapChartData: MapChartDataType,
 // }
 
+type PublicationPreviewVersionType = "desktop" | "mobile";
+
 export default function Home() {
+	let screenWidth = window.innerWidth;
 	const { userRole, setUserRole } = useUserRoleContext();
 	const [publicationsState, setPublicationsState] = useState<LoadingStateType>("loading");
+	const [publicationPreviewVersion, setpublicationPreviewVersion] = useState<PublicationPreviewVersionType>(
+		decidePublicationPreviewVersion()
+	);
 	// const [dashboardState, setDashboardState] = useState<LoadingStateType>("loading");
 
 	const bestPublicationsArray = useRef<PublicationType[]>([]);
 	// const chartsData = useRef<ChartsDataType>();
 	const axiosController = useRef<AbortController>();
 	let resetUserCredentialsTimer: number = 0;
+
+	function updateScreenWidthValue() {
+		screenWidth = window.innerWidth;
+	}
+
+	//Comprueba el ancho de pantalla actual y decide si debe mostrarse la versión "desktop" (list) o "mobile" (slider) de PublicationPreview
+	function decidePublicationPreviewVersion(): PublicationPreviewVersionType {
+		if (screenWidth > 700) return "desktop";
+		else return "mobile";
+	}
+
+	window.addEventListener("resize", updateScreenWidthValue);
+
+	//Cuando el ancho de pantalla cambia, puede producirse un cambio de estado que muestre una versión u otra de PublicationPreview
+	useEffect(() => {
+		setpublicationPreviewVersion(decidePublicationPreviewVersion());
+	}, [screenWidth]);
 
 	// Se utiliza este Layout Effect para que se carguen por defecto el nombre y el rol del usuario del Local Storage, si existen.
 	// Esto evita que la página "parpadee" cuando esta información se obtiene del servidor.
@@ -140,9 +164,15 @@ export default function Home() {
 					</div>
 				)}
 
-				{publicationsState === "loaded" && (
+				{publicationsState === "loaded" && publicationPreviewVersion === "desktop" && (
 					<div className="w-full px-[12.15vw] py-[10vh]">
 						<PublicationsPreviewList bestPublicationsArray={bestPublicationsArray.current} />
+					</div>
+				)}
+
+				{publicationsState === "loaded" && publicationPreviewVersion === "mobile" && (
+					<div className="w-full py-[10vh]">
+						<PublicationsPreviewMobile bestPublicationsArray={bestPublicationsArray.current} />
 					</div>
 				)}
 
