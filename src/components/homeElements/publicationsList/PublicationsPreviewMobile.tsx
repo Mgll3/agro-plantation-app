@@ -102,47 +102,57 @@ function PublicationsPreviewMobile({ bestPublicationsArray }: PublicationsPrevie
 	let initialPosition: number;
 	let newPosition: number;
 
-	useEffect(() => {
-		pictureViewerDiv.current!.addEventListener("touchstart", (e) => {
-			// Comenzamos el desplazamiento
-			isDragging = true;
-			startX = e.touches[0].clientX;
-			initialPosition = pictureViewerDiv.current!.offsetLeft;
-		});
+	function touchstart(e: TouchEvent) {
+		// Comenzamos el desplazamiento
+		isDragging = true;
+		startX = e.touches[0].clientX;
+		initialPosition = pictureViewerDiv.current!.offsetLeft;
+	}
 
-		pictureViewerDiv.current!.addEventListener("touchmove", (e) => {
-			if (!isDragging) return;
+	function touchmove(e: TouchEvent) {
+		if (!isDragging) return;
 
-			// Calculamos la posición actual
-			currentX = e.touches[0].clientX;
-			const deltaX = currentX - startX;
+		// Calculamos la posición actual
+		currentX = e.touches[0].clientX;
+		const deltaX = currentX - startX;
 
-			// Movemos el pictureViewerDiv.current según la posición del dedo
-			newPosition = Math.round(initialPosition + deltaX);
+		// Movemos el pictureViewerDiv.current según la posición del dedo
+		newPosition = Math.round(initialPosition + deltaX);
 
-			if (newPosition < initialPosition) {
-				if (!isSliderAtEndRef.current) {
-					pictureViewerDiv.current!.style.left = `${newPosition}px`;
-					actualViewerDivPosition.current = newPosition;
-				}
-			} else if (newPosition > initialPosition && newPosition <= 5) {
+		if (newPosition < initialPosition) {
+			if (!isSliderAtEndRef.current) {
 				pictureViewerDiv.current!.style.left = `${newPosition}px`;
 				actualViewerDivPosition.current = newPosition;
-			} else {
-				pictureViewerDiv.current!.style.left = `${0}px`;
-				actualViewerDivPosition.current = 0;
 			}
-		});
+		} else if (newPosition > initialPosition && newPosition <= 5) {
+			pictureViewerDiv.current!.style.left = `${newPosition}px`;
+			actualViewerDivPosition.current = newPosition;
+		} else {
+			pictureViewerDiv.current!.style.left = `${0}px`;
+			actualViewerDivPosition.current = 0;
+		}
+	}
 
-		pictureViewerDiv.current!.addEventListener("touchend", () => {
-			// Terminamos el desplazamiento
-			checkIsSliderAtStart();
-			if (newPosition > initialPosition) {
-				isSliderAtEndRef.current = false;
-				setIsSliderAtEnd(false);
-			}
-			isDragging = false;
-		});
+	function touchend(e: TouchEvent) {
+		// Terminamos el desplazamiento
+		checkIsSliderAtStart();
+		if (newPosition > initialPosition) {
+			isSliderAtEndRef.current = false;
+			setIsSliderAtEnd(false);
+		}
+		isDragging = false;
+	}
+
+	useEffect(() => {
+		pictureViewerDiv.current!.addEventListener("touchstart", touchstart);
+		pictureViewerDiv.current!.addEventListener("touchmove", touchmove);
+		pictureViewerDiv.current!.addEventListener("touchend", touchend);
+
+		return () => {
+			pictureViewerDiv.current!.removeEventListener("touchstart", touchstart);
+			pictureViewerDiv.current!.removeEventListener("touchmove", touchmove);
+			pictureViewerDiv.current!.removeEventListener("touchend", touchend);
+		};
 	}, []);
 
 	//**** Fin de la sección de desplazamiento mediante el dedo del usuario

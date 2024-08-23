@@ -114,6 +114,7 @@ export default function Home() {
 
 		return () => {
 			axiosController.current?.abort();
+			window.removeEventListener("resize", decidePublicationPreviewVersion);
 		};
 	}, []);
 
