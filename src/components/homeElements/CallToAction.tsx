@@ -4,7 +4,7 @@ import { ButtonColorType } from "../button/buttonTypes";
 function CallToAction() {
 	const buttonColor: ButtonColorType = "yellow";
 	const buttonFontSize =
-		"text-[1rem] custom-400:text-[1.2rem] custom-600:text-[1.978rem] custom-1900:text-[3rem] custom-2500:text-[3.5rem] custom-3500:text-[5rem]";
+		"text-[1rem] custom-400:text-[1.2rem]  custom-600:text-[1.5rem] custom-700:text-[1.7rem] custom-900:text-[1.978rem] custom-1900:text-[3rem] custom-2500:text-[3.5rem] custom-3500:text-[5rem]";
 	const buttonWidth =
 		"w-[13rem] custom-400:w-[13.23rem] custom-600:w-[20.8rem] custom-1900:w-[30rem] custom-2500:w-[38rem] custom-3500:w-[55rem]";
 	const buttonPaddingY = "py-[0.8rem] custom-1400:py-[1.72rem] custom-1900:py-[2rem] custom-3500:py-[3rem]";
@@ -19,10 +19,10 @@ function CallToAction() {
 			custom-3500:py-[8rem] custom-3500:pl-[26rem] custom-3500:pr-[35rem]
 			"
 		>
-			<div className="mr-[2.1rem] custom-600:mr-[4rem] text-[1.2rem] custom-600:text-[2.4rem] custom-1900:text-[3.2rem] custom-2500:text-[4.5rem] custom-3500:text-[6rem]">
+			<div className="mr-[2.1rem] custom-600:mr-[4rem] text-[1.2rem] custom-600:text-[1.6rem] custom-750:text-[2.4rem] custom-1900:text-[3.2rem] custom-2500:text-[4.5rem] custom-3500:text-[6rem]">
 				<p>
 					Regístrate a{" "}
-					<span className="font-loginFont text-[1.4rem] custom-600:text-[2.4rem] custom-1900:text-[3.2rem] custom-2500:text-[4.5rem] custom-3500:text-[6rem]">
+					<span className="font-loginFont text-[1.4rem] custom-600:text-[2rem] custom-750:text-[2.4rem] custom-1900:text-[3.2rem] custom-2500:text-[4.5rem] custom-3500:text-[6rem]">
 						PLANT-IN{" "}
 					</span>
 					y compartí tu huerta, tus cosechas y mucho más.

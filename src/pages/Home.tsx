@@ -33,11 +33,11 @@ type LoadingStateType = "loading" | "loaded" | "error";
 type PublicationPreviewVersionType = "desktop" | "mobile";
 
 export default function Home() {
-	let screenWidth = window.innerWidth;
+	const publicationPreviewVersionInitValue = window.innerWidth > 500 ? "desktop" : "mobile";
 	const { userRole, setUserRole } = useUserRoleContext();
 	const [publicationsState, setPublicationsState] = useState<LoadingStateType>("loading");
-	const [publicationPreviewVersion, setpublicationPreviewVersion] = useState<PublicationPreviewVersionType>(
-		decidePublicationPreviewVersion()
+	const [publicationPreviewVersion, setPublicationPreviewVersion] = useState<PublicationPreviewVersionType>(
+		publicationPreviewVersionInitValue
 	);
 	// const [dashboardState, setDashboardState] = useState<LoadingStateType>("loading");
 
@@ -46,22 +46,13 @@ export default function Home() {
 	const axiosController = useRef<AbortController>();
 	let resetUserCredentialsTimer: number = 0;
 
-	function updateScreenWidthValue() {
-		screenWidth = window.innerWidth;
-	}
-
 	//Comprueba el ancho de pantalla actual y decide si debe mostrarse la versión "desktop" (list) o "mobile" (slider) de PublicationPreview
-	function decidePublicationPreviewVersion(): PublicationPreviewVersionType {
-		if (screenWidth > 700) return "desktop";
-		else return "mobile";
+	function decidePublicationPreviewVersion() {
+		if (window.innerWidth > 500) setPublicationPreviewVersion("desktop");
+		else setPublicationPreviewVersion("mobile");
 	}
 
-	window.addEventListener("resize", updateScreenWidthValue);
-
-	//Cuando el ancho de pantalla cambia, puede producirse un cambio de estado que muestre una versión u otra de PublicationPreview
-	useEffect(() => {
-		setpublicationPreviewVersion(decidePublicationPreviewVersion());
-	}, [screenWidth]);
+	window.addEventListener("resize", decidePublicationPreviewVersion);
 
 	// Se utiliza este Layout Effect para que se carguen por defecto el nombre y el rol del usuario del Local Storage, si existen.
 	// Esto evita que la página "parpadee" cuando esta información se obtiene del servidor.
@@ -165,13 +156,13 @@ export default function Home() {
 				)}
 
 				{publicationsState === "loaded" && publicationPreviewVersion === "desktop" && (
-					<div className="w-full px-[12.15vw] py-[10vh]">
+					<div className="w-full px-[10.15vw] py-[10vh]">
 						<PublicationsPreviewList bestPublicationsArray={bestPublicationsArray.current} />
 					</div>
 				)}
 
 				{publicationsState === "loaded" && publicationPreviewVersion === "mobile" && (
-					<div className="w-full py-[10vh]">
+					<div className="w-full py-[3.2rem]">
 						<PublicationsPreviewMobile bestPublicationsArray={bestPublicationsArray.current} />
 					</div>
 				)}
