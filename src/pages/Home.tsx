@@ -156,13 +156,13 @@ export default function Home() {
 					>
 						<p
 							className="text-[2rem]
-							custom-1900:text-[2.5rem]"
+							custom-1900:text-[2.5rem] custom-2500:text-[3.7rem]"
 						>
 							No se han podido cargar las publicaciones más votadas.
 						</p>
 						<p
 							className="mt-2 text-[1.6rem]
-							custom-1900:text-[2rem]"
+							custom-1900:text-[2rem] custom-2500:text-[3.2rem]"
 						>
 							Por favor, compruebe su conexión y refresque la página.
 						</p>

@@ -12,7 +12,7 @@ function PublicationsPreviewList({ bestPublicationsArray }: PublicationsPreviewL
 			<h2
 				className="mb-[1rem] text-center text-[1.6rem] font-sans font-semibold tracking-[0.015rem]
 				custom-500:text-[2rem] custom-700:text-[2.5rem] custom-900:text-[3rem] custom-1400:text-[3.5rem] custom-1900:text-[4rem] custom-2500:text-[5rem] custom-3500:text-[6.5rem] custom-1400:font-normal
-				custom-700:mb-[1.4rem] custom-900:mb-[1.8rem] custom-1200:mb-[2rem] custom-1400:mb-[2.4rem] custom-1900:mb-[3rem] custom-2500:mb-[4rem] custom-2500:mb-[5rem]"
+				custom-700:mb-[1.4rem] custom-900:mb-[1.8rem] custom-1200:mb-[2rem] custom-1400:mb-[2.4rem] custom-1900:mb-[3rem] custom-2500:mb-[4rem] custom-3500:mb-[5rem]"
 			>
 				Publicaciones
 			</h2>
