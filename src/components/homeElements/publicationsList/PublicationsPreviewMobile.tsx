@@ -50,12 +50,22 @@ function PublicationsPreviewMobile({ bestPublicationsArray }: PublicationsPrevie
 		if (actualViewerDivPosition.current < 0) {
 			actualViewerDivPosition.current += 1;
 			pictureViewerDiv.current!.style.left = `${actualViewerDivPosition.current}px`;
+
+			//Si botón "hacia la derecha" estaba deshabilitado por encontrarnos al final del slider, lo habilitamos.
+			isSliderAtEndRef.current = false;
+			setIsSliderAtEnd(false);
+
 			checkIsSliderAtStart();
 
 			moveSliderLeftInterval.current = window.setInterval(() => {
 				if (actualViewerDivPosition.current < 0) {
 					actualViewerDivPosition.current += 1;
 					pictureViewerDiv.current!.style.left = `${actualViewerDivPosition.current}px`;
+
+					//Si botón "hacia la derecha" estaba deshabilitado por encontrarnos al final del slider, lo habilitamos.
+					isSliderAtEndRef.current = false;
+					setIsSliderAtEnd(false);
+
 					checkIsSliderAtStart();
 				}
 			}, 5);
@@ -85,15 +95,6 @@ function PublicationsPreviewMobile({ bestPublicationsArray }: PublicationsPrevie
 	function stopMovingSliderRight() {
 		clearInterval(moveSliderRightInterval.current);
 	}
-
-	useEffect(() => {
-		sliderEndPositionObserver.observe(sliderLastDiv.current!);
-
-		return () => {
-			clearInterval(moveSliderLeftInterval.current);
-			clearInterval(moveSliderRightInterval.current);
-		};
-	}, []);
 
 	//**** Esta sección controla el desplazamiento mediante el dedo del usuario
 	let isDragging = false;
@@ -133,29 +134,35 @@ function PublicationsPreviewMobile({ bestPublicationsArray }: PublicationsPrevie
 		}
 	}
 
-	function touchend(e: TouchEvent) {
+	function touchend() {
 		// Terminamos el desplazamiento
 		checkIsSliderAtStart();
+
+		//Si botón "hacia la derecha" estaba deshabilitado por encontrarnos al final del slider, lo habilitamos.
 		if (newPosition > initialPosition) {
 			isSliderAtEndRef.current = false;
 			setIsSliderAtEnd(false);
 		}
 		isDragging = false;
 	}
+	//**** Fin de la sección de desplazamiento mediante el dedo del usuario
 
 	useEffect(() => {
+		sliderEndPositionObserver.observe(sliderLastDiv.current!);
+
 		pictureViewerDiv.current!.addEventListener("touchstart", touchstart);
 		pictureViewerDiv.current!.addEventListener("touchmove", touchmove);
 		pictureViewerDiv.current!.addEventListener("touchend", touchend);
 
 		return () => {
+			clearInterval(moveSliderLeftInterval.current);
+			clearInterval(moveSliderRightInterval.current);
+
 			pictureViewerDiv.current!.removeEventListener("touchstart", touchstart);
 			pictureViewerDiv.current!.removeEventListener("touchmove", touchmove);
 			pictureViewerDiv.current!.removeEventListener("touchend", touchend);
 		};
 	}, []);
-
-	//**** Fin de la sección de desplazamiento mediante el dedo del usuario
 
 	useEffect(() => {
 		clearInterval(moveSliderRightInterval.current);
@@ -181,7 +188,7 @@ function PublicationsPreviewMobile({ bestPublicationsArray }: PublicationsPrevie
 				</div>
 
 				<div className="overflow-hidden w-[88%]">
-					<div ref={pictureViewerDiv} className="relative left-[0%] flex gap-x-[1.6rem] w-[300%]">
+					<div ref={pictureViewerDiv} className="relative left-[0%] flex gap-x-[1.2rem] w-[300%]">
 						{bestPublicationsArray.map((element) => {
 							return (
 								<div key={generateUniqueId()}>
@@ -196,7 +203,7 @@ function PublicationsPreviewMobile({ bestPublicationsArray }: PublicationsPrevie
 							);
 						})}
 						{/* Este div vacío es utilizado para que el observer detecte que hemos llegado al final del slider */}
-						<div ref={sliderLastDiv} className="relative right-[1.6rem] custom-500:hidden w-[1px]"></div>
+						<div ref={sliderLastDiv} className="relative right-[1rem] custom-500:hidden w-[1px]"></div>
 					</div>
 				</div>
 

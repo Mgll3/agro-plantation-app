@@ -150,14 +150,31 @@ export default function Home() {
 				)}
 
 				{publicationsState === "error" && (
-					<div className="px-[10vw] py-20 font-sans text-center text-2xl">
-						<p className="">No se han podido cargar las publicaciones más votadas.</p>
-						<p className="mt-2 text-xl">Por favor, compruebe su conexión y refresque la página.</p>
+					<div
+						className="px-[10vw] py-20 font-sans text-center
+						custom-1400:py-[10vh]"
+					>
+						<p
+							className="text-[2rem]
+							custom-1900:text-[2.5rem]"
+						>
+							No se han podido cargar las publicaciones más votadas.
+						</p>
+						<p
+							className="mt-2 text-[1.6rem]
+							custom-1900:text-[2rem]"
+						>
+							Por favor, compruebe su conexión y refresque la página.
+						</p>
 					</div>
 				)}
 
 				{publicationsState === "loaded" && publicationPreviewVersion === "desktop" && (
-					<div className="w-full px-[10.15vw] py-[10vh]">
+					<div
+						className="w-full px-[3vw] py-[10vh]
+						custom-1400:px-[10.15vw] custom-2500:px-[15vw]
+						custom-1400:py-[9.8vh]"
+					>
 						<PublicationsPreviewList bestPublicationsArray={bestPublicationsArray.current} />
 					</div>
 				)}
