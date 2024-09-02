@@ -39,6 +39,7 @@ export default {
 				brightRed: "#FF0000",
 				redError: "#FD0303",
 				green300: "#AAC46A",
+				grey150: "#E7E6E6",
 				grey300: "#DAD9D9",
 				grey400: "#CECDCD",
 				grey500: "#C2C0C0",

@@ -127,25 +127,55 @@ function CreatePublication() {
 				<Header />
 			</div>
 
-			<main className="flex flex-col items-center w-full pt-[8.8rem] pb-[13.6rem] font-sans">
-				<div className="w-[1281px]">
+			<main
+				className="flex flex-col w-full pt-[2.4rem] pb-[3.2rem] font-sans
+				custom-500:pt-[3rem] custom-700:pt-[4rem] custom-900:pt-[6rem] custom-1200:pt-[7rem] custom-1400:pt-[8.8rem] custom-2500:pt-[12rem] custom-3500:pt-[15rem]
+				custom-500:pb-[5rem] custom-700:pb-[8rem] custom-900:pb-[10rem] custom-1400:pb-[13.6rem] custom-2500:pb-[15rem] custom-3500:pb-[20rem]"
+			>
+				<div
+					className="w-full ml-[1.6rem]
+					custom-600:ml-[3rem] custom-700:ml-[5rem] custom-1200:ml-[7rem] custom-1400:ml-[8.8rem] custom-1900:ml-[12rem] custom-2500:ml-[22rem] custom-3500:ml-[35rem]"
+				>
 					<button
 						type="button"
-						onClick={() => navigate("/")}
-						className="flex items-center py-[11px] pr-[16px] pl-[2.1rem] mb-[25px] text-[1.2rem] font-semibold border-2 border-brandingYellow rounded-xl text-brandingYellow"
+						onClick={() => navigate("/producer/publications")}
+						className="flex items-center py-[0.8rem] pr-[1.6rem] pl-[2.1rem] mb-[4.7rem] text-[1.2rem] font-semibold border-2 border-brandingYellow rounded-xl text-brandingYellow
+							custom-1200:py-[1rem] custom-1400:py-[1.1rem] custom-1900:py-[1.3rem] custom-2500:py-[1.4rem]
+							custom-1000:mb-[3.5rem] custom-1400:mb-[3.2rem] custom-1900:mb-[4rem]
+							custom-1900:text-[1.7rem] custom-2500:text-[2.5rem]"
 					>
-						<img alt="" src="/icons/Shape@2x.png" className="w-[5px] h-[8px] mr-[1.4rem]" />
-						Volver a Home
+						<img
+							alt=""
+							src="/icons/Shape@2x.png"
+							className="w-[7px] h-[10px] mr-[1rem]
+							custom-1900:w-[10px] custom-2500:w-[18px]
+							custom-1900:h-[14px] custom-2500:h-[24px]
+							custom-1400:mr-[1.4rem]"
+						/>
+						Volver a mis publicaciones
 					</button>
 
-					<h1 className="font-bold mb-[14px] text-[35px]">Crea tu publicación</h1>
+					<h1
+						className="font-bold text-[1.4rem]
+						custom-500:text-[2rem] custom-700:text-[2.5rem] custom-1000:text-[3rem] custom-1400:text-[3.5rem] custom-1900:text-[4.2rem] custom-2500:text-[5rem]"
+					>
+						Crea tu publicación
+					</h1>
 
-					<p className="w-[65%] mb-20 text-[16px]">
+					<p
+						className="w-[91.5%] mt-[2.4rem] text-[1.2rem]
+						custom-500:mt-[1.5rem] custom-1000:mt-[1rem] custom-1400:mt-[0.8rem] custom-1900:mt-[1rem]
+						custom-500:text-[1.4rem] custom-1000:text-[1.4rem] custom-1900:text-[2rem] custom-2500:text-[3rem]"
+					>
 						Agregá todos los detalles de tu publicación para que los lectores sepan qué esperar
 					</p>
 				</div>
 
-				<div className="flex w-[1063px] py-[20px]">
+				<div
+					className="flex w-full px-[0.6rem] mt-[3.2rem]
+					custom-1000:mt-[4rem] custom-1400:mt-[5rem] custom-1900:mt-[6rem]
+					custom-400:px-[1.6rem] custom-600:px-[3rem] custom-700:px-[5rem] custom-1200:px-[14rem] custom-1400:px-[18.8rem] custom-1900:px-[22rem] custom-2500:px-[35rem] custom-3500:px-[50rem]"
+				>
 					<CreatePublicationForm handleSubmit={handleSubmit} />
 				</div>
 			</main>
