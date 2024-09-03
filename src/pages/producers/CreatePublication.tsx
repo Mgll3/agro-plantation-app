@@ -186,7 +186,7 @@ function CreatePublication() {
 			{createPublicationState === "sent" && (
 				<GenericModal
 					buttonText="Aceptar"
-					mainText="Se guardó con éxito tu publicación"
+					mainText="Se envió con éxito tu publicación"
 					secondaryText='Ahora puedes hacerla pública desde el apartado "Mis Publicaciones".'
 					handleClick={acceptFormSentModal}
 				/>
