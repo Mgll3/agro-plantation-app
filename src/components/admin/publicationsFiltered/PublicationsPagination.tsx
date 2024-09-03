@@ -27,7 +27,9 @@ function PublicationsPagination({ actualPage, pagesLeft, pagesForBlock }: Public
 				paginationElements.push(
 					<p
 						key={i}
-						className="flex justify-center items-center w-[28px] h-[28px] text-brandingLightYellow bg-brandingDarkGreen rounded-full"
+						className="flex justify-center items-center w-[2rem] h-[2rem] text-brandingLightYellow bg-brandingDarkGreen rounded-full
+						custom-700:w-[2.4rem] custom-1400:w-[2.8rem] custom-1900:w-[3.4rem] custom-2500:w-[4.7rem]
+						custom-700:h-[2.4rem] custom-1400:h-[2.8rem] custom-1900:h-[3.4rem] custom-2500:h-[4.7rem]"
 					>
 						{i}
 					</p>
@@ -45,17 +47,37 @@ function PublicationsPagination({ actualPage, pagesLeft, pagesForBlock }: Public
 	}
 
 	return (
-		<div className="relative flex justify-center items-center w-[436px] h-[55px] font-lato text-brandingDarkGreen text-[12px] bg-brandingLightYellow shadow-lg rounded-2xl border-[1px] border-brandingDarkGreen border-solid">
+		<div
+			className="relative flex justify-center items-center w-[50vw] h-[2.8rem] font-lato text-brandingDarkGreen text-[1.2rem] bg-brandingLightYellow shadow-lg rounded-2xl border-[1px] border-brandingDarkGreen border-solid
+			custom-390:w-[40vw] custom-900:w-[33vw] custom-1400:w-[43.6rem] custom-1900:w-[25vw]
+			custom-500:h-[3.5rem] custom-700:h-[4.5rem] custom-1400:h-[5.5rem] custom-2500:h-[7rem]
+			custom-1400:text-[1.2rem] custom-1900:text-[1.8rem] custom-2500:text-[2.5rem]"
+		>
 			{isTherePrevBlock && (
-				<Link to={`/admin/publications/${minPage - 1}`} className="absolute left-[10px] top-[-4px] text-[36px]">
+				<Link
+					to={`/admin/publications/${minPage - 1}`}
+					className="mb-[0.7rem] text-[2.7rem]
+					custom-1400:mb-[1rem] custom-1900:mb-[1.5rem]
+					custom-600:text-[3rem] custom-1400:text-[3.6rem] custom-1900:text-[6rem] custom-2500:text-[8rem]"
+				>
 					<KeyboardArrowLeftRoundedIcon fontSize="inherit" color="inherit" />
 				</Link>
 			)}
 
-			<div className="flex justify-center items-center gap-x-[1.5rem]">{renderPagination()}</div>
+			<div
+				className="flex justify-center items-center w-[80%] gap-x-[1.5rem]
+				custom-1900:gap-x-[3rem]"
+			>
+				{renderPagination()}
+			</div>
 
 			{isThereNextBlock && (
-				<Link to={`/admin/publications/${maxPage + 1}`} className="absolute right-[10px] top-[-4px] text-[36px]">
+				<Link
+					to={`/admin/publications/${maxPage + 1}`}
+					className="mb-[0.7rem] text-[2.7rem]
+					custom-1400:mb-[1rem] custom-1900:mb-[1.5rem]
+					custom-600:text-[3rem] custom-1400:text-[3.6rem] custom-1900:text-[6rem] custom-2500:text-[8rem]"
+				>
 					<KeyboardArrowRightRoundedIcon fontSize="inherit" color="inherit" />
 				</Link>
 			)}
