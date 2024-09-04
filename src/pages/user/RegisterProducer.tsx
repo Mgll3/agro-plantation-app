@@ -66,7 +66,7 @@ function RegisterProducer() {
 	}
 
 	return (
-		<div className="flex flex-col h-[100vh]">
+		<div className="flex flex-col min-h-[100vh]">
 			<div className="w-full">
 				<Header />
 			</div>

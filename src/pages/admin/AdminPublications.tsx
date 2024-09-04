@@ -21,6 +21,7 @@ import { getPublicationsByPending } from "../../interfaces/publicationsFilters/g
 import { getPublicationsByAmmount } from "../../interfaces/publicationsFilters/getPublicationsByAmmount";
 import useLoadingState from "../../hooks/useLoadingState";
 import PublicationsPagination from "../../components/admin/publicationsFiltered/PublicationsPagination";
+import PublicationsFiltersMobile from "../../components/admin/publicationsFiltered/PublicationsFiltersMobile";
 
 function AdminPublications() {
 	const location = useLocation();
@@ -277,21 +278,31 @@ function AdminPublications() {
 	}, [filter, id]);
 
 	return (
-		<>
+		<div className="flex flex-col min-h-[100vh]">
 			<div className="w-full">
 				<Header />
 			</div>
 
-			<main className="flex flex-col items-center w-[100%] min-h-[40vh] mt-[10vh] mx-auto">
-				<PublicationsFilters filter={filter} setFilter={changeFilterWithNavigation} />
+			<main
+				className="flex flex-col items-center flex-grow w-[100%] min-h-[40vh] mt-[0.5rem] mx-auto
+				custom-1000:mt-[10vh]"
+			>
+				{window.innerWidth >= 1024 ? (
+					<PublicationsFilters filter={filter} setFilter={changeFilterWithNavigation} />
+				) : (
+					<PublicationsFiltersMobile filter={filter} setFilter={changeFilterWithNavigation} />
+				)}
 
 				{loadingState === "loading" && (
 					<>
-						<div className="min-h-[50vh] mt-24 text-brandingLightGreen">
+						<div className="mt-24 text-brandingLightGreen">
 							<LoadingSmall />
 						</div>
 
-						<div className="py-[2rem]">
+						<div
+							className="mt-auto mb-[2.4rem]
+							custom-600:mb-[3rem] custom-1400:mb-[8.8rem] custom-2500:mb-[12rem]"
+						>
 							<PublicationsPagination actualPage={Number(id)} pagesLeft={pagesLeft.current} pagesForBlock={3} />
 						</div>
 					</>
@@ -300,7 +311,7 @@ function AdminPublications() {
 				{loadingState === "loaded" && (
 					<>
 						<div
-							className="mb-[3.5rem] flex justify-center w-[100%]
+							className="flex justify-center w-[100%] mb-[3.5rem]
 							custom-900:w-[90%] custom-1200:w-[80%] custom-2500:w-[75%] custom-3500:w-[62.7%]
 							custom-500:mb-[5rem] custom-1400:mb-[8.8rem] custom-2500:mb-[12rem]"
 						>
@@ -308,7 +319,7 @@ function AdminPublications() {
 						</div>
 
 						<div
-							className="mb-[2.4rem]
+							className="mt-auto mb-[2.4rem]
 							custom-600:mb-[3rem] custom-1400:mb-[8.8rem] custom-2500:mb-[12rem]"
 						>
 							<PublicationsPagination actualPage={Number(id)} pagesLeft={pagesLeft.current} pagesForBlock={3} />
@@ -321,10 +332,10 @@ function AdminPublications() {
 				)}
 			</main>
 
-			<div className="">
+			<div className="mt-auto">
 				<Footer />
 			</div>
-		</>
+		</div>
 	);
 }
 
