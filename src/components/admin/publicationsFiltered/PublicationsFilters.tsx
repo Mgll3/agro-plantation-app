@@ -10,7 +10,11 @@ function PublicationsFilters({ filter, setFilter }: PublicationsFiltersProps) {
 	const dotStyle = "w-[6px] h-[6px] bg-brandingLightGreen rounded-full";
 
 	return (
-		<ul className="flex gap-6 items-center font-montserrat font-semibold text-[16px]">
+		<ul
+			className="flex gap-6 items-center font-montserrat font-semibold text-[1.6rem]
+			custom-1900:gap-8
+			custom-1900:text-[2.2rem] custom-2500:text-[2.8rem] custom-3500:text-[3rem]"
+		>
 			<li>
 				<div className="relative flex-col">
 					<button className="text-darkText" type="button" onClick={() => setFilter("random")}>

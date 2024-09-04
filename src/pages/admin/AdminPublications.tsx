@@ -282,7 +282,7 @@ function AdminPublications() {
 				<Header />
 			</div>
 
-			<main className="flex flex-col items-center w-[80%] min-h-[40vh] mt-[10vh] mx-auto">
+			<main className="flex flex-col items-center w-[100%] min-h-[40vh] mt-[10vh] mx-auto">
 				<PublicationsFilters filter={filter} setFilter={changeFilterWithNavigation} />
 
 				{loadingState === "loading" && (
@@ -299,11 +299,18 @@ function AdminPublications() {
 
 				{loadingState === "loaded" && (
 					<>
-						<div className="mb-[5vh] flex justify-center w-[100%]">
+						<div
+							className="mb-[3.5rem] flex justify-center w-[100%]
+							custom-900:w-[90%] custom-1200:w-[80%] custom-2500:w-[75%] custom-3500:w-[62.7%]
+							custom-500:mb-[5rem] custom-1400:mb-[8.8rem] custom-2500:mb-[12rem]"
+						>
 							<Viewer itemsList={publicationsFiltered} filter={filter} />
 						</div>
 
-						<div className="py-[2rem]">
+						<div
+							className="mb-[2.4rem]
+							custom-600:mb-[3rem] custom-1400:mb-[8.8rem] custom-2500:mb-[12rem]"
+						>
 							<PublicationsPagination actualPage={Number(id)} pagesLeft={pagesLeft.current} pagesForBlock={3} />
 						</div>
 					</>
@@ -314,7 +321,7 @@ function AdminPublications() {
 				)}
 			</main>
 
-			<div className="mt-8">
+			<div className="">
 				<Footer />
 			</div>
 		</>

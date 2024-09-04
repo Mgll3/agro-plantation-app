@@ -57,7 +57,7 @@ function PublicationsPagination({ actualPage, pagesLeft, pagesForBlock }: Public
 				<Link
 					to={`/admin/publications/${minPage - 1}`}
 					className="mb-[0.7rem] text-[2.7rem]
-					custom-1400:mb-[1rem] custom-1900:mb-[1.5rem]
+					custom-1400:mb-[1rem] custom-1900:mb-[1.5rem] custom-2500:mb-[1.9rem]
 					custom-600:text-[3rem] custom-1400:text-[3.6rem] custom-1900:text-[6rem] custom-2500:text-[8rem]"
 				>
 					<KeyboardArrowLeftRoundedIcon fontSize="inherit" color="inherit" />
@@ -75,7 +75,7 @@ function PublicationsPagination({ actualPage, pagesLeft, pagesForBlock }: Public
 				<Link
 					to={`/admin/publications/${maxPage + 1}`}
 					className="mb-[0.7rem] text-[2.7rem]
-					custom-1400:mb-[1rem] custom-1900:mb-[1.5rem]
+					custom-1400:mb-[1rem] custom-1900:mb-[1.5rem] custom-2500:mb-[1.9rem]
 					custom-600:text-[3rem] custom-1400:text-[3.6rem] custom-1900:text-[6rem] custom-2500:text-[8rem]"
 				>
 					<KeyboardArrowRightRoundedIcon fontSize="inherit" color="inherit" />
