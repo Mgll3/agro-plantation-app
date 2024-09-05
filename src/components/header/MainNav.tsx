@@ -30,7 +30,10 @@ function MainNav({ handleOpenMustLoginWarning }: MainNavProps) {
 
 	return (
 		<nav aria-label="Navegación principal" className="flex justify-center w-[100%]">
-			<ul className="flex gap-x-4 custom-2000:gap-x-8">
+			<ul
+				className="flex gap-x-[1rem]
+				custom-2500:gap-x-[2rem] custom-3500:gap-x-[3rem]"
+			>
 				<li className="">
 					<Button
 						buttonColor={location.pathname === "/" ? buttonColor2 : buttonColor}

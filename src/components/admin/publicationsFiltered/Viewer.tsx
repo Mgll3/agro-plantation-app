@@ -15,10 +15,10 @@ function Viewer({ itemsList, filter }: ViewerPropsType) {
 						<div key={index} className="w-[100%]">
 							<h2
 								className="mt-[2rem] mb-[1.6rem] ml-[0.7rem] text-sans font-semibold text-[1.6rem]
-								custom-500:mt-[4rem] custom-700:mt-[8.8rem] custom-2500:mt-[10rem]
+								custom-500:mt-[4rem] custom-700:mt-[8.8rem] custom-2500:mt-[10rem] custom-3500:mt-[15rem]
 								custom-500:mb-[2rem] custom-700:mb-[2.2rem] custom-1900:mb-[3rem] custom-2500:mb-[4rem]
 								custom-500:ml-[2rem] custom-700:ml-[3rem] custom-1200:ml-[0rem]
-								custom-500:text-[2rem] custom-700:text-[2.4rem] custom-1900:text-[3rem] custom-2500:text-[4rem]"
+								custom-500:text-[2rem] custom-700:text-[2.4rem] custom-1900:text-[3rem] custom-2500:text-[4rem] custom-3500:text-[5rem]"
 							>
 								{block.title}
 							</h2>

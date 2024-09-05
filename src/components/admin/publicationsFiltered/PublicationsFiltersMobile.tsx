@@ -55,13 +55,10 @@ function PublicationsFiltersMobile({ filter, setFilter }: PublicationsFiltersMob
 	}
 
 	return (
-		<div
-			className="w-full
-			custom-500:mt-[1rem] custom-600:mt-[1.5rem]"
-		>
+		<div className="w-full">
 			<ul
 				className="flex gap-[0.5rem] justify-center font-sans font-normal text-[0.6rem] text-grey500
-				custom-390:gap-[0.5rem] custom-420:gap-[1rem] custom-640:gap-[2rem] custom-900:gap-[2.5rem]
+				custom-390:gap-[0.5rem] custom-420:gap-[1rem] custom-600:gap-[1.5rem] custom-640:gap-[2rem] custom-900:gap-[2.5rem]
 				custom-390:text-[0.7rem] custom-420:text-[0.8rem] custom-500:text-[1rem] custom-600:text-[1.1rem] custom-700:text-[1.4rem] custom-900:text-[1.6rem]"
 			>
 				{spanishFiltersArray.map((element, index) => {
@@ -83,7 +80,7 @@ function PublicationsFiltersMobile({ filter, setFilter }: PublicationsFiltersMob
 
 			<div
 				className="flex items-center justify-between my-[1.1rem] px-[1.6rem]
-				custom-500:mt-[2rem] custom-600:mt-[3rem]"
+				custom-500:mt-[2rem] custom-600:mt-[3rem] custom-700:mt-[4rem]"
 			>
 				<button onClick={setPrevFilter}>
 					<svg
@@ -101,7 +98,7 @@ function PublicationsFiltersMobile({ filter, setFilter }: PublicationsFiltersMob
 
 				<p
 					className="text-[1.4rem] font-semibold
-						custom-400:text-[1.6rem]] custom-500:text-[2rem] custom-900:text-[2.5rem]"
+						custom-400:text-[1.6rem]] custom-500:text-[2rem] custom-700:text-[2.5rem]"
 				>
 					{actualFilter}
 				</p>

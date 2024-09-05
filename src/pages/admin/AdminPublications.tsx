@@ -285,7 +285,7 @@ function AdminPublications() {
 
 			<main
 				className="flex flex-col items-center flex-grow w-[100%] min-h-[40vh] mt-[0.5rem] mx-auto
-				custom-1000:mt-[10vh]"
+				custom-500:mt-[2rem] custom-700:mt-[2.5rem] custom-900:mt-[3.5rem] custom-1400:mt-[8.8rem]"
 			>
 				{window.innerWidth >= 1024 ? (
 					<PublicationsFilters filter={filter} setFilter={changeFilterWithNavigation} />
@@ -312,7 +312,7 @@ function AdminPublications() {
 					<>
 						<div
 							className="flex justify-center w-[100%] mb-[3.5rem]
-							custom-900:w-[90%] custom-1200:w-[80%] custom-2500:w-[75%] custom-3500:w-[62.7%]
+							custom-900:w-[90%] custom-1200:w-[80%] custom-2500:w-[75%] custom-3500:w-[86%]
 							custom-500:mb-[5rem] custom-1400:mb-[8.8rem] custom-2500:mb-[12rem]"
 						>
 							<Viewer itemsList={publicationsFiltered} filter={filter} />
