@@ -39,9 +39,15 @@ function PublicationImagesViewer({ mainImg, secondaryImages, handleImageOnClick 
 	const pointerStyle = leftPicturesNumber > 0 ? "cursor-pointer" : "";
 
 	return (
-		<div className="flex w-[100%] gap-[1rem] select-none">
+		<div
+			className="flex flex-col w-[100%] gap-[1.2rem] select-none
+			custom-900:flex-row
+			custom-900:gap-[1.3rem]
+			custom-900:w-[100%]"
+		>
 			<div
-				className={`flex justify-center items-center w-[50%] h-[50vh] overflow-hidden text-[100px] rounded-xl ${mainPictureBg} bg-cover border-[2px] border-brandingDarkGreen border-solid`}
+				className={`flex justify-center items-center w-[100%] aspect-[535/420] overflow-hidden text-[100px] rounded-xl ${mainPictureBg} bg-cover border-[2px] border-brandingDarkGreen border-solid
+					custom-900:w-[50%]`}
 			>
 				{mainPicture ? (
 					<img
@@ -55,9 +61,14 @@ function PublicationImagesViewer({ mainImg, secondaryImages, handleImageOnClick 
 				)}
 			</div>
 
-			<div className="flex flex-wrap w-[50%] h-[50vh] gap-[1rem] text-[100px]">
+			<div
+				className="flex flex-wrap justify-between w-[100%] aspect-[535/420] gap-x-[1.6rem] gap-y-[1.2rem] text-[100px]
+				custom-900:gap-[1.4rem]
+				custom-900:w-[50%]"
+			>
 				<div
-					className={`flex justify-center items-center w-[48.5%] h-[48%] overflow-hidden rounded-xl ${secondaryPicture1Bg}`}
+					className={`flex justify-center items-center w-[47.4%] aspect-[253/202] overflow-hidden rounded-xl bg-cover bg-no-repeat ${secondaryPicture1Bg}
+						custom-390:w-[47.7%] custom-400:w-[47.9%] custom-500:w-[48.2%] custom-600:w-[48.5%] custom-700:w-[48.7%] custom-900:w-[48.1%] custom-1200:w-[48.6%] custom-1900:w-[49%] custom-2500:w-[49.2%]`}
 				>
 					{secondaryPicture1 ? (
 						<img
@@ -71,7 +82,8 @@ function PublicationImagesViewer({ mainImg, secondaryImages, handleImageOnClick 
 					)}
 				</div>
 				<div
-					className={`flex justify-center items-center w-[48.5%] h-[48%] overflow-hidden rounded-xl ${secondaryPicture2Bg}`}
+					className={`flex justify-center items-center w-[47.4%] aspect-[253/202] overflow-hidden rounded-xl bg-cover bg-no-repeat ${secondaryPicture2Bg}
+						custom-390:w-[47.7%] custom-400:w-[47.9%] custom-500:w-[48.2%] custom-600:w-[48.5%] custom-700:w-[48.7%] custom-900:w-[48.1%] custom-1200:w-[48.6%] custom-1900:w-[49%] custom-2500:w-[49.2%]`}
 				>
 					{secondaryPicture2 ? (
 						<img
@@ -85,7 +97,8 @@ function PublicationImagesViewer({ mainImg, secondaryImages, handleImageOnClick 
 					)}
 				</div>
 				<div
-					className={`flex justify-center items-center w-[48.5%] h-[48%] overflow-hidden rounded-xl ${secondaryPicture3Bg}`}
+					className={`flex justify-center items-center w-[47.4%] aspect-[253/202] overflow-hidden rounded-xl bg-cover bg-no-repeat ${secondaryPicture3Bg}
+						custom-390:w-[47.7%] custom-400:w-[47.9%] custom-500:w-[48.2%] custom-600:w-[48.5%] custom-700:w-[48.7%] custom-900:w-[48.1%] custom-1200:w-[48.6%] custom-1900:w-[49%] custom-2500:w-[49.2%]`}
 				>
 					{secondaryPicture3 ? (
 						<img
@@ -101,25 +114,44 @@ function PublicationImagesViewer({ mainImg, secondaryImages, handleImageOnClick 
 
 				<div
 					onClick={handleLeftPicturesOnClick}
-					className={`flex justify-center items-center gap-[0.6rem] w-[48.5%] h-[48%] overflow-hidden text-darkText rounded-xl bg-brandingLightGreen ${pointerStyle}`}
+					className={`flex justify-center items-center gap-[0.6rem] w-[47.4%] aspect-[253/202] overflow-hidden text-darkText rounded-xl bg-brandingLightGreen ${pointerStyle}
+						custom-390:w-[47.7%] custom-400:w-[47.9%] custom-500:w-[48.2%] custom-600:w-[48.5%] custom-700:w-[48.7%] custom-900:w-[48.1%] custom-1200:w-[48.6%] custom-1900:w-[49%] custom-2500:w-[49.2%]`}
 				>
 					{leftPicturesNumber > 0 ? (
 						<>
 							<div>
-								<p className="text-montserrat text-[2.31rem] font-bold">
+								<p
+									className="text-montserrat text-[2.31rem] font-bold
+									custom-2500:text-[4rem]"
+								>
 									<span>+</span>
 									{leftPicturesNumber}
 								</p>
 							</div>
 
 							<div>
-								<p className="text-[12px] font-semibold">más</p>
-								<p className="text-[16px] font-bold">Fotos</p>
+								<p
+									className="text-[12px] font-semibold
+									custom-2500:text-[2.3rem]"
+								>
+									más
+								</p>
+								<p
+									className="text-[16px] font-bold
+									custom-2500:text-[2.8rem]"
+								>
+									Fotos
+								</p>
 							</div>
 						</>
 					) : (
 						<div>
-							<p className="text-[16px] font-bold">No hay más imágenes</p>
+							<p
+								className="text-[1.6rem] text-center font-bold
+								custom-2500:text-[2.5rem]"
+							>
+								No hay más imágenes
+							</p>
 						</div>
 					)}
 				</div>

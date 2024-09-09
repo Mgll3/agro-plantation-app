@@ -295,7 +295,7 @@ function AdminPublications() {
 
 				{loadingState === "loading" && (
 					<>
-						<div className="mt-24 text-brandingLightGreen">
+						<div className="min-h-[40vh] mt-24 text-brandingLightGreen">
 							<LoadingSmall />
 						</div>
 

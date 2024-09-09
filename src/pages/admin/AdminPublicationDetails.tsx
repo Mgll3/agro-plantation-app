@@ -30,9 +30,10 @@ function AdminPublicationDetails() {
 	const [sliderVisibility, setSliderVisibility] = useState(false);
 	const [publicationData, setPublicationData] = useState<PublicationInfoType | null>(null);
 
-	const buttonFontSize = "text-[1.978rem]";
-	const buttonPaddingY = "py-[2.017rem]";
-	const buttonWidth = "w-[28.81%]";
+	const buttonFontSize =
+		"text-[1rem] custom-500:text-[1.3rem] custom-700:text-[1.6rem] custom-900:text-[1.978rem] custom-1900:text-[2.5rem] custom-2500:text-[3rem]";
+	const buttonPaddingY = "py-[0.2rem] custom-500:py-[0.5rem] custom-900:py-[1rem] custom-1200:py-[2.017rem]";
+	const buttonWidth = "w-[27%] custom-1400:w-[28.81%]";
 
 	//A "PictureSlider" le pasamos un objeto con todas las imágenes (no necesita diferenciar entre la principal y el resto) y el id de la imagen pulsada (la que debe mostrarse en primer lugar)
 
@@ -242,14 +243,18 @@ function AdminPublicationDetails() {
 	}, []);
 
 	return (
-		<>
+		<div className="flex flex-col min-h-[100vh]">
 			<div className="w-full">
 				<Header />
 			</div>
 
-			<main className="flex flex-col items-center w-[80%] min-h-[40vh] mt-[10vh] mx-auto">
+			<main
+				className="flex flex-col items-center grow w-[97%] min-h-[40vh] my-[2.4rem] mx-auto
+				custom-390:w-[92.52%] custom-700:w-[85%] custom-1000:w-[83%] custom-1400:w-[75%]
+				custom-500:my-[3.5rem] custom-700:my-[4.5rem] custom-900:my-[6rem] custom-1000:my-[7rem] custom-1400:my-[8.8rem] custom-1900:my-[10rem] custom-3500:my-[15rem]"
+			>
 				{loadingState === "loading" && (
-					<div className="mt-24 text-brandingLightGreen">
+					<div className="min-h-[40vh] mt-24 text-brandingLightGreen">
 						<LoadingSmall />
 					</div>
 				)}
@@ -261,7 +266,10 @@ function AdminPublicationDetails() {
 					loadingState === "modalPublicationStatePending") &&
 					publicationData && (
 						<>
-							<div className="mb-[5rem] flex justify-center w-[100%]">
+							<div
+								className="mb-[5rem] flex justify-center w-[100%]
+								custom-1900:mb-[7rem] custom-3500:mb-[12rem]"
+							>
 								<PublicationDetails
 									publicationInfo={publicationData}
 									addressCoordinates={addressCoordinates.current}
@@ -269,7 +277,7 @@ function AdminPublicationDetails() {
 								/>
 							</div>
 
-							<div className="flex justify-center gap-[5%] w-[100%] mb-[5rem]">
+							<div className="flex justify-center gap-[5%] w-[100%]">
 								<Button
 									buttonColor="yellow"
 									buttonFontSize={buttonFontSize}
@@ -301,9 +309,9 @@ function AdminPublicationDetails() {
 								{publicationData.authorizationStatus.state !== "PENDING" && (
 									<Button
 										buttonColor="yellow"
-										buttonFontSize="text-[20px]"
-										buttonPaddingY="py-[0.5rem] px-[5rem]"
-										buttonWidth="w-[30%]"
+										buttonFontSize={buttonFontSize}
+										buttonPaddingY={buttonPaddingY}
+										buttonWidth={buttonWidth}
 										buttonFuncionality={buttonChangeToPendingFunctionality}
 									/>
 								)}
@@ -336,10 +344,10 @@ function AdminPublicationDetails() {
 				)}
 			</main>
 
-			<div className="mt-8">
+			<div className="mt-auto">
 				<Footer />
 			</div>
-		</>
+		</div>
 	);
 }
 

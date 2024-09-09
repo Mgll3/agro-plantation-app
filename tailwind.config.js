@@ -46,6 +46,7 @@ export default {
 				grey600: "#9C9999",
 				grey700: "#6B6B6B",
 				grey800: "#4E4C4C",
+				grey900: "#272626",
 				brown150: "#F7F4E6",
 				yellow500: "#F6C915",
 				terciary150: "#D4E2B5",
