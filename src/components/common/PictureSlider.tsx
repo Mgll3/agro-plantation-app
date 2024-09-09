@@ -83,14 +83,19 @@ function PictureSlider({ sliderInfo, handleImageOnClick }: PictureSliderProps) {
 
 	return (
 		<div className="z-50 fixed top-0 left-0 flex flex-col justify-center items-center w-screen bg-semiTansparentBlack h-screen select-none">
-			<div className="relative flex justify-center items-center w-[57vw] h-[70vh] overflow-hidden bg-publicationCardsBg bg-no-repeat bg-cover text-center text-black font-sans border-[2px] border-brandingDarkGreen border-solid rounded-2xl">
-				<img ref={mainImgElement} alt="" src={mainImg} className="absolute z-0 left-[0%] w-[70vw] duration-700" />
-				<img ref={prevImgElement} alt="" src={prevImg} className="absolute z-10 left-[-100%] w-[70vw]" />
-				<img ref={nextImgElement} alt="" src={nextImg} className="absolute z-10 right-[-100%] w-[70vw]" />
+			<div
+				className="relative flex justify-center items-center w-[90vw] aspect-[817.24/546.19] overflow-hidden bg-publicationCardsBg bg-no-repeat bg-cover text-center text-black font-sans border-[2px] border-brandingDarkGreen border-solid rounded-2xl
+				custom-700:w-[80vw] custom-1000:w-[70vw] custom-1200:w-[57vw] custom-2500:w-[50vw]"
+			>
+				<img ref={mainImgElement} alt="" src={mainImg} className="absolute z-0 left-[0%] w-[100%] duration-700" />
+				<img ref={prevImgElement} alt="" src={prevImg} className="absolute z-10 left-[-100%] w-[100%]" />
+				<img ref={nextImgElement} alt="" src={nextImg} className="absolute z-10 right-[-100%] w-[100%]" />
 				<p
 					role="button"
 					onClick={handleImageOnClick}
-					className="absolute top-[5px] right-[5px] z-20 flex justify-center items-center w-[50px] h-[50px] rounded-full bg-green300 hover:bg-brandingLightGreen text-[24px] font-bold cursor-pointer duration-300"
+					className="absolute top-[5px] right-[5px] z-20 flex justify-center items-center w-[30px] aspect-[1/1] rounded-full bg-green300 hover:bg-brandingLightGreen text-[18px] font-bold cursor-pointer duration-300
+						custom-1000:w-[40px] custom-1400:w-[50px] custom-2500:w-[70px]
+						custom-1000:text-[24px] custom-1900:text-[30px] custom-2500:text-[40px]"
 				>
 					X
 				</p>
@@ -99,13 +104,19 @@ function PictureSlider({ sliderInfo, handleImageOnClick }: PictureSliderProps) {
 					<>
 						<div
 							onClick={changeToPrevImg}
-							className="absolute top-[40%] left-[2%] z-20 flex justify-center items-center w-[4vw] h-[8vw] bg-screenDarkening hover:bg-semiTansparentBlack hover:scale-110 active:scale-90 rounded-xl text-brandingLightGreen text-[45px] cursor-pointer duration-300"
+							className="absolute top-[40%] left-[2%] z-20 flex justify-center items-center w-[10vw] h-[15vw] bg-screenDarkening hover:bg-semiTansparentBlack hover:scale-110 active:scale-90 rounded-xl text-brandingLightGreen text-[35px] cursor-pointer duration-300
+								custom-500:w-[7vw] custom-1000:w-[5vw] custom-2500:w-[3vw]
+								custom-500:h-[14vw] custom-1000:h-[10vw] custom-1400:h-[8vw] custom-2500:h-[7vw]
+								custom-600:text-[40px] custom-700:text-[45px] custom-1400:text-[55px] custom-1900:text-[65px] custom-2500:text-[70px]"
 						>
 							<ArrowBackIosNewRoundedIcon color="inherit" fontSize="inherit" />
 						</div>
 						<div
 							onClick={changeToNextImg}
-							className="absolute top-[40%] right-[2%] z-20 flex justify-center items-center w-[4vw] h-[8vw] bg-screenDarkening hover:bg-semiTansparentBlack hover:scale-110 active:scale-90 rounded-xl text-brandingLightGreen text-[45px] cursor-pointer duration-300"
+							className="absolute top-[40%] right-[2%] z-20 flex justify-center items-center w-[10vw] h-[15vw] bg-screenDarkening hover:bg-semiTansparentBlack hover:scale-110 active:scale-90 rounded-xl text-brandingLightGreen text-[35px] cursor-pointer duration-300
+								custom-500:w-[7vw] custom-1000:w-[5vw] custom-2500:w-[3vw]
+								custom-500:h-[14vw] custom-1000:h-[10vw] custom-1400:h-[8vw] custom-2500:h-[7vw]
+								custom-600:text-[40px] custom-700:text-[45px] custom-1400:text-[55px] custom-1900:text-[65px] custom-2500:text-[70px]"
 						>
 							<ArrowForwardIosRoundedIcon color="inherit" fontSize="inherit" />
 						</div>
@@ -113,7 +124,12 @@ function PictureSlider({ sliderInfo, handleImageOnClick }: PictureSliderProps) {
 				)}
 			</div>
 
-			<div className="mt-[2rem] text-brandingLightGreen text-[20px]">{`${mainImgIndex + 1} de ${sliderInfo.pictures.length}`}</div>
+			<div
+				className="mt-[2rem] text-brandingLightGreen text-[2rem]
+				custom-1900:text-[2.5rem] custom-2500:text-[3rem]"
+			>
+				{`${mainImgIndex + 1} de ${sliderInfo.pictures.length}`}
+			</div>
 		</div>
 	);
 }
