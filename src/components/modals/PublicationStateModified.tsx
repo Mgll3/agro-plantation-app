@@ -5,8 +5,17 @@ type PublicationStateModifiedProps = {
 function PublicationStateModified({ newState }: PublicationStateModifiedProps) {
 	return (
 		<div className="z-[1000] fixed top-0 left-0 flex justify-center items-center w-screen bg-screenDarkening h-screen">
-			<div className="flex items-center flex-col justify-between w-[500px] py-[4rem] px-[2rem] bg-white text-center text-black font-sans rounded-xl">
-				<div className="w-[160px]">
+			<div
+				className="flex items-center flex-col justify-between w-[300px] aspect-square pt-[4.646rem] pb-[9.2rem] px-[2.323rem] bg-white text-center text-black font-sans rounded-3xl
+				custom-400:w-[400px] custom-1400:w-[500px] custom-2500:w-[600px]
+				custom-600:aspect-[551/488]
+				custom-1400:py-[6.4rem]
+				custom-1400:px-[3.2rem]"
+			>
+				<div
+					className="w-[110px]
+					custom-1400:w-[135px] custom-2500:w-[165px]"
+				>
 					{newState === "rejected" ? (
 						<img src="/icons/modals/ko-with-border.png" />
 					) : (
@@ -14,13 +23,41 @@ function PublicationStateModified({ newState }: PublicationStateModifiedProps) {
 					)}
 				</div>
 
-				<h3 className="text-[49px] font-regular pt-[3rem]">¡Listo!</h3>
+				<h3
+					className="text-[3.5rem] font-regular pt-[4.646rem]
+					custom-1400:pt-[6.4rem]
+					custom-600:text-[4rem] custom-1400:text-[4.9rem] custom-2500:text-[5.5rem]"
+				>
+					¡Listo!
+				</h3>
 
-				{newState === "approved" && <p className="text-[24px] pt-[1rem]">Publicación Aprobada</p>}
+				{newState === "approved" && (
+					<p
+						className="text-[1.742rem] pt-[1.5rem]
+						custom-1400:pt-[3.2rem]
+						custom-600:text-[2rem] custom-1400:text-[2.4rem] custom-2500:text-[3rem]"
+					>
+						Publicación Aprobada
+					</p>
+				)}
 
-				{newState === "rejected" && <p className="text-[24px] pt-[1rem]">Publicación Rechazada</p>}
+				{newState === "rejected" && (
+					<p
+						className="text-[1.742rem] pt-[1rem]
+					custom-600:text-[2rem] custom-1400:text-[2.4rem] custom-2500:text-[3rem]"
+					>
+						Publicación Rechazada
+					</p>
+				)}
 
-				{newState === "pending" && <p className="text-[24px] pt-[1rem]">Publicación Pendiente</p>}
+				{newState === "pending" && (
+					<p
+						className="text-[1.742rem] pt-[1rem]
+					custom-1400:text-[2.4rem]"
+					>
+						Publicación Pendiente
+					</p>
+				)}
 			</div>
 		</div>
 	);

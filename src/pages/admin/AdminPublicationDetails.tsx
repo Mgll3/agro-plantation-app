@@ -331,7 +331,9 @@ function AdminPublicationDetails() {
 						</>
 					)}
 
-				{loadingState === "loaded" && <Loading />}
+				{loadingState === "errorServer" && (
+					<NetworkError failedAction="cargar la publicación." buttonText="Reintentar" handleClose={closeErrorModal} />
+				)}
 
 				{loadingState === "errorCredentials" && (
 					<NetworkError
