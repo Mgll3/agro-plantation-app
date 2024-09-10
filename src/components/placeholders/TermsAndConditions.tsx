@@ -54,10 +54,22 @@ function TermsAndConditions() {
 				<Header />
 			</div>
 
-			<main className="py-12 px-[10vw]">
-				<h1 className="text-4xl text-center pb-10">Términos y Condiciones</h1>
+			<main
+				className="py-[6vh] px-[2vw]
+				custom-700:py-[4vh] custom-1200:py-[6vh]
+				custom-600:px-[5vw] custom-900:px-[8vw] custom-1400:px-[10vw]"
+			>
+				<h1
+					className="font-bold text-[3rem] text-center pb-10
+					custom-700:text-[3.5rem] custom-900:text-[4rem]"
+				>
+					Términos y Condiciones
+				</h1>
 
-				<div className="bg-brandingLightYellow py-12 px-12 leading-loose border-2 border-black border-solid text-[20px]">
+				<div
+					className="bg-brandingLightYellow py-12 px-12 leading-loose border-2 border-black border-solid text-[2rem]
+					custom-700:text-[2.5rem]"
+				>
 					<p>
 						Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sapiente error repellendus, quas consequuntur
 						minus, id vitae possimus maiores, soluta suscipit cum velit quam beatae quibusdam adipisci quasi ullam!
