@@ -55,7 +55,7 @@ function ProtectedRouteNonAdmin() {
 	useEffect(() => {
 		if (isAuthorized === "notAuthorized") {
 			navigateTimer = window.setTimeout(() => {
-				navigate("/admin/publications", { replace: true });
+				navigate("/admin/home", { replace: true });
 			}, 1);
 		}
 

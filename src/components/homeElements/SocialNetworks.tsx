@@ -14,7 +14,7 @@ function SocialNetworks() {
 				>
 					<img
 						alt="Instagram"
-						src="icons/social_media/Instagram.png"
+						src="/icons/social_media/Instagram.png"
 						className="w-[7.439vw] h-[7.439vw] min-w-[32px] max-w-[96px] min-h-[32px] max-h-[96px]
 							custom-1900:max-w-[110px] custom-1900:max-h-[110px] custom-2500:max-w-[140px] custom-2500:max-h-[140px] custom-3500:max-w-[180px] custom-3500:max-h-[180px]"
 					/>
@@ -29,7 +29,7 @@ function SocialNetworks() {
 				>
 					<img
 						alt="Facebook"
-						src="icons/social_media/Facebook.png"
+						src="/icons/social_media/Facebook.png"
 						className="w-[7.439vw] h-[7.439vw] min-w-[32px] max-w-[96px] min-h-[32px] max-h-[96px]
 							custom-1900:max-w-[110px] custom-1900:max-h-[110px] custom-2500:max-w-[140px] custom-2500:max-h-[140px] custom-3500:max-w-[180px] custom-3500:max-h-[180px]"
 					/>
@@ -44,7 +44,7 @@ function SocialNetworks() {
 				>
 					<img
 						alt="Linkedin"
-						src="icons/social_media/LinkedIn.png"
+						src="/icons/social_media/LinkedIn.png"
 						className="w-[7.439vw] h-[7.439vw] min-w-[32px] max-w-[96px] min-h-[32px] max-h-[96px]
 							custom-1900:max-w-[110px] custom-1900:max-h-[110px] custom-2500:max-w-[140px] custom-2500:max-h-[140px] custom-3500:max-w-[180px] custom-3500:max-h-[180px]"
 					/>
@@ -59,7 +59,7 @@ function SocialNetworks() {
 				>
 					<img
 						alt="Twitter"
-						src="icons/social_media/TwitterX.png"
+						src="/icons/social_media/TwitterX.png"
 						className="w-[7.439vw] h-[7.439vw] min-w-[32px] max-w-[96px] min-h-[32px] max-h-[96px]
 							custom-1900:max-w-[110px] custom-1900:max-h-[110px] custom-2500:max-w-[140px] custom-2500:max-h-[140px] custom-3500:max-w-[180px] custom-3500:max-h-[180px]"
 					/>

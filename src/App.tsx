@@ -25,6 +25,7 @@ import UserForum from "./pages/user/UserForum";
 import ProducerPublications from "./pages/producers/ProducerPublications";
 import ProducerForum from "./pages/producers/ProducerForum";
 import ProtectedRouteNonAdmin from "./components/protectRoutes/ProtectedRouteNonAdmin";
+import AdminHome from "./pages/admin/AdminHome";
 
 function App() {
 	return (
@@ -66,6 +67,7 @@ function App() {
 
 				{/* ADMIN RUTES */}
 				<Route element={<ProtectedRouteAdmin />}>
+					<Route path="/admin/home" element={<AdminHome />} />
 					<Route path="/admin/publications" element={<AdminPublications />} />
 					<Route path="/admin/publications/:id" element={<AdminPublications />} />
 					<Route path="/admin/users" element={<AdminUsers />} />

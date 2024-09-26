@@ -20,6 +20,15 @@ function AdminNav() {
 			>
 				<li className="">
 					<Button
+						buttonColor={location.pathname === "/admin/home" ? buttonColor2 : buttonColor}
+						buttonFontSize={buttonFontSize}
+						buttonWidth={buttonWidth}
+						buttonPaddingY={buttonPaddingY}
+						buttonFuncionality={{ linkText: "Home", linkUrl: "/admin/home" }}
+					></Button>
+				</li>
+				<li className="">
+					<Button
 						buttonColor={regex.test(location.pathname) ? buttonColor2 : buttonColor}
 						buttonFontSize={buttonFontSize}
 						buttonWidth={buttonWidth}
