@@ -23,12 +23,19 @@ import PublicationsFiltersMobile from "../../../components/admin/publicationsFil
 import { useUserRoleContext } from "../../../context/UserRoleContext";
 import PublicationsFilters from "../../../components/common/publications/PublicationsFilters";
 
+type DeviceUsedType = "pc" | "mobile";
+
 function Publications() {
 	const location = useLocation();
 	const initFilter = location.state ? location.state : "random";
 	const [publicationsFiltered, setPublicationsFiltered] = useState<FormattedPublicationsInfoType[] | null>(null);
 	const [loadingState, changeLoadingState] = useLoadingState();
 	const [filter, setFilter] = useState<FilterType>(initFilter);
+
+	//Used to render the correct filter component based on window width
+	const deviceUsedInitValue: DeviceUsedType = window.innerWidth <= 900 ? "mobile" : "pc";
+	const [deviceUsed, setDeviceUsed] = useState<DeviceUsedType>(deviceUsedInitValue);
+
 	const { userRole } = useUserRoleContext();
 	const pagesLeft = useRef<number>(0);
 	const navigate = useNavigate();
@@ -251,6 +258,22 @@ function Publications() {
 		};
 	}, [filter, id]);
 
+	useEffect(() => {
+		function changeDeviceType() {
+			if (window.innerWidth <= 900 && deviceUsed === "pc") {
+				setDeviceUsed("mobile");
+				console.log(deviceUsed);
+			} else if (window.innerWidth > 900 && deviceUsed === "mobile") {
+				setDeviceUsed("pc");
+				console.log(deviceUsed);
+			}
+		}
+		window.addEventListener("resize", changeDeviceType);
+		return () => {
+			window.removeEventListener("resize", changeDeviceType);
+		};
+	});
+
 	return (
 		<div className="flex flex-col min-h-[100vh]">
 			<div className="w-full">
@@ -261,7 +284,7 @@ function Publications() {
 				className="flex flex-col items-center flex-grow w-[100%] min-h-[40vh] mt-[0.5rem] mx-auto
 				custom-500:mt-[2rem] custom-700:mt-[2.5rem] custom-900:mt-[3.5rem] custom-1400:mt-[8.8rem]"
 			>
-				{window.innerWidth >= 1024 ? (
+				{deviceUsed === "pc" ? (
 					<PublicationsFilters filter={filter} setFilter={changeFilterWithNavigation} />
 				) : (
 					<PublicationsFiltersMobile filter={filter} setFilter={changeFilterWithNavigation} />

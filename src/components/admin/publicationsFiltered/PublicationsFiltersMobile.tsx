@@ -38,8 +38,13 @@ function PublicationsFiltersMobile({ filter, setFilter }: PublicationsFiltersMob
 	function setPrevFilter() {
 		const actualFilterIndex = spanishFiltersArray.findIndex((element) => element === actualFilter);
 		if (actualFilterIndex === 0) {
-			setActualFilter(spanishFiltersArray[spanishFiltersArray.length - 1]);
-			setFilter(englishFiltersArray[englishFiltersArray.length - 1]);
+			if (userRole === "ADMIN") {
+				setActualFilter(spanishFiltersArray[spanishFiltersArray.length - 1]);
+				setFilter(englishFiltersArray[englishFiltersArray.length - 1]);
+			} else {
+				setActualFilter(spanishFiltersArray[spanishFiltersArray.length - 2]); //An User or Producer doesn´t have access to the "auth" filter
+				setFilter(englishFiltersArray[englishFiltersArray.length - 2]);
+			}
 		} else {
 			setActualFilter(spanishFiltersArray[actualFilterIndex - 1]);
 			setFilter(englishFiltersArray[actualFilterIndex - 1]);
@@ -52,8 +57,13 @@ function PublicationsFiltersMobile({ filter, setFilter }: PublicationsFiltersMob
 			setActualFilter(spanishFiltersArray[0]);
 			setFilter(englishFiltersArray[0]);
 		} else {
-			setActualFilter(spanishFiltersArray[actualFilterIndex + 1]);
-			setFilter(englishFiltersArray[actualFilterIndex + 1]);
+			if (userRole === "ADMIN" || englishFiltersArray[actualFilterIndex + 1] !== "auth") {
+				setActualFilter(spanishFiltersArray[actualFilterIndex + 1]);
+				setFilter(englishFiltersArray[actualFilterIndex + 1]);
+			} else {
+				setActualFilter(spanishFiltersArray[0]);
+				setFilter(englishFiltersArray[0]);
+			}
 		}
 	}
 

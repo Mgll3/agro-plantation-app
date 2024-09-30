@@ -1,13 +1,19 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { user } from "../../data/userData";
 import { Link } from "react-router-dom";
 import { useUserRoleContext } from "../../context/UserRoleContext";
+
+type DeviceUsedType = "pc" | "mobile";
 
 type UserProfileProps = {
 	handleLogoutClick: () => void;
 };
 
 function UserProfile({ handleLogoutClick }: UserProfileProps) {
+	//Used to render the correct filter component based on window width
+	const deviceUsedInitValue: DeviceUsedType = window.innerWidth <= 800 ? "mobile" : "pc";
+	const [deviceUsed, setDeviceUsed] = useState<DeviceUsedType>(deviceUsedInitValue);
+
 	const { userRole } = useUserRoleContext();
 	const expandProfileIcon = useRef(null);
 	const userProfile = useRef(null);
@@ -32,6 +38,20 @@ function UserProfile({ handleLogoutClick }: UserProfileProps) {
 		}
 	}
 
+	useEffect(() => {
+		function changeDeviceType() {
+			if (window.innerWidth <= 800 && deviceUsed === "pc") {
+				setDeviceUsed("mobile");
+			} else if (window.innerWidth > 800 && deviceUsed === "mobile") {
+				setDeviceUsed("pc");
+			}
+		}
+		window.addEventListener("resize", changeDeviceType);
+		return () => {
+			window.removeEventListener("resize", changeDeviceType);
+		};
+	});
+
 	return (
 		<div aria-label="Mi perfil" className="relative">
 			<div className="flex justify-center items-center w-fit py-[3px] custom-800:py-[6px] custom-1000:py-[10px] px-[11px] custom-600:px-[12px] custom-2000:px-[2rem] rounded-lg custom-2000:rounded-3xl bg-brandingYellow">
@@ -46,21 +66,22 @@ function UserProfile({ handleLogoutClick }: UserProfileProps) {
 				<p
 					role="button"
 					onClick={showHideProfileOptions}
-					className="hidden custom-800:inline mr-[1.8rem] custom-3000:mr-[2.5rem] font-sans font-normal custom-1000:font-semibold text-[1.6rem] custom-1000:text-[19.78px] custom-2000:text-[3.2rem] custom-3000:text-[3.8rem]"
+					className="hidden custom-800:inline mr-[1.8rem] custom-3000:mr-[2.5rem] font-sans font-normal custom-1000:font-semibold text-[1.6rem]
+						custom-800:cursor-pointer"
 				>
 					{user.name}
 				</p>
 
 				<p
 					role="button"
-					className="custom-800:hidden font-sans font-normal text-[1.2rem]
+					className="custom-800:hidden font-sans font-normal text-[1.2rem] cursor-default
 					custom-500:text-[1.6rem]"
 				>
 					{userFirstName}
 				</p>
 
 				<div
-					className="hidden custom-800:flex items-center cursor-pointer duration-200"
+					className="hidden custom-800:flex items-center custom-800:cursor-pointer duration-200"
 					onClick={showHideProfileOptions}
 					ref={expandProfileIcon}
 				>
@@ -68,7 +89,7 @@ function UserProfile({ handleLogoutClick }: UserProfileProps) {
 				</div>
 			</div>
 
-			{window.innerWidth > 800 && (
+			{deviceUsed === "pc" && (
 				<nav
 					aria-label="Navegación Secundaria"
 					ref={userProfile}
