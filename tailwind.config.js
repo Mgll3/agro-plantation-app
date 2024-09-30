@@ -74,7 +74,9 @@ export default {
 				"below-light": "2px 2px 5px rgba(0, 0, 0, 0.2)",
 				"below-dark": "0px 4px 4px rgba(0, 0, 0, 0.5)",
 				"around-light": "0px 0px 10px rgba(0, 0, 0, 0.2)",
-				"around-dark": "0px 0px 5px rgba(0, 0, 0, 0.5)"
+				"around-dark": "0px 0px 5px rgba(0, 0, 0, 0.5)",
+				"below-right-light": "1px 3px 3px rgba(0, 0, 0, 0.3)",
+				"below-right-dark": "2px 2px 3px rgba(0, 0, 0, 0.5)"
 			},
 			screens: {
 				"custom-390": "390px",

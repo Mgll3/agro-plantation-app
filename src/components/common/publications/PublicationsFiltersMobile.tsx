@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FilterType } from "../adminTypes";
+import { FilterType } from "../../admin/adminTypes";
 import { useUserRoleContext } from "../../../context/UserRoleContext";
 
 type PublicationsFiltersMobileProps = {

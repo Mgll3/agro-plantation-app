@@ -1,6 +1,6 @@
 import { useUserRoleContext } from "../../../context/UserRoleContext";
 import { UserProducerFilterType } from "../../../pages/common/publications/userProducerFilterType";
-import { FilterType } from "../adminTypes";
+import { FilterType } from "../../admin/adminTypes";
 
 type PublicationsFiltersProps = {
 	filter: FilterType;

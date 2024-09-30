@@ -20,7 +20,7 @@ import { getPublicationsByPending } from "../../interfaces/publicationsFilters/g
 import { getPublicationsByAmmount } from "../../interfaces/publicationsFilters/getPublicationsByAmmount";
 import useLoadingState from "../../hooks/useLoadingState";
 import PublicationsPagination from "../../components/admin/publicationsFiltered/PublicationsPagination";
-import PublicationsFiltersMobile from "../../components/admin/publicationsFiltered/PublicationsFiltersMobile";
+import PublicationsFiltersMobile from "../../components/common/publications/PublicationsFiltersMobile";
 import PublicationsFilters from "../../components/common/publications/PublicationsFilters";
 
 function AdminPublications() {
