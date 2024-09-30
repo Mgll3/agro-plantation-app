@@ -18,7 +18,7 @@ import { getPublicationsByScore } from "../../../interfaces/publicationsFilters/
 import { getPublicationsByDate } from "../../../interfaces/publicationsFilters/getPublicationsByDate";
 import { getPublicationsByAmmount } from "../../../interfaces/publicationsFilters/getPublicationsByAmmount";
 import useLoadingState from "../../../hooks/useLoadingState";
-import PublicationsPagination from "../../../components/admin/publicationsFiltered/PublicationsPagination";
+import PublicationsPagination from "../../../components/common/publications/PublicationsPagination";
 import PublicationsFiltersMobile from "../../../components/common/publications/PublicationsFiltersMobile";
 import { useUserRoleContext } from "../../../context/UserRoleContext";
 import PublicationsFilters from "../../../components/common/publications/PublicationsFilters";

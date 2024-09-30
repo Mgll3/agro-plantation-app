@@ -1,6 +1,7 @@
 import KeyboardArrowLeftRoundedIcon from "@mui/icons-material/KeyboardArrowLeftRounded";
 import KeyboardArrowRightRoundedIcon from "@mui/icons-material/KeyboardArrowRightRounded";
 import { Link } from "react-router-dom";
+import { useUserRoleContext } from "../../../context/UserRoleContext";
 
 type PublicationsPaginationProps = {
 	actualPage: number; //Página en la que nos encontramos
@@ -9,6 +10,17 @@ type PublicationsPaginationProps = {
 };
 
 function PublicationsPagination({ actualPage, pagesLeft, pagesForBlock }: PublicationsPaginationProps) {
+	//Se usa para modificar la ruta de los enlaces dependiendo del tipo de usuario que pulsa.
+	const { userRole } = useUserRoleContext();
+	let subRoute = "";
+	if (userRole === "ADMIN") {
+		subRoute = "admin";
+	} else if (userRole === "USER") {
+		subRoute = "user";
+	} else {
+		subRoute = "producer";
+	}
+
 	// Calculamos en qué franja de paginación estamos (1-8, 9-16...)
 	const paginationGroup = Math.ceil(actualPage / pagesForBlock) * pagesForBlock; // Nos va a dar el máximo de la franja actual. Si da "8" sabremos que estamos en la franja 1-8, si da "16" en la de 9-16, etc
 
@@ -36,7 +48,7 @@ function PublicationsPagination({ actualPage, pagesLeft, pagesForBlock }: Public
 				);
 			} else {
 				paginationElements.push(
-					<Link key={i} to={`/admin/publications/${i}`} className="">
+					<Link key={i} to={`/${subRoute}/publications/${i}`} className="">
 						{i}
 					</Link>
 				);
@@ -55,7 +67,7 @@ function PublicationsPagination({ actualPage, pagesLeft, pagesForBlock }: Public
 		>
 			{isTherePrevBlock && (
 				<Link
-					to={`/admin/publications/${minPage - 1}`}
+					to={`/${subRoute}/publications/${minPage - 1}`}
 					className="mb-[0.7rem] text-[2.7rem]
 					custom-1400:mb-[1rem] custom-1900:mb-[1.5rem] custom-2500:mb-[1.9rem]
 					custom-600:text-[3rem] custom-1400:text-[3.6rem] custom-1900:text-[6rem] custom-2500:text-[8rem]"
@@ -73,7 +85,7 @@ function PublicationsPagination({ actualPage, pagesLeft, pagesForBlock }: Public
 
 			{isThereNextBlock && (
 				<Link
-					to={`/admin/publications/${maxPage + 1}`}
+					to={`/${subRoute}/publications/${maxPage + 1}`}
 					className="mb-[0.7rem] text-[2.7rem]
 					custom-1400:mb-[1rem] custom-1900:mb-[1.5rem] custom-2500:mb-[1.9rem]
 					custom-600:text-[3rem] custom-1400:text-[3.6rem] custom-1900:text-[6rem] custom-2500:text-[8rem]"
