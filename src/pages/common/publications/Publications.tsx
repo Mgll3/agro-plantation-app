@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import Footer from "../../../components/footer/Footer";
 import Header from "../../../components/header/Header";
-import Viewer from "../../../components/admin/publicationsFiltered/Viewer";
+import Viewer from "../../../components/common/publications/Viewer";
 import NetworkError from "../../../components/modals/NetworkError";
 import LoadingSmall from "../../../components/modals/LoadingSmall";
 import { useLocation, useNavigate, useParams } from "react-router-dom";

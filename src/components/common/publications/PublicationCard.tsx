@@ -1,5 +1,6 @@
 import { Link, useParams } from "react-router-dom";
-import { PublicationInfoType } from "../adminTypes";
+import { PublicationInfoType } from "../../admin/adminTypes";
+import { useUserRoleContext } from "../../../context/UserRoleContext";
 
 type PublicationCardProps = {
 	publicationInfo: PublicationInfoType;
@@ -7,6 +8,7 @@ type PublicationCardProps = {
 };
 
 function PublicationCard({ publicationInfo, filter }: PublicationCardProps) {
+	const { userRole } = useUserRoleContext();
 	const params = useParams();
 	const pagination = params.id;
 
@@ -67,15 +69,17 @@ function PublicationCard({ publicationInfo, filter }: PublicationCardProps) {
 							<p className="ml-[2px]">{publicationInfo.score}</p>
 						</div>
 
-						<div className="flex items-center">
-							<p className="mr-[5px]">Estado</p>
+						{userRole === "ADMIN" && (
+							<div className="flex items-center">
+								<p className="mr-[5px]">Estado</p>
 
-							<div
-								className={`w-[12px] h-[12px] rounded-full ${stateColor}
+								<div
+									className={`w-[12px] h-[12px] rounded-full ${stateColor}
 								custom-500:w-[15px] custom-1900:w-[25px] custom-3500:w-[30px]
 								custom-500:h-[15px] custom-1900:h-[25px] custom-3500:h-[30px]`}
-							></div>
-						</div>
+								></div>
+							</div>
+						)}
 					</div>
 				</div>
 			</div>
