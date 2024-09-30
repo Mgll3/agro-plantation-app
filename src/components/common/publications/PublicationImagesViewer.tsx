@@ -1,4 +1,4 @@
-import { MainImageType } from "../adminTypes";
+import { MainImageType } from "../../admin/adminTypes";
 import NoPhotographyIcon from "@mui/icons-material/NoPhotography";
 
 type PublicationImagesViewerProps = {

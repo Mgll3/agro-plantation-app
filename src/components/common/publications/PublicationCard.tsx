@@ -8,7 +8,16 @@ type PublicationCardProps = {
 };
 
 function PublicationCard({ publicationInfo, filter }: PublicationCardProps) {
+	//Se usa para modificar la ruta de los enlaces dependiendo del tipo de usuario que pulsa.
 	const { userRole } = useUserRoleContext();
+	let subRoute = "";
+	if (userRole === "ADMIN") {
+		subRoute = "admin";
+	} else if (userRole === "USER") {
+		subRoute = "user";
+	} else {
+		subRoute = "producer";
+	}
 	const params = useParams();
 	const pagination = params.id;
 
@@ -29,7 +38,7 @@ function PublicationCard({ publicationInfo, filter }: PublicationCardProps) {
 	}
 
 	return (
-		<Link to={`/admin/publications/details/${publicationInfo.id}`} state={actualPageInfo} className="h-[100%]">
+		<Link to={`/${subRoute}/publications/details/${publicationInfo.id}`} state={actualPageInfo} className="h-[100%]">
 			<div
 				className="w-[100%] h-[100%] p-[6.38%] rounded-2xl text-sans bg-brandingLightYellow
 				custom-2500:rounded-3xl"

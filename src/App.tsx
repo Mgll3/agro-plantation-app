@@ -26,6 +26,7 @@ import ProtectedRouteNonAdmin from "./components/protectRoutes/ProtectedRouteNon
 import AdminHome from "./pages/admin/AdminHome";
 import ProtectedRouteUserProducer from "./components/protectRoutes/ProtectedRouteUserProducer";
 import Publications from "./pages/common/publications/Publications";
+import UserProducerPublicationDetails from "./pages/common/publications/UserProducerPublicationDetails";
 
 function App() {
 	return (
@@ -75,10 +76,10 @@ function App() {
 				<Route element={<ProtectedRouteUserProducer />}>
 					<Route path="/user/publications" element={<Publications />} />
 					<Route path="/user/publications/:id" element={<Publications />} />
-					{/* <Route path="/user/publications/details/:id" element={<PublicationsDetails />} /> */}
+					<Route path="/user/publications/details/:id" element={<UserProducerPublicationDetails />} />
 					<Route path="/producer/publications" element={<Publications />} />
 					<Route path="/producer/publications/:id" element={<Publications />} />
-					{/* <Route path="/producer/publications/details/:id" element={<PublicationsDetails />} /> */}
+					<Route path="/producer/publications/details/:id" element={<UserProducerPublicationDetails />} />
 				</Route>
 			</Routes>
 		</>

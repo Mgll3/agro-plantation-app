@@ -1,5 +1,5 @@
 import { PublicationInfoType } from "../adminTypes";
-import PublicationImagesViewer from "./PublicationImagesViewer";
+import PublicationImagesViewer from "../../common/publications/PublicationImagesViewer";
 import GeoViewer from "../../geolocator/GeoViewer";
 import Button from "../../button/Button";
 import { AddressCoordinatesType } from "../../../pages/admin/AdminPublicationDetails";
