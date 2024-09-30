@@ -7,7 +7,7 @@ import { ReactNode, useEffect, useRef, useState } from "react";
 import GeoViewer from "../geolocator/GeoViewer";
 import { CoordinatesType } from "../../pages/admin/AdminPublicationDetails";
 import { getAddressCoordinates } from "../../interfaces/geolocation/getAddressCoordinates";
-import PublicationPreview from "../admin/createPublication/PublicationPreview";
+import PublicationPreview from "../producer/createPublication/PublicationPreview";
 
 type CreatePublicationFormProps = {
 	handleSubmit: (formValues: NewPublicationType) => void;

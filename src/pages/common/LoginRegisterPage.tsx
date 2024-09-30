@@ -1,18 +1,18 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { logInUser } from "../interfaces/users/logInUser";
-import Login from "../components/forms/Login";
-import { registerUser } from "../interfaces/users/registerUser";
-import Register from "../components/forms/Register";
+import { logInUser } from "../../interfaces/users/logInUser";
+import Login from "../../components/forms/Login";
+import { registerUser } from "../../interfaces/users/registerUser";
+import Register from "../../components/forms/Register";
 import {
 	LoginFormValuesType,
 	RegisterFormFieldsToSendType,
 	RegisterFormValuesType
-} from "../components/forms/formsTypes";
+} from "../../components/forms/formsTypes";
 import { UserDataType } from "./commonTypes";
-import { useUserRoleContext } from "../context/UserRoleContext";
-import { updateUserData } from "../utils/updateUserData";
-import { resetUserData } from "../utils/resetUserData";
+import { useUserRoleContext } from "../../context/UserRoleContext";
+import { updateUserData } from "../../utils/updateUserData";
+import { resetUserData } from "../../utils/resetUserData";
 
 export type LoginStateType = "init" | "loading" | "loginError" | "networkError" | "logged";
 export type RegisterStateType =

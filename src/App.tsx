@@ -1,11 +1,10 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import "leaflet/dist/leaflet.css";
-import WrongPath from "./pages/WrongPath";
+import WrongPath from "./pages/common/WrongPath";
 import ProtectedRouteUser from "./components/protectRoutes/ProtectedRouteUser";
-import Home from "./pages/Home";
-import UserPublications from "./pages/user/UserPublications";
-import LoginRegisterPage from "./pages/LoginRegisterPage";
+import Home from "./pages/common/Home";
+import LoginRegisterPage from "./pages/common/LoginRegisterPage";
 import Copyright from "./components/placeholders/Copyright";
 import HelpDesk from "./components/placeholders/HelpDesk";
 import Community from "./components/placeholders/Community";
@@ -22,10 +21,11 @@ import AdminPublicationDetails from "./pages/admin/AdminPublicationDetails";
 import ProtectedRouteProducer from "./components/protectRoutes/ProtectedRouteProducer";
 import CreatePublication from "./pages/producers/CreatePublication";
 import UserForum from "./pages/user/UserForum";
-import ProducerPublications from "./pages/producers/ProducerPublications";
 import ProducerForum from "./pages/producers/ProducerForum";
 import ProtectedRouteNonAdmin from "./components/protectRoutes/ProtectedRouteNonAdmin";
 import AdminHome from "./pages/admin/AdminHome";
+import ProtectedRouteUserProducer from "./components/protectRoutes/ProtectedRouteUserProducer";
+import Publications from "./pages/common/publications/Publications";
 
 function App() {
 	return (
@@ -44,28 +44,24 @@ function App() {
 
 				{/* PROTECTED ROUTES */}
 
-				{/* NON ADMIN RUTES */}
+				{/* NON ADMIN ROUTES */}
 				<Route element={<ProtectedRouteNonAdmin />}>
 					<Route path="/" element={<Home />} />
 				</Route>
 
-				{/* USER RUTES */}
+				{/* USER ROUTES */}
 				<Route element={<ProtectedRouteUser />}>
-					<Route path="/user/publications" element={<UserPublications />} />
-					<Route path="/user/publications/:id" element={<UserPublications />} />
 					<Route path="/user/registerProducer" element={<RegisterProducer />} />
 					<Route path="/user/forum" element={<UserForum />} />
 				</Route>
 
-				{/* PRODUCER RUTES */}
+				{/* PRODUCER ROUTES */}
 				<Route element={<ProtectedRouteProducer />}>
-					<Route path="/producer/publications" element={<ProducerPublications />} />
-					<Route path="/producer/publications/:id" element={<ProducerPublications />} />
 					<Route path="/producer/publications/createPublication" element={<CreatePublication />} />
 					<Route path="/producer/forum" element={<ProducerForum />} />
 				</Route>
 
-				{/* ADMIN RUTES */}
+				{/* ADMIN ROUTES */}
 				<Route element={<ProtectedRouteAdmin />}>
 					<Route path="/admin/home" element={<AdminHome />} />
 					<Route path="/admin/publications" element={<AdminPublications />} />
@@ -73,6 +69,16 @@ function App() {
 					<Route path="/admin/users" element={<AdminUsers />} />
 					<Route path="/admin/forum" element={<AdminForum />} />
 					<Route path="/admin/publications/details/:id" element={<AdminPublicationDetails />} />
+				</Route>
+
+				{/* USER & PRODUCER COMMON ROUTES */}
+				<Route element={<ProtectedRouteUserProducer />}>
+					<Route path="/user/publications" element={<Publications />} />
+					<Route path="/user/publications/:id" element={<Publications />} />
+					{/* <Route path="/user/publications/details/:id" element={<PublicationsDetails />} /> */}
+					<Route path="/producer/publications" element={<Publications />} />
+					<Route path="/producer/publications/:id" element={<Publications />} />
+					{/* <Route path="/producer/publications/details/:id" element={<PublicationsDetails />} /> */}
 				</Route>
 			</Routes>
 		</>

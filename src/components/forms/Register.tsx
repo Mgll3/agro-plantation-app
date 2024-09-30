@@ -1,7 +1,7 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { RegisterFormValuesType } from "./formsTypes";
-import { RegisterStateType } from "../../pages/LoginRegisterPage";
+import { RegisterStateType } from "../../pages/common/LoginRegisterPage";
 import { Link, useNavigate } from "react-router-dom";
 import RegisterOk from "./RegisterOk";
 import Loading from "../modals/Loading";
@@ -122,7 +122,7 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 							className="absolute bottom-0 p-[4px_4px] m-[1rem] bg-[#93b447b5] text-[#1B7E25] text-center md:text-[15px] text-[1.2rem] rounded-md z-10 max-[767px]:text-black"
 						>
 							Todos los derechos reservados para PLANT-IN <s className="max-[767px]:text-[#1B7E25]">&copy;</s>
-							<small >Marzo 2024</small>
+							<small>Marzo 2024</small>
 						</Link>
 					</div>
 				</aside>

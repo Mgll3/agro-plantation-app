@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { FilterType } from "../adminTypes";
+import { useUserRoleContext } from "../../../context/UserRoleContext";
 
 type PublicationsFiltersMobileProps = {
 	filter: FilterType;
@@ -8,6 +9,8 @@ type PublicationsFiltersMobileProps = {
 
 //Definimos un array con los filtros en español (los que se usan de cara al usuario) y otro con los filtros en inglés, tal como se reciben por props, en el mismo orden, para poder hacer fácilmente la equivalencia o traducción de uno en otro.
 function PublicationsFiltersMobile({ filter, setFilter }: PublicationsFiltersMobileProps) {
+	const { userRole } = useUserRoleContext();
+
 	const englishFiltersArray = ["random", "user", "score", "date", "ammount", "auth"] as const;
 	const spanishFiltersArray = [
 		"Aleatorio",
@@ -62,7 +65,7 @@ function PublicationsFiltersMobile({ filter, setFilter }: PublicationsFiltersMob
 				custom-390:text-[0.7rem] custom-420:text-[0.8rem] custom-500:text-[1rem] custom-600:text-[1.1rem] custom-700:text-[1.4rem] custom-900:text-[1.6rem]"
 			>
 				{spanishFiltersArray.map((element, index) => {
-					if (element !== actualFilter) {
+					if (element !== actualFilter && (element !== "Por Pendientes" || userRole === "ADMIN")) {
 						return (
 							<li key={index}>
 								<button

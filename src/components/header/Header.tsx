@@ -147,7 +147,7 @@ function Header() {
 					<div className="hidden absolute right-[30px] top-[10px] custom-1000:right-[43px] custom-1000:top-[28px] custom-800:block">
 						{userRole === "visitor" ? <SecondaryNav /> : <UserProfile handleLogoutClick={handleLogoutClick} />}
 					</div>
-					<div className="absolute right-[-60px] top-[5px] custom-800:right-[30px] custom-800:top-[10px] custom-1000:right-[43px] custom-1000:top-[28px] custom-800:hidden">
+					<div className="absolute right-[16px] top-[8px] custom-600:right-[30px] custom-800:top-[10px] custom-1000:right-[43px] custom-1000:top-[28px] custom-800:hidden">
 						{userRole !== "visitor" && <UserProfile handleLogoutClick={handleLogoutClick} />}
 					</div>
 				</div>

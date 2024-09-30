@@ -1,34 +1,35 @@
 import { useEffect, useRef, useState } from "react";
-import Footer from "../../components/footer/Footer";
-import Header from "../../components/header/Header";
-import Viewer from "../../components/admin/publicationsFiltered/Viewer";
-import NetworkError from "../../components/modals/NetworkError";
-import LoadingSmall from "../../components/modals/LoadingSmall";
+import Footer from "../../../components/footer/Footer";
+import Header from "../../../components/header/Header";
+import Viewer from "../../../components/admin/publicationsFiltered/Viewer";
+import NetworkError from "../../../components/modals/NetworkError";
+import LoadingSmall from "../../../components/modals/LoadingSmall";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { getStoredToken } from "../../utils/getStoredToken";
-import { getPublicationsByRandom } from "../../interfaces/publicationsFilters/getPublicationsByRandom";
+import { getStoredToken } from "../../../utils/getStoredToken";
+import { getPublicationsByRandom } from "../../../interfaces/publicationsFilters/getPublicationsByRandom";
 import {
 	AdminPublicationsFilteredType,
 	FilterType,
 	FormattedPublicationsInfoType,
 	PublicationInfoType
-} from "../../components/admin/adminTypes";
-import { getPublicationsByUser } from "../../interfaces/publicationsFilters/getPublicationsByUser";
-import { getPublicationsByScore } from "../../interfaces/publicationsFilters/getPublicationsByScore";
-import { getPublicationsByDate } from "../../interfaces/publicationsFilters/getPublicationsByDate";
-import { getPublicationsByPending } from "../../interfaces/publicationsFilters/getPublicationsByPending";
-import { getPublicationsByAmmount } from "../../interfaces/publicationsFilters/getPublicationsByAmmount";
-import useLoadingState from "../../hooks/useLoadingState";
-import PublicationsPagination from "../../components/admin/publicationsFiltered/PublicationsPagination";
-import PublicationsFiltersMobile from "../../components/admin/publicationsFiltered/PublicationsFiltersMobile";
-import PublicationsFilters from "../../components/common/publications/PublicationsFilters";
+} from "../../../components/admin/adminTypes";
+import { getPublicationsByUser } from "../../../interfaces/publicationsFilters/getPublicationsByUser";
+import { getPublicationsByScore } from "../../../interfaces/publicationsFilters/getPublicationsByScore";
+import { getPublicationsByDate } from "../../../interfaces/publicationsFilters/getPublicationsByDate";
+import { getPublicationsByAmmount } from "../../../interfaces/publicationsFilters/getPublicationsByAmmount";
+import useLoadingState from "../../../hooks/useLoadingState";
+import PublicationsPagination from "../../../components/admin/publicationsFiltered/PublicationsPagination";
+import PublicationsFiltersMobile from "../../../components/admin/publicationsFiltered/PublicationsFiltersMobile";
+import { useUserRoleContext } from "../../../context/UserRoleContext";
+import PublicationsFilters from "../../../components/common/publications/PublicationsFilters";
 
-function AdminPublications() {
+function Publications() {
 	const location = useLocation();
 	const initFilter = location.state ? location.state : "random";
 	const [publicationsFiltered, setPublicationsFiltered] = useState<FormattedPublicationsInfoType[] | null>(null);
 	const [loadingState, changeLoadingState] = useLoadingState();
 	const [filter, setFilter] = useState<FilterType>(initFilter);
+	const { userRole } = useUserRoleContext();
 	const pagesLeft = useRef<number>(0);
 	const navigate = useNavigate();
 
@@ -44,7 +45,11 @@ function AdminPublications() {
 	//Al componente PublicationFilters se le pasa esta función y no "setFilter" directamente para que además de cambiar de filtro nos mande a la página 1 de dicho filtro (la página 4 de un filtro puede no existir en otro y dar error). Las otras formas de hacer esto que he probado afectaban a la información del "state" de los <Link> que redirigen a esta página, haciendo que cuando pulsáramos "Volver" desde AdminPublicationDetails no se recordara la página del filtro en la que estábamos y nos mandase de nuevo a la 1º. Esto sólo afecta a los cambios manuales de filtro y nada más.
 	function changeFilterWithNavigation(newFilter: FilterType) {
 		setFilter(newFilter);
-		navigate("/admin/publications/1", { state: newFilter });
+
+		let route = "";
+		if (userRole === "USER") route = "/user/publications/1";
+		if (userRole === "PRODUCER" || userRole === "PRODUCER_VIP") route = "/producer/publications/1";
+		navigate(route, { state: newFilter });
 	}
 
 	//Estas funciones organizan la información recuperada del servidor y la adaptan al formato que entiende el componente "Viewer", el formato ()
@@ -87,7 +92,7 @@ function AdminPublications() {
 			}
 		});
 
-		//Generamos tantos objetos con la información en el formato que acepta "Viewer" como usuarios hay en el array "users"
+		//Generamos tantos objetos (con la información en el formato que acepta "Viewer") como usuarios hay en el array "users"
 		users.map((user) => {
 			const formattedBlock: FormattedBlockType = {
 				title: user.name,
@@ -171,19 +176,6 @@ function AdminPublications() {
 		return result;
 	}
 
-	function formatByAuthPublications(publications: PublicationInfoType[]) {
-		const result: FormattedPublicationsInfoType[] = [];
-
-		const formattedBlock: FormattedBlockType = {
-			title: "Pendientes de publicación",
-			content: publications
-		};
-
-		result.push(formattedBlock);
-
-		return result;
-	}
-
 	useEffect(() => {
 		changeLoadingState("loading");
 		axiosController.current = new AbortController();
@@ -238,24 +230,6 @@ function AdminPublications() {
 				})
 				.catch(() => {
 					changeLoadingState("errorServer");
-				});
-		}
-
-		if (filter === "auth" && storedToken) {
-			getPublicationsByPending(storedToken, axiosController.current, id as string)
-				.then((response: AdminPublicationsFilteredType) => {
-					const formattedPublications = formatByAuthPublications(response.publications);
-					pagesLeft.current = response.pagination;
-					setPublicationsFiltered(formattedPublications);
-					changeLoadingState("loaded");
-				})
-				.catch((error) => {
-					if (error.message === "404") {
-						setPublicationsFiltered(null);
-						changeLoadingState("loaded");
-					} else {
-						changeLoadingState("errorServer");
-					}
 				});
 		}
 
@@ -339,4 +313,4 @@ function AdminPublications() {
 	);
 }
 
-export default AdminPublications;
+export default Publications;

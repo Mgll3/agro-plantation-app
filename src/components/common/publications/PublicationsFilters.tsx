@@ -1,11 +1,14 @@
+import { useUserRoleContext } from "../../../context/UserRoleContext";
+import { UserProducerFilterType } from "../../../pages/common/publications/userProducerFilterType";
 import { FilterType } from "../adminTypes";
 
 type PublicationsFiltersProps = {
 	filter: FilterType;
-	setFilter: (newFilter: FilterType) => void;
+	setFilter: (newFilter: FilterType | UserProducerFilterType) => void;
 };
 
 function PublicationsFilters({ filter, setFilter }: PublicationsFiltersProps) {
+	const { userRole } = useUserRoleContext();
 	const filterUnderlinedStyles = "absolute w-[40px] border-[3px] border-darkText border-solid";
 	const dotStyle = "w-[6px] h-[6px] bg-brandingLightGreen rounded-full";
 
@@ -67,17 +70,22 @@ function PublicationsFilters({ filter, setFilter }: PublicationsFiltersProps) {
 					<div className={filter === "ammount" ? filterUnderlinedStyles : ""}></div>
 				</div>
 			</li>
-			<li>
-				<div className={dotStyle}></div>
-			</li>
-			<li>
-				<div className="flex-col">
-					<button className="text-darkText" type="button" onClick={() => setFilter("auth")}>
-						Por Pendientes
-					</button>
-					<div className={filter === "auth" ? filterUnderlinedStyles : ""}></div>
-				</div>
-			</li>
+
+			{userRole === "ADMIN" && (
+				<>
+					<li>
+						<div className={dotStyle}></div>
+					</li>
+					<li>
+						<div className="flex-col">
+							<button className="text-darkText" type="button" onClick={() => setFilter("auth")}>
+								Por Pendientes
+							</button>
+							<div className={filter === "auth" ? filterUnderlinedStyles : ""}></div>
+						</div>
+					</li>
+				</>
+			)}
 		</ul>
 	);
 }

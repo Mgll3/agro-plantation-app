@@ -1,4 +1,4 @@
-import { LoginStateType } from "../../pages/LoginRegisterPage.tsx";
+import { LoginStateType } from "../../pages/common/LoginRegisterPage.tsx";
 import Button from "../button/Button.tsx";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { Link } from "react-router-dom";
@@ -32,26 +32,33 @@ export default function Login({ handleSubmit, handleRegisterClick, loginState, c
 
 	return (
 		// TAILWINDCSS => MOBILE FIRST
-		<div className={classNames(
-			"w-[100%] font-sans items-center text-[#eaefd4f2] overflow-x-hidden",
-			"max-[767px]:flex max-[767px]:flex-col-reverse max-[767px]:overflow-hidden" ,
-			"md:flex md:h-[100vh]  md:justify-center"
-		)}>
-			
-			<aside className="w-full h-[30vh] 
-			md:w-[35vw] md:h-[100vh]">
+		<div
+			className={classNames(
+				"w-[100%] font-sans items-center text-[#eaefd4f2] overflow-x-hidden",
+				"max-[767px]:flex max-[767px]:flex-col-reverse max-[767px]:overflow-hidden",
+				"md:flex md:h-[100vh]  md:justify-center"
+			)}
+		>
+			<aside
+				className="w-full h-[30vh] 
+			md:w-[35vw] md:h-[100vh]"
+			>
 				{/*First line, Mobile First */}
-				<div className={classNames(
-					"w-[100%] bg-loginMobile bg-cover bg-no-repeat",
-					"max-[767px]:relative max-[767px]:bg-center max-[767px]:justify-end max-[767px]:items-center max-[767px]:flex max-[767px]:flex-col max-[767px]:h-full max-[767px]:gap-2",
-					"md:bg-login md:h-[100vh] md:bg-center md:flex md:justify-end md:items-center "
-				)}>
+				<div
+					className={classNames(
+						"w-[100%] bg-loginMobile bg-cover bg-no-repeat",
+						"max-[767px]:relative max-[767px]:bg-center max-[767px]:justify-end max-[767px]:items-center max-[767px]:flex max-[767px]:flex-col max-[767px]:h-full max-[767px]:gap-2",
+						"md:bg-login md:h-[100vh] md:bg-center md:flex md:justify-end md:items-center "
+					)}
+				>
 					{/* Capa sobre imagen Mobile */}
 					<div className="max-[767px]:absolute max-[767px]:inset-0 max-[767px]:bg-gradient-to-b max-[767px]:from-[#4b9742] max-[767px]:to-[#0b7115] max-[767px]:opacity-55 max-[767px]:z-0"></div>
 
-					<h1 className="bg-[#EAE3C0] text-black font-semibold rounded-2xl font-sans 
+					<h1
+						className="bg-[#EAE3C0] text-black font-semibold rounded-2xl font-sans 
 					max-[767px]:p-[.1rem_4rem] max-[767px]:z-20 
-					md:text-2xl  md:p-[1rem_5rem]  md:translate-x-[14px] md:translate-y-[-20px] ">
+					md:text-2xl  md:p-[1rem_5rem]  md:translate-x-[14px] md:translate-y-[-20px] "
+					>
 						Ingreso
 					</h1>
 
@@ -62,13 +69,15 @@ export default function Login({ handleSubmit, handleRegisterClick, loginState, c
 						max-[767px]:z-20 max-[767px]:w-[80%] mb-4 max-[767px]:text-[1.15rem] max-[767px]:text-black"
 					>
 						Todos los derechos reservados para PLANT-IN <s className="max-[767px]:text-[#1B7E25]">&copy;</s>
-						<small >Marzo 2024</small>
+						<small>Marzo 2024</small>
 					</Link>
 				</div>
 			</aside>
 			{/*absolute bottom-0 p-[4px_4px] m-[1rem_1.7rem] bg-[#94B447] text-[#1B7E25] text-center text-[15px] rounded-md* *NO ME ACUERDO SI SERVÍA*/}
-			<div className="w-full h-[70vh] 
-				md:w-[max-content] md:h-[100vh]  ">
+			<div
+				className="w-full h-[70vh] 
+				md:w-[max-content] md:h-[100vh]  "
+			>
 				<Formik initialValues={initialValues} validationSchema={registerSchema} onSubmit={handleSubmit}>
 					<Form
 						name="loginForm"

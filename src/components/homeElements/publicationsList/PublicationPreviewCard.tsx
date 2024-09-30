@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { useUserRoleContext } from "../../../context/UserRoleContext";
 
 type PublicationPreviewCardProps = {
 	id: number;
@@ -10,10 +11,14 @@ type PublicationPreviewCardProps = {
 };
 
 function PublicationPreviewCard({ id, mainImage, title, author, mainText }: PublicationPreviewCardProps) {
+	const { userRole } = useUserRoleContext();
 	const [maxChars, setMaxChars] = useState(0);
 	const cardContainer = useRef<HTMLDivElement>(null);
 
-	const linkUrl = `/publications/${id}`;
+	let linkUrl = "/";
+
+	if (userRole === "USER") linkUrl = `user/publications/details/${id}`;
+	if (userRole === "PRODUCER" || userRole === "PRODUCER_VIP") linkUrl = `producer/publications/details/${id}`;
 
 	function calcMaxChars() {
 		const cardWidth = cardContainer.current?.clientWidth;
