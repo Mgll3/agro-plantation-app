@@ -1,5 +1,6 @@
 package com.gardengroup.agroplantationapp.service;
 
+import com.gardengroup.agroplantationapp.model.dto.publication.PublicationDTO;
 import com.gardengroup.agroplantationapp.model.dto.publication.PublicationFilterDTO;
 import com.gardengroup.agroplantationapp.model.dto.publication.PublicationSaveDTO;
 import com.gardengroup.agroplantationapp.model.dto.publication.PublicationUpdDTO;
@@ -35,22 +36,22 @@ public class PublicationService implements IPublicationService {
     @Autowired
     VoteRepository voteRepository;
 
-    //crea la publicacion y ya pone su estado de la autorizacion en pendiente
+    // crea la publicacion y ya pone su estado de la autorizacion en pendiente
     @Transactional
     public Publication savePublication(PublicationSaveDTO publicationDTO, String email) {
 
         Publication publication = new Publication(publicationDTO);
 
         User user = userRepository.findByEmail(email)
-            .orElseThrow(() -> new DataAccessException(Constants.U_NOT_FOUND) {
-        });
+                .orElseThrow(() -> new DataAccessException(Constants.U_NOT_FOUND) {
+                });
 
         publication.setAuthor(user);
 
-        //Asignaciones de parametros default
+        // Asignaciones de parametros default
         publication.setVisibility(false);
         publication.setScore(0);
-        //Inicializo la publicacion con estado rechazado
+        // Inicializo la publicacion con estado rechazado
         publication.setAuthorizationStatus(new StateRequest(3L));
         publication.setPublicationDate(LocalDateTime.now());
         publication.setPlantation(publication.getPlantation());
@@ -62,44 +63,44 @@ public class PublicationService implements IPublicationService {
     public void saveImages(MultipartFile mainFile, List<MultipartFile> files, Long publicationId) {
         String folder = "publications";
 
-        //Busqueda de publicacion que vamos a modificar
+        // Busqueda de publicacion que vamos a modificar
         Publication publication = publicationRepository.findById(publicationId)
-            .orElseThrow(() -> new DataAccessException(Constants.P_NOT_FOUND) {
-        });
+                .orElseThrow(() -> new DataAccessException(Constants.P_NOT_FOUND) {
+                });
 
-        //Revisar si hay imagen principal y luego guardarla
-        if (!mainFile.getOriginalFilename().isEmpty()){
+        // Revisar si hay imagen principal y luego guardarla
+        if (!mainFile.getOriginalFilename().isEmpty()) {
             Map result = cloudinaryService.upload(mainFile, folder);
-    
-            Image mainImage = new Image(result.get("public_id").toString(), 
-            result.get("secure_url").toString());
+
+            Image mainImage = new Image(result.get("public_id").toString(),
+                    result.get("secure_url").toString());
             publication.setMainImage(mainImage);
-        } else{
+        } else {
             throw new DataAccessException("Main image not found") {
             };
         }
         List<Image> images = new ArrayList<>();
-        //Chequeo si hay imagenes secundarias y luego guardarlas
+        // Chequeo si hay imagenes secundarias y luego guardarlas
         if (!files.get(0).getOriginalFilename().isEmpty()) {
             for (MultipartFile file : files) {
-                //Posible montaje simultaneo de imagenes para mayor velocidad
+                // Posible montaje simultaneo de imagenes para mayor velocidad
                 Map resultC = cloudinaryService.upload(file, folder);
-                Image image = new Image(resultC.get("public_id").toString(), 
-                    resultC.get("secure_url").toString());
+                Image image = new Image(resultC.get("public_id").toString(),
+                        resultC.get("secure_url").toString());
                 images.add(image);
             }
             publication.setImages(images);
-        } 
-        
+        }
+
         publicationRepository.save(publication);
     }
 
     @Transactional
     public Publication updateVisibility(Long publicationId, String email) {
-        
+
         User user = userRepository.findByEmail(email)
-            .orElseThrow(() -> new DataAccessException(Constants.U_NOT_FOUND) {
-        });
+                .orElseThrow(() -> new DataAccessException(Constants.U_NOT_FOUND) {
+                });
 
         Optional<Publication> optionalPublication = publicationRepository.findById(publicationId);
 
@@ -123,9 +124,8 @@ public class PublicationService implements IPublicationService {
         }
     }
 
-    
     public List<Publication> getTopPublications() {
-        
+
         List<Publication> allPublications = publicationRepository.findTop6ByOrderByScoreDesc();
 
         if (allPublications.isEmpty()) {
@@ -137,16 +137,25 @@ public class PublicationService implements IPublicationService {
     }
 
     @Transactional
-    public Publication getPublication(Long id) {
+    public PublicationDTO getPublication(Long publicationId, String email) {
 
-        Optional<Publication> publication = publicationRepository.findById(id);
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new DataAccessException(Constants.U_NOT_FOUND) {
+                });
 
-        if (publication.isPresent()) {
-            return publication.get();
+        Publication publication = publicationRepository.findById(publicationId)
+                .orElseThrow(() -> new DataAccessException(Constants.P_NOT_FOUND) {
+                });
+        ;
+        PublicationDTO publicationDTO = new PublicationDTO(publication);
+        Optional<Vote> voto = voteRepository.findByUserAndPublication(publicationId, user.getId());
+
+        if (voto.isPresent()) {
+            publicationDTO.setUserVote(true);
         } else {
-            throw new DataAccessException(Constants.P_NOT_FOUND) {
-            };
+            publicationDTO.setUserVote(false);
         }
+        return publicationDTO;
 
     }
 
@@ -163,7 +172,6 @@ public class PublicationService implements IPublicationService {
         }
 
     }
-
 
     @Transactional
     public void updatePublication(PublicationUpdDTO publicationUpdDTO) {
@@ -184,20 +192,20 @@ public class PublicationService implements IPublicationService {
     @Transactional
     public void deletePublication(Long id) {
         Publication publicationSaved = publicationRepository.findById(id)
-            .orElseThrow(() -> new DataAccessException(Constants.P_NOT_FOUND) {
-        });
+                .orElseThrow(() -> new DataAccessException(Constants.P_NOT_FOUND) {
+                });
 
-        //Comprobaciones, existencia de las imagenes
+        // Comprobaciones, existencia de las imagenes
         if (publicationSaved.getMainImage() != null) {
             cloudinaryService.delete(publicationSaved.getMainImage().getId());
         }
         if (publicationSaved.getImages() != null) {
-            
+
             for (Image image : publicationSaved.getImages()) {
                 cloudinaryService.delete(image.getId());
             }
         }
-        
+
         publicationRepository.deleteById(id);
 
     }
@@ -219,14 +227,15 @@ public class PublicationService implements IPublicationService {
                 // Buscar el estado "ACCEPTED" en la tabla StateRequest
                 StateRequest acceptedState = stateRequestRepository.findByState("ACCEPTED")
                         .orElseThrow(() -> new RuntimeException("Estado 'ACCEPTED' no encontrado"));
-                
+
                 // Asignar el estado "ACCEPTED" a la publicación
                 publication.setAuthorizationStatus(acceptedState);
 
                 publicationRepository.save(publication);
 
             } else {
-                throw new IllegalStateException("La publicación con ID " + publicationId + " no está en estado PENDIENTE");
+                throw new IllegalStateException(
+                        "La publicación con ID " + publicationId + " no está en estado PENDIENTE");
             }
         } else {
             throw new IllegalArgumentException(Constants.P_NOT_FOUND);
@@ -251,13 +260,13 @@ public class PublicationService implements IPublicationService {
                 // Guardar la publicación actualizada en la base de datos
                 publicationRepository.save(publication);
             } else {
-                throw new IllegalStateException("La publicación con ID " + publicationId + " no está en estado PENDIENTE");
+                throw new IllegalStateException(
+                        "La publicación con ID " + publicationId + " no está en estado PENDIENTE");
             }
         } else {
             throw new IllegalArgumentException("Publicación con ID " + publicationId + " no encontrada.");
         }
     }
-
 
     @Transactional
     public Vote toggleVote(Long publicationId, String userEmail) {
@@ -272,8 +281,10 @@ public class PublicationService implements IPublicationService {
             // El usuario ya ha votado, cambiar el estado del voto
             existingVote.setState(!existingVote.isState()); // Cambiar el estado del voto
 
-            // Actualizar el puntaje de la publicación en función del cambio de estado del voto
-            int scoreChange = existingVote.isState() ? 1 : -1; // Sumar 1 al puntaje si se vota positivamente, restar 1 si se quita el voto positivo
+            // Actualizar el puntaje de la publicación en función del cambio de estado del
+            // voto
+            int scoreChange = existingVote.isState() ? 1 : -1; // Sumar 1 al puntaje si se vota positivamente, restar 1
+                                                               // si se quita el voto positivo
             int newScore = publication.getScore() + scoreChange; // Calcular el nuevo puntaje
             publication.setScore(newScore);
 
@@ -282,8 +293,8 @@ public class PublicationService implements IPublicationService {
         } else {
             // El usuario no ha votado antes, se crea un nuevo voto
             User user = userRepository.findByEmail(userEmail)
-                .orElseThrow(() -> new DataAccessException(Constants.U_NOT_FOUND) {
-            });
+                    .orElseThrow(() -> new DataAccessException(Constants.U_NOT_FOUND) {
+                    });
 
             Vote newVote = new Vote();
             newVote.setUser(user);
@@ -304,10 +315,9 @@ public class PublicationService implements IPublicationService {
         return existingVote;
     }
 
-
     @Transactional
-    public PublicationFilterDTO getPublicationsByLike(int pag){
-        
+    public PublicationFilterDTO getPublicationsByLike(int pag) {
+
         if (pag < 1) {
             throw new IllegalArgumentException(Constants.PAGE_INVALID);
         }
@@ -318,23 +328,21 @@ public class PublicationService implements IPublicationService {
         if (pag == 1) {
             pag = 0;
         } else {
-            pag = (pag-1) * 15;
+            pag = (pag - 1) * 15;
         }
-        
 
         List<Publication> publications = publicationRepository.publicationsBylike(pag, pagTop);
-        //Calculo número posible de paginaciones que hay en base de datos
+        // Calculo número posible de paginaciones que hay en base de datos
         Double paginationDouble = (double) publications.size() / 15;
-        int pagination = (int) (Math.ceil(paginationDouble)-1);
+        int pagination = (int) (Math.ceil(paginationDouble) - 1);
 
         if (!publications.isEmpty()) {
             if (publications.size() > 15) {
-                //Envio solo 15 publicaciones que necesita el front
+                // Envio solo 15 publicaciones que necesita el front
                 publications = publications.subList(0, 15);
-            } 
+            }
 
-            return  new PublicationFilterDTO(publications, pagination);
-            
+            return new PublicationFilterDTO(publications, pagination);
 
         } else {
             throw new DataAccessException(Constants.PS_NOT_FOUND) {
@@ -343,7 +351,7 @@ public class PublicationService implements IPublicationService {
     }
 
     @Transactional
-    public PublicationFilterDTO getPublicationsByUser(int pag){
+    public PublicationFilterDTO getPublicationsByUser(int pag) {
 
         if (pag < 1) {
             throw new IllegalArgumentException(Constants.PAGE_INVALID);
@@ -355,23 +363,21 @@ public class PublicationService implements IPublicationService {
         if (pag == 1) {
             pag = 0;
         } else {
-            pag = (pag-1) * 15;
+            pag = (pag - 1) * 15;
         }
-        
 
         List<Publication> publications = publicationRepository.publicationsByUser(pag, pagTop);
-        //Calculo número posible de paginaciones que hay en base de datos
+        // Calculo número posible de paginaciones que hay en base de datos
         Double paginationDouble = (double) publications.size() / 15;
-        int pagination = (int) (Math.ceil(paginationDouble)-1);
+        int pagination = (int) (Math.ceil(paginationDouble) - 1);
 
         if (!publications.isEmpty()) {
             if (publications.size() > 15) {
-                //Envio solo 15 publicaciones que necesita el front
+                // Envio solo 15 publicaciones que necesita el front
                 publications = publications.subList(0, 15);
-            } 
+            }
 
             return new PublicationFilterDTO(publications, pagination);
-            
 
         } else {
             throw new DataAccessException(Constants.PS_NOT_FOUND) {
@@ -380,8 +386,8 @@ public class PublicationService implements IPublicationService {
     }
 
     @Transactional
-    public PublicationFilterDTO getPublicationsByDate(int pag){
-        
+    public PublicationFilterDTO getPublicationsByDate(int pag) {
+
         if (pag < 1) {
             throw new IllegalArgumentException(Constants.PAGE_INVALID);
         }
@@ -392,23 +398,21 @@ public class PublicationService implements IPublicationService {
         if (pag == 1) {
             pag = 0;
         } else {
-            pag = (pag-1) * 15;
+            pag = (pag - 1) * 15;
         }
-        
 
         List<Publication> publications = publicationRepository.publicationsByDate(pag, pagTop);
-        //Calculo número posible de paginaciones que hay en base de datos
+        // Calculo número posible de paginaciones que hay en base de datos
         Double paginationDouble = (double) publications.size() / 15;
-        int pagination = (int) (Math.ceil(paginationDouble)-1);
+        int pagination = (int) (Math.ceil(paginationDouble) - 1);
 
         if (!publications.isEmpty()) {
             if (publications.size() > 15) {
-                //Envio solo 15 publicaciones que necesita el front
+                // Envio solo 15 publicaciones que necesita el front
                 publications = publications.subList(0, 15);
-            } 
+            }
 
             return new PublicationFilterDTO(publications, pagination);
-            
 
         } else {
             throw new DataAccessException(Constants.PS_NOT_FOUND) {
@@ -417,8 +421,8 @@ public class PublicationService implements IPublicationService {
     }
 
     @Transactional
-    public PublicationFilterDTO getPublicationsByAleatory(int pag){
-        
+    public PublicationFilterDTO getPublicationsByAleatory(int pag) {
+
         if (pag < 1) {
             throw new IllegalArgumentException(Constants.PAGE_INVALID);
         }
@@ -429,19 +433,19 @@ public class PublicationService implements IPublicationService {
         if (pag == 1) {
             pag = 0;
         } else {
-            pag = (pag-1) * 15;
+            pag = (pag - 1) * 15;
         }
-        
+
         List<Publication> publications = publicationRepository.publicationsByAleatory(pag, pagTop);
-        //Calculo número posible de paginaciones que hay en base de datos
+        // Calculo número posible de paginaciones que hay en base de datos
         Double paginationDouble = (double) publications.size() / 15;
-        int pagination = (int) (Math.ceil(paginationDouble)-1);
+        int pagination = (int) (Math.ceil(paginationDouble) - 1);
 
         if (!publications.isEmpty()) {
             if (publications.size() > 15) {
-                //Envio solo 15 publicaciones que necesita el front
+                // Envio solo 15 publicaciones que necesita el front
                 publications = publications.subList(0, 15);
-            } 
+            }
 
             return new PublicationFilterDTO(publications, pagination);
 
@@ -452,8 +456,8 @@ public class PublicationService implements IPublicationService {
     }
 
     @Transactional
-    public PublicationFilterDTO getPublicationsByPending(int pag){
-        
+    public PublicationFilterDTO getPublicationsByPending(int pag) {
+
         if (pag < 1) {
             throw new IllegalArgumentException(Constants.PAGE_INVALID);
         }
@@ -463,20 +467,19 @@ public class PublicationService implements IPublicationService {
         // Busco si hay 3 paginaciones más adelante de la actual (1 Paginacion = 15)
         if (pag == 1) {
             pag = 0;
-            
+
         } else {
-            pag = (pag-1) * 15;
+            pag = (pag - 1) * 15;
         }
-        
 
         final List<Publication> publications = publicationRepository.publicationsByPending(pag, pagTop);
-        //Calculo número posible de paginaciones que hay en base de datos
+        // Calculo número posible de paginaciones que hay en base de datos
         Double paginationDouble = (double) publicationRepository.countPublicationsByPending() / 15;
-        int pagination = (int) (Math.ceil(paginationDouble)-1);
+        int pagination = (int) (Math.ceil(paginationDouble) - 1);
 
         if (!publications.isEmpty()) {
             return new PublicationFilterDTO(publications, pagination);
-            
+
         } else {
             throw new DataAccessException(Constants.PS_NOT_FOUND) {
             };
@@ -485,8 +488,8 @@ public class PublicationService implements IPublicationService {
     }
 
     @Transactional
-    public PublicationFilterDTO getPublicationsByQuantity(int pag){
-        
+    public PublicationFilterDTO getPublicationsByQuantity(int pag) {
+
         if (pag < 1) {
             throw new IllegalArgumentException(Constants.PAGE_INVALID);
         }
@@ -497,23 +500,21 @@ public class PublicationService implements IPublicationService {
         if (pag == 1) {
             pag = 0;
         } else {
-            pag = (pag-1) * 15;
+            pag = (pag - 1) * 15;
         }
-        
-        
+
         List<Publication> publications = publicationRepository.publicationsByQuantity(pag, pagTop);
-        //Calculo número posible de paginaciones que hay en base de datos
+        // Calculo número posible de paginaciones que hay en base de datos
         Double paginationDouble = (double) publications.size() / 15;
-        int pagination = (int) (Math.ceil(paginationDouble)-1);
+        int pagination = (int) (Math.ceil(paginationDouble) - 1);
 
         if (!publications.isEmpty()) {
             if (publications.size() > 15) {
-                //Envio solo 15 publicaciones que necesita el front
+                // Envio solo 15 publicaciones que necesita el front
                 publications = publications.subList(0, 15);
-            } 
+            }
 
             return new PublicationFilterDTO(publications, pagination);
-            
 
         } else {
             throw new DataAccessException(Constants.PS_NOT_FOUND) {
@@ -521,16 +522,16 @@ public class PublicationService implements IPublicationService {
         }
     }
 
-    //Temporal
+    // Temporal
     @Transactional
     public void changeToPending(Long publicationId) {
-        Publication publication = publicationRepository.findById(publicationId).orElseThrow(() -> new DataAccessException(Constants.P_NOT_FOUND) {
-        });
+        Publication publication = publicationRepository.findById(publicationId)
+                .orElseThrow(() -> new DataAccessException(Constants.P_NOT_FOUND) {
+                });
         publication.setAuthorizationStatus(new StateRequest(1L));
-        
+
         publicationRepository.save(publication);
-    
+
     }
-    
 
 }

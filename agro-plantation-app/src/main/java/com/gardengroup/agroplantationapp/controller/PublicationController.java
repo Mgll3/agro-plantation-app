@@ -31,7 +31,6 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
-
 @RestController
 @RequestMapping("/v1/publication")
 @CrossOrigin(origins = "*")
@@ -42,8 +41,8 @@ public class PublicationController {
     @Autowired
     private SecurityService securityService;
 
-    @Operation(summary = "Guardar publicación",
-            description = "End Point para guardar una nueva publicación en base de datos, con Token", tags = {"Publication"})
+    @Operation(summary = "Guardar publicación", description = "End Point para guardar una nueva publicación en base de datos, con Token", tags = {
+            "Publication" })
     @Parameter(name = "Publication", description = "Objeto Publication que se guardará en base de datos")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Publicación guardada exitosamente"),
@@ -52,10 +51,11 @@ public class PublicationController {
             @ApiResponse(responseCode = "400", description = "Error de validación en los campos de la publicación")
     })
     @PostMapping("/save")
-    public ResponseEntity<Publication> savePublication(@Valid @RequestBody PublicationSaveDTO publication, HttpServletRequest request) {
+    public ResponseEntity<Publication> savePublication(@Valid @RequestBody PublicationSaveDTO publication,
+            HttpServletRequest request) {
         try {
             String email = securityService.getEmail(request);
-            //Validar si existe correo
+            // Validar si existe correo
             if (email == null) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
             }
@@ -67,15 +67,15 @@ public class PublicationController {
         }
     }
 
-    @Operation(summary = "Guardar las imágenes de una publicacion ya creada",
-            description = "End Point para subir imagenes a la nube", tags = {"Publication"})
+    @Operation(summary = "Guardar las imágenes de una publicacion ya creada", description = "End Point para subir imagenes a la nube", tags = {
+            "Publication" })
     @Parameter(name = "mainImage", description = "Imagen principal que se va a guardar")
     @Parameter(name = "images", description = "Lista de imagenes secundarias que se van a guardar")
     @Parameter(name = "publicationId", description = "Id de la publicación a la que se le van a asociar las imagenes")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Imagenes guardadas exitosamente"),
-        @ApiResponse(responseCode = "501", description = "Error al guardar las imagenes"),
-        @ApiResponse(responseCode = "404", description = "Publicación no encontrada")
+            @ApiResponse(responseCode = "200", description = "Imagenes guardadas exitosamente"),
+            @ApiResponse(responseCode = "501", description = "Error al guardar las imagenes"),
+            @ApiResponse(responseCode = "404", description = "Publicación no encontrada")
     })
     @PostMapping("/saveImages")
     public ResponseEntity<Void> saveImages(
@@ -98,15 +98,13 @@ public class PublicationController {
         }
     }
 
-    @Operation(summary = "Actualizar visibilidad de una publicación",
-            description = "Endpoint para actualizar la visibilidad de una publicación por su ID", tags = {"Publication"})
+    @Operation(summary = "Actualizar visibilidad de una publicación", description = "Endpoint para actualizar la visibilidad de una publicación por su ID", tags = {
+            "Publication" })
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Visibilidad actualizada correctamente",
-                    content = @Content(schema = @Schema(implementation = Publication.class))),
+            @ApiResponse(responseCode = "200", description = "Visibilidad actualizada correctamente", content = @Content(schema = @Schema(implementation = Publication.class))),
             @ApiResponse(responseCode = "401", description = "No autorizado - El usuario no tiene permisos para actualizar la visibilidad"),
             @ApiResponse(responseCode = "404", description = "No encontrado - La publicación con el ID proporcionado no existe"),
-            @ApiResponse(responseCode = "501", description = "Error al procesar la solicitud",
-                    content = @Content(schema = @Schema(implementation = String.class)))
+            @ApiResponse(responseCode = "501", description = "Error al procesar la solicitud", content = @Content(schema = @Schema(implementation = String.class)))
     })
     @PutMapping("/updateVisibility/{publicationId}")
     public ResponseEntity<Publication> updateVisibility(@PathVariable Long publicationId, HttpServletRequest request) {
@@ -125,8 +123,8 @@ public class PublicationController {
         }
     }
 
-    @Operation(summary = "Obtener una publicación",
-            description = "End Point para obtener una publicación por su id", tags = {"Publication"})
+    @Operation(summary = "Obtener una publicación", description = "End Point para obtener una publicación por su id", tags = {
+            "Publication" })
     @Parameter(name = "id", description = "Id de la publicación que se desea obtener")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Publicación obtenida exitosamente"),
@@ -134,9 +132,10 @@ public class PublicationController {
             @ApiResponse(responseCode = "500", description = "Error al obtener la publicación")
     })
     @GetMapping("/{id}")
-    public ResponseEntity<Publication> getPublication(@PathVariable Long id) {
+    public ResponseEntity<PublicationDTO> getPublication(@PathVariable Long id, HttpServletRequest request) {
         try {
-            Publication publication = publicationService.getPublication(id);
+            String email = securityService.getEmail(request);
+            PublicationDTO publication = publicationService.getPublication(id, email);
             return new ResponseEntity<>(publication, HttpStatus.OK);
         } catch (Exception e) {
             log.error(e.getMessage());
@@ -148,10 +147,8 @@ public class PublicationController {
         }
     }
 
-
-    @Operation(summary = "Obtener publicaciones por email",
-            description = "End Point para obtener todas las publicaciones asociadas a un email de usuario",
-            tags = {"Publication"})
+    @Operation(summary = "Obtener publicaciones por email", description = "End Point para obtener todas las publicaciones asociadas a un email de usuario", tags = {
+            "Publication" })
     @Parameter(name = "email", description = "Email del usuario que se desea obtener sus publicaciones")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Publicaciones obtenidas exitosamente"),
@@ -173,11 +170,8 @@ public class PublicationController {
         }
     }
 
-
-    @Operation(summary = "Actualizar Publicación existente",
-            description = "Modificar los datos de una publicación ya existente", tags = "Publication")
-    @Parameter(name = "Publication",
-            description = "Publicación que va ser actualizada, unicamente se actualizan los campos title, plantation y visibility")
+    @Operation(summary = "Actualizar Publicación existente", description = "Modificar los datos de una publicación ya existente", tags = "Publication")
+    @Parameter(name = "Publication", description = "Publicación que va ser actualizada, unicamente se actualizan los campos title, plantation y visibility")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Publicación actualizada exitosamente"),
             @ApiResponse(responseCode = "404", description = "Publicación no encontrada"),
@@ -198,8 +192,7 @@ public class PublicationController {
         }
     }
 
-    @Operation(summary = "Eliminar Publicacion",
-            description = "Eliminar todos los datos de una Publicación por su Id", tags = "Publication")
+    @Operation(summary = "Eliminar Publicacion", description = "Eliminar todos los datos de una Publicación por su Id", tags = "Publication")
     @Parameter(name = "id", description = "Id de la publicación que se desea eliminar")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Publicación eliminada exitosamente"),
@@ -221,16 +214,12 @@ public class PublicationController {
         }
     }
 
-    
-
-    @Operation(summary = "Obtener las publicaciones principales",
-            description = "Endpoint para obtener las publicaciones más populares o mejor valoradas", tags = {"Publication"})
+    @Operation(summary = "Obtener las publicaciones principales", description = "Endpoint para obtener las publicaciones más populares o mejor valoradas", tags = {
+            "Publication" })
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Éxito al obtener las publicaciones principales",
-                    content = @Content(schema = @Schema(implementation = List.class))),
+            @ApiResponse(responseCode = "200", description = "Éxito al obtener las publicaciones principales", content = @Content(schema = @Schema(implementation = List.class))),
             @ApiResponse(responseCode = "404", description = "No hay publicaciones para mostrar"),
-            @ApiResponse(responseCode = "500", description = "Error al procesar la solicitud",
-                    content = @Content(schema = @Schema(implementation = String.class)))
+            @ApiResponse(responseCode = "500", description = "Error al procesar la solicitud", content = @Content(schema = @Schema(implementation = String.class)))
     })
     @GetMapping("publications/top")
     public ResponseEntity<List<Publication>> getTopPublications() {
@@ -247,9 +236,7 @@ public class PublicationController {
         }
     }
 
-    @Operation(summary = "Alternar voto para una publicación",
-            description = "Endpoint para alternar el voto (me gusta/no me gusta) para una publicación específica, necesita token", 
-            tags = "Publication")
+    @Operation(summary = "Alternar voto para una publicación", description = "Endpoint para alternar el voto (me gusta/no me gusta) para una publicación específica, necesita token", tags = "Publication")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Voto alternado exitosamente"),
             @ApiResponse(responseCode = "404", description = "Publicación no encontrada"),
@@ -272,14 +259,11 @@ public class PublicationController {
         }
     }
 
-    @Operation(summary = "Obtener publicaciones pendientes", 
-        description = "Endpoint para obtener las publicaciones pendientes", tags = "Publication")
+    @Operation(summary = "Obtener publicaciones pendientes", description = "Endpoint para obtener las publicaciones pendientes", tags = "Publication")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Éxito al obtener las publicaciones pendientes",
-                    content = @Content(schema = @Schema(implementation = List.class))),
+            @ApiResponse(responseCode = "200", description = "Éxito al obtener las publicaciones pendientes", content = @Content(schema = @Schema(implementation = List.class))),
             @ApiResponse(responseCode = "204", description = "No hay publicaciones pendientes para mostrar"),
-            @ApiResponse(responseCode = "501", description = "Error al procesar la solicitud",
-                    content = @Content(schema = @Schema(implementation = String.class)))
+            @ApiResponse(responseCode = "501", description = "Error al procesar la solicitud", content = @Content(schema = @Schema(implementation = String.class)))
     })
     @GetMapping("/pendingPublications")
     public ResponseEntity<List<Publication>> getPendingPublications() {
@@ -287,8 +271,7 @@ public class PublicationController {
         return ResponseEntity.ok(pendingPublications);
     }
 
-    @Operation(summary = "Aprobar publicación", 
-        description = "Endpoint para aprobar una solicitud de publicación", tags = "Publication")
+    @Operation(summary = "Aprobar publicación", description = "Endpoint para aprobar una solicitud de publicación", tags = "Publication")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Éxito al aprobar la publicación"),
             @ApiResponse(responseCode = "501", description = "Error al procesar la solicitud")
@@ -308,8 +291,7 @@ public class PublicationController {
         }
     }
 
-    @Operation(summary = "Rechazar publicación", 
-        description = "Endpoint para rechazar una solicitud de publicación", tags = "Publication")
+    @Operation(summary = "Rechazar publicación", description = "Endpoint para rechazar una solicitud de publicación", tags = "Publication")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Éxito al rechazar la publicación"),
             @ApiResponse(responseCode = "501", description = "Error al procesar la solicitud")
@@ -325,9 +307,8 @@ public class PublicationController {
         }
     }
 
-    @Operation(summary = "Obtener publicaciones por Likes",
-            description = "End Point para obtener las publicaciónes en orden por más likes, además devuelve como maximo 3, el número de paginaciónes siguientes posibles",
-            tags = {"Publication Filters"})
+    @Operation(summary = "Obtener publicaciones por Likes", description = "End Point para obtener las publicaciónes en orden por más likes, además devuelve como maximo 3, el número de paginaciónes siguientes posibles", tags = {
+            "Publication Filters" })
     @Parameter(name = "pag", description = "Numero de Paginación")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Publicaciones obtenidas exitosamente"),
@@ -349,9 +330,8 @@ public class PublicationController {
         }
     }
 
-    @Operation(summary = "Obtener publicaciones por Usuario",
-            description = "End Point para obtener las publicaciónes en orden alfabetico por usuario, además devuelve como maximo 3, el número de paginaciónes siguientes posibles",
-            tags = {"Publication Filters"})
+    @Operation(summary = "Obtener publicaciones por Usuario", description = "End Point para obtener las publicaciónes en orden alfabetico por usuario, además devuelve como maximo 3, el número de paginaciónes siguientes posibles", tags = {
+            "Publication Filters" })
     @Parameter(name = "pag", description = "Numero de Paginación")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Publicaciones obtenidas exitosamente"),
@@ -373,9 +353,8 @@ public class PublicationController {
         }
     }
 
-    @Operation(summary = "Obtener publicaciones aleatoriamente",
-            description = "End Point para obtener las publicaciónes en orden más recientes por fecha, además devuelve como maximo 3, el número de paginaciónes siguientes posibles",
-            tags = {"Publication Filters"})
+    @Operation(summary = "Obtener publicaciones aleatoriamente", description = "End Point para obtener las publicaciónes en orden más recientes por fecha, además devuelve como maximo 3, el número de paginaciónes siguientes posibles", tags = {
+            "Publication Filters" })
     @Parameter(name = "pag", description = "Numero de Paginación")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Publicaciones obtenidas exitosamente"),
@@ -397,9 +376,8 @@ public class PublicationController {
         }
     }
 
-    @Operation(summary = "Obtener publicaciones aleatoriamente",
-            description = "End Point para obtener las publicaciónes de forma aleatoria, además devuelve como maximo 3, el número de paginaciónes siguientes posibles",
-            tags = {"Publication Filters"})
+    @Operation(summary = "Obtener publicaciones aleatoriamente", description = "End Point para obtener las publicaciónes de forma aleatoria, además devuelve como maximo 3, el número de paginaciónes siguientes posibles", tags = {
+            "Publication Filters" })
     @Parameter(name = "pag", description = "Numero de Paginación")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Publicaciones obtenidas exitosamente"),
@@ -421,9 +399,8 @@ public class PublicationController {
         }
     }
 
-    @Operation(summary = "Obtener publicaciones pendientes",
-            description = "End Point para obtener las publicaciónes pendientes de aprobar para ser publicas, además devuelve como maximo 3, el número de paginaciónes siguientes posibles",
-            tags = {"Publication Filters"})
+    @Operation(summary = "Obtener publicaciones pendientes", description = "End Point para obtener las publicaciónes pendientes de aprobar para ser publicas, además devuelve como maximo 3, el número de paginaciónes siguientes posibles", tags = {
+            "Publication Filters" })
     @Parameter(name = "pag", description = "Numero de Paginación")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Publicaciones obtenidas exitosamente"),
@@ -433,7 +410,7 @@ public class PublicationController {
     @GetMapping("/pending/{pag}")
     public ResponseEntity<PublicationFilterDTO> getPublicationsByPending(@PathVariable int pag) {
         try {
-            
+
             PublicationFilterDTO publications = publicationService.getPublicationsByPending(pag);
 
             return new ResponseEntity<>(publications, HttpStatus.OK);
@@ -447,9 +424,8 @@ public class PublicationController {
         }
     }
 
-    @Operation(summary = "Obtener publicaciones por Usuario y cantidad",
-            description = "End Point para obtener las publicaciónes en orden por usuario con cantidad mayor a menor, además devuelve como maximo 3, el número de paginaciónes siguientes posibles",
-            tags = {"Publication Filters"})
+    @Operation(summary = "Obtener publicaciones por Usuario y cantidad", description = "End Point para obtener las publicaciónes en orden por usuario con cantidad mayor a menor, además devuelve como maximo 3, el número de paginaciónes siguientes posibles", tags = {
+            "Publication Filters" })
     @Parameter(name = "pag", description = "Numero de Paginación")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Publicaciones obtenidas exitosamente"),
@@ -470,8 +446,8 @@ public class PublicationController {
             }
         }
     }
-    
-    //Temporal, cambiar publicacion de estado a pendiente
+
+    // Temporal, cambiar publicacion de estado a pendiente
     @PutMapping("/changeToPending/{publicationId}")
     public ResponseEntity<Void> changeToPending(@PathVariable Long publicationId) {
         try {
@@ -487,13 +463,7 @@ public class PublicationController {
         }
     }
 
-
-
-
-
-    
-
-    //Manejo de errores de validación
+    // Manejo de errores de validación
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
@@ -505,17 +475,4 @@ public class PublicationController {
         return ResponseEntity.badRequest().body(errors);
     }
 
-
-
-
-
 }
-
-
-
-
-
-
-
-
-
