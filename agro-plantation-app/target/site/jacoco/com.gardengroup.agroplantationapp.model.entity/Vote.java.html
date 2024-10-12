@@ -9,24 +9,24 @@ import lombok.ToString;
 @Entity
 @Table(name = &quot;vote&quot;)
 @Getter
-<span class="nc" id="L12">@Setter</span>
-<span class="nc" id="L13">@ToString</span>
-<span class="nc bnc" id="L14" title="All 34 branches missed.">@EqualsAndHashCode</span>
-<span class="fc" id="L15">public class Vote {</span>
+@Setter
+@ToString
+@EqualsAndHashCode
+<span class="nc" id="L15">public class Vote {</span>
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-<span class="nc" id="L19">    private Long id;</span>
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = &quot;user_id&quot;, nullable = false)
-<span class="nc" id="L23">    private User user;</span>
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = &quot;publication_id&quot;, nullable = false)
-<span class="nc" id="L27">    private Publication publication;</span>
+    private Publication publication;
 
     @Column(columnDefinition = &quot;BOOLEAN DEFAULT 0&quot;)
-<span class="nc" id="L30">    private boolean state;</span>
+    private boolean state;
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

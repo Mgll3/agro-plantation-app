@@ -44,7 +44,7 @@ import java.util.stream.Collectors;
 
 <span class="nc" id="L45">        User user = userRepository.findByEmail(email)</span>
 <span class="nc" id="L46">                .orElseThrow(() -&gt; new DataAccessException(Constants.U_NOT_FOUND) {</span>
-                });
+<span class="nc" id="L47">                });</span>
 
 <span class="nc" id="L49">        publication.setAuthor(user);</span>
 
@@ -66,7 +66,7 @@ import java.util.stream.Collectors;
         // Busqueda de publicacion que vamos a modificar
 <span class="nc" id="L67">        Publication publication = publicationRepository.findById(publicationId)</span>
 <span class="nc" id="L68">                .orElseThrow(() -&gt; new DataAccessException(Constants.P_NOT_FOUND) {</span>
-                });
+<span class="nc" id="L69">                });</span>
 
         // Revisar si hay imagen principal y luego guardarla
 <span class="nc bnc" id="L72" title="All 2 branches missed.">        if (!mainFile.getOriginalFilename().isEmpty()) {</span>
@@ -88,7 +88,7 @@ import java.util.stream.Collectors;
 <span class="nc" id="L88">                Image image = new Image(resultC.get(&quot;public_id&quot;).toString(),</span>
 <span class="nc" id="L89">                        resultC.get(&quot;secure_url&quot;).toString());</span>
 <span class="nc" id="L90">                images.add(image);</span>
-<span class="nc" id="L91">            }</span>
+            }
 <span class="nc" id="L92">            publication.setImages(images);</span>
         }
 
@@ -100,7 +100,7 @@ import java.util.stream.Collectors;
 
 <span class="nc" id="L101">        User user = userRepository.findByEmail(email)</span>
 <span class="nc" id="L102">                .orElseThrow(() -&gt; new DataAccessException(Constants.U_NOT_FOUND) {</span>
-                });
+<span class="nc" id="L103">                });</span>
 
 <span class="nc" id="L105">        Optional&lt;Publication&gt; optionalPublication = publicationRepository.findById(publicationId);</span>
 
@@ -141,18 +141,18 @@ import java.util.stream.Collectors;
 
 <span class="nc" id="L142">        User user = userRepository.findByEmail(email)</span>
 <span class="nc" id="L143">                .orElseThrow(() -&gt; new DataAccessException(Constants.U_NOT_FOUND) {</span>
-                });
+<span class="nc" id="L144">                });</span>
 
 <span class="nc" id="L146">        Publication publication = publicationRepository.findById(publicationId)</span>
 <span class="nc" id="L147">                .orElseThrow(() -&gt; new DataAccessException(Constants.P_NOT_FOUND) {</span>
-                });
+<span class="nc" id="L148">                });</span>
         ;
 <span class="nc" id="L150">        PublicationDTO publicationDTO = new PublicationDTO(publication);</span>
 <span class="nc" id="L151">        Optional&lt;Vote&gt; voto = voteRepository.findByUserAndPublication(publicationId, user.getId());</span>
 
 <span class="nc bnc" id="L153" title="All 2 branches missed.">        if (voto.isPresent()) {</span>
 <span class="nc" id="L154">            publicationDTO.setUserVote(true);</span>
-        } else {
+<span class="nc" id="L155">        } else {</span>
 <span class="nc" id="L156">            publicationDTO.setUserVote(false);</span>
         }
 <span class="nc" id="L158">        return publicationDTO;</span>
@@ -193,7 +193,7 @@ import java.util.stream.Collectors;
     public void deletePublication(Long id) {
 <span class="nc" id="L194">        Publication publicationSaved = publicationRepository.findById(id)</span>
 <span class="nc" id="L195">                .orElseThrow(() -&gt; new DataAccessException(Constants.P_NOT_FOUND) {</span>
-                });
+<span class="nc" id="L196">                });</span>
 
         // Comprobaciones, existencia de las imagenes
 <span class="nc bnc" id="L199" title="All 2 branches missed.">        if (publicationSaved.getMainImage() != null) {</span>
@@ -203,7 +203,7 @@ import java.util.stream.Collectors;
 
 <span class="nc bnc" id="L204" title="All 2 branches missed.">            for (Image image : publicationSaved.getImages()) {</span>
 <span class="nc" id="L205">                cloudinaryService.delete(image.getId());</span>
-<span class="nc" id="L206">            }</span>
+            }
         }
 
 <span class="nc" id="L209">        publicationRepository.deleteById(id);</span>
@@ -235,9 +235,9 @@ import java.util.stream.Collectors;
 
 <span class="nc" id="L236">            } else {</span>
 <span class="nc" id="L237">                throw new IllegalStateException(</span>
-                        &quot;La publicación con ID &quot; + publicationId + &quot; no está en estado PENDIENTE&quot;);
+<span class="nc" id="L238">                        &quot;La publicación con ID &quot; + publicationId + &quot; no está en estado PENDIENTE&quot;);</span>
             }
-<span class="nc" id="L240">        } else {</span>
+        } else {
 <span class="nc" id="L241">            throw new IllegalArgumentException(Constants.P_NOT_FOUND);</span>
         }
 <span class="nc" id="L243">    }</span>
@@ -261,9 +261,9 @@ import java.util.stream.Collectors;
 <span class="nc" id="L261">                publicationRepository.save(publication);</span>
 <span class="nc" id="L262">            } else {</span>
 <span class="nc" id="L263">                throw new IllegalStateException(</span>
-                        &quot;La publicación con ID &quot; + publicationId + &quot; no está en estado PENDIENTE&quot;);
+<span class="nc" id="L264">                        &quot;La publicación con ID &quot; + publicationId + &quot; no está en estado PENDIENTE&quot;);</span>
             }
-<span class="nc" id="L266">        } else {</span>
+        } else {
 <span class="nc" id="L267">            throw new IllegalArgumentException(&quot;Publicación con ID &quot; + publicationId + &quot; no encontrada.&quot;);</span>
         }
 <span class="nc" id="L269">    }</span>
@@ -294,7 +294,7 @@ import java.util.stream.Collectors;
             // El usuario no ha votado antes, se crea un nuevo voto
 <span class="nc" id="L295">            User user = userRepository.findByEmail(userEmail)</span>
 <span class="nc" id="L296">                    .orElseThrow(() -&gt; new DataAccessException(Constants.U_NOT_FOUND) {</span>
-                    });
+<span class="nc" id="L297">                    });</span>
 
 <span class="nc" id="L299">            Vote newVote = new Vote();</span>
 <span class="nc" id="L300">            newVote.setUser(user);</span>
@@ -327,7 +327,7 @@ import java.util.stream.Collectors;
         // Busco si hay 3 paginaciones más adelante de la actual (1 Paginacion = 15)
 <span class="nc bnc" id="L328" title="All 2 branches missed.">        if (pag == 1) {</span>
 <span class="nc" id="L329">            pag = 0;</span>
-        } else {
+<span class="nc" id="L330">        } else {</span>
 <span class="nc" id="L331">            pag = (pag - 1) * 15;</span>
         }
 
@@ -362,7 +362,7 @@ import java.util.stream.Collectors;
         // Busco si hay 3 paginaciones más adelante de la actual (1 Paginacion = 15)
 <span class="nc bnc" id="L363" title="All 2 branches missed.">        if (pag == 1) {</span>
 <span class="nc" id="L364">            pag = 0;</span>
-        } else {
+<span class="nc" id="L365">        } else {</span>
 <span class="nc" id="L366">            pag = (pag - 1) * 15;</span>
         }
 
@@ -397,7 +397,7 @@ import java.util.stream.Collectors;
         // Busco si hay 3 paginaciones más adelante de la actual (1 Paginacion = 15)
 <span class="nc bnc" id="L398" title="All 2 branches missed.">        if (pag == 1) {</span>
 <span class="nc" id="L399">            pag = 0;</span>
-        } else {
+<span class="nc" id="L400">        } else {</span>
 <span class="nc" id="L401">            pag = (pag - 1) * 15;</span>
         }
 
@@ -432,7 +432,7 @@ import java.util.stream.Collectors;
         // Busco si hay 3 paginaciones más adelante de la actual (1 Paginacion = 15)
 <span class="nc bnc" id="L433" title="All 2 branches missed.">        if (pag == 1) {</span>
 <span class="nc" id="L434">            pag = 0;</span>
-        } else {
+<span class="nc" id="L435">        } else {</span>
 <span class="nc" id="L436">            pag = (pag - 1) * 15;</span>
         }
 
@@ -468,7 +468,7 @@ import java.util.stream.Collectors;
 <span class="nc bnc" id="L468" title="All 2 branches missed.">        if (pag == 1) {</span>
 <span class="nc" id="L469">            pag = 0;</span>
 
-        } else {
+<span class="nc" id="L471">        } else {</span>
 <span class="nc" id="L472">            pag = (pag - 1) * 15;</span>
         }
 
@@ -499,7 +499,7 @@ import java.util.stream.Collectors;
         // Busco si hay 3 paginaciones más adelante de la actual (1 Paginacion = 15)
 <span class="nc bnc" id="L500" title="All 2 branches missed.">        if (pag == 1) {</span>
 <span class="nc" id="L501">            pag = 0;</span>
-        } else {
+<span class="nc" id="L502">        } else {</span>
 <span class="nc" id="L503">            pag = (pag - 1) * 15;</span>
         }
 
@@ -527,7 +527,7 @@ import java.util.stream.Collectors;
     public void changeToPending(Long publicationId) {
 <span class="nc" id="L528">        Publication publication = publicationRepository.findById(publicationId)</span>
 <span class="nc" id="L529">                .orElseThrow(() -&gt; new DataAccessException(Constants.P_NOT_FOUND) {</span>
-                });
+<span class="nc" id="L530">                });</span>
 <span class="nc" id="L531">        publication.setAuthorizationStatus(new StateRequest(1L));</span>
 
 <span class="nc" id="L533">        publicationRepository.save(publication);</span>

@@ -19,7 +19,7 @@ import com.gardengroup.agroplantationapp.model.repository.UserRepository;
 
 
 @Service
-<span class="fc" id="L22">public class ProducerRequestService implements IProducerRequestService{</span>
+<span class="nc" id="L22">public class ProducerRequestService implements IProducerRequestService{</span>
 
     @Autowired
     private ProducerRequestRepository producerRequestRepository;
@@ -72,7 +72,7 @@ import com.gardengroup.agroplantationapp.model.repository.UserRepository;
             // Guardar los cambios en la base de datos
 <span class="nc" id="L73">            producerRequestRepository.save(producerRequest);</span>
 
-        } else {
+<span class="nc" id="L75">        } else {</span>
 <span class="nc" id="L76">            throw new IllegalStateException(&quot;La solicitud no está en estado 'PENDING'&quot;);</span>
         }
 <span class="nc" id="L78">    }</span>
@@ -84,7 +84,7 @@ import com.gardengroup.agroplantationapp.model.repository.UserRepository;
         
 <span class="nc" id="L85">        User user = userRepository.findByEmail(userEmail)</span>
 <span class="nc" id="L86">            .orElseThrow(() -&gt; new DataAccessException(&quot;User not found&quot;) {</span>
-        });
+<span class="nc" id="L87">        });</span>
         
 <span class="nc" id="L89">        producerRequest.setUser(user);</span>
 <span class="nc" id="L90">        producerRequest.setDate(new Date());</span>

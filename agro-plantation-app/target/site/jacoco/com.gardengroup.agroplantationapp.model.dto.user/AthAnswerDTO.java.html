@@ -5,20 +5,20 @@ import lombok.Data;
 /**
  * Clase para representar la respuesta de autenticación.
  */
-<span class="nc bnc" id="L8" title="All 38 branches missed.">@Data</span>
+@Data
 public class AthAnswerDTO {
 
-<span class="fc" id="L11">    private String accessToken;</span>
-<span class="fc" id="L12">    private String name;</span>
-<span class="fc" id="L13">    private String lastname;</span>
-<span class="fc" id="L14">    private String userType;</span>
+    private String accessToken;
+    private String name;
+    private String lastname;
+    private String userType;
 
-<span class="fc" id="L16">    public AthAnswerDTO(String accessToken, String name, String lastname, String userType) {</span>
-<span class="fc" id="L17">        this.accessToken = accessToken;</span>
-<span class="fc" id="L18">        this.name = name;</span>
-<span class="fc" id="L19">        this.lastname = lastname;</span>
-<span class="fc" id="L20">        this.userType = userType;</span>
-<span class="fc" id="L21">    }</span>
+<span class="nc" id="L16">    public AthAnswerDTO(String accessToken, String name, String lastname, String userType) {</span>
+<span class="nc" id="L17">        this.accessToken = accessToken;</span>
+<span class="nc" id="L18">        this.name = name;</span>
+<span class="nc" id="L19">        this.lastname = lastname;</span>
+<span class="nc" id="L20">        this.userType = userType;</span>
+<span class="nc" id="L21">    }</span>
 
 <span class="nc" id="L23">    public AthAnswerDTO(String name, String lastname, String userType) {</span>
 <span class="nc" id="L24">        this.name = name;</span>

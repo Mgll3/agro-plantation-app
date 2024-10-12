@@ -10,32 +10,32 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 import java.util.List;
 
-<span class="nc bnc" id="L13" title="All 94 branches missed.">@Data</span>
-<span class="nc" id="L14">@NoArgsConstructor</span>
+@Data
+@NoArgsConstructor
 public class PublicationDTO {
 
-<span class="nc" id="L17">    private Long id;</span>
+    private Long id;
 
-<span class="nc" id="L19">    private String title;</span>
+    private String title;
 
-<span class="nc" id="L21">    private Plantation plantation;</span>
+    private Plantation plantation;
 
-<span class="nc" id="L23">    private User author;</span>
+    private User author;
 
-<span class="nc" id="L25">    private LocalDateTime publicationDate;</span>
+    private LocalDateTime publicationDate;
 
-<span class="nc" id="L27">    private Boolean visibility;</span>
+    private Boolean visibility;
 
-<span class="nc" id="L29">    private Image mainImage;</span>
+    private Image mainImage;
 
-<span class="nc" id="L31">    private List&lt;Image&gt; images;</span>
+    private List&lt;Image&gt; images;
     // private List&lt;Comment&gt; comments; proximamente
 
-<span class="nc" id="L34">    private Integer score;</span>
+    private Integer score;
 
-<span class="nc" id="L36">    private StateRequest authorizationStatus;</span>
+    private StateRequest authorizationStatus;
 
-<span class="nc" id="L38">    private Boolean userVote;</span>
+    private Boolean userVote;
 
 <span class="nc" id="L40">    public PublicationDTO(Publication publication) {</span>
 <span class="nc" id="L41">        this.id = publication.getId();</span>

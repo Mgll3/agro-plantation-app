@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-<span class="fc" id="L16">public class UserService implements IUserService {</span>
+<span class="nc" id="L16">public class UserService implements IUserService {</span>
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -22,18 +22,18 @@ import org.springframework.transaction.annotation.Transactional;
 
     @Transactional
     public User createUser(RegisterDTO dtoRegistrer) {
-<span class="fc" id="L25">        User user = new User();</span>
-<span class="fc" id="L26">        user.setEmail(dtoRegistrer.getEmail());</span>
-<span class="fc" id="L27">        user.setPassword(securityService.passwordEncoder(dtoRegistrer.getPassword()));</span>
-<span class="fc" id="L28">        user.setName(dtoRegistrer.getName());</span>
-<span class="fc" id="L29">        user.setLastname(dtoRegistrer.getLastname());</span>
-<span class="fc" id="L30">        user.setAddress(dtoRegistrer.getAddress());</span>
+<span class="nc" id="L25">        User user = new User();</span>
+<span class="nc" id="L26">        user.setEmail(dtoRegistrer.getEmail());</span>
+<span class="nc" id="L27">        user.setPassword(securityService.passwordEncoder(dtoRegistrer.getPassword()));</span>
+<span class="nc" id="L28">        user.setName(dtoRegistrer.getName());</span>
+<span class="nc" id="L29">        user.setLastname(dtoRegistrer.getLastname());</span>
+<span class="nc" id="L30">        user.setAddress(dtoRegistrer.getAddress());</span>
 
         // Asignar el tipo de usuario 1 en base de datos osea &quot;USER&quot;
-<span class="fc" id="L33">        user.setUserType(new UserType(1L));</span>
+<span class="nc" id="L33">        user.setUserType(new UserType(1L));</span>
 
         // Guardar el usuario en la base de datos
-<span class="fc" id="L36">        return userRepository.save(user);</span>
+<span class="nc" id="L36">        return userRepository.save(user);</span>
 
     }
 
@@ -44,17 +44,17 @@ import org.springframework.transaction.annotation.Transactional;
     }
 
     public Boolean existsEmail(String email) {
-<span class="fc" id="L47">        return userRepository.existsByUseremail(email);</span>
+<span class="nc" id="L47">        return userRepository.existsByUseremail(email);</span>
     }
 
     
 
     @Transactional
     public AthAnswerDTO authenticate(LoginDTO loginDTO) {
-<span class="fc" id="L54">        String token = securityService.authenticate(loginDTO);</span>
-<span class="pc" id="L55">        User user = userRepository.findByEmail(loginDTO.getEmail()).orElseThrow(() -&gt; new DataAccessException(&quot;User not found&quot;) {</span>
-        });
-<span class="fc" id="L57">        return new AthAnswerDTO(token, user.getName(), user.getLastname(), user.getUserType().getType());</span>
+<span class="nc" id="L54">        String token = securityService.authenticate(loginDTO);</span>
+<span class="nc" id="L55">        User user = userRepository.findByEmail(loginDTO.getEmail()).orElseThrow(() -&gt; new DataAccessException(&quot;User not found&quot;) {</span>
+<span class="nc" id="L56">        });</span>
+<span class="nc" id="L57">        return new AthAnswerDTO(token, user.getName(), user.getLastname(), user.getUserType().getType());</span>
     }
 
     @Transactional
@@ -63,7 +63,7 @@ import org.springframework.transaction.annotation.Transactional;
         
 <span class="nc" id="L64">        User user = userRepository.findByEmail(email)</span>
 <span class="nc" id="L65">            .orElseThrow(() -&gt; new DataAccessException(&quot;User not found&quot;) {</span>
-        });
+<span class="nc" id="L66">        });</span>
         
 <span class="nc" id="L68">        return new AthAnswerDTO(user.getName(), user.getLastname(), user.getUserType().getType());</span>
         

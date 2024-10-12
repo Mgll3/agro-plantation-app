@@ -6,12 +6,12 @@ import jakarta.persistence.Id;
 import lombok.Data;
 
 @Entity
-<span class="nc bnc" id="L9" title="All 22 branches missed.">@Data</span>
+@Data
 public class Image {
     @Id
-<span class="nc" id="L12">    private String id;</span>
+    private String id;
     @Column(length = 120, nullable = false)
-<span class="nc" id="L14">    private String url;</span>
+    private String url;
 
     
 <span class="nc" id="L17">    public Image() {</span>

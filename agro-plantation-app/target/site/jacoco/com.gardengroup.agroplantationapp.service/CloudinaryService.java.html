@@ -7,12 +7,12 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.Map;
 
 @Service
-<span class="fc" id="L10">public class CloudinaryService {</span>
-<span class="fc" id="L11">    Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(</span>
-            &quot;cloud_name&quot;, &quot;dvckhdihm&quot;,
-            &quot;api_key&quot;, &quot;557386598599339&quot;,
-            &quot;api_secret&quot;, &quot;bp3usRWRLm8otZenuA3dRYEWxMg&quot;,
-<span class="fc" id="L15">            &quot;secure&quot;, true)</span>
+<span class="nc" id="L10">public class CloudinaryService {</span>
+<span class="nc" id="L11">    Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(</span>
+<span class="nc" id="L12">            &quot;cloud_name&quot;, &quot;dvckhdihm&quot;,</span>
+<span class="nc" id="L13">            &quot;api_key&quot;, &quot;557386598599339&quot;,</span>
+<span class="nc" id="L14">            &quot;api_secret&quot;, &quot;bp3usRWRLm8otZenuA3dRYEWxMg&quot;,</span>
+<span class="nc" id="L15">            &quot;secure&quot;, true)</span>
     );
 
     public Map upload(MultipartFile file, String folder) {

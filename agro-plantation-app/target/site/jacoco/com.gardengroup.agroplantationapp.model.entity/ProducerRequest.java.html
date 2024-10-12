@@ -13,30 +13,30 @@ import com.gardengroup.agroplantationapp.model.dto.request.ProducerRequestSaveDT
 @Entity
 @Table(name =&quot;producer_request&quot;)
 @Getter
-<span class="nc" id="L16">@Setter</span>
-<span class="nc" id="L17">@ToString</span>
-<span class="nc bnc" id="L18" title="All 70 branches missed.">@EqualsAndHashCode</span>
+@Setter
+@ToString
+@EqualsAndHashCode
 public class ProducerRequest {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-<span class="nc" id="L23">    private Long id;</span>
+    private Long id;
     @ManyToOne
     @JoinColumn(nullable = false)
-<span class="nc" id="L26">    private User user;</span>
+    private User user;
     @Column(columnDefinition = &quot;DATETIME&quot;)
-<span class="nc" id="L28">    private Date date;</span>
+    private Date date;
     @Column(length = 40, nullable = false)
-<span class="nc" id="L30">    private String gardenName;</span>
+    private String gardenName;
     @Column(length = 15, nullable = false)
-<span class="nc" id="L32">    private String gardenSize;</span>
+    private String gardenSize;
     @Column(length = 50, nullable = false)
-<span class="nc" id="L34">    private String gardenAddress;</span>
+    private String gardenAddress;
     @Column(length = 140, nullable = false)
-<span class="nc" id="L36">    private String description;</span>
+    private String description;
     @ManyToOne
     @JoinColumn(nullable = false)
-<span class="nc" id="L39">    private StateRequest staterequest;</span>
+    private StateRequest staterequest;
 
 <span class="nc" id="L41">    public ProducerRequest(ProducerRequestSaveDTO producerRequestDTO) {</span>
 <span class="nc" id="L42">        this.gardenName = producerRequestDTO.getGardenName();</span>

@@ -12,34 +12,34 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-<span class="nc bnc" id="L15" title="All 86 branches missed.">@Data</span>
-<span class="nc" id="L16">@NoArgsConstructor</span>
+@Data
+@NoArgsConstructor
 public class Publication {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-<span class="nc" id="L20">    private Long id;</span>
+    private Long id;
     @Column(length = 50, nullable = false)
-<span class="nc" id="L22">    private String title;</span>
+    private String title;
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(nullable = false)
-<span class="nc" id="L25">    private Plantation plantation;</span>
+    private Plantation plantation;
     @ManyToOne()
     @JoinColumn(nullable = false)
-<span class="nc" id="L28">    private User author;</span>
+    private User author;
     @Column(columnDefinition = &quot;DATETIME&quot;, nullable = false)
-<span class="nc" id="L30">    private LocalDateTime publicationDate;</span>
+    private LocalDateTime publicationDate;
     @Column(columnDefinition = &quot;BOOLEAN DEFAULT 0&quot;)
-<span class="nc" id="L32">    private Boolean visibility;</span>
+    private Boolean visibility;
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-<span class="nc" id="L34">    private Image mainImage;</span>
+    private Image mainImage;
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-<span class="nc" id="L36">    private List&lt;Image&gt; images;</span>
+    private List&lt;Image&gt; images;
     // private List&lt;Comment&gt; comments; proximamente
     @Column(columnDefinition = &quot;INTEGER DEFAULT 0&quot;)
-<span class="nc" id="L39">    private Integer score;</span>
+    private Integer score;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(nullable = false)
-<span class="nc" id="L42">    private StateRequest authorizationStatus;</span>
+    private StateRequest authorizationStatus;
 
     // Actualizar unicamenete la información que no esta ya guardada en la
     // publicación

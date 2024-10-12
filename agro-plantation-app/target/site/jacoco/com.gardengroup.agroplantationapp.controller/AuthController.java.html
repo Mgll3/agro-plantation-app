@@ -23,8 +23,8 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping(&quot;/auth&quot;)
 @CrossOrigin(origins = &quot;*&quot;)
-<span class="fc" id="L26">@Slf4j</span>
-<span class="fc" id="L27">public class AuthController {</span>
+<span class="nc" id="L26">@Slf4j</span>
+<span class="nc" id="L27">public class AuthController {</span>
 
     @Autowired
     private IUserService userService;
@@ -43,15 +43,15 @@ import org.springframework.web.bind.annotation.*;
         
         try {
             // Verifica si el correo electrónico ya existe
-<span class="pc bpc" id="L46" title="1 of 2 branches missed.">            if (userService.existsEmail(registerDto.getEmail())) {</span>
+<span class="nc bnc" id="L46" title="All 2 branches missed.">            if (userService.existsEmail(registerDto.getEmail())) {</span>
                 // Si el correo electrónico ya existe, devuelve un mensaje indicando que el usuario ya existe
 <span class="nc" id="L48">                return new ResponseEntity&lt;&gt;(&quot;Este correo electrónico ya está registrado.&quot;, HttpStatus.CONFLICT);</span>
             }
 
             // Llama al método en el servicio para crear el usuario a partir del DTO
-<span class="fc" id="L52">            User user =  userService.createUser(registerDto);</span>
+<span class="nc" id="L52">            User user =  userService.createUser(registerDto);</span>
 
-<span class="fc" id="L54">            return new ResponseEntity&lt;&gt;(user, HttpStatus.CREATED);</span>
+<span class="nc" id="L54">            return new ResponseEntity&lt;&gt;(user, HttpStatus.CREATED);</span>
 <span class="nc" id="L55">            } catch (Exception e) {</span>
 <span class="nc" id="L56">                log.error(e.getMessage());</span>
 <span class="nc" id="L57">                return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(e.getMessage());</span>
@@ -68,8 +68,8 @@ import org.springframework.web.bind.annotation.*;
     @PostMapping(&quot;/login&quot;)
     public ResponseEntity&lt;AthAnswerDTO&gt; login(@RequestBody LoginDTO loginDto) {
         try {
-<span class="fc" id="L71">            AthAnswerDTO answer = userService.authenticate(loginDto);</span>
-<span class="fc" id="L72">            return new ResponseEntity&lt;&gt;(answer, HttpStatus.OK);</span>
+<span class="nc" id="L71">            AthAnswerDTO answer = userService.authenticate(loginDto);</span>
+<span class="nc" id="L72">            return new ResponseEntity&lt;&gt;(answer, HttpStatus.OK);</span>
 <span class="nc" id="L73">        } catch (Exception e) {</span>
 <span class="nc" id="L74">            log.error(e.getMessage());</span>
 <span class="nc bnc" id="L75" title="All 2 branches missed.">            if (e.getMessage().equals(&quot;User not found&quot;)) {</span>

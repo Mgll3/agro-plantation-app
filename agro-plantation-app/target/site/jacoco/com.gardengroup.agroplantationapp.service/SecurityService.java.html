@@ -15,7 +15,7 @@ import com.gardengroup.agroplantationapp.security.JwtTokenProvider;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Service
-<span class="fc" id="L18">public class SecurityService {</span>
+<span class="nc" id="L18">public class SecurityService {</span>
     
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
@@ -28,18 +28,18 @@ import jakarta.servlet.http.HttpServletRequest;
 
     
     public String getEmail(HttpServletRequest request) {
-<span class="fc" id="L31">        String token = jwtAuthenticationFilter.getRequestToken(request);</span>
-<span class="fc" id="L32">        return jwtTokenProvider.getJwtUser(token);</span>
+<span class="nc" id="L31">        String token = jwtAuthenticationFilter.getRequestToken(request);</span>
+<span class="nc" id="L32">        return jwtTokenProvider.getJwtUser(token);</span>
     }
 
     public String passwordEncoder(String password) {
-<span class="fc" id="L36">        return passwordEncoder.encode(password);</span>
+<span class="nc" id="L36">        return passwordEncoder.encode(password);</span>
     }
 
     public String authenticate(LoginDTO dtoLogin) { 
-<span class="fc" id="L40">        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(dtoLogin.getEmail(), dtoLogin.getPassword()));</span>
-<span class="fc" id="L41">        SecurityContextHolder.getContext().setAuthentication(authentication);</span>
-<span class="fc" id="L42">        return jwtTokenProvider.generateToken(authentication);</span>
+<span class="nc" id="L40">        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(dtoLogin.getEmail(), dtoLogin.getPassword()));</span>
+<span class="nc" id="L41">        SecurityContextHolder.getContext().setAuthentication(authentication);</span>
+<span class="nc" id="L42">        return jwtTokenProvider.generateToken(authentication);</span>
         
     }
     
