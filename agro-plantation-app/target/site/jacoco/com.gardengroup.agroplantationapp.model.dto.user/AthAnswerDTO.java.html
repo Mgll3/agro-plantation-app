@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AthAnswerDTO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">agro-plantation-app</a> &gt; <a href="index.source.html" class="el_package">com.gardengroup.agroplantationapp.model.dto.user</a> &gt; <span class="el_source">AthAnswerDTO.java</span></div><h1>AthAnswerDTO.java</h1><pre class="source lang-java linenums">package com.gardengroup.agroplantationapp.model.dto.user;
+
+import lombok.Data;
+
+/**
+ * Clase para representar la respuesta de autenticación.
+ */
+<span class="nc bnc" id="L8" title="All 38 branches missed.">@Data</span>
+public class AthAnswerDTO {
+
+<span class="fc" id="L11">    private String accessToken;</span>
+<span class="fc" id="L12">    private String name;</span>
+<span class="fc" id="L13">    private String lastname;</span>
+<span class="fc" id="L14">    private String userType;</span>
+
+<span class="fc" id="L16">    public AthAnswerDTO(String accessToken, String name, String lastname, String userType) {</span>
+<span class="fc" id="L17">        this.accessToken = accessToken;</span>
+<span class="fc" id="L18">        this.name = name;</span>
+<span class="fc" id="L19">        this.lastname = lastname;</span>
+<span class="fc" id="L20">        this.userType = userType;</span>
+<span class="fc" id="L21">    }</span>
+
+<span class="nc" id="L23">    public AthAnswerDTO(String name, String lastname, String userType) {</span>
+<span class="nc" id="L24">        this.name = name;</span>
+<span class="nc" id="L25">        this.lastname = lastname;</span>
+<span class="nc" id="L26">        this.userType = userType;</span>
+<span class="nc" id="L27">    }</span>
+
+<span class="nc" id="L29">    public AthAnswerDTO(String accessToken) {</span>
+<span class="nc" id="L30">        this.accessToken = accessToken;</span>
+<span class="nc" id="L31">    }</span>
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
