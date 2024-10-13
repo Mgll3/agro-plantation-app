@@ -3,6 +3,7 @@
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -11,13 +12,14 @@ import java.util.Date;
 import com.gardengroup.agroplantationapp.model.dto.request.ProducerRequestSaveDTO;
 
 @Entity
-@Table(name =&quot;producer_request&quot;)
+@Table(name = &quot;producer_request&quot;)
 @Getter
 @Setter
 @ToString
 @EqualsAndHashCode
+@NoArgsConstructor
 public class ProducerRequest {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -38,11 +40,11 @@ public class ProducerRequest {
     @JoinColumn(nullable = false)
     private StateRequest staterequest;
 
-<span class="nc" id="L41">    public ProducerRequest(ProducerRequestSaveDTO producerRequestDTO) {</span>
-<span class="nc" id="L42">        this.gardenName = producerRequestDTO.getGardenName();</span>
-<span class="nc" id="L43">        this.gardenSize = producerRequestDTO.getGardenSize();</span>
-<span class="nc" id="L44">        this.gardenAddress = producerRequestDTO.getGardenAddress();</span>
-<span class="nc" id="L45">        this.description = producerRequestDTO.getDescription();</span>
-<span class="nc" id="L46">    }</span>
+<span class="nc" id="L43">    public ProducerRequest(ProducerRequestSaveDTO producerRequestDTO) {</span>
+<span class="nc" id="L44">        this.gardenName = producerRequestDTO.getGardenName();</span>
+<span class="nc" id="L45">        this.gardenSize = producerRequestDTO.getGardenSize();</span>
+<span class="nc" id="L46">        this.gardenAddress = producerRequestDTO.getGardenAddress();</span>
+<span class="nc" id="L47">        this.description = producerRequestDTO.getDescription();</span>
+<span class="nc" id="L48">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

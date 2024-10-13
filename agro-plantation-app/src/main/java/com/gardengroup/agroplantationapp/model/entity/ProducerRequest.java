@@ -3,6 +3,7 @@ package com.gardengroup.agroplantationapp.model.entity;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -11,13 +12,14 @@ import java.util.Date;
 import com.gardengroup.agroplantationapp.model.dto.request.ProducerRequestSaveDTO;
 
 @Entity
-@Table(name ="producer_request")
+@Table(name = "producer_request")
 @Getter
 @Setter
 @ToString
 @EqualsAndHashCode
+@NoArgsConstructor
 public class ProducerRequest {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
