@@ -9,7 +9,7 @@ function AdminForum() {
 
 			<nav>HERRAMIENTAS DE ADMINISTRADOR</nav>
 
-			<main>FORO</main>
+			<main>FORO DISPONIBLE EN EL SIGUIENTE MVP!!!</main>
 		</>
 	);
 }

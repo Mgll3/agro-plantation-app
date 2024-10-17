@@ -8,7 +8,7 @@ import { useEffect, useRef, useState } from "react";
 import { getPublicationById } from "../../interfaces/getPublicationById";
 import { getStoredToken } from "../../utils/getStoredToken";
 import { MainImageType, PublicationInfoType } from "../../components/admin/adminTypes";
-import PublicationDetails from "../../components/admin/publicationDetails/PublicationDetails";
+import PublicationDetails from "../../components/common/publications/PublicationDetails";
 import { getAddressCoordinates } from "../../interfaces/geolocation/getAddressCoordinates";
 import Button from "../../components/button/Button";
 import Loading from "../../components/modals/Loading";

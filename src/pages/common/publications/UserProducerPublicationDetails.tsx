@@ -8,13 +8,14 @@ import { useEffect, useRef, useState } from "react";
 import { getPublicationById } from "../../../interfaces/getPublicationById";
 import { getStoredToken } from "../../../utils/getStoredToken";
 import { MainImageType, PublicationInfoType } from "../../../components/admin/adminTypes";
-import PublicationDetails from "../../../components/admin/publicationDetails/PublicationDetails";
+import PublicationDetails from "../../../components/common/publications/PublicationDetails";
 import { getAddressCoordinates } from "../../../interfaces/geolocation/getAddressCoordinates";
 import Button from "../../../components/button/Button";
 import Loading from "../../../components/modals/Loading";
 import PublicationStateModified from "../../../components/modals/PublicationStateModified";
 import PictureSlider, { SliderInfoType } from "../../../components/common/PictureSlider";
 import { useUserRoleContext } from "../../../context/UserRoleContext";
+import { alternatePublicationVote } from "../../../interfaces/alternatePublicationVote";
 
 export type CoordinatesType = {
 	lat: number;
@@ -29,8 +30,8 @@ function UserProducerPublicationDetails() {
 	const [publicationData, setPublicationData] = useState<PublicationInfoType | null>(null);
 
 	const buttonFontSize =
-		"text-[1rem] custom-500:text-[1.3rem] custom-700:text-[1.6rem] custom-900:text-[1.978rem] custom-1900:text-[2.5rem] custom-2500:text-[3rem]";
-	const buttonPaddingY = "py-[0.2rem] custom-500:py-[0.5rem] custom-900:py-[1rem] custom-1200:py-[2.017rem]";
+		"text-[1.3rem] custom-700:text-[1.6rem] custom-900:text-[1.978rem] custom-1900:text-[2.5rem] custom-2500:text-[3rem]";
+	const buttonPaddingY = "py-[0.5rem] custom-900:py-[1rem] custom-1200:py-[2.017rem]";
 	const buttonWidth = "w-[27%] custom-1400:w-[28.81%]";
 
 	//A "PictureSlider" le pasamos un objeto con todas las imágenes (no necesita diferenciar entre la principal y el resto) y el id de la imagen pulsada (la que debe mostrarse en primer lugar)
@@ -93,10 +94,15 @@ function UserProducerPublicationDetails() {
 	const axiosController2 = useRef<AbortController>();
 	const addressCoordinates = useRef<AddressCoordinatesType>(null);
 	const redirectToPendingTimeout = useRef<number>(0);
+	const loadingTimeout = useRef<number>(0);
 	const navigate = useNavigate();
-
-	//Usada para volver a la pantalla de publications con el filtro "auth" cuando no se ha cambiado el estado de la publicación
 	const { userRole } = useUserRoleContext();
+
+	const buttonBackToPreviousPageFunctionality = {
+		actionText: "Volver",
+		handleClick: redirectToPreviousPage
+	};
+
 	let subRoute = "";
 	if (userRole === "ADMIN") {
 		subRoute = "admin";
@@ -105,6 +111,8 @@ function UserProducerPublicationDetails() {
 	} else {
 		subRoute = "producer";
 	}
+
+	//Usada para volver a la pantalla de publications con el filtro "auth" cuando no se ha cambiado el estado de la publicación
 	function redirectToPreviousPage() {
 		if (location.state?.pagination) {
 			navigate(`/${subRoute}/publications/${prevPagePagination}`, { replace: true, state: prevPageFilter });
@@ -113,17 +121,36 @@ function UserProducerPublicationDetails() {
 		}
 	}
 
-	const buttonBackToPreviousPageFunctionality = {
-		actionText: "Volver",
-		handleClick: redirectToPreviousPage
-	};
-
 	function closeErrorModal() {
 		changeLoadingState("loading");
 	}
 
 	function navToLogin() {
 		<Navigate to="/login" />;
+	}
+
+	function votePublication() {
+		const storedToken = getStoredToken();
+		changeLoadingState("loading2", "loading2");
+		axiosController2.current = new AbortController();
+
+		if (storedToken && publicationData?.id) {
+			alternatePublicationVote(storedToken, publicationData.id, axiosController2.current)
+				.then(() => {
+					loadingTimeout.current = window.setTimeout(() => {
+						changeLoadingState("loaded", "loaded");
+					}, 1500);
+				})
+				.catch();
+		} else if (publicationId === null) {
+			loadingTimeout.current = window.setTimeout(() => {
+				changeLoadingState("errorServer", "errorServer");
+			}, 1500);
+		} else if (!storedToken) {
+			loadingTimeout.current = window.setTimeout(() => {
+				changeLoadingState("errorCredentials", "errorCredentials");
+			}, 1500);
+		}
 	}
 
 	useEffect(() => {
@@ -161,6 +188,7 @@ function UserProducerPublicationDetails() {
 
 		return () => {
 			clearTimeout(redirectToPendingTimeout.current);
+			clearTimeout(loadingTimeout.current);
 			axiosController.current?.abort();
 			axiosController2.current?.abort();
 		};
@@ -184,6 +212,7 @@ function UserProducerPublicationDetails() {
 				)}
 
 				{(loadingState === "loaded" ||
+					loadingState === "loading2" ||
 					loadingState === "modalLoading" ||
 					loadingState === "modalPublicationStateApproved" ||
 					loadingState === "modalPublicationStateRejected" ||
@@ -191,13 +220,14 @@ function UserProducerPublicationDetails() {
 					publicationData && (
 						<>
 							<div
-								className="mb-[5rem] flex justify-center w-[100%]
+								className="mb-[4rem] flex justify-center w-[100%]
 								custom-1900:mb-[7rem] custom-3500:mb-[12rem]"
 							>
 								<PublicationDetails
 									publicationInfo={publicationData}
 									addressCoordinates={addressCoordinates.current}
 									handleImageOnClick={showSlider}
+									handleVotePublication={votePublication}
 								/>
 							</div>
 
@@ -212,6 +242,8 @@ function UserProducerPublicationDetails() {
 							</div>
 
 							{loadingState === "modalLoading" && <Loading />}
+
+							{loadingState === "loading2" && <Loading />}
 
 							{loadingState === "modalPublicationStateApproved" && <PublicationStateModified newState="approved" />}
 

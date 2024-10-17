@@ -50,6 +50,7 @@ export type PublicationInfoType = {
 	title: string;
 	score: number;
 	publicationDate: string;
+	userVote: boolean;
 	mainImage: MainImageType | null;
 	images: MainImageType[] | null;
 	authorizationStatus: AuthorizationStatusType;

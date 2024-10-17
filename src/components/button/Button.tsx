@@ -42,7 +42,7 @@ function Button({
 			<button
 				type="button"
 				onClick={buttonFuncionality.handleClick}
-				className={`${buttonWidth} ${buttonPaddingY} ${buttonFontSize} ${bgColor} ${textColor} shadow-md rounded-xl custom-2000:rounded-2xl font-sans cursor-pointer font-bold tracking-widest hover:bg-brandingDarkGreen transition-all hover:text-[#F6C915] ${otherStyles}`}
+				className={`${buttonWidth} ${buttonPaddingY} ${buttonFontSize} ${bgColor} ${textColor} shadow-md rounded-xl custom-2000:rounded-2xl font-sans cursor-pointer font-bold tracking-widest ${buttonColor === "green" ? "hover:bg-green300" : "hover:bg-brandingDarkGreen"}  transition-all ${buttonColor === "green" ? "hover:text-black" : "hover:text-[#F6C915]"} ${otherStyles}`}
 			>
 				{buttonFuncionality.actionText}
 			</button>
@@ -60,7 +60,7 @@ function Button({
 		return (
 			<Link to={buttonFuncionality.linkUrl} className={`inline-block ${buttonWidth}`}>
 				<button
-					className={`${buttonPaddingY} ${buttonFontSize} ${bgColor} ${textColor} w-[100%] shadow-md rounded-xl custom-2000:rounded-2xl font-sans cursor-pointer font-bold hover:bg-brandingDarkGreen transition-all hover:text-[#F6C915] ${otherStyles}`}
+					className={`${buttonPaddingY} ${buttonFontSize} ${bgColor} ${textColor} w-[100%] shadow-md rounded-xl custom-2000:rounded-2xl font-sans cursor-pointer font-bold ${buttonColor === "green" ? "hover:bg-green300" : "hover:bg-brandingDarkGreen"} transition-all ${buttonColor === "green" ? "hover:text-black" : "hover:text-[#F6C915]"} ${otherStyles}`}
 				>
 					{buttonFuncionality.linkText}
 				</button>

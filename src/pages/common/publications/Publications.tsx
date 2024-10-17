@@ -262,10 +262,8 @@ function Publications() {
 		function changeDeviceType() {
 			if (window.innerWidth <= 900 && deviceUsed === "pc") {
 				setDeviceUsed("mobile");
-				console.log(deviceUsed);
 			} else if (window.innerWidth > 900 && deviceUsed === "mobile") {
 				setDeviceUsed("pc");
-				console.log(deviceUsed);
 			}
 		}
 		window.addEventListener("resize", changeDeviceType);
