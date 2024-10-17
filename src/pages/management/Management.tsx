@@ -6,7 +6,7 @@ import { registerUser } from "../../interfaces/users/registerUser";
 import { LoginFormValuesType, RegisterFormFieldsToSendType } from "../../components/forms/formsTypes";
 import { useUserRoleContext } from "../../context/UserRoleContext";
 import { logInUser } from "../../interfaces/users/logInUser";
-import { UserDataType } from "../commonTypes";
+import { UserDataType } from "../../pages/common/commonTypes";
 import { updateUserData } from "../../utils/updateUserData";
 import { getStoredToken } from "../../utils/getStoredToken";
 import { PlantationDemoType, PlantationsDemoDataType, publicationsDemoData } from "./publicationsDemoData";

@@ -1,12 +1,15 @@
 //Utilizada para actualizar todos los datos en los estados y en el Local Storage (Incluído el Token) cuando se recibe la información del usuario del servidor.
 import { UserRoleType } from "../context/UserRoleContext";
 import { user } from "../data/userData";
-import { UserDataType } from "../pages/commonTypes";
+import { UserDataType } from "../pages/common/commonTypes";
 import { storeName } from "./storeName";
 import { storeRole } from "./storeRole";
 import { storeToken } from "./storeToken";
 
-export function updateUserData(userData: UserDataType, setUserRole: React.Dispatch<React.SetStateAction<UserRoleType>>) {
+export function updateUserData(
+	userData: UserDataType,
+	setUserRole: React.Dispatch<React.SetStateAction<UserRoleType>>
+) {
 	if (userData.accessToken) {
 		storeToken(userData.accessToken);
 	}
