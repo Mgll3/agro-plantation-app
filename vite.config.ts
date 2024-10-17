@@ -14,17 +14,16 @@ const __dirname = dirname(__filename);
 // https://vitejs.dev/config/
 export default defineConfig({
 	plugins: [react()],
+	base: "/",
 	test: {
 		environment: "jsdom",
 		setupFiles: "./src/tests/setup.ts",
 		globals: true,
-		css: true,   
+		css: true
 	},
 	resolve: {
 		alias: {
-			"@": path.resolve(__dirname, "./public"),
-		},
-	},
-	
-	
+			"@": path.resolve(__dirname, "./public")
+		}
+	}
 });
