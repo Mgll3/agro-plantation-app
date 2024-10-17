@@ -463,16 +463,38 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
         }
     }
 
+    @Operation(summary = &quot;Solicitar aprobación de una publicación&quot;, description = &quot;Endpoint para que el autor de una publicación solicite su aprobación&quot;, tags = &quot;Publication&quot;)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = &quot;200&quot;, description = &quot;Solicitud de aprobación enviada con éxito.&quot;),
+            @ApiResponse(responseCode = &quot;404&quot;, description = &quot;Publicación no encontrada.&quot;),
+            @ApiResponse(responseCode = &quot;501&quot;, description = &quot;Error al procesar la solicitud.&quot;)
+    })
+    @PostMapping(&quot;/{publicationId}/requestApproval&quot;)
+    public ResponseEntity&lt;String&gt; requestApproval(@PathVariable Long publicationId, HttpServletRequest request) {
+        try {
+            // 1. Obtener el email del usuario desde la solicitud utilizando el servicio de
+            // seguridad
+<span class="nc" id="L477">            String email = securityService.getEmail(request);</span>
+            // 2. Llamar al servicio para solicitar la aprobación de la publicación
+<span class="nc" id="L479">            publicationService.requestApproval(publicationId, email);</span>
+            // 3. Retornar una respuesta exitosa si la solicitud se procesó correctamente
+<span class="nc" id="L481">            return ResponseEntity.ok(&quot;Solicitud de aprobación enviada con éxito.&quot;);</span>
+
+<span class="nc" id="L483">        } catch (Exception e) {</span>
+<span class="nc" id="L484">            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();</span>
+        }
+    }
+
     // Manejo de errores de validación
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity&lt;Map&lt;String, String&gt;&gt; handleValidationExceptions(MethodArgumentNotValidException ex) {
-<span class="nc" id="L469">        Map&lt;String, String&gt; errors = new HashMap&lt;&gt;();</span>
-<span class="nc" id="L470">        ex.getBindingResult().getAllErrors().forEach(error -&gt; {</span>
-<span class="nc" id="L471">            String fieldName = ((FieldError) error).getField();</span>
-<span class="nc" id="L472">            String errorMessage = error.getDefaultMessage();</span>
-<span class="nc" id="L473">            errors.put(fieldName, errorMessage);</span>
-<span class="nc" id="L474">        });</span>
-<span class="nc" id="L475">        return ResponseEntity.badRequest().body(errors);</span>
+<span class="nc" id="L491">        Map&lt;String, String&gt; errors = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L492">        ex.getBindingResult().getAllErrors().forEach(error -&gt; {</span>
+<span class="nc" id="L493">            String fieldName = ((FieldError) error).getField();</span>
+<span class="nc" id="L494">            String errorMessage = error.getDefaultMessage();</span>
+<span class="nc" id="L495">            errors.put(fieldName, errorMessage);</span>
+<span class="nc" id="L496">        });</span>
+<span class="nc" id="L497">        return ResponseEntity.badRequest().body(errors);</span>
     }
 
 }

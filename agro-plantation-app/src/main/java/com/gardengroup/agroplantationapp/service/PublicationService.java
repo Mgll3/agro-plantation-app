@@ -217,27 +217,38 @@ public class PublicationService implements IPublicationService {
 
     @Transactional
     public void approvePublication(Long publicationId) {
+        // 1. Buscar la publicación por su ID en el repositorio
         Optional<Publication> optionalPublication = publicationRepository.findById(publicationId);
 
+        // 2. Verificar si la publicación existe
         if (optionalPublication.isPresent()) {
+            // 3. Obtener la publicación desde Optional si está presente
             Publication publication = optionalPublication.get();
 
+            // 4. Verificar si la publicación está en estado "PENDING"
             if ("PENDING".equals(publication.getAuthorizationStatus().getState())) {
 
-                // Buscar el estado "ACCEPTED" en la tabla StateRequest
+                // 5. Buscar el estado "ACCEPTED" en la tabla StateRequest
                 StateRequest acceptedState = stateRequestRepository.findByState("ACCEPTED")
                         .orElseThrow(() -> new RuntimeException("Estado 'ACCEPTED' no encontrado"));
 
-                // Asignar el estado "ACCEPTED" a la publicación
+                // 6. Asignar el estado "ACCEPTED" a la publicación
                 publication.setAuthorizationStatus(acceptedState);
 
+                // 7. Actualizar el campo visibility a true
+                publication.setVisibility(true);
+
+                // 8. Guardar los cambios en la base de datos utilizando el repositorio
                 publicationRepository.save(publication);
 
             } else {
+                // 9. Lanzar una excepción si la publicación no está en estado "PENDING"
                 throw new IllegalStateException(
                         "La publicación con ID " + publicationId + " no está en estado PENDIENTE");
             }
         } else {
+            // 10. Lanzar una excepción si no se encuentra la publicación con el ID
+            // proporcionado
             throw new IllegalArgumentException(Constants.P_NOT_FOUND);
         }
     }
@@ -532,6 +543,26 @@ public class PublicationService implements IPublicationService {
 
         publicationRepository.save(publication);
 
+    }
+
+    @Transactional
+    public void requestApproval(Long publicationId, String email) {
+        // 1. Buscar la publicación por su ID en el repositorio
+        Optional<Publication> optionalPublication = publicationRepository.findById(publicationId);
+        // 2. Verificar si la publicación existe
+        if (optionalPublication.isPresent()) {
+            // 3. Obtener la publicación desde Optional si está presente
+            Publication publication = optionalPublication.get();
+            // 4. Actualizar el estado de autorización de la publicación a "PENDING"
+            publication.getAuthorizationStatus().setState("PENDING");
+
+            // 5. Guardar los cambios en la base de datos utilizando el repositorio
+            publicationRepository.save(publication);
+        } else {
+
+            throw new DataAccessException("Publication not found with ID: " + publicationId) {
+            };
+        }
     }
 
 }

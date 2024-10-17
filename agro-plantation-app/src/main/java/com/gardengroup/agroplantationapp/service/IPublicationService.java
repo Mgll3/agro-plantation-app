@@ -50,4 +50,6 @@ public interface IPublicationService {
     public PublicationFilterDTO getPublicationsByQuantity(int pag);
 
     public void changeToPending(Long publicationId);
+
+    public void requestApproval(Long publicationId, String email);
 }

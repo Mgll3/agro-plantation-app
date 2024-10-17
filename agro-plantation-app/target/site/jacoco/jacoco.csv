@@ -4,8 +4,8 @@ agro-plantation-app,com.gardengroup.agroplantationapp.model.dto.publication,Publ
 agro-plantation-app,com.gardengroup.agroplantationapp.controller,AuthController,81,0,4,0,16,0,6,0,4,0
 agro-plantation-app,com.gardengroup.agroplantationapp.controller,ProducerRequestController,85,0,0,0,23,0,6,0,6,0
 agro-plantation-app,com.gardengroup.agroplantationapp.controller,UserController,24,0,0,0,7,0,3,0,3,0
-agro-plantation-app,com.gardengroup.agroplantationapp.controller,PublicationController,558,0,34,0,139,0,40,0,23,0
-agro-plantation-app,com.gardengroup.agroplantationapp.service,PublicationService,1018,0,86,0,227,0,74,0,31,0
+agro-plantation-app,com.gardengroup.agroplantationapp.controller,PublicationController,576,0,34,0,144,0,41,0,24,0
+agro-plantation-app,com.gardengroup.agroplantationapp.service,PublicationService,1053,0,88,0,236,0,76,0,32,0
 agro-plantation-app,com.gardengroup.agroplantationapp.service,UserService.new DataAccessException() {...},7,0,0,0,1,0,1,0,1,0
 agro-plantation-app,com.gardengroup.agroplantationapp.service,ProducerRequestService,144,0,4,0,29,0,10,0,8,0
 agro-plantation-app,com.gardengroup.agroplantationapp.service,CloudinaryService,103,0,4,0,17,0,5,0,3,0
@@ -15,6 +15,7 @@ agro-plantation-app,com.gardengroup.agroplantationapp.service,PublicationService
 agro-plantation-app,com.gardengroup.agroplantationapp.service,ProducerRequestService.new DataAccessException() {...},7,0,0,0,1,0,1,0,1,0
 agro-plantation-app,com.gardengroup.agroplantationapp.service,SecurityService,37,0,0,0,7,0,4,0,4,0
 agro-plantation-app,com.gardengroup.agroplantationapp.service,UserService,118,0,0,0,20,0,8,0,8,0
+agro-plantation-app,com.gardengroup.agroplantationapp.service,PublicationService.new DataAccessException() {...},7,0,0,0,1,0,1,0,1,0
 agro-plantation-app,com.gardengroup.agroplantationapp.service,PublicationService.new DataAccessException() {...},7,0,0,0,1,0,1,0,1,0
 agro-plantation-app,com.gardengroup.agroplantationapp.service,PublicationService.new DataAccessException() {...},7,0,0,0,1,0,1,0,1,0
 agro-plantation-app,com.gardengroup.agroplantationapp.service,PublicationService.new DataAccessException() {...},7,0,0,0,1,0,1,0,1,0

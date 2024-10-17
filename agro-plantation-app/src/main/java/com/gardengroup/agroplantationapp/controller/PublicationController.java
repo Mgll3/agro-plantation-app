@@ -282,7 +282,6 @@ public class PublicationController {
             publicationService.approvePublication(publicationId);
             return ResponseEntity.ok("La solicitud de publicación ha sido aprobada con éxito.");
         } catch (Exception e) {
-            log.error(e.getMessage());
             if (e.getMessage().equals(Constants.P_NOT_FOUND)) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             } else {
@@ -302,7 +301,6 @@ public class PublicationController {
             publicationService.rejectPublication(publicationId);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
-            log.error(e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
         }
     }
@@ -460,6 +458,28 @@ public class PublicationController {
             } else {
                 return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
             }
+        }
+    }
+
+    @Operation(summary = "Solicitar aprobación de una publicación", description = "Endpoint para que el autor de una publicación solicite su aprobación", tags = "Publication")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Solicitud de aprobación enviada con éxito."),
+            @ApiResponse(responseCode = "404", description = "Publicación no encontrada."),
+            @ApiResponse(responseCode = "501", description = "Error al procesar la solicitud.")
+    })
+    @PostMapping("/{publicationId}/requestApproval")
+    public ResponseEntity<String> requestApproval(@PathVariable Long publicationId, HttpServletRequest request) {
+        try {
+            // 1. Obtener el email del usuario desde la solicitud utilizando el servicio de
+            // seguridad
+            String email = securityService.getEmail(request);
+            // 2. Llamar al servicio para solicitar la aprobación de la publicación
+            publicationService.requestApproval(publicationId, email);
+            // 3. Retornar una respuesta exitosa si la solicitud se procesó correctamente
+            return ResponseEntity.ok("Solicitud de aprobación enviada con éxito.");
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
         }
     }
 
