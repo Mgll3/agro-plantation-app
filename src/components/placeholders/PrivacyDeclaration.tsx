@@ -2,7 +2,7 @@ import { useEffect, useLayoutEffect, useRef } from "react";
 import Header from "../header/Header";
 import { getStoredToken } from "../../utils/getStoredToken";
 import { checkOpenSession } from "../../interfaces/users/checkOpenSession";
-import { UserDataType } from "../../pages/commonTypes";
+import { UserDataType } from "../../pages/common/commonTypes";
 import { storeName } from "../../utils/storeName";
 import { user } from "../../data/userData";
 import { useUserRoleContext } from "../../context/UserRoleContext";
