@@ -11,7 +11,6 @@ import Community from "./components/placeholders/Community";
 import AboutUs from "./components/placeholders/AboutUs";
 import ProtectedRouteAdmin from "./components/protectRoutes/ProtectedRouteAdmin";
 import AdminPublications from "./pages/admin/AdminPublications";
-import AdminUsers from "./pages/admin/AdminUsers";
 import AdminForum from "./pages/admin/AdminForum";
 import Management from "./pages/management/Management";
 import RegisterProducer from "./pages/user/RegisterProducer";
@@ -67,7 +66,7 @@ function App() {
 					<Route path="/admin/home" element={<AdminHome />} />
 					<Route path="/admin/publications" element={<AdminPublications />} />
 					<Route path="/admin/publications/:id" element={<AdminPublications />} />
-					<Route path="/admin/users" element={<AdminUsers />} />
+					{/* <Route path="/admin/users" element={<AdminUsers />} /> */}
 					<Route path="/admin/forum" element={<AdminForum />} />
 					<Route path="/admin/publications/details/:id" element={<AdminPublicationDetails />} />
 				</Route>
