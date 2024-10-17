@@ -274,6 +274,7 @@ function AdminPublicationDetails() {
 									publicationInfo={publicationData}
 									addressCoordinates={addressCoordinates.current}
 									handleImageOnClick={showSlider}
+									handleVotePublication={() => null}
 								/>
 							</div>
 
