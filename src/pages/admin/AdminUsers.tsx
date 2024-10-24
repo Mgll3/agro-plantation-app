@@ -1,67 +1,77 @@
-// import { useEffect, useRef } from "react";
-// import Footer from "../../components/footer/Footer";
-// import Header from "../../components/header/Header";
-// import LoadingSmall from "../../components/modals/LoadingSmall";
-// import NetworkError from "../../components/modals/NetworkError";
-// import useLoadingState from "../../hooks/useLoadingState";
-// import { getStoredToken } from "../../utils/getStoredToken";
-// import { getPendingProducerRequests } from "../../interfaces/users/getPendingProducerRequests";
+import { useEffect, useRef } from "react";
+import Footer from "../../components/footer/Footer";
+import Header from "../../components/header/Header";
+import LoadingSmall from "../../components/modals/LoadingSmall";
+import NetworkError from "../../components/modals/NetworkError";
+import useLoadingState from "../../hooks/useLoadingState";
+import { getStoredToken } from "../../utils/getStoredToken";
+import { getPendingProducerRequests } from "../../interfaces/users/getPendingProducerRequests";
+import ProducerRequestsList from "../../components/admin/authProducers/ProducerRequestsList";
+import { ProducerRequestsListType } from "../../components/admin/adminTypes";
 
-// function AdminUsers() {
-// 	const [loadingState, changeLoadingState] = useLoadingState();
-// 	const axiosController = useRef<AbortController>();
+function AdminUsers() {
+	const [loadingState, changeLoadingState] = useLoadingState();
+	const requestsList = useRef<ProducerRequestsListType>([]);
+	const axiosController = useRef<AbortController>();
 
-// 	function closeErrorModal() {
-// 		changeLoadingState("loading");
-// 	}
+	function closeErrorModal() {
+		changeLoadingState("loading");
+	}
 
-// 	useEffect(() => {
-// 		axiosController.current = new AbortController();
-// 		const storedToken = getStoredToken();
+	function handleClickShowDetails() {
+		changeLoadingState("requestDetails");
+	}
 
-// 		if (loadingState === "loading" && storedToken) {
-// 			getPendingProducerRequests(storedToken, axiosController.current)
-// 				.then((response: AdminPublicationsFilteredType) => {
-// 					const formattedPublications = formatByRandomPublications(response.publications);
-// 					pagesLeft.current = response.pagination;
-// 					setPublicationsFiltered(formattedPublications);
-// 					changeLoadingState("loaded");
-// 				})
-// 				.catch(() => {
-// 					changeLoadingState("errorServer");
-// 				});
-// 		}
+	useEffect(() => {
+		axiosController.current = new AbortController();
+		const storedToken = getStoredToken();
 
-// 		return () => {
-// 			axiosController.current?.abort();
-// 		};
-// 	}, []);
+		if (loadingState === "loading" && storedToken) {
+			getPendingProducerRequests(storedToken, axiosController.current)
+				.then((response: ProducerRequestsListType) => {
+					requestsList.current = response;
+					changeLoadingState("loaded");
+				})
+				.catch(() => {
+					changeLoadingState("errorServer");
+				});
+		}
 
-// 	return (
-// 		<div className="flex flex-col min-h-[100vh]">
-// 			<div className="w-full">
-// 				<Header />
-// 			</div>
+		return () => {
+			axiosController.current?.abort();
+		};
+	}, []);
 
-// 			<main className="">
-// 				{loadingState === "loading" && (
-// 					<div className="min-h-[40vh] mt-24 text-brandingLightGreen">
-// 						<LoadingSmall />
-// 					</div>
-// 				)}
+	return (
+		<div className="flex flex-col min-h-[100vh]">
+			<div className="w-full">
+				<Header />
+			</div>
 
-// 				{loadingState === "loaded" && <></>}
+			<main
+				className="flex flex-col items-center flex-grow w-[100%] min-h-[40vh] mt-[4rem] px-[1.6rem]
+				custom-1400:mt-[3.5rem] custom-1900:mt-[5rem] custom-2500:mt-[6rem] custom-3500:mt-[10rem]"
+			>
+				{loadingState === "loading" && (
+					<div className="min-h-[40vh] mt-24 text-brandingLightGreen">
+						<LoadingSmall />
+					</div>
+				)}
 
-// 				{loadingState === "errorServer" && (
-// 					<NetworkError failedAction="cargar las peticiones." buttonText="Entendido" handleClose={closeErrorModal} />
-// 				)}
-// 			</main>
+				{loadingState === "loaded" && (
+					<ProducerRequestsList requestsList={requestsList.current} onClickShowDetails={handleClickShowDetails} />
+				)}
 
-// 			<div className="mt-auto">
-// 				<Footer />
-// 			</div>
-// 		</div>
-// 	);
-// }
+				{loadingState === "errorServer" && (
+					<NetworkError failedAction="cargar las peticiones." buttonText="Entendido" handleClose={closeErrorModal} />
+				)}
+			</main>
 
-// export default AdminUsers;
+			<div className="mt-auto">
+				<Footer />
+			</div>
+		</div>
+	);
+}
+
+export default AdminUsers;

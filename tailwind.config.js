@@ -49,6 +49,7 @@ export default {
 				grey900: "#272626",
 				brown150: "#F7F4E6",
 				yellow500: "#F6C915",
+				terciary50: "#EAf0DA",
 				terciary150: "#D4E2B5",
 				terciary300: "#BFD390"
 			},

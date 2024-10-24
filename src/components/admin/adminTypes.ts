@@ -71,3 +71,20 @@ export type FormattedPublicationsInfoType = {
 	title: string;
 	content: PublicationInfoType[];
 };
+
+///////////////////////////////////////////////////////////////
+// Tipos para las peticiones para convertirse en productor
+//////////////////////////////////////////////////////////////
+
+//Este tipo describe el array de peticiones para convertirse en productor que devuelve el servidor.
+export type gardenSizeType = "familiar" | "comunitaria" | "comerciales";
+
+export type ProducerRequestsType = {
+	id: number;
+	gardenName: string;
+	gardenSize: gardenSizeType;
+	gardenAddress: string;
+	description: string;
+};
+
+export type ProducerRequestsListType = ProducerRequestsType[];

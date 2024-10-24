@@ -7,6 +7,7 @@ export type LoadingStateType =
 	| "loaded"
 	| "sending"
 	| "sent"
+	| "requestDetails"
 	| "errorServer"
 	| "errorServer2"
 	| "errorCredentials"
@@ -38,7 +39,7 @@ export default function useLoadingState(initialState?: LoadingStateType): UseLoa
 			() => {
 				setLoadingState(newState);
 			},
-			timer ? timer : 1600
+			timer ? timer : 1300
 		);
 	}
 

@@ -26,6 +26,7 @@ import AdminHome from "./pages/admin/AdminHome";
 import ProtectedRouteUserProducer from "./components/protectRoutes/ProtectedRouteUserProducer";
 import Publications from "./pages/common/publications/Publications";
 import UserProducerPublicationDetails from "./pages/common/publications/UserProducerPublicationDetails";
+import AdminUsers from "./pages/admin/AdminUsers";
 
 function App() {
 	return (
@@ -66,7 +67,7 @@ function App() {
 					<Route path="/admin/home" element={<AdminHome />} />
 					<Route path="/admin/publications" element={<AdminPublications />} />
 					<Route path="/admin/publications/:id" element={<AdminPublications />} />
-					{/* <Route path="/admin/users" element={<AdminUsers />} /> */}
+					<Route path="/admin/users" element={<AdminUsers />} />
 					<Route path="/admin/forum" element={<AdminForum />} />
 					<Route path="/admin/publications/details/:id" element={<AdminPublicationDetails />} />
 				</Route>
