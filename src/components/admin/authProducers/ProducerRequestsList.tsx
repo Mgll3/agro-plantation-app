@@ -1,13 +1,15 @@
 import { ReactElement } from "react";
-import { ProducerRequestsListType } from "../adminTypes";
+import { ProducerRequestsListType, ProducerRequestsType } from "../adminTypes";
 import ProducerRequestCard from "./ProducerRequestCard";
+import { windowWidthType } from "../../../pages/admin/AdminUsers";
 
 type ProducerRequestsListProps = {
 	requestsList: ProducerRequestsListType;
-	onClickShowDetails: () => void;
+	windowWidth: windowWidthType;
+	onClickShowDetails: (requestData: ProducerRequestsType) => void;
 };
 
-function ProducerRequestsList({ requestsList, onClickShowDetails }: ProducerRequestsListProps) {
+function ProducerRequestsList({ requestsList, windowWidth, onClickShowDetails }: ProducerRequestsListProps) {
 	function renderRequestsList() {
 		const listElements: ReactElement[] = [];
 		if (requestsList.length === 0) {
@@ -25,6 +27,7 @@ function ProducerRequestsList({ requestsList, onClickShowDetails }: ProducerRequ
 					<ProducerRequestCard
 						key={requestsList[i].id}
 						request={requestsList[i]}
+						windowWidth={windowWidth}
 						onClickShowDetails={onClickShowDetails}
 					/>
 				);

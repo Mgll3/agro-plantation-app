@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
 import LoadingSmall from "../../components/modals/LoadingSmall";
@@ -7,19 +7,64 @@ import useLoadingState from "../../hooks/useLoadingState";
 import { getStoredToken } from "../../utils/getStoredToken";
 import { getPendingProducerRequests } from "../../interfaces/users/getPendingProducerRequests";
 import ProducerRequestsList from "../../components/admin/authProducers/ProducerRequestsList";
-import { ProducerRequestsListType } from "../../components/admin/adminTypes";
+import { ProducerRequestsListType, ProducerRequestsType } from "../../components/admin/adminTypes";
+
+export type windowWidthType = "xs" | "s" | "m" | "lg" | "xl";
 
 function AdminUsers() {
+	// El siguiente estado se utiliza para que ProducerRequestCard sepa qué cantidad de texto de la propiedad "request.descriptions" puede renderizar en pantalla sin que haya un salto de línea.
+	const [windowWidth, setWindowWidth] = useState<windowWidthType>(returnWindowWidthValue());
+
 	const [loadingState, changeLoadingState] = useLoadingState();
 	const requestsList = useRef<ProducerRequestsListType>([]);
 	const axiosController = useRef<AbortController>();
+
+	//Usada para comprobar el ancho de la ventana y, si es necesario, modificar el valor de windowWidth y provocar un nuevo renderizado.
+	function returnWindowWidthValue() {
+		switch (true) {
+			case window.innerWidth < 380:
+				return "xs";
+				break;
+
+			case window.innerWidth < 430:
+				return "s";
+				break;
+
+			case window.innerWidth < 900:
+				return "m";
+				break;
+
+			case window.innerWidth < 1900:
+				return "lg";
+				break;
+
+			case window.innerWidth < 2500:
+				return "xl";
+				break;
+
+			default:
+				return "xl";
+				break;
+		}
+	}
+
+	function updateWindowWidth() {
+		setWindowWidth(returnWindowWidthValue());
+	}
+
+	//Listener a la escucha de redimensionamientos de la pantalla.
+	window.addEventListener("resize", updateWindowWidth);
 
 	function closeErrorModal() {
 		changeLoadingState("loading");
 	}
 
-	function handleClickShowDetails() {
+	function handleClickShowDetails(requestData: ProducerRequestsType) {
 		changeLoadingState("requestDetails");
+	}
+
+	function handleClickGoBack() {
+		changeLoadingState("loading");
 	}
 
 	useEffect(() => {
@@ -42,6 +87,12 @@ function AdminUsers() {
 		};
 	}, []);
 
+	useEffect(() => {
+		return () => {
+			window.removeEventListener("resize", updateWindowWidth);
+		};
+	});
+
 	return (
 		<div className="flex flex-col min-h-[100vh]">
 			<div className="w-full">
@@ -60,7 +111,11 @@ function AdminUsers() {
 				)}
 
 				{loadingState === "loaded" && (
-					<ProducerRequestsList requestsList={requestsList.current} onClickShowDetails={handleClickShowDetails} />
+					<ProducerRequestsList
+						requestsList={requestsList.current}
+						onClickShowDetails={handleClickShowDetails}
+						windowWidth={windowWidth}
+					/>
 				)}
 
 				{loadingState === "errorServer" && (

@@ -1,12 +1,14 @@
+import { windowWidthType } from "../../../pages/admin/AdminUsers";
 import Button from "../../button/Button";
 import { ProducerRequestsType } from "../adminTypes";
 
 type ProducerRequestCardProps = {
 	request: ProducerRequestsType;
-	onClickShowDetails: () => void;
+	windowWidth: windowWidthType;
+	onClickShowDetails: (requestData: ProducerRequestsType) => void;
 };
 
-function ProducerRequestCard({ request, onClickShowDetails }: ProducerRequestCardProps) {
+function ProducerRequestCard({ request, windowWidth, onClickShowDetails }: ProducerRequestCardProps) {
 	const buttonFontSize =
 		"text-[1rem] custom-500:text-[1.4rem] custom-700:text-[1.6rem] custom-900:text-[1.8rem] custom-1400:text-[2rem] custom-1900:text-[2.5rem] custom-2500:text-[3rem]";
 	const buttonPaddingY =
@@ -16,10 +18,38 @@ function ProducerRequestCard({ request, onClickShowDetails }: ProducerRequestCar
 
 	const buttonGoToDetailsFunctionality = {
 		actionText: "Ver Perfil",
-		handleClick: onClickShowDetails
+		handleClick: () => onClickShowDetails(request)
 	};
 
-	const shortedDescription = `${request.description.substring(0, 40)}...`;
+	//Esta sección determina el nº de caracteres de request.description que se renderizan en pantalla. El objetivo es que no haya un salto de línea.
+	let numberOfCharacters: number = 0;
+
+	switch (windowWidth) {
+		case "xs":
+			numberOfCharacters = 33;
+			break;
+
+		case "s":
+			numberOfCharacters = 40;
+			break;
+
+		case "m":
+			numberOfCharacters = 42;
+			break;
+
+		case "lg":
+			numberOfCharacters = 55;
+			break;
+
+		case "xl":
+			numberOfCharacters = 60;
+			break;
+
+		default:
+			break;
+	}
+
+	const shortedDescription = `${request.description.substring(0, numberOfCharacters)}...`;
 
 	return (
 		<div
