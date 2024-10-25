@@ -54,7 +54,12 @@ function UserProfile({ handleLogoutClick }: UserProfileProps) {
 
 	return (
 		<div aria-label="Mi perfil" className="relative">
-			<div className="flex justify-center items-center w-fit py-[3px] custom-800:py-[6px] custom-1000:py-[10px] px-[11px] custom-600:px-[12px] custom-2000:px-[2rem] rounded-lg custom-2000:rounded-3xl bg-brandingYellow">
+			<div
+				className="flex justify-center items-center w-fit py-[0.3rem] px-[1.1rem] rounded-lg bg-brandingYellow
+				custom-800:py-[0.6rem] custom-1000:py-[1rem] custom-2500:py-[1.3rem] custom-3500:py-[1.5rem]
+				custom-600:px-[1.2rem] custom-2500:px-[2.3rem] custom-3500:px-[2.5rem]
+				custom-2000:rounded-2xl"
+			>
 				{userRole === "PRODUCER" || userRole === "PRODUCER_VIP" ? (
 					<img
 						src="/icons/black-plant.png"
@@ -66,7 +71,11 @@ function UserProfile({ handleLogoutClick }: UserProfileProps) {
 				<p
 					role="button"
 					onClick={showHideProfileOptions}
-					className="hidden custom-800:inline mr-[1.8rem] custom-3000:mr-[2.5rem] font-sans font-normal custom-1000:font-semibold text-[1.6rem]
+					className="hidden mr-[1.8rem] font-sans font-normal text-[1.6rem]
+						custom-800:inline
+						custom-3000:mr-[2.5rem]
+						custom-1900:text-[1.8rem] custom-2500:text-[2.5rem] custom-3500:text-[3.2rem] 
+						custom-1000:font-semibold
 						custom-800:cursor-pointer"
 				>
 					{user.name}
@@ -85,7 +94,7 @@ function UserProfile({ handleLogoutClick }: UserProfileProps) {
 					onClick={showHideProfileOptions}
 					ref={expandProfileIcon}
 				>
-					<img src="/icons/arrow-black.png" alt="" className="custom-2000:w-[2.1rem] custom-3000:w-[2.5rem]" />
+					<img src="/icons/arrow-black.png" alt="" className="custom-2000:w-[1.8rem] custom-3000:w-[2.2rem]" />
 				</div>
 			</div>
 
