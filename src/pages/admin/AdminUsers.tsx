@@ -49,8 +49,9 @@ function AdminUsers() {
 			</div>
 
 			<main
-				className="flex flex-col items-center flex-grow w-[100%] min-h-[40vh] mt-[4rem] px-[1.6rem]
-				custom-1400:mt-[3.5rem] custom-1900:mt-[5rem] custom-2500:mt-[6rem] custom-3500:mt-[10rem]"
+				className="flex flex-col items-center flex-grow w-[100%] min-h-[40vh] mt-[4rem] mb-[5rem] px-[1.6rem]
+				custom-1400:mt-[3.5rem] custom-1900:mt-[5rem] custom-2500:mt-[6rem] custom-3500:mt-[10rem]
+				custom-1400:mb-[7.8rem]"
 			>
 				{loadingState === "loading" && (
 					<div className="min-h-[40vh] mt-24 text-brandingLightGreen">
