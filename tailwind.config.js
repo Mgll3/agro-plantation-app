@@ -28,6 +28,7 @@ export default {
 				brandingLightBlue: "#B5B3B3",
 				screenDarkening: "#00000070",
 				semiTansparentBlack: "#000000cc",
+				borderBrand: "#1D7874",
 				darkText: "#484848",
 				darkGrayText: "#767676",
 				darkGrayText2: "#595959",

@@ -8,6 +8,7 @@ import { getStoredToken } from "../../utils/getStoredToken";
 import { getPendingProducerRequests } from "../../interfaces/users/getPendingProducerRequests";
 import ProducerRequestsList from "../../components/admin/authProducers/ProducerRequestsList";
 import { ProducerRequestsListType, ProducerRequestsType } from "../../components/admin/adminTypes";
+import ProducerRequestDetails from "../../components/admin/authProducers/ProducerRequestDetails";
 
 export type windowWidthType = "xs" | "s" | "m" | "lg" | "xl";
 
@@ -17,6 +18,7 @@ function AdminUsers() {
 
 	const [loadingState, changeLoadingState] = useLoadingState();
 	const requestsList = useRef<ProducerRequestsListType>([]);
+	const selectedRequest = useRef<ProducerRequestsType | null>(null);
 	const axiosController = useRef<AbortController>();
 
 	//Usada para comprobar el ancho de la ventana y, si es necesario, modificar el valor de windowWidth y provocar un nuevo renderizado.
@@ -60,11 +62,12 @@ function AdminUsers() {
 	}
 
 	function handleClickShowDetails(requestData: ProducerRequestsType) {
-		changeLoadingState("requestDetails");
+		selectedRequest.current = requestData;
+		changeLoadingState("requestDetails", undefined, 700);
 	}
 
 	function handleClickGoBack() {
-		changeLoadingState("loading");
+		changeLoadingState("loaded", undefined, 1);
 	}
 
 	useEffect(() => {
@@ -102,7 +105,10 @@ function AdminUsers() {
 			<main
 				className="flex flex-col items-center flex-grow w-[100%] min-h-[40vh] mt-[4rem] mb-[5rem] px-[1.6rem]
 				custom-1400:mt-[3.5rem] custom-1900:mt-[5rem] custom-2500:mt-[6rem] custom-3500:mt-[10rem]
-				custom-1400:mb-[7.8rem]"
+				custom-1400:mb-[7.8rem] custom-1900:mb-[12rem] custom-2500:mb-[15rem] custom-3500:mb-[20rem]
+				custom-500:px-[2.5rem]
+				custom-700:pl-[4rem] custom-1000:pl-[6rem] custom-1400:pl-[8.2rem]
+				custom-700:pr-[7rem] custom-1000:pr-[10rem] custom-1400:pr-[13.7rem]"
 			>
 				{loadingState === "loading" && (
 					<div className="min-h-[40vh] mt-24 text-brandingLightGreen">
@@ -116,6 +122,10 @@ function AdminUsers() {
 						onClickShowDetails={handleClickShowDetails}
 						windowWidth={windowWidth}
 					/>
+				)}
+
+				{loadingState === "requestDetails" && (
+					<ProducerRequestDetails selectedRequest={selectedRequest.current} onClickGoBack={handleClickGoBack} />
 				)}
 
 				{loadingState === "errorServer" && (
