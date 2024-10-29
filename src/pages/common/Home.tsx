@@ -87,7 +87,7 @@ export default function Home() {
 					} else {
 						resetUserCredentialsTimer = window.setTimeout(() => {
 							resetUserData(setUserRole);
-						}, 1400);
+						}, 3000);
 					}
 				});
 		} else {
@@ -151,18 +151,21 @@ export default function Home() {
 
 				{publicationsState === "error" && (
 					<div
-						className="px-[10vw] py-20 font-sans text-center
-						custom-1400:py-[10vh]"
+						className="mx-[7vw] mt-[7vh] mb-[5vh] p-[1rem] font-sans text-center bg-terciary150 rounded-xl border-[2px] border-black border-solid
+						custom-1400:mt-[12vh]
+						custom-1400:mb-[2vh]
+						custom-1400:p-[1.5rem]
+						custom-1400:rounded-3xl"
 					>
 						<p
-							className="text-[2rem]
-							custom-1900:text-[2.5rem] custom-2500:text-[3.7rem]"
+							className="text-[1.6rem] font-semibold
+							custom-1400:text-[2rem] custom-1900:text-[2.5rem] custom-2500:text-[3.7rem]"
 						>
 							No se han podido cargar las publicaciones más votadas.
 						</p>
 						<p
-							className="mt-2 text-[1.6rem]
-							custom-1900:text-[2rem] custom-2500:text-[3.2rem]"
+							className="mt-2 text-[1.4rem]
+							custom-1400:text-[1.6rem] custom-1900:text-[2rem] custom-2500:text-[3.2rem]"
 						>
 							Por favor, compruebe su conexión y refresque la página.
 						</p>

@@ -27,7 +27,7 @@ function PublicationsPreviewList({ bestPublicationsArray }: PublicationsPreviewL
 							<PublicationPreviewCard
 								id={element.id}
 								author={`${element.author.name} ${element.author.lastname}`}
-								mainImage={element.mainImage.url}
+								mainImage={element.mainImage?.url}
 								title={element.title}
 								mainText={element.plantation.details}
 							/>

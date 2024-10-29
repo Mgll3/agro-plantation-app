@@ -5,7 +5,7 @@ import { useUserRoleContext } from "../../../context/UserRoleContext";
 type PublicationPreviewCardProps = {
 	id: number;
 	author: string;
-	mainImage: string;
+	mainImage: string | undefined;
 	title: string;
 	mainText: string;
 };
@@ -64,7 +64,13 @@ function PublicationPreviewCard({ id, mainImage, title, author, mainText }: Publ
 					className="w-full h-[87px] bg-publicationCardsBg bg-cover
 						custom-500:h-[94px] custom-900:h-[112.8px] custom-1000:h-[160px] custom-1400:h-[184px] custom-1900:h-[194px] custom-2500:h-[279px] custom-3500:h-[393px]"
 				>
-					<img alt="Publication Main Image" src={mainImage} className="w-full h-full object-contain" />
+					{mainImage ? (
+						<img alt="Publication Main Image" src={mainImage} className="w-full h-full object-contain" />
+					) : (
+						<div className="flex justify-center items-center w-full h-full">
+							<p className="text-[2rem] text-brandingLightGreen drop-shadow-md">Sin Imagen</p>
+						</div>
+					)}
 				</div>
 
 				<div

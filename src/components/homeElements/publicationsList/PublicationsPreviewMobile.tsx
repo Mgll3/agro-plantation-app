@@ -158,9 +158,11 @@ function PublicationsPreviewMobile({ bestPublicationsArray }: PublicationsPrevie
 			clearInterval(moveSliderLeftInterval.current);
 			clearInterval(moveSliderRightInterval.current);
 
-			pictureViewerDiv.current!.removeEventListener("touchstart", touchstart);
-			pictureViewerDiv.current!.removeEventListener("touchmove", touchmove);
-			pictureViewerDiv.current!.removeEventListener("touchend", touchend);
+			if (pictureViewerDiv.current) {
+				pictureViewerDiv.current!.removeEventListener("touchstart", touchstart);
+				pictureViewerDiv.current!.removeEventListener("touchmove", touchmove);
+				pictureViewerDiv.current!.removeEventListener("touchend", touchend);
+			}
 		};
 	}, []);
 
@@ -195,7 +197,7 @@ function PublicationsPreviewMobile({ bestPublicationsArray }: PublicationsPrevie
 									<PublicationPreviewCard
 										id={element.id}
 										author={`${element.author.name} ${element.author.lastname}`}
-										mainImage={element.mainImage.url}
+										mainImage={element.mainImage?.url}
 										title={element.title}
 										mainText={element.plantation.details}
 									/>
