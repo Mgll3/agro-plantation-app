@@ -196,8 +196,8 @@ export default function Management() {
 	const producer3DataJson = JSON.stringify(producer3Data);
 
 	const admin1Data: RegisterFormFieldsToSendType = {
-		email: "antoniolopez123@gmail.com",
-		password: "Tut$oms6",
+		email: "makoHartwood@gmail.com",
+		password: "Makondo$05",
 		name: "Antonio",
 		lastname: "Gómez Cedán",
 		address: "Avenida del Rosal 2, Navacerrada, Madrid"
