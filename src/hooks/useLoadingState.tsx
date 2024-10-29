@@ -15,7 +15,10 @@ export type LoadingStateType =
 	| "modalLoading"
 	| "modalPublicationStateApproved"
 	| "modalPublicationStateRejected"
-	| "modalPublicationStatePending";
+	| "modalPublicationStatePending"
+	| "modalUserRequestApproved"
+	| "modalUserRequestReject"
+	| "modalUserRequestError";
 
 export type UseLoadingStateReturnType = [
 	LoadingStateType,

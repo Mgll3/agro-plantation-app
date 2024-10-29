@@ -9,6 +9,9 @@ import { getPendingProducerRequests } from "../../interfaces/users/getPendingPro
 import ProducerRequestsList from "../../components/admin/authProducers/ProducerRequestsList";
 import { ProducerRequestsListType, ProducerRequestsType } from "../../components/admin/adminTypes";
 import ProducerRequestDetails from "../../components/admin/authProducers/ProducerRequestDetails";
+import GenericModal from "../../components/modals/GenericModal";
+import { approveProducerRequest } from "../../interfaces/users/approveProducerRequest";
+import { rejectProducerRequest } from "../../interfaces/users/rejectProducerRequest";
 
 export type windowWidthType = "xs" | "s" | "m" | "lg" | "xl";
 
@@ -20,6 +23,7 @@ function AdminUsers() {
 	const requestsList = useRef<ProducerRequestsListType>([]);
 	const selectedRequest = useRef<ProducerRequestsType | null>(null);
 	const axiosController = useRef<AbortController>();
+	console.log(loadingState);
 
 	//Usada para comprobar el ancho de la ventana y, si es necesario, modificar el valor de windowWidth y provocar un nuevo renderizado.
 	function returnWindowWidthValue() {
@@ -61,20 +65,71 @@ function AdminUsers() {
 		changeLoadingState("loading");
 	}
 
+	function closeErrorModal2() {
+		changeLoadingState("requestDetails", "loading2", 1);
+	}
+
+	function handleCloseApprovedModal() {
+		changeLoadingState("loading");
+	}
+
+	function handleCloseRejectedModal() {
+		changeLoadingState("loading");
+	}
+
 	function handleClickShowDetails(requestData: ProducerRequestsType) {
 		selectedRequest.current = requestData;
-		changeLoadingState("requestDetails", undefined, 700);
+		changeLoadingState("requestDetails", "loading2", 700);
 	}
 
 	function handleClickGoBack() {
-		changeLoadingState("loaded", undefined, 1);
+		changeLoadingState("loaded", undefined, 100);
 	}
 
-	useEffect(() => {
+	function handleClickApprove() {
+		changeLoadingState("loading2", "loading2", 1);
+		axiosController.current?.abort();
 		axiosController.current = new AbortController();
 		const storedToken = getStoredToken();
 
+		if (storedToken && selectedRequest.current?.id) {
+			approveProducerRequest(selectedRequest.current.id, storedToken, axiosController.current)
+				.then(() => {
+					changeLoadingState("modalUserRequestApproved", "loading2", 300);
+				})
+				.catch(() => {
+					changeLoadingState("modalUserRequestError", "loading2", 300);
+				});
+		} else {
+			changeLoadingState("modalUserRequestError", "loading2", 300);
+		}
+	}
+
+	function handleClickReject() {
+		changeLoadingState("loading2", "loading2", 1);
+		axiosController.current?.abort();
+		axiosController.current = new AbortController();
+		const storedToken = getStoredToken();
+
+		if (storedToken && selectedRequest.current?.id) {
+			rejectProducerRequest(selectedRequest.current.id, storedToken, axiosController.current)
+				.then(() => {
+					changeLoadingState("modalUserRequestReject", "loading2", 300);
+				})
+				.catch(() => {
+					changeLoadingState("modalUserRequestError", "loading2", 300);
+				});
+		} else {
+			changeLoadingState("modalUserRequestError", "loading2", 300);
+		}
+	}
+
+	useEffect(() => {
+		const storedToken = getStoredToken();
+
 		if (loadingState === "loading" && storedToken) {
+			axiosController.current?.abort();
+			axiosController.current = new AbortController();
 			getPendingProducerRequests(storedToken, axiosController.current)
 				.then((response: ProducerRequestsListType) => {
 					requestsList.current = response;
@@ -84,11 +139,7 @@ function AdminUsers() {
 					changeLoadingState("errorServer");
 				});
 		}
-
-		return () => {
-			axiosController.current?.abort();
-		};
-	}, []);
+	}, [loadingState]);
 
 	useEffect(() => {
 		return () => {
@@ -116,16 +167,59 @@ function AdminUsers() {
 					</div>
 				)}
 
-				{loadingState === "loaded" && (
-					<ProducerRequestsList
-						requestsList={requestsList.current}
-						onClickShowDetails={handleClickShowDetails}
-						windowWidth={windowWidth}
-					/>
+				{loadingState === "loading2" && (
+					<div className="min-h-[40vh] mt-24 text-brandingLightGreen">
+						<LoadingSmall />
+					</div>
 				)}
 
-				{loadingState === "requestDetails" && (
-					<ProducerRequestDetails selectedRequest={selectedRequest.current} onClickGoBack={handleClickGoBack} />
+				{(loadingState === "loaded" ||
+					loadingState === "modalUserRequestApproved" ||
+					loadingState === "modalUserRequestReject") && (
+					<>
+						<ProducerRequestsList
+							requestsList={requestsList.current}
+							onClickShowDetails={handleClickShowDetails}
+							windowWidth={windowWidth}
+						/>
+
+						{loadingState === "modalUserRequestApproved" && (
+							<GenericModal
+								mainText="Gestión realizada correctamente"
+								secondaryText="La petición ha sido aprobada"
+								buttonText="Volver"
+								handleClick={handleCloseApprovedModal}
+							/>
+						)}
+
+						{loadingState === "modalUserRequestReject" && (
+							<GenericModal
+								mainText="Gestión realizada correctamente"
+								secondaryText="La petición ha sido rechazada"
+								buttonText="Volver"
+								handleClick={handleCloseRejectedModal}
+							/>
+						)}
+					</>
+				)}
+
+				{(loadingState === "requestDetails" || loadingState === "modalUserRequestError") && (
+					<>
+						<ProducerRequestDetails
+							selectedRequest={selectedRequest.current!}
+							onClickGoBack={handleClickGoBack}
+							onClickApprove={handleClickApprove}
+							onClickReject={handleClickReject}
+						/>
+
+						{loadingState === "modalUserRequestError" && (
+							<NetworkError
+								failedAction="contactar con el servidor."
+								buttonText="Entendido"
+								handleClose={closeErrorModal2}
+							/>
+						)}
+					</>
 				)}
 
 				{loadingState === "errorServer" && (
