@@ -2,27 +2,27 @@ import { useEffect, useRef, useState } from "react";
 import Button from "../../components/button/Button";
 import { ButtonColorType } from "../../components/button/buttonTypes";
 import Header from "../../components/header/Header";
-import { registerUser } from "../../interfaces/users/registerUser";
+// import { registerUser } from "../../interfaces/users/registerUser";
 import { LoginFormValuesType, RegisterFormFieldsToSendType } from "../../components/forms/formsTypes";
 import { useUserRoleContext } from "../../context/UserRoleContext";
 import { logInUser } from "../../interfaces/users/logInUser";
 import { UserDataType } from "../../pages/common/commonTypes";
 import { updateUserData } from "../../utils/updateUserData";
 import { getStoredToken } from "../../utils/getStoredToken";
-import { PlantationDemoType, PlantationsDemoDataType, publicationsDemoData } from "./publicationsDemoData";
-import { createPublication } from "../../interfaces/createPublication";
-import { storePublicationsDemoIds } from "./storePublicationsDemoIds";
-import { getPublicationsDemoIds } from "./getPublicationsDemoIds";
-import { deletePublication } from "../../interfaces/deletePublication";
-import { erasePublicationsDemoIds } from "./erasePublicationsDemoIds";
+// import { PlantationDemoType, PlantationsDemoDataType, publicationsDemoData } from "./publicationsDemoData";
+// import { createPublication } from "../../interfaces/createPublication";
+// import { storePublicationsDemoIds } from "./storePublicationsDemoIds";
+// import { getPublicationsDemoIds } from "./getPublicationsDemoIds";
+// import { deletePublication } from "../../interfaces/deletePublication";
+// import { erasePublicationsDemoIds } from "./erasePublicationsDemoIds";
 import { checkOpenSession } from "../../interfaces/users/checkOpenSession";
 import { resetUserData } from "../../utils/resetUserData";
-import ContentCopyTwoToneIcon from "@mui/icons-material/ContentCopyTwoTone";
-import { uploadPublicationsImages } from "../../interfaces/uploadPublicationsImages";
-import { mainImgMockArray, secondImgMockArray } from "./publicationsMockImages/publicationsImagesData";
-import generateRandomNumber from "../../utils/generateRandomNumber";
+// import ContentCopyTwoToneIcon from "@mui/icons-material/ContentCopyTwoTone";
+// import { uploadPublicationsImages } from "../../interfaces/uploadPublicationsImages";
+// import { mainImgMockArray, secondImgMockArray } from "./publicationsMockImages/publicationsImagesData";
+// import generateRandomNumber from "../../utils/generateRandomNumber";
 
-type RegisterUserStateType = "init" | "usersOk" | "usersKo";
+// type RegisterUserStateType = "init" | "usersOk" | "usersKo";
 type loginUserType =
 	| "init"
 	| "loginUser"
@@ -31,87 +31,87 @@ type loginUserType =
 	| "loginKoUser"
 	| "loginKoProducer"
 	| "loginKoAdmin";
-type CreatePublicationsType = "init" | "publicationsOk" | "publicationsKo" | "noToken";
-type DeletePublicationsStateType = "init" | "noPublications" | "deletedOk" | "deletedKo" | "noToken";
+// type CreatePublicationsType = "init" | "publicationsOk" | "publicationsKo" | "noToken";
+// type DeletePublicationsStateType = "init" | "noPublications" | "deletedOk" | "deletedKo" | "noToken";
 
 export default function Management() {
-	const { userRole, setUserRole } = useUserRoleContext();
-	const [registerUserState, setRegisterUserState] = useState<RegisterUserStateType>("init");
+	const { setUserRole } = useUserRoleContext();
+	// const [registerUserState, setRegisterUserState] = useState<RegisterUserStateType>("init");
 	const [loginUserState, setLoginUserState] = useState<loginUserType>("init");
-	const [createPublicationsState, setCreatePublicationsState] = useState<CreatePublicationsType>("init");
-	const [deletePublicationsState, setDeletePublicationsState] = useState<DeletePublicationsStateType>("init");
-	const [areTherePublicationsToDelete, setAreTherePublicationsToDelete] = useState(false);
+	// const [createPublicationsState, setCreatePublicationsState] = useState<CreatePublicationsType>("init");
+	// const [deletePublicationsState, setDeletePublicationsState] = useState<DeletePublicationsStateType>("init");
+	// const [areTherePublicationsToDelete, setAreTherePublicationsToDelete] = useState(false);
 	const [rerender, setRerender] = useState(false);
 
 	function reRenderComponent() {
 		setRerender(!rerender);
 	}
 
-	const publicationsIdsToStore = useRef<number[]>([]);
-	const mainImgMockArrayPosition = useRef<number>(0); //Guarda la posición en el array de la última imagen principal utilizada, para usar la siguiente y no volver a usar la misma.
+	// const publicationsIdsToStore = useRef<number[]>([]);
+	// const mainImgMockArrayPosition = useRef<number>(0); //Guarda la posición en el array de la última imagen principal utilizada, para usar la siguiente y no volver a usar la misma.
 
-	const publicationsToPublish: PlantationsDemoDataType = publicationsDemoData;
+	// const publicationsToPublish: PlantationsDemoDataType = publicationsDemoData;
 	let resetUserCredentialsTimer: number = 0;
 
 	const axiosController1 = useRef<AbortController>();
 	const axiosController2 = useRef<AbortController>();
 	const axiosController3 = useRef<AbortController>();
 	const axiosController4 = useRef<AbortController>();
-	const axiosController5 = useRef<AbortController>();
+	// const axiosController5 = useRef<AbortController>();
 
-	const buttonColorYellow: ButtonColorType = "yellow";
+	// const buttonColorYellow: ButtonColorType = "yellow";
 	const buttonColorGreen: ButtonColorType = "green";
 	const buttonFontSize = "text-[1.6rem]";
-	const buttonWidth = "w-[250px]";
+	// const buttonWidth = "w-[250px]";
 	const buttonWidthSmall = "w-[180px]";
-	const buttonPaddingY = "py-3.5";
+	// const buttonPaddingY = "py-3.5";
 	const buttonPaddingYSmall = "py-1.5";
 
-	const createUsersFuncionality = {
-		actionText: "Crear Usuarios",
-		handleClick: createUsers
-	};
+	// const createUsersFuncionality = {
+	// 	actionText: "Crear Usuarios",
+	// 	handleClick: createUsers
+	// };
 
-	function closeCodeAid() {
-		setRegisterUserState("init");
-	}
+	// function closeCodeAid() {
+	// 	setRegisterUserState("init");
+	// }
 
-	const closeCreateUsersAidFuncionality = {
-		actionText: "Cerrar",
-		handleClick: closeCodeAid
-	};
+	// const closeCreateUsersAidFuncionality = {
+	// 	actionText: "Cerrar",
+	// 	handleClick: closeCodeAid
+	// };
 
-	function create5Publications() {
-		createPublications(5);
-	}
+	// function create5Publications() {
+	// 	createPublications(5);
+	// }
 
-	const create5PublicationsFuncionality = {
-		actionText: "Crear 5 Publicaciones",
-		handleClick: create5Publications
-	};
+	// const create5PublicationsFuncionality = {
+	// 	actionText: "Crear 5 Publicaciones",
+	// 	handleClick: create5Publications
+	// };
 
-	function create10Publications() {
-		createPublications(10);
-	}
+	// function create10Publications() {
+	// 	createPublications(10);
+	// }
 
-	const create10PublicationsFuncionality = {
-		actionText: "Crear 10 Publicaciones",
-		handleClick: create10Publications
-	};
+	// const create10PublicationsFuncionality = {
+	// 	actionText: "Crear 10 Publicaciones",
+	// 	handleClick: create10Publications
+	// };
 
-	function createAllPublications() {
-		createPublications(publicationsToPublish.length);
-	}
+	// function createAllPublications() {
+	// 	createPublications(publicationsToPublish.length);
+	// }
 
-	const createAllPublicationsFuncionality = {
-		actionText: `Crear Todas Las Publicaciones (${publicationsToPublish.length})`,
-		handleClick: createAllPublications
-	};
+	// const createAllPublicationsFuncionality = {
+	// 	actionText: `Crear Todas Las Publicaciones (${publicationsToPublish.length})`,
+	// 	handleClick: createAllPublications
+	// };
 
-	const deletePublicationsFuncionality = {
-		actionText: "Borrar Publicaciones",
-		handleClick: deletePublications
-	};
+	// const deletePublicationsFuncionality = {
+	// 	actionText: "Borrar Publicaciones",
+	// 	handleClick: deletePublications
+	// };
 
 	const loginAsUser1Funcionality = {
 		actionText: "Logar Usuario",
@@ -153,7 +153,7 @@ export default function Management() {
 		address: "Soto del Real, Madrid"
 	};
 
-	const user1DataJson = JSON.stringify(user1Data);
+	// const user1DataJson = JSON.stringify(user1Data);
 
 	const user2Data: RegisterFormFieldsToSendType = {
 		email: "velezmarcocontacto@gmail.com",
@@ -163,7 +163,7 @@ export default function Management() {
 		address: "Manzanares, Madrid"
 	};
 
-	const user2DataJson = JSON.stringify(user2Data);
+	// const user2DataJson = JSON.stringify(user2Data);
 
 	const producer1Data: RegisterFormFieldsToSendType = {
 		email: "lorenita16tat@gmail.com",
@@ -173,7 +173,7 @@ export default function Management() {
 		address: "Calle Marte 25, Soto del Real, Madrid"
 	};
 
-	const producer1DataJson = JSON.stringify(producer1Data);
+	// const producer1DataJson = JSON.stringify(producer1Data);
 
 	const producer2Data: RegisterFormFieldsToSendType = {
 		email: "gabymoratrabajo@gmail.com",
@@ -183,7 +183,7 @@ export default function Management() {
 		address: "Avenida Pedriza 6, Manzanares el Real, Madrid"
 	};
 
-	const producer2DataJson = JSON.stringify(producer2Data);
+	// const producer2DataJson = JSON.stringify(producer2Data);
 
 	const producer3Data: RegisterFormFieldsToSendType = {
 		email: "sanchezangelbarraco@gmail.com",
@@ -193,51 +193,51 @@ export default function Management() {
 		address: "Calle Magallanes 5, Colmenar Viejo, Madrid"
 	};
 
-	const producer3DataJson = JSON.stringify(producer3Data);
+	// const producer3DataJson = JSON.stringify(producer3Data);
 
 	const admin1Data: RegisterFormFieldsToSendType = {
 		email: "makoHartwood@gmail.com",
 		password: "Makondo$05",
-		name: "Antonio",
-		lastname: "Gómez Cedán",
+		name: "Arturo",
+		lastname: "López Rosa",
 		address: "Avenida del Rosal 2, Navacerrada, Madrid"
 	};
 
-	const admin1DataJson = JSON.stringify(admin1Data);
+	// const admin1DataJson = JSON.stringify(admin1Data);
 
-	const usersArray = [
-		user1DataJson,
-		user2DataJson,
-		producer1DataJson,
-		producer2DataJson,
-		producer3DataJson,
-		admin1DataJson
-	];
+	// const usersArray = [
+	// 	user1DataJson,
+	// 	user2DataJson,
+	// 	producer1DataJson,
+	// 	producer2DataJson,
+	// 	producer3DataJson,
+	// 	admin1DataJson
+	// ];
 
 	////////////////////////////////////////////////////////////////////////////   DATOS DE LOS USUARIOS - FIN
 
-	const textToCopy1 = "mysql -uroot -p";
+	// const textToCopy1 = "mysql -uroot -p";
 
-	const textToCopy2 = `use agroplantationapp;
+	// const textToCopy2 = `use agroplantationapp;
 
-	UPDATE user SET user_type_id = (SELECT id FROM user_type WHERE type = 'USER') WHERE email = 'pedritoaldas2@gmail.com';
-	
-	UPDATE user SET user_type_id = (SELECT id FROM user_type WHERE type = 'USER') WHERE email = 'velezmarcocontacto@gmail.com';
-	
-	UPDATE user SET user_type_id = (SELECT id FROM user_type WHERE type = 'PRODUCER') WHERE email = 'lorenita16tat@gmail.com';
-	
-	UPDATE user SET user_type_id = (SELECT id FROM user_type WHERE type = 'PRODUCER') WHERE email = 'gabymoratrabajo@gmail.com';
-	
-	UPDATE user SET user_type_id = (SELECT id FROM user_type WHERE type = 'PRODUCER') WHERE email = 'sanchezangelbarraco@gmail.com';
-	
-	UPDATE user SET user_type_id = (SELECT id FROM user_type WHERE type = 'ADMIN') WHERE email = 'antoniolopez12@gmail.com';`;
-	function copyToClipboard1() {
-		navigator.clipboard.writeText(textToCopy1);
-	}
+	// UPDATE user SET user_type_id = (SELECT id FROM user_type WHERE type = 'USER') WHERE email = 'pedritoaldas2@gmail.com';
 
-	function copyToClipboard2() {
-		navigator.clipboard.writeText(textToCopy2);
-	}
+	// UPDATE user SET user_type_id = (SELECT id FROM user_type WHERE type = 'USER') WHERE email = 'velezmarcocontacto@gmail.com';
+
+	// UPDATE user SET user_type_id = (SELECT id FROM user_type WHERE type = 'PRODUCER') WHERE email = 'lorenita16tat@gmail.com';
+
+	// UPDATE user SET user_type_id = (SELECT id FROM user_type WHERE type = 'PRODUCER') WHERE email = 'gabymoratrabajo@gmail.com';
+
+	// UPDATE user SET user_type_id = (SELECT id FROM user_type WHERE type = 'PRODUCER') WHERE email = 'sanchezangelbarraco@gmail.com';
+
+	// UPDATE user SET user_type_id = (SELECT id FROM user_type WHERE type = 'ADMIN') WHERE email = 'antoniolopez12@gmail.com';`;
+	// function copyToClipboard1() {
+	// 	navigator.clipboard.writeText(textToCopy1);
+	// }
+
+	// function copyToClipboard2() {
+	// 	navigator.clipboard.writeText(textToCopy2);
+	// }
 
 	////////////////////////////////////////////////////////////////////////////   FUNCIONES PARA LOGAR A LOS DISTINTOS USUARIOS
 
@@ -363,176 +363,176 @@ export default function Management() {
 
 	////////////////////////////////////////////////////////////////////////////   FUNCIONES PARA LOGAR A LOS DISTINTOS USUARIOS - FIN
 
-	function createUsers() {
-		axiosController1.current = new AbortController();
-		const usersToCreateNumber = usersArray.length;
-		let finishedAttemps = 0;
-		let createdUsersNumber = 0;
+	// function createUsers() {
+	// 	axiosController1.current = new AbortController();
+	// 	const usersToCreateNumber = usersArray.length;
+	// 	let finishedAttemps = 0;
+	// 	let createdUsersNumber = 0;
 
-		usersArray.map((user) => {
-			registerUser(user, axiosController1.current!)
-				.then(() => {
-					finishedAttemps++;
-					createdUsersNumber++;
+	// 	usersArray.map((user) => {
+	// 		registerUser(user, axiosController1.current!)
+	// 			.then(() => {
+	// 				finishedAttemps++;
+	// 				createdUsersNumber++;
 
-					if (finishedAttemps === usersToCreateNumber && createdUsersNumber === usersToCreateNumber) {
-						setRegisterUserState("usersOk");
-					}
-				})
-				.catch((error: Error) => {
-					console.log(error);
-					finishedAttemps++;
+	// 				if (finishedAttemps === usersToCreateNumber && createdUsersNumber === usersToCreateNumber) {
+	// 					setRegisterUserState("usersOk");
+	// 				}
+	// 			})
+	// 			.catch((error: Error) => {
+	// 				console.log(error);
+	// 				finishedAttemps++;
 
-					if (finishedAttemps === usersToCreateNumber && createdUsersNumber < usersToCreateNumber) {
-						setRegisterUserState("usersKo");
-					}
-				});
-		});
-	}
+	// 				if (finishedAttemps === usersToCreateNumber && createdUsersNumber < usersToCreateNumber) {
+	// 					setRegisterUserState("usersKo");
+	// 				}
+	// 			});
+	// 	});
+	// }
 
-	function createPublications(ammount: number) {
-		axiosController2.current = new AbortController();
-		const storedToken = getStoredToken();
-		let finishedAttemps = 0;
-		let createdPublicationsNumber = 0;
-		const storedPublicationsIdStringify = getPublicationsDemoIds();
+	// function createPublications(ammount: number) {
+	// 	axiosController2.current = new AbortController();
+	// 	const storedToken = getStoredToken();
+	// 	let finishedAttemps = 0;
+	// 	let createdPublicationsNumber = 0;
+	// 	const storedPublicationsIdStringify = getPublicationsDemoIds();
 
-		if (storedPublicationsIdStringify) {
-			publicationsIdsToStore.current = JSON.parse(storedPublicationsIdStringify);
-		}
+	// 	if (storedPublicationsIdStringify) {
+	// 		publicationsIdsToStore.current = JSON.parse(storedPublicationsIdStringify);
+	// 	}
 
-		if (userRole !== "visitor" && userRole !== "USER" && storedToken) {
-			for (let i = 0; i < ammount; i++) {
-				const publicationDataJson: Stringified<PlantationDemoType> = JSON.stringify(publicationsToPublish[i]);
+	// 	if (userRole !== "visitor" && userRole !== "USER" && storedToken) {
+	// 		for (let i = 0; i < ammount; i++) {
+	// 			const publicationDataJson: Stringified<PlantationDemoType> = JSON.stringify(publicationsToPublish[i]);
 
-				createPublication(storedToken!, publicationDataJson, axiosController2.current!)
-					.then((response) => {
-						finishedAttemps++;
-						createdPublicationsNumber++;
-						publicationsIdsToStore.current.push(response.id!);
-						uploadImages(storedToken, response.id);
+	// 			createPublication(storedToken!, publicationDataJson, axiosController2.current!)
+	// 				.then((response) => {
+	// 					finishedAttemps++;
+	// 					createdPublicationsNumber++;
+	// 					publicationsIdsToStore.current.push(response.id!);
+	// 					uploadImages(storedToken, response.id);
 
-						if (finishedAttemps === ammount && createdPublicationsNumber === ammount) {
-							const publicationsIdsToStoreJSON = JSON.stringify(publicationsIdsToStore.current);
-							storePublicationsDemoIds(publicationsIdsToStoreJSON);
-							setCreatePublicationsState("publicationsOk");
-							setDeletePublicationsState("init");
-							setAreTherePublicationsToDelete(true);
-							publicationsIdsToStore.current = [];
-						}
-					})
-					.catch((error) => {
-						finishedAttemps++;
-						console.log(error);
+	// 					if (finishedAttemps === ammount && createdPublicationsNumber === ammount) {
+	// 						const publicationsIdsToStoreJSON = JSON.stringify(publicationsIdsToStore.current);
+	// 						storePublicationsDemoIds(publicationsIdsToStoreJSON);
+	// 						setCreatePublicationsState("publicationsOk");
+	// 						setDeletePublicationsState("init");
+	// 						setAreTherePublicationsToDelete(true);
+	// 						publicationsIdsToStore.current = [];
+	// 					}
+	// 				})
+	// 				.catch((error) => {
+	// 					finishedAttemps++;
+	// 					console.log(error);
 
-						if (finishedAttemps === ammount && createdPublicationsNumber < ammount) {
-							const publicationsIdsToStoreJSON = JSON.stringify(publicationsIdsToStore.current);
-							storePublicationsDemoIds(publicationsIdsToStoreJSON);
-							setCreatePublicationsState("publicationsKo");
-							setDeletePublicationsState("init");
-							publicationsIdsToStore.current = [];
-						}
-					});
-			}
-		} else {
-			setCreatePublicationsState("noToken");
-		}
-	}
+	// 					if (finishedAttemps === ammount && createdPublicationsNumber < ammount) {
+	// 						const publicationsIdsToStoreJSON = JSON.stringify(publicationsIdsToStore.current);
+	// 						storePublicationsDemoIds(publicationsIdsToStoreJSON);
+	// 						setCreatePublicationsState("publicationsKo");
+	// 						setDeletePublicationsState("init");
+	// 						publicationsIdsToStore.current = [];
+	// 					}
+	// 				});
+	// 		}
+	// 	} else {
+	// 		setCreatePublicationsState("noToken");
+	// 	}
+	// }
 
-	async function fetchImageAsBlob(url: string) {
-		const response = await fetch(url);
-		const blob = await response.blob();
-		return blob;
-	}
+	// async function fetchImageAsBlob(url: string) {
+	// 	const response = await fetch(url);
+	// 	const blob = await response.blob();
+	// 	return blob;
+	// }
 
-	async function uploadImages(token: string, publicationId: number) {
-		axiosController5.current = new AbortController();
-		const formData = new FormData();
-		const publicationIdString = String(publicationId);
+	// async function uploadImages(token: string, publicationId: number) {
+	// 	axiosController5.current = new AbortController();
+	// 	const formData = new FormData();
+	// 	const publicationIdString = String(publicationId);
 
-		if (mainImgMockArrayPosition.current >= mainImgMockArray.length - 1) {
-			mainImgMockArrayPosition.current = 0;
-		} else {
-			mainImgMockArrayPosition.current++;
-		}
+	// 	if (mainImgMockArrayPosition.current >= mainImgMockArray.length - 1) {
+	// 		mainImgMockArrayPosition.current = 0;
+	// 	} else {
+	// 		mainImgMockArrayPosition.current++;
+	// 	}
 
-		// Preparamos los datos de la imagen principal.
-		const mainImgMockName = mainImgMockArray[mainImgMockArrayPosition.current].name;
+	// 	// Preparamos los datos de la imagen principal.
+	// 	const mainImgMockName = mainImgMockArray[mainImgMockArrayPosition.current].name;
 
-		const mainImgMockUrl = mainImgMockArray[mainImgMockArrayPosition.current].url;
+	// 	const mainImgMockUrl = mainImgMockArray[mainImgMockArrayPosition.current].url;
 
-		const mainImgBlob = await fetchImageAsBlob(mainImgMockUrl);
+	// 	const mainImgBlob = await fetchImageAsBlob(mainImgMockUrl);
 
-		formData.append("mainImage", mainImgBlob, mainImgMockName);
-		formData.append("publicationId", publicationIdString);
+	// 	formData.append("mainImage", mainImgBlob, mainImgMockName);
+	// 	formData.append("publicationId", publicationIdString);
 
-		//Preparamos los datos de las publicaciones secundarias
-		//A cada publicación vamos a añadirle un número aleatorio de imágenes secundarias:
-		const randomNumberOfImgs = generateRandomNumber(1, secondImgMockArray.length - 1);
+	// 	//Preparamos los datos de las publicaciones secundarias
+	// 	//A cada publicación vamos a añadirle un número aleatorio de imágenes secundarias:
+	// 	const randomNumberOfImgs = generateRandomNumber(1, secondImgMockArray.length - 1);
 
-		if (randomNumberOfImgs > 0) {
-			for (let i = 0; i <= randomNumberOfImgs; i++) {
-				const secondaryImgMockName = secondImgMockArray[i].name;
-				const secondaryImgMockUrl = secondImgMockArray[i].url;
-				const secondaryImgMockBlob = await fetchImageAsBlob(secondaryImgMockUrl);
+	// 	if (randomNumberOfImgs > 0) {
+	// 		for (let i = 0; i <= randomNumberOfImgs; i++) {
+	// 			const secondaryImgMockName = secondImgMockArray[i].name;
+	// 			const secondaryImgMockUrl = secondImgMockArray[i].url;
+	// 			const secondaryImgMockBlob = await fetchImageAsBlob(secondaryImgMockUrl);
 
-				formData.append("images", secondaryImgMockBlob, secondaryImgMockName);
-			}
-		}
+	// 			formData.append("images", secondaryImgMockBlob, secondaryImgMockName);
+	// 		}
+	// 	}
 
-		uploadPublicationsImages(token, formData, axiosController5.current)
-			.then(() => {
-				return "OK";
-			})
-			.catch((error) => {
-				console.log(`Error al subir las imágenes de la publicación ${publicationId}: ${error}`);
-			});
-	}
+	// 	uploadPublicationsImages(token, formData, axiosController5.current)
+	// 		.then(() => {
+	// 			return "OK";
+	// 		})
+	// 		.catch((error) => {
+	// 			console.log(`Error al subir las imágenes de la publicación ${publicationId}: ${error}`);
+	// 		});
+	// }
 
-	function deletePublications() {
-		axiosController3.current = new AbortController();
-		const storedToken = getStoredToken();
-		let deletingError = false;
-		const publicationsToDeleteIdsStringify = getPublicationsDemoIds();
-		let publicationsToDeleteIds: number[];
+	// function deletePublications() {
+	// 	axiosController3.current = new AbortController();
+	// 	const storedToken = getStoredToken();
+	// 	let deletingError = false;
+	// 	const publicationsToDeleteIdsStringify = getPublicationsDemoIds();
+	// 	let publicationsToDeleteIds: number[];
 
-		if (publicationsToDeleteIdsStringify && storedToken) {
-			publicationsToDeleteIds = JSON.parse(publicationsToDeleteIdsStringify);
+	// 	if (publicationsToDeleteIdsStringify && storedToken) {
+	// 		publicationsToDeleteIds = JSON.parse(publicationsToDeleteIdsStringify);
 
-			publicationsToDeleteIds.map((id) => {
-				if (!deletingError) {
-					deletePublication(storedToken, id, axiosController3.current!)
-						.then(() => {})
-						.catch((error) => {
-							deletingError = true;
-							console.log(error);
-						});
-				} else {
-					setDeletePublicationsState("deletedKo");
-				}
-			});
+	// 		publicationsToDeleteIds.map((id) => {
+	// 			if (!deletingError) {
+	// 				deletePublication(storedToken, id, axiosController3.current!)
+	// 					.then(() => {})
+	// 					.catch((error) => {
+	// 						deletingError = true;
+	// 						console.log(error);
+	// 					});
+	// 			} else {
+	// 				setDeletePublicationsState("deletedKo");
+	// 			}
+	// 		});
 
-			if (!deletingError) {
-				erasePublicationsDemoIds();
-				setDeletePublicationsState("deletedOk");
-				setAreTherePublicationsToDelete(false);
-			} else {
-				setDeletePublicationsState("deletedKo");
-			}
-		} else {
-			if (!publicationsToDeleteIdsStringify) setDeletePublicationsState("noPublications");
-			if (!storedToken) setDeletePublicationsState("noToken");
-		}
-	}
+	// 		if (!deletingError) {
+	// 			erasePublicationsDemoIds();
+	// 			setDeletePublicationsState("deletedOk");
+	// 			setAreTherePublicationsToDelete(false);
+	// 		} else {
+	// 			setDeletePublicationsState("deletedKo");
+	// 		}
+	// 	} else {
+	// 		if (!publicationsToDeleteIdsStringify) setDeletePublicationsState("noPublications");
+	// 		if (!storedToken) setDeletePublicationsState("noToken");
+	// 	}
+	// }
 
 	useEffect(() => {
-		const publicationsToDeleteIdsStringify = getPublicationsDemoIds();
+		// const publicationsToDeleteIdsStringify = getPublicationsDemoIds();
 
-		if (publicationsToDeleteIdsStringify) {
-			setAreTherePublicationsToDelete(true);
-		} else {
-			setAreTherePublicationsToDelete(false);
-		}
+		// if (publicationsToDeleteIdsStringify) {
+		// 	setAreTherePublicationsToDelete(true);
+		// } else {
+		// 	setAreTherePublicationsToDelete(false);
+		// }
 
 		return () => {
 			axiosController1.current?.abort;
@@ -574,14 +574,14 @@ export default function Management() {
 				<Header />
 			</div>
 
-			<div className="flex flex-col items-center py-[5vh] px-[5vw] w-[100%] font-sans">
-				<h1 className="text-[34px] font-bold">Administración</h1>
+			<main className="flex flex-col items-center min-h-[90vh] py-[5vh] px-[5vw] w-[100%] font-sans">
+				<h1 className="mb-[5vh] text-[34px] text-center font-bold">Usuarios Para Pruebas</h1>
 
-				<h2 className="font-semibold text-[24px] my-[5vh]">Crear Usuarios</h2>
+				{/* <h2 className="font-semibold text-[24px] my-[5vh]">Crear Usuarios</h2> */}
 
 				{/* ///////////////////////////////  CREAR USUARIOS  ////////////////////////////////// */}
 
-				<div className="relative">
+				{/* <div className="relative">
 					<Button
 						buttonColor={buttonColorYellow}
 						buttonFontSize={buttonFontSize}
@@ -652,24 +652,26 @@ export default function Management() {
 
 						{registerUserState === "usersKo" && <p className="font-bold">Error al Crear Usuarios!!!</p>}
 					</div>
-				</div>
+				</div> */}
 
 				{/* /////////////////  LOGAR USUARIOS  ////////////////////// */}
 
-				<h2 className="font-semibold text-[24px] mt-[6.5vh] mb-[5vh]">Logar Usuarios</h2>
+				{/* <h2 className="font-semibold text-[24px] mt-[6.5vh] mb-[5vh]">Logar Usuarios</h2> */}
 
 				{/* ///////////  USUARIOS NORMALES  /////////// */}
 
-				<h3 className="mb-4 text-[18px] font-semibold text-brandingDarkGreen">Usuarios</h3>
+				<h3 className="mb-[2rem] text-[2.3rem] font-semibold text-brandingDarkGreen">Usuarios</h3>
 
-				<div className="relative flex justify-center gap-16 width-[100%]">
+				<div className="relative flex justify-center flex-wrap gap-[6rem] width-[100%]">
 					<div className="flex flex-col items-center">
-						<div className="flex flex-col items-start">
-							<p className="">
-								Email: <span className="font-bold">pedritoaldas2@gmail.com</span>
+						<div className="flex flex-col items-center mb-[1.5rem]">
+							<p className="mb-[0.8rem] text-center">
+								Email: <br />
+								<span className="font-bold">pedritoaldas2@gmail.com</span>
 							</p>
-							<p className="mb-4">
-								Contraseña: <span className="font-bold">oem$TP5</span>
+							<p className="mb-4 text-center">
+								Contraseña: <br />
+								<span className="font-bold">oem$TP5</span>
 							</p>
 						</div>
 						<Button
@@ -682,12 +684,14 @@ export default function Management() {
 					</div>
 
 					<div className="flex flex-col items-center">
-						<div className="flex flex-col items-start">
-							<p className="">
-								Email: <span className="font-bold">velezmarcocontacto@gmail.com</span>
+						<div className="flex flex-col items-center mb-[1.5rem]">
+							<p className="mb-[0.8rem] text-center">
+								Email: <br />
+								<span className="font-bold">velezmarcocontacto@gmail.com</span>
 							</p>
-							<p className="mb-4">
-								Contraseña: <span className="font-bold">fito$TP6</span>
+							<p className="mb-4 text-center">
+								Contraseña: <br />
+								<span className="font-bold">fito$TP6</span>
 							</p>
 						</div>
 						<Button
@@ -710,16 +714,38 @@ export default function Management() {
 
 				{/* ///////////  PRODUCTORES  /////////// */}
 
-				<h3 className="mb-4 mt-16 text-[18px] font-semibold text-brandingDarkGreen">Productores</h3>
+				<h3 className="mb-[2rem] mt-[6rem] text-[2.3rem] font-semibold text-brandingDarkGreen">Productores</h3>
 
-				<div className="relative flex justify-center gap-16 width-[100%]">
+				<div className="relative flex justify-center flex-wrap gap-[6rem] width-[100%]">
 					<div className="flex flex-col items-center">
-						<div className="flex flex-col items-start">
-							<p className="">
-								Email: <span className="font-bold">lorenita16tat@gmail.com</span>
+						<div className="flex flex-col items-center mb-[1.5rem]">
+							<p className="mb-[0.8rem] text-center">
+								Email: <br />
+								<span className="font-bold">sanchezangelbarraco@gmail.com</span>
 							</p>
-							<p className="mb-4">
-								Contraseña: <span className="font-bold">A%ldo1se</span>
+							<p className="mb-4 text-center">
+								Contraseña: <br />
+								<span className="font-bold">A%lco6$e</span>
+							</p>
+						</div>
+						<Button
+							buttonColor={buttonColorGreen}
+							buttonFontSize={buttonFontSize}
+							buttonWidth={buttonWidthSmall}
+							buttonPaddingY={buttonPaddingYSmall}
+							buttonFuncionality={loginAsProducer3Funcionality}
+						/>
+					</div>
+
+					<div className="flex flex-col items-center">
+						<div className="flex flex-col items-center mb-[1.5rem]">
+							<p className="mb-[0.8rem] text-center">
+								Email: <br />
+								<span className="font-bold">lorenita16tat@gmail.com</span>
+							</p>
+							<p className="mb-4 text-center">
+								Contraseña: <br />
+								<span className="font-bold">A%ldo1se</span>
 							</p>
 						</div>
 						<Button
@@ -732,12 +758,14 @@ export default function Management() {
 					</div>
 
 					<div className="flex flex-col items-center">
-						<div className="flex flex-col items-start">
-							<p className="">
-								Email: <span className="font-bold">gabymoratrabajo@gmail.com</span>
+						<div className="flex flex-col items-center mb-[1.5rem]">
+							<p className="mb-[0.8rem] text-center">
+								Email: <br />
+								<span className="font-bold">gabymoratrabajo@gmail.com</span>
 							</p>
-							<p className="mb-4">
-								Contraseña: <span className="font-bold">A%lco6$e</span>
+							<p className="mb-4 text-center">
+								Contraseña: <br />
+								<span className="font-bold">A%lco6$e</span>
 							</p>
 						</div>
 						<Button
@@ -746,24 +774,6 @@ export default function Management() {
 							buttonWidth={buttonWidthSmall}
 							buttonPaddingY={buttonPaddingYSmall}
 							buttonFuncionality={loginAsProducer2Funcionality}
-						/>
-					</div>
-
-					<div className="flex flex-col items-center">
-						<div className="flex flex-col items-start">
-							<p className="">
-								Email: <span className="font-bold">sanchezangelbarraco@gmail.com</span>
-							</p>
-							<p className="mb-4">
-								Contraseña: <span className="font-bold">A%lco6$e</span>
-							</p>
-						</div>
-						<Button
-							buttonColor={buttonColorGreen}
-							buttonFontSize={buttonFontSize}
-							buttonWidth={buttonWidthSmall}
-							buttonPaddingY={buttonPaddingYSmall}
-							buttonFuncionality={loginAsProducer3Funcionality}
 						/>
 					</div>
 
@@ -778,16 +788,18 @@ export default function Management() {
 
 				{/* ///////////  ADMINISTRADOR  /////////// */}
 
-				<h3 className="mb-4 mt-16 text-[18px] font-semibold text-brandingDarkGreen">Administrador</h3>
+				<h3 className="mb-[2rem] mt-[6rem] text-[2.3rem] font-semibold text-brandingDarkGreen">Administrador</h3>
 
-				<div className="relative flex justify-center gap-16 width-[100%]">
+				<div className="relative flex justify-center gap-[6rem] width-[100%]">
 					<div className="flex flex-col items-center">
-						<div className="flex flex-col items-start">
-							<p className="">
-								Email: <span className="font-bold">antoniolopez12@gmail.com</span>
+						<div className="flex flex-col items-center mb-[1.5rem]">
+							<p className="mb-[0.8rem] text-center">
+								Email: <br />
+								<span className="font-bold">makoHartwood@gmail.com</span>
 							</p>
-							<p className="mb-4">
-								Contraseña: <span className="font-bold">Tut$oms6</span>
+							<p className="mb-4 text-center">
+								Contraseña: <br />
+								<span className="font-bold">Makondo$05</span>
 							</p>
 						</div>
 						<Button
@@ -810,7 +822,7 @@ export default function Management() {
 
 				{/* /////////////////////////////////////////  CREAR PUBLICACIONES  ////////////////////////////////////// */}
 
-				<h2 className="font-semibold text-[24px] mt-[6.5vh] mb-[5vh]">Crear Publicaciones</h2>
+				{/* <h2 className="font-semibold text-[24px] mt-[6.5vh] mb-[5vh]">Crear Publicaciones</h2>
 
 				<div className="relative flex justify-center gap-20">
 					<Button
@@ -846,11 +858,11 @@ export default function Management() {
 							No Hay un Productor o Administrador Logado!!!
 						</p>
 					)}
-				</div>
+				</div> */}
 
 				{/* /////////////////////////////////////////  BORRAR PUBLICACIONES  ////////////////////////////////////// */}
 
-				<h2 className="font-semibold text-[24px] mt-[6.5vh] mb-[5vh]">Borrar Publicaciones</h2>
+				{/* <h2 className="font-semibold text-[24px] mt-[6.5vh] mb-[5vh]">Borrar Publicaciones</h2>
 
 				{areTherePublicationsToDelete === true ? (
 					<div className="relative flex justify-center gap-20">
@@ -871,8 +883,8 @@ export default function Management() {
 					</div>
 				) : (
 					<p className="font-bold">No hay publicaciones para eliminar!!!</p>
-				)}
-			</div>
+				)} */}
+			</main>
 		</div>
 	);
 }
