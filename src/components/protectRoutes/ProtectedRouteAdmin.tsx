@@ -3,10 +3,10 @@ import { checkOpenSession } from "../../interfaces/users/checkOpenSession";
 import { useUserRoleContext } from "../../context/UserRoleContext";
 import { Outlet, useNavigate } from "react-router-dom";
 import { UserDataType, isAuthorizedType } from "./ProtectedRoutesTypes";
-import { CircularProgress } from "@mui/material";
 import { getStoredToken } from "../../utils/getStoredToken";
 import { updateUserData } from "../../utils/updateUserData";
 import { resetUserData } from "../../utils/resetUserData";
+import LoadingScreen from "./LoadingScreen";
 
 function ProtectedRouteAdmin() {
 	const { setUserRole } = useUserRoleContext();
@@ -65,15 +65,7 @@ function ProtectedRouteAdmin() {
 		};
 	}, [isAuthorized]);
 
-	return (
-		<>
-			{isAuthorized === "loading" || isAuthorized === "notAuthorized" ? (
-				<CircularProgress color="success" />
-			) : (
-				<Outlet />
-			)}
-		</>
-	);
+	return <>{isAuthorized === "loading" || isAuthorized === "notAuthorized" ? <LoadingScreen /> : <Outlet />}</>;
 }
 
 export default ProtectedRouteAdmin;
