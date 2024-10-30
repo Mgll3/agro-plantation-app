@@ -10,6 +10,7 @@ import { getStoredToken } from "../../utils/getStoredToken";
 import { requestToBeProducer } from "../../interfaces/users/requestToBeProducer";
 import NetworkError from "../../components/modals/NetworkError";
 import { RegisterProducerFormValuesType } from "../../components/forms/formsTypes";
+import { Helmet } from "react-helmet";
 
 type ProducerRequestDataToSendType = {
 	gardenName: string;
@@ -67,6 +68,10 @@ function RegisterProducer() {
 
 	return (
 		<div className="flex flex-col min-h-[100vh]">
+			<Helmet>
+				<title>Plant-In Registro de Productor</title>
+			</Helmet>
+
 			<div className="w-full">
 				<Header />
 			</div>

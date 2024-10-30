@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet";
 import AdminHomeBanner from "../../components/admin/AdminHomeBanner";
 import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
@@ -6,6 +7,10 @@ import SocialNetworks from "../../components/homeElements/SocialNetworks";
 function AdminHome() {
 	return (
 		<div className="flex flex-col min-h-[100vh]">
+			<Helmet>
+				<title>Plant-In Home</title>
+			</Helmet>
+
 			<div className="w-full">
 				<Header />
 			</div>

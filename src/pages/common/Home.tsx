@@ -22,6 +22,7 @@ import { resetUserData } from "../../utils/resetUserData";
 import styles from "./Home.module.scss";
 import PublicationsPreviewMobile from "../../components/homeElements/publicationsList/PublicationsPreviewMobile";
 import LoadingSmall from "../../components/modals/LoadingSmall";
+import { Helmet } from "react-helmet";
 
 type LoadingStateType = "loading" | "loaded" | "error";
 
@@ -121,6 +122,10 @@ export default function Home() {
 
 	return (
 		<>
+			<Helmet>
+				<title>Plant-In Home</title>
+			</Helmet>
+
 			<div className="w-full">
 				<Header />
 			</div>

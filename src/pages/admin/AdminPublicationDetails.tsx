@@ -17,6 +17,7 @@ import { approvePublication } from "../../interfaces/approvePublication";
 import { rejectPublication } from "../../interfaces/rejectPublication";
 import { changePublicationToPending } from "../../interfaces/changePublicationToPending";
 import PictureSlider, { SliderInfoType } from "../../components/common/PictureSlider";
+import { Helmet } from "react-helmet";
 
 export type CoordinatesType = {
 	lat: number;
@@ -244,6 +245,10 @@ function AdminPublicationDetails() {
 
 	return (
 		<div className="flex flex-col min-h-[100vh]">
+			<Helmet>
+				<title>{`Plant-In Publicación "${publicationData?.title}"`}</title>
+			</Helmet>
+
 			<div className="w-full">
 				<Header />
 			</div>

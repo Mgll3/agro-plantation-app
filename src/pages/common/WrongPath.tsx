@@ -1,6 +1,6 @@
 import { useEffect } from "react";
+import { Helmet } from "react-helmet";
 import { useNavigate } from "react-router-dom";
-
 
 function WrongPath() {
 	const navigate = useNavigate();
@@ -16,9 +16,14 @@ function WrongPath() {
 	});
 
 	return (
-		<main>
-			<h1>La página indicada no existe. Redirigiendo a Home...</h1>
-		</main>
+		<>
+			<Helmet>
+				<title>Plant-In URL Incorrecta</title>
+			</Helmet>
+			<main>
+				<h1>La página indicada no existe. Redirigiendo a Home...</h1>
+			</main>
+		</>
 	);
 }
 

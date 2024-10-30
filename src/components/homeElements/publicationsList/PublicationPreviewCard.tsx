@@ -68,7 +68,7 @@ function PublicationPreviewCard({ id, mainImage, title, author, mainText }: Publ
 						<img alt="Publication Main Image" src={mainImage} className="w-full h-full object-contain" />
 					) : (
 						<div className="flex justify-center items-center w-full h-full">
-							<p className="text-[2rem] text-brandingLightGreen drop-shadow-md">Sin Imagen</p>
+							<p className="text-[2rem] font-semibold text-brandingLightGreen drop-shadow-custom">Sin Imagen</p>
 						</div>
 					)}
 				</div>

@@ -17,6 +17,7 @@ import { getStoredToken } from "../../utils/getStoredToken";
 // import { erasePublicationsDemoIds } from "./erasePublicationsDemoIds";
 import { checkOpenSession } from "../../interfaces/users/checkOpenSession";
 import { resetUserData } from "../../utils/resetUserData";
+import { Helmet } from "react-helmet";
 // import ContentCopyTwoToneIcon from "@mui/icons-material/ContentCopyTwoTone";
 // import { uploadPublicationsImages } from "../../interfaces/uploadPublicationsImages";
 // import { mainImgMockArray, secondImgMockArray } from "./publicationsMockImages/publicationsImagesData";
@@ -570,6 +571,10 @@ export default function Management() {
 
 	return (
 		<div className="w-full pb-20 bg-brandingLightYellow">
+			<Helmet>
+				<title>Plant-In Herramientas Para Demo</title>
+			</Helmet>
+
 			<div className="w-full">
 				<Header />
 			</div>

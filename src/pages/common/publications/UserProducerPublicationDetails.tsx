@@ -16,6 +16,7 @@ import PublicationStateModified from "../../../components/modals/PublicationStat
 import PictureSlider, { SliderInfoType } from "../../../components/common/PictureSlider";
 import { useUserRoleContext } from "../../../context/UserRoleContext";
 import { alternatePublicationVote } from "../../../interfaces/alternatePublicationVote";
+import { Helmet } from "react-helmet";
 
 export type CoordinatesType = {
 	lat: number;
@@ -196,6 +197,10 @@ function UserProducerPublicationDetails() {
 
 	return (
 		<div className="flex flex-col min-h-[100vh]">
+			<Helmet>
+				<title>{`Plant-In Publicación "${publicationData?.title}"`}</title>
+			</Helmet>
+
 			<div className="w-full">
 				<Header />
 			</div>

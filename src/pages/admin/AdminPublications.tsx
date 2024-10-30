@@ -22,6 +22,7 @@ import useLoadingState from "../../hooks/useLoadingState";
 import PublicationsPagination from "../../components/common/publications/PublicationsPagination";
 import PublicationsFiltersMobile from "../../components/common/publications/PublicationsFiltersMobile";
 import PublicationsFilters from "../../components/common/publications/PublicationsFilters";
+import { Helmet } from "react-helmet";
 
 function AdminPublications() {
 	const location = useLocation();
@@ -279,6 +280,10 @@ function AdminPublications() {
 
 	return (
 		<div className="flex flex-col min-h-[100vh]">
+			<Helmet>
+				<title>Plant-In Publicaciones de Usuarios</title>
+			</Helmet>
+
 			<div className="w-full">
 				<Header />
 			</div>

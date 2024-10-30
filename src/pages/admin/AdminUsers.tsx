@@ -12,6 +12,7 @@ import ProducerRequestDetails from "../../components/admin/authProducers/Produce
 import GenericModal from "../../components/modals/GenericModal";
 import { approveProducerRequest } from "../../interfaces/users/approveProducerRequest";
 import { rejectProducerRequest } from "../../interfaces/users/rejectProducerRequest";
+import { Helmet } from "react-helmet";
 
 export type windowWidthType = "xs" | "s" | "m" | "lg" | "xl";
 
@@ -149,6 +150,10 @@ function AdminUsers() {
 
 	return (
 		<div className="flex flex-col min-h-[100vh]">
+			<Helmet>
+				<title>Plant-In Solicitudes de Usuarios</title>
+			</Helmet>
+
 			<div className="w-full">
 				<Header />
 			</div>

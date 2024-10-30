@@ -14,6 +14,7 @@ import { createPublication } from "../../interfaces/createPublication";
 import { uploadPublicationsImages } from "../../interfaces/uploadPublicationsImages";
 import { getPublicationsDemoIds } from "../management/getPublicationsDemoIds";
 import { storePublicationsDemoIds } from "../management/storePublicationsDemoIds";
+import { Helmet } from "react-helmet";
 
 function CreatePublication() {
 	const [createPublicationState, setCreatePublicationState] = useLoadingState("init");
@@ -123,6 +124,10 @@ function CreatePublication() {
 
 	return (
 		<>
+			<Helmet>
+				<title>Plant-In Crear Publicación</title>
+			</Helmet>
+
 			<div className="w-full">
 				<Header />
 			</div>

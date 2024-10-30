@@ -13,6 +13,7 @@ import { UserDataType } from "./commonTypes";
 import { useUserRoleContext } from "../../context/UserRoleContext";
 import { updateUserData } from "../../utils/updateUserData";
 import { resetUserData } from "../../utils/resetUserData";
+import { Helmet } from "react-helmet";
 
 export type LoginStateType = "init" | "loading" | "loginError" | "networkError" | "logged";
 export type RegisterStateType =
@@ -186,6 +187,10 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 			<main ref={mainContainerElement} className="flex absolute transition-all left-0 duration-1000 overflow-y-hidden">
 				{focus === "login" ? (
 					<>
+						<Helmet>
+							<title>Plant-In Login</title>
+						</Helmet>
+
 						<div className="w-screen h-screen">
 							<Login
 								handleSubmit={submitLoginForm}
@@ -206,6 +211,10 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 					</>
 				) : (
 					<>
+						<Helmet>
+							<title>Plant-In Registro</title>
+						</Helmet>
+
 						<div className="w-screen">
 							<Register
 								handleSubmit={submitRegisterForm}

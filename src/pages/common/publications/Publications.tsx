@@ -22,6 +22,7 @@ import PublicationsPagination from "../../../components/common/publications/Publ
 import PublicationsFiltersMobile from "../../../components/common/publications/PublicationsFiltersMobile";
 import { useUserRoleContext } from "../../../context/UserRoleContext";
 import PublicationsFilters from "../../../components/common/publications/PublicationsFilters";
+import { Helmet } from "react-helmet";
 
 type DeviceUsedType = "pc" | "mobile";
 
@@ -274,6 +275,10 @@ function Publications() {
 
 	return (
 		<div className="flex flex-col min-h-[100vh]">
+			<Helmet>
+				<title>Plant-In Publicaciones de Usuarios</title>
+			</Helmet>
+
 			<div className="w-full">
 				<Header />
 			</div>
