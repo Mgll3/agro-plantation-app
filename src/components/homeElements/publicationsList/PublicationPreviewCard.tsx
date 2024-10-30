@@ -30,7 +30,7 @@ function PublicationPreviewCard({ id, mainImage, title, author, mainText }: Publ
 		const fixedText = mainText.substring(0, maxChars); // The minimun number of characters we´re going to show
 		let finalPreviewText = fixedText;
 
-		if (fixedText[maxChars] !== " " && fixedText[maxChars] !== ".") {
+		if (fixedText[maxChars] !== " " && fixedText[maxChars] !== "." && fixedText[maxChars + 1]) {
 			// We don't want the text to end in the middle of a word, so if "fixedText" does not end in a space " " or a period ".", we save a part of the text that comes next to look for a space (the end of a word or a phrase)
 			const restOfText = mainText.substring(maxChars + 1, 100);
 			const indexOfNextSpace = restOfText.indexOf(" ");
@@ -102,7 +102,7 @@ function PublicationPreviewCard({ id, mainImage, title, author, mainText }: Publ
 							custom-500:pt-[1.2rem] custom-1400:pt-[1.6rem] custom-1900:pt-[2rem]
 							custom-1900:flex custom-1900:grow custom-1900:items-center"
 					>
-						{`${generatePreviewText()}...`}
+						{`${generatePreviewText()}${maxChars + 1 < mainText.length ? "..." : ""}`}
 					</p>
 				</div>
 			</div>
