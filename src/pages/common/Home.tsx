@@ -157,7 +157,7 @@ export default function Home() {
 
 				{publicationsState === "error" && (
 					<div
-						className="mx-[7vw] mt-[7vh] mb-[5vh] p-[1rem] font-sans text-center bg-terciary150 rounded-xl border-[2px] border-black border-solid
+						className="mx-[7vw] mt-[7vh] mb-[5vh] p-[1rem] font-sans text-center bg-terciary150 rounded-xl border-[2px] border-black border-solid shadow-below-light
 						custom-1400:mt-[12vh]
 						custom-1400:mb-[2vh]
 						custom-1400:p-[1.5rem]

@@ -14,12 +14,20 @@ function ProducerRequestsList({ requestsList, windowWidth, onClickShowDetails }:
 		const listElements: ReactElement[] = [];
 		if (requestsList.length === 0) {
 			return (
-				<p
-					className="text-[1.4rem] text-center
-					custom-500:text-[1.6rem] custom-700:text-[2rem] custom-900:text-[2.4rem]  custom-1200:text-[2.8rem] custom-1900:text-[3.2rem] custom-2500:text-[3.8rem] custom-3500:text-[4.5rem]"
+				<div
+					className="w-full my-[3vh]
+				custom-1200:mt-[5vh]
+				custom-1400:mb-[2vh]
+				custom-1400:rounded-3xl"
 				>
-					- No hay solicitudes pendientes -
-				</p>
+					<p
+						className="w-fit mx-auto p-[1rem] text-[1.4rem] text-center font-niramit font-semibold bg-terciary150 rounded-xl border-[2px] border-black border-solid shadow-below-light
+					custom-500:text-[1.6rem] custom-700:text-[2rem] custom-900:text-[2.2rem]  custom-1200:text-[2.5rem] custom-1900:text-[2.9rem] custom-2500:text-[3.5rem] custom-3500:text-[4rem]
+					custom-900:px-[1.6rem] custom-1200:px-[2.5rem]"
+					>
+						No hay solicitudes pendientes
+					</p>
+				</div>
 			);
 		} else {
 			for (let i = 0; i < requestsList.length; i++) {
