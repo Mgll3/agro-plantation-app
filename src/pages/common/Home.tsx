@@ -21,6 +21,7 @@ import { updateUserData } from "../../utils/updateUserData";
 import { resetUserData } from "../../utils/resetUserData";
 import styles from "./Home.module.scss";
 import PublicationsPreviewMobile from "../../components/homeElements/publicationsList/PublicationsPreviewMobile";
+import LoadingSmall from "../../components/modals/LoadingSmall";
 
 type LoadingStateType = "loading" | "loaded" | "error";
 
@@ -144,8 +145,8 @@ export default function Home() {
 				) : null}
 
 				{publicationsState === "loading" && (
-					<div className="px-[10vw] text-center">
-						<img alt="Cargando..." src="icons/loading.gif" className="" />
+					<div className="my-[10vh] px-[10vw] text-center">
+						<LoadingSmall />
 					</div>
 				)}
 

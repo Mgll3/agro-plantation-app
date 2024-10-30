@@ -2,7 +2,7 @@ import { CircularProgress } from "@mui/material";
 
 function LoadingSmall() {
 	return (
-		<div className="flex justify-center items-center z-10 w-full select-none text-colorYellowBg">
+		<div className="flex justify-center items-center z-10 w-full select-none text-brandingDarkGreen">
 			<CircularProgress color="inherit" size="5vw" />
 		</div>
 	);
