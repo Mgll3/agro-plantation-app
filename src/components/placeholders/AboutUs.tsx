@@ -7,6 +7,7 @@ import { user } from "../../data/userData";
 import { useUserRoleContext } from "../../context/UserRoleContext";
 import { getStoredName } from "../../utils/getStoredName";
 import { UserDataType } from "../../pages/common/commonTypes";
+import { Helmet } from "react-helmet";
 
 function AboutUs() {
 	const { setUserRole } = useUserRoleContext();
@@ -50,6 +51,10 @@ function AboutUs() {
 
 	return (
 		<>
+			<Helmet>
+				<title>Plant-In Sobre Nosotros</title>
+			</Helmet>
+
 			<div className="w-full">
 				<Header />
 			</div>

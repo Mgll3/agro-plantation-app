@@ -7,6 +7,7 @@ import { storeName } from "../../utils/storeName";
 import { user } from "../../data/userData";
 import { useUserRoleContext } from "../../context/UserRoleContext";
 import { getStoredName } from "../../utils/getStoredName";
+import { Helmet } from "react-helmet";
 
 function Copyright() {
 	const { setUserRole } = useUserRoleContext();
@@ -50,6 +51,10 @@ function Copyright() {
 
 	return (
 		<>
+			<Helmet>
+				<title>Plant-In Copyright</title>
+			</Helmet>
+
 			<div className="w-full">
 				<Header />
 			</div>
