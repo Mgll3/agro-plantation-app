@@ -108,9 +108,25 @@ function Header() {
 				<div
 					className={`relative flex justify-center items-center w-[100vw] h-[98px] custom-1000:h-[180px] custom-2000:h-[270px] custom-3000:h-[320px] ${headerBg} bg-cover bg-center bg-no-repeat`}
 				>
-					<Link to="/management" className="absolute bottom-[0px] left-0 w-[40px] pl-[1rem] text-[4rem]">
-						<DvrIcon fontSize="inherit" />
-					</Link>
+					<div
+						className="absolute bottom-[0px] right-[90px] w-[40px] pl-[1rem]
+						custom-800:left-0"
+					>
+						<Link
+							to="/management"
+							className="flex items-center text-[3.5rem] drop-shadow-customWhite
+							custom-800:text-[4.5rem]
+							hover:scale-[1.1]"
+						>
+							<DvrIcon fontSize="inherit" />
+							<p
+								className="ml-[0.6rem] text-[2.2rem] font-bold font-montserrat
+								custom-800:text-[3rem]"
+							>
+								Demo
+							</p>
+						</Link>
+					</div>
 
 					{/* MOBILE MENU ***START */}
 					<div

@@ -22,7 +22,7 @@ function PublicationPreviewCard({ id, mainImage, title, author, mainText }: Publ
 
 	function calcMaxChars() {
 		const cardWidth = cardContainer.current?.clientWidth;
-		const newMaxCharsValue = ((cardWidth as number) * 65) / 190;
+		const newMaxCharsValue = ((cardWidth as number) * 40) / 190;
 		setMaxChars(newMaxCharsValue);
 	}
 
