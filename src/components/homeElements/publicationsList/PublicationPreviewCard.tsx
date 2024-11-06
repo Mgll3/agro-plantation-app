@@ -54,9 +54,10 @@ function PublicationPreviewCard({ id, mainImage, title, author, mainText }: Publ
 	return (
 		<Link to={linkUrl}>
 			<div
-				className="flex flex-col w-[183px] h-[182px] overflow-hidden border-2 border-black border-solid rounded-3xl
+				className={`flex flex-col w-[183px] h-[182px] overflow-hidden border-2 border-black border-solid rounded-3xl
 					custom-500:w-[220px] custom-900:w-[250px] custom-1000:w-[300px] custom-1400:w-[328px] custom-1900:w-[370px] custom-2500:w-[500px] custom-3500:w-[700px]
-					custom-500:h-[200px] custom-900:h-[240px] custom-1000:h-[290px] custom-1400:h-[320px] custom-1900:h-[360px] custom-2500:h-[490px] custom-3500:h-[690px]"
+					custom-500:h-[200px] custom-900:h-[240px] custom-1000:h-[290px] custom-1400:h-[320px] custom-1900:h-[360px] custom-2500:h-[490px] custom-3500:h-[690px]
+					${userRole === "visitor" ? "cursor-default" : "cursor-pointer"}`}
 				ref={cardContainer}
 				key={id}
 			>
