@@ -19,7 +19,7 @@ function PublicationCard({ publicationInfo, filter }: PublicationCardProps) {
 		subRoute = "producer";
 	}
 	const params = useParams();
-	const pagination = params.id;
+	const pagination = params.id ? params.id : "1";
 
 	//Este objeto contiene la información del filtro y nº de página actual, para que al volver desde AdminPublicationDetails se vuelvan a aplicar.
 	const actualPageInfo = {

@@ -83,6 +83,8 @@ function UserProducerPublicationDetails() {
 
 	// Este state del <Link> que nos ha traído a esta página lo usamos para saber qué filtro de publicaciones y qué página dentro de ese filtro se estaban usando cuando pulsamos en la publicación, para poder devolver al usuario a ese mismo filtro (random, usuario, fecha...) y página.
 	const location = useLocation();
+	console.log(location?.state?.filter);
+	console.log(location?.state?.pagination);
 	const prevPageFilter: string = location?.state?.filter ? location.state.filter : "";
 	const prevPagePagination: string = location?.state?.pagination ? location.state.pagination : "";
 
