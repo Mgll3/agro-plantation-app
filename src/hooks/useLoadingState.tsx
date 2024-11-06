@@ -5,6 +5,7 @@ export type LoadingStateType =
 	| "loading"
 	| "loading2"
 	| "loaded"
+	| "loaded2"
 	| "sending"
 	| "sent"
 	| "requestDetails"

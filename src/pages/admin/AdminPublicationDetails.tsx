@@ -211,11 +211,13 @@ function AdminPublicationDetails() {
 
 			getPublicationById(storedToken, axiosController.current, publicationId)
 				.then((response: PublicationInfoType) => {
+					changeLoadingState("loaded");
+
 					getAddressCoordinates(axiosController.current!, response.author.address)
 						.then((coordinates) => {
 							addressCoordinates.current = coordinates as CoordinatesType;
 							setPublicationData(response);
-							changeLoadingState("loaded");
+							changeLoadingState("loaded2");
 						})
 						.catch(() => {
 							addressCoordinates.current = null;
@@ -265,6 +267,7 @@ function AdminPublicationDetails() {
 				)}
 
 				{(loadingState === "loaded" ||
+					loadingState === "loaded2" ||
 					loadingState === "modalLoading" ||
 					loadingState === "modalPublicationStateApproved" ||
 					loadingState === "modalPublicationStateRejected" ||
@@ -276,6 +279,7 @@ function AdminPublicationDetails() {
 								custom-1900:mb-[7rem] custom-3500:mb-[12rem]"
 							>
 								<PublicationDetails
+									areMapCoordinatesLoaded={loadingState === "loaded" ? false : true}
 									publicationInfo={publicationData}
 									addressCoordinates={addressCoordinates.current}
 									handleImageOnClick={showSlider}

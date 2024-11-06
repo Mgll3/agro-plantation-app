@@ -83,8 +83,6 @@ function UserProducerPublicationDetails() {
 
 	// Este state del <Link> que nos ha traído a esta página lo usamos para saber qué filtro de publicaciones y qué página dentro de ese filtro se estaban usando cuando pulsamos en la publicación, para poder devolver al usuario a ese mismo filtro (random, usuario, fecha...) y página.
 	const location = useLocation();
-	console.log(location?.state?.filter);
-	console.log(location?.state?.pagination);
 	const prevPageFilter: string = location?.state?.filter ? location.state.filter : "";
 	const prevPagePagination: string = location?.state?.pagination ? location.state.pagination : "";
 
@@ -164,11 +162,13 @@ function UserProducerPublicationDetails() {
 
 			getPublicationById(storedToken, axiosController.current, publicationId)
 				.then((response: PublicationInfoType) => {
+					changeLoadingState("loaded");
+
 					getAddressCoordinates(axiosController.current!, response.author.address)
 						.then((coordinates) => {
 							addressCoordinates.current = coordinates as CoordinatesType;
 							setPublicationData(response);
-							changeLoadingState("loaded");
+							changeLoadingState("loaded2");
 						})
 						.catch(() => {
 							addressCoordinates.current = null;
@@ -219,6 +219,7 @@ function UserProducerPublicationDetails() {
 				)}
 
 				{(loadingState === "loaded" ||
+					loadingState === "loaded2" ||
 					loadingState === "loading2" ||
 					loadingState === "modalLoading" ||
 					loadingState === "modalPublicationStateApproved" ||
@@ -231,6 +232,7 @@ function UserProducerPublicationDetails() {
 								custom-1900:mb-[7rem] custom-3500:mb-[12rem]"
 							>
 								<PublicationDetails
+									areMapCoordinatesLoaded={loadingState === "loaded" ? false : true}
 									publicationInfo={publicationData}
 									addressCoordinates={addressCoordinates.current}
 									handleImageOnClick={showSlider}

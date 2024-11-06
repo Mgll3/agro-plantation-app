@@ -5,8 +5,10 @@ import { AddressCoordinatesType } from "../../../pages/admin/AdminPublicationDet
 import { useUserRoleContext } from "../../../context/UserRoleContext";
 import ContactProducer from "./ContactProducer";
 import VotePublication from "./VotePublication";
+import LoadingSmall from "../../modals/LoadingSmall";
 
 type PublicationDetailsProps = {
+	areMapCoordinatesLoaded: boolean;
 	publicationInfo: PublicationInfoType;
 	addressCoordinates: AddressCoordinatesType;
 	handleImageOnClick: (pictureId: string) => void;
@@ -14,6 +16,7 @@ type PublicationDetailsProps = {
 };
 
 export default function PublicationDetails({
+	areMapCoordinatesLoaded,
 	publicationInfo,
 	addressCoordinates,
 	handleImageOnClick,
@@ -147,14 +150,18 @@ export default function PublicationDetails({
 					</h2>
 
 					<div className="z-10 w-[100%] aspect-[397/129] overflow-hidden rounded-xl border-[0.5px] border-black border-solid">
-						{addressCoordinates ? (
-							<GeoViewer
-								addressString={publicationInfo.author.address}
-								addressCoordinates={addressCoordinates}
-								plantationName={publicationInfo.title}
-							/>
+						{areMapCoordinatesLoaded ? (
+							addressCoordinates ? (
+								<GeoViewer
+									addressString={publicationInfo.author.address}
+									addressCoordinates={addressCoordinates}
+									plantationName={publicationInfo.title}
+								/>
+							) : (
+								<p>No se ha podido obtener la dirección</p>
+							)
 						) : (
-							<p>No se ha podido obtener la dirección</p>
+							<LoadingSmall />
 						)}
 					</div>
 				</div>
