@@ -51,8 +51,8 @@ public class PublicationService implements IPublicationService {
         // Asignaciones de parametros default
         publication.setVisibility(false);
         publication.setScore(0);
-        // Inicializo la publicacion con estado rechazado
-        publication.setAuthorizationStatus(new StateRequest(3L));
+        // Inicializo la publicacion con estado pendiente
+        publication.setAuthorizationStatus(new StateRequest(1L));
         publication.setPublicationDate(LocalDateTime.now());
         publication.setPlantation(publication.getPlantation());
 
@@ -146,9 +146,9 @@ public class PublicationService implements IPublicationService {
         Publication publication = publicationRepository.findById(publicationId)
                 .orElseThrow(() -> new DataAccessException(Constants.P_NOT_FOUND) {
                 });
-        ;
+        Optional<Vote> voto = voteRepository.findByUserAndPublication(user.getId(), publicationId);
+
         PublicationDTO publicationDTO = new PublicationDTO(publication);
-        Optional<Vote> voto = voteRepository.findByUserAndPublication(publicationId, user.getId());
 
         if (voto.isPresent()) {
             publicationDTO.setUserVote(true);
