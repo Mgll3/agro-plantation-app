@@ -11,7 +11,6 @@ import Community from "./components/placeholders/Community";
 import AboutUs from "./components/placeholders/AboutUs";
 import ProtectedRouteAdmin from "./components/protectRoutes/ProtectedRouteAdmin";
 import AdminPublications from "./pages/admin/AdminPublications";
-import AdminForum from "./pages/admin/AdminForum";
 import Management from "./pages/management/Management";
 import RegisterProducer from "./pages/user/RegisterProducer";
 import TermsAndConditions from "./components/placeholders/TermsAndConditions";
@@ -19,14 +18,13 @@ import PrivacyDeclaration from "./components/placeholders/PrivacyDeclaration";
 import AdminPublicationDetails from "./pages/admin/AdminPublicationDetails";
 import ProtectedRouteProducer from "./components/protectRoutes/ProtectedRouteProducer";
 import CreatePublication from "./pages/producers/CreatePublication";
-import UserForum from "./pages/user/UserForum";
-import ProducerForum from "./pages/producers/ProducerForum";
 import ProtectedRouteNonAdmin from "./components/protectRoutes/ProtectedRouteNonAdmin";
 import AdminHome from "./pages/admin/AdminHome";
 import ProtectedRouteUserProducer from "./components/protectRoutes/ProtectedRouteUserProducer";
 import Publications from "./pages/common/publications/Publications";
 import UserProducerPublicationDetails from "./pages/common/publications/UserProducerPublicationDetails";
 import AdminUsers from "./pages/admin/AdminUsers";
+import NextMVPPlaceholder from "./components/placeholders/NextMVPPlaceholder";
 
 function App() {
 	return (
@@ -53,13 +51,13 @@ function App() {
 				{/* USER ROUTES */}
 				<Route element={<ProtectedRouteUser />}>
 					<Route path="/user/registerProducer" element={<RegisterProducer />} />
-					<Route path="/user/forum" element={<UserForum />} />
+					<Route path="/user/forum" element={<NextMVPPlaceholder />} />
 				</Route>
 
 				{/* PRODUCER ROUTES */}
 				<Route element={<ProtectedRouteProducer />}>
 					<Route path="/producer/publications/createPublication" element={<CreatePublication />} />
-					<Route path="/producer/forum" element={<ProducerForum />} />
+					<Route path="/producer/forum" element={<NextMVPPlaceholder />} />
 				</Route>
 
 				{/* ADMIN ROUTES */}
@@ -68,7 +66,7 @@ function App() {
 					<Route path="/admin/publications" element={<AdminPublications />} />
 					<Route path="/admin/publications/:id" element={<AdminPublications />} />
 					<Route path="/admin/users" element={<AdminUsers />} />
-					<Route path="/admin/forum" element={<AdminForum />} />
+					<Route path="/admin/forum" element={<NextMVPPlaceholder />} />
 					<Route path="/admin/publications/details/:id" element={<AdminPublicationDetails />} />
 				</Route>
 
