@@ -1,6 +1,6 @@
 HELP.md
-!target/*.jar
 target/*
+!target/*.jar
 logs/
 
 ### STS ###
