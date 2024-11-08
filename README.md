@@ -3,6 +3,9 @@
 </div>
 <img src="https://media.discordapp.net/attachments/1194038261849542747/1248043035623817299/Header.jpg?ex=66623a27&is=6660e8a7&hm=31cf6f5be96ef730dfa21d9f364f06a27d8aca17d95d6ddca67d0da356ace9fa&=&format=webp">
 
+<h2> URL API:https://agro-plantation-app.onrender.com</h2>
+<h2> URL Front:https://plant-in.netlify.app</h2>
+
 <h2><u><strong>🌱¿Qué es Plant-IN?🌱</strong></u></h2>
 
 Esta aplicación web está diseñada para promocionar las huertas agroecológicas dentro del territorio nacional Argentino. Los productores pueden publicar información sobre sus plantaciones de vegetales y frutas, previa autorización de un administrador. Los usuarios interesados pueden conocer la ubicación, procedencia y prácticas de cada huerta para consumir de manera más consciente. Además, la plataforma incluye un foro de consejos sobre plantación y técnicas agroecológicas, accesible públicamente para la visualización pero restringido a usuarios registrados para la publicación y comentarios. También permite a los productores llevar un registro privado de sus cosechas y ofrece publicaciones de prácticas agrícolas disponibles para todos los visitantes, registrados o no.
