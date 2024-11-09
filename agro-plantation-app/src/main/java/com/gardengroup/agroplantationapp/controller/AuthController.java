@@ -19,7 +19,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-
 @Controller
 @RequestMapping("/auth")
 @CrossOrigin(origins = "*")
@@ -29,41 +28,39 @@ public class AuthController {
     @Autowired
     private IUserService userService;
 
-    @Operation(summary = "Registrar usuario", description = "Endpoint para registrar un nuevo usuario", tags = {"Auth"})
+    @Operation(summary = "Registrar usuario", description = "Endpoint para registrar un nuevo usuario", tags = {
+            "Auth" })
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Usuario registrado correctamente",
-                    content = @Content(schema = @Schema(implementation = User.class))),
-            @ApiResponse(responseCode = "409", description = "Conflicto - Este correo electrónico ya está registrado",
-                    content = @Content(schema = @Schema(implementation = String.class))),
-            @ApiResponse(responseCode = "501", description = "Error al procesar la solicitud",
-                    content = @Content(schema = @Schema(implementation = String.class)))
+            @ApiResponse(responseCode = "201", description = "Usuario registrado correctamente", content = @Content(schema = @Schema(implementation = User.class))),
+            @ApiResponse(responseCode = "409", description = "Conflicto - Este correo electrónico ya está registrado", content = @Content(schema = @Schema(implementation = String.class))),
+            @ApiResponse(responseCode = "501", description = "Error al procesar la solicitud", content = @Content(schema = @Schema(implementation = String.class)))
     })
     @PostMapping("/registro")
     public ResponseEntity<?> register(@RequestBody RegisterDTO registerDto) {
-        
+
         try {
             // Verifica si el correo electrónico ya existe
             if (userService.existsEmail(registerDto.getEmail())) {
-                // Si el correo electrónico ya existe, devuelve un mensaje indicando que el usuario ya existe
+                // Si el correo electrónico ya existe, devuelve un mensaje indicando que el
+                // usuario ya existe
                 return new ResponseEntity<>("Este correo electrónico ya está registrado.", HttpStatus.CONFLICT);
             }
 
             // Llama al método en el servicio para crear el usuario a partir del DTO
-            User user =  userService.createUser(registerDto);
+            User user = userService.createUser(registerDto);
 
             return new ResponseEntity<>(user, HttpStatus.CREATED);
-            } catch (Exception e) {
-                log.error(e.getMessage());
-                return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(e.getMessage());
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(e.getMessage());
         }
     }
 
-    @Operation(summary = "Iniciar sesión", description = "Endpoint para autenticar y obtener un token de acceso", tags = {"Auth"})
+    @Operation(summary = "Iniciar sesión", description = "Endpoint para autenticar y obtener un token de acceso", tags = {
+            "Auth" })
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Autenticación exitosa",
-                    content = @Content(schema = @Schema(implementation = AthAnswerDTO.class))),
-            @ApiResponse(responseCode = "401", description = "No autorizado - Error al autenticar",
-                    content = @Content(schema = @Schema(implementation = AthAnswerDTO.class)))
+            @ApiResponse(responseCode = "200", description = "Autenticación exitosa", content = @Content(schema = @Schema(implementation = AthAnswerDTO.class))),
+            @ApiResponse(responseCode = "401", description = "No autorizado - Error al autenticar", content = @Content(schema = @Schema(implementation = AthAnswerDTO.class)))
     })
     @PostMapping("/login")
     public ResponseEntity<AthAnswerDTO> login(@RequestBody LoginDTO loginDto) {
@@ -74,14 +71,11 @@ public class AuthController {
             log.error(e.getMessage());
             if (e.getMessage().equals("User not found")) {
                 return new ResponseEntity<>(new AthAnswerDTO("User not found"), HttpStatus.UNAUTHORIZED);
-            }else {
+            } else {
                 return new ResponseEntity<>(new AthAnswerDTO("Error al autenticar"), HttpStatus.INTERNAL_SERVER_ERROR);
             }
-            
+
         }
     }
-
-    
-
 
 }

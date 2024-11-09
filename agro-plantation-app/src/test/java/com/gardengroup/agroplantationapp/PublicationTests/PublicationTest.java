@@ -33,7 +33,7 @@ import com.gardengroup.agroplantationapp.model.entity.User;
 @TestInstance(Lifecycle.PER_CLASS) // Para que se ejecute el BeforeAll
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS) // limpiar bd despues de pruebas
 // @ActiveProfiles("test")
-public class PublicationTest {
+class PublicationTest {
 
     private User producerUser = new User();
     private String accessToken = null;
@@ -46,7 +46,7 @@ public class PublicationTest {
     private ObjectMapper objectMapper; // Convertir objetos a JSON
 
     @BeforeAll
-    public void registerAndLoginUser() throws Exception {
+    void registerAndLoginUser() throws Exception {
         // Inicializar usuario
         RegisterDTO registerDto = new RegisterDTO("mgl@gmail.com", "1", "Miguel",
                 "Alvarez", "Calle 123");
@@ -98,7 +98,7 @@ public class PublicationTest {
 
     @DisplayName("Guardar una publicación en el sistema")
     @Test
-    public void shouldSavePublication() throws Exception {
+    void shouldSavePublication() throws Exception {
 
         ResultActions response = mockMvc.perform(post("/v1/publication/save")
                 .with(SecurityMockMvcRequestPostProcessors.csrf()) // TOKEN CSRF de seguridad
@@ -114,7 +114,7 @@ public class PublicationTest {
 
     @DisplayName("Guardar una publicación en el sistema")
     @Test
-    public void shouldGetOnePublication() throws Exception {
+    void shouldGetOnePublication() throws Exception {
         // Guardar la publicación
         ResultActions saveResponse = mockMvc.perform(post("/v1/publication/save")
                 .with(SecurityMockMvcRequestPostProcessors.csrf()) // TOKEN CSRF de seguridad
@@ -141,7 +141,7 @@ public class PublicationTest {
 
     @DisplayName("Actualizar una publicación")
     // @Test //TODO: Falta terminar
-    public void shouldUpdatePublication() throws Exception {
+    void shouldUpdatePublication() throws Exception {
         // Guardar publicación
         ResultActions saveResponse = mockMvc.perform(post("/v1/publication/save")
                 .with(SecurityMockMvcRequestPostProcessors.csrf()) // TOKEN CSRF de seguridad
@@ -175,7 +175,7 @@ public class PublicationTest {
 
     @DisplayName("Obtener publicaciones aleatorias con minimo 1 y maximo 15 publicaciones y paginaciones correctas")
     @Test
-    public void shouldGetPublicationsByAleatory() throws Exception {
+    void shouldGetPublicationsByAleatory() throws Exception {
 
         // Crear 136 publicaciones para testear, + 6 precreadas = 142 publicaciones
         for (int i = 0; i < 136; i++) {

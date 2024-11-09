@@ -335,7 +335,7 @@ public class PublicationService implements IPublicationService {
 
         int pagTop = 46;
 
-        // Busco si hay 3 paginaciones más adelante de la actual (1 Paginacion = 15)
+        // Buscar si hay 3 paginaciones más adelante de la actual (1 Paginacion = 15)
         if (pag == 1) {
             pag = 0;
         } else {
@@ -343,13 +343,13 @@ public class PublicationService implements IPublicationService {
         }
 
         List<Publication> publications = publicationRepository.publicationsBylike(pag, pagTop);
-        // Calculo número posible de paginaciones que hay en base de datos
+        // Calcular número posible de paginaciones que hay en base de datos
         Double paginationDouble = (double) publications.size() / 15;
         int pagination = (int) (Math.ceil(paginationDouble) - 1);
 
         if (!publications.isEmpty()) {
             if (publications.size() > 15) {
-                // Envio solo 15 publicaciones que necesita el front
+                // Enviar solo 15 publicaciones que necesita el front
                 publications = publications.subList(0, 15);
             }
 
@@ -370,7 +370,7 @@ public class PublicationService implements IPublicationService {
 
         int pagTop = 46;
 
-        // Busco si hay 3 paginaciones más adelante de la actual (1 Paginacion = 15)
+        // Buscar si hay 3 paginaciones más adelante de la actual (1 Paginacion = 15)
         if (pag == 1) {
             pag = 0;
         } else {
@@ -378,13 +378,13 @@ public class PublicationService implements IPublicationService {
         }
 
         List<Publication> publications = publicationRepository.publicationsByUser(pag, pagTop);
-        // Calculo número posible de paginaciones que hay en base de datos
+        // Calcular número posible de paginaciones que hay en base de datos
         Double paginationDouble = (double) publications.size() / 15;
         int pagination = (int) (Math.ceil(paginationDouble) - 1);
 
         if (!publications.isEmpty()) {
             if (publications.size() > 15) {
-                // Envio solo 15 publicaciones que necesita el front
+                // Enviar solo 15 publicaciones que necesita el front
                 publications = publications.subList(0, 15);
             }
 
@@ -405,7 +405,7 @@ public class PublicationService implements IPublicationService {
 
         int pagTop = 46;
 
-        // Busco si hay 3 paginaciones más adelante de la actual (1 Paginacion = 15)
+        // Buscar si hay 3 paginaciones más adelante de la actual (1 Paginacion = 15)
         if (pag == 1) {
             pag = 0;
         } else {
@@ -413,13 +413,13 @@ public class PublicationService implements IPublicationService {
         }
 
         List<Publication> publications = publicationRepository.publicationsByDate(pag, pagTop);
-        // Calculo número posible de paginaciones que hay en base de datos
+        // Calcular número posible de paginaciones que hay en base de datos
         Double paginationDouble = (double) publications.size() / 15;
         int pagination = (int) (Math.ceil(paginationDouble) - 1);
 
         if (!publications.isEmpty()) {
             if (publications.size() > 15) {
-                // Envio solo 15 publicaciones que necesita el front
+                // Enviar solo 15 publicaciones que necesita el front
                 publications = publications.subList(0, 15);
             }
 
@@ -440,7 +440,7 @@ public class PublicationService implements IPublicationService {
 
         int pagTop = 46;
 
-        // Busco si hay 3 paginaciones más adelante de la actual (1 Paginacion = 15)
+        // Buscar si hay 3 paginaciones más adelante de la actual (1 Paginacion = 15)
         if (pag == 1) {
             pag = 0;
         } else {
@@ -448,13 +448,13 @@ public class PublicationService implements IPublicationService {
         }
 
         List<Publication> publications = publicationRepository.publicationsByAleatory(pag, pagTop);
-        // Calculo número posible de paginaciones que hay en base de datos
+        // Calcular número posible de paginaciones que hay en base de datos
         Double paginationDouble = (double) publications.size() / 15;
         int pagination = (int) (Math.ceil(paginationDouble) - 1);
 
         if (!publications.isEmpty()) {
             if (publications.size() > 15) {
-                // Envio solo 15 publicaciones que necesita el front
+                // Enviar solo 15 publicaciones que necesita el front
                 publications = publications.subList(0, 15);
             }
 
@@ -475,7 +475,7 @@ public class PublicationService implements IPublicationService {
 
         int pagTop = 46;
 
-        // Busco si hay 3 paginaciones más adelante de la actual (1 Paginacion = 15)
+        // Buscar si hay 3 paginaciones más adelante de la actual (1 Paginacion = 15)
         if (pag == 1) {
             pag = 0;
 
@@ -484,7 +484,7 @@ public class PublicationService implements IPublicationService {
         }
 
         final List<Publication> publications = publicationRepository.publicationsByPending(pag, pagTop);
-        // Calculo número posible de paginaciones que hay en base de datos
+        // Calcular número posible de paginaciones que hay en base de datos
         Double paginationDouble = (double) publicationRepository.countPublicationsByPending() / 15;
         int pagination = (int) (Math.ceil(paginationDouble) - 1);
 
@@ -507,7 +507,7 @@ public class PublicationService implements IPublicationService {
 
         int pagTop = 46;
 
-        // Busco si hay 3 paginaciones más adelante de la actual (1 Paginacion = 15)
+        // Buscar si hay 3 paginaciones más adelante de la actual (1 Paginacion = 15)
         if (pag == 1) {
             pag = 0;
         } else {
@@ -515,13 +515,13 @@ public class PublicationService implements IPublicationService {
         }
 
         List<Publication> publications = publicationRepository.publicationsByQuantity(pag, pagTop);
-        // Calculo número posible de paginaciones que hay en base de datos
+        // Calcular número posible de paginaciones que hay en base de datos
         Double paginationDouble = (double) publications.size() / 15;
         int pagination = (int) (Math.ceil(paginationDouble) - 1);
 
         if (!publications.isEmpty()) {
             if (publications.size() > 15) {
-                // Envio solo 15 publicaciones que necesita el front
+                // Enviar solo 15 publicaciones que necesita el front
                 publications = publications.subList(0, 15);
             }
 

@@ -10,10 +10,8 @@ import com.gardengroup.agroplantationapp.model.entity.UserType;
 import java.util.Optional;
 
 @Repository
-public interface UserTypeRepository extends JpaRepository<UserType,Long> {
+public interface UserTypeRepository extends JpaRepository<UserType, Long> {
 
-   // @Query("SELECT u FROM UserType u WHERE u.type = :type")
-   // public UserType findByType(@Param("type") String type);
     @Query("SELECT u FROM UserType u WHERE u.type = :type")
     Optional<UserType> findByType(@Param("type") String type);
 
