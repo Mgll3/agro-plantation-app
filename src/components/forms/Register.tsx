@@ -108,92 +108,158 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 	});
 
 	return (
-		<>
-			<div className="relative md:w-[100vw] md:flex-row font-loginFont flex flex-col-reverse h-[100%] text-[#eaefd4f2] bg-[#EAE3C0]">
-				<aside className="w-[100vw] h-[30vh] relative md:w-[30vw] md:h-[100vh]">
-					<div className="md:bg-login bg-loginMobile w-[100%] h-[100%] bg-center bg-cover bg-no-repeat flex justify-center md:justify-end items-center font-sans">
-						{/* Capa sobre imagen Mobile */}
-						<div className="max-[767px]:absolute max-[767px]:inset-0 max-[767px]:bg-gradient-to-b max-[767px]:from-[#4b9742] max-[767px]:to-[#0b7115] max-[767px]:opacity-55 max-[767px]:z-0"></div>
-						<h2 className="bg-[#EAE3C0] text-black font-semibold text-2xl md:md:p-[1rem_4rem] rounded-2xl md:translate-x-[14px] md:translate-y-[30px] z-10 p-[.1rem_4rem]">
-							Registro
-						</h2>
+		<div
+			className="relative flex flex-col-reverse justify-between h-[100%] text-[#eaefd4f2] font-loginFont bg-[#EAE3C0]
+			custom-750:flex-row
+			custom-750:w-[100vw]"
+		>
+			<header
+				className="relative w-[100vw] h-[25vh] mt-[-0.5rem]
+				custom-750:w-[30vw]
+				custom-390:h-[20vh] custom-420:h-[14.81vh] custom-500:h-[25vh] custom-750:h-full
+				custom-750:mt-[0rem]"
+			>
+				<div
+					className="flex flex-col justify-end items-center w-[100%] h-[100%] bg-loginMobile bg-[30%_48%] bg-cover bg-no-repeat font-sans
+					custom-750:justify-center
+					custom-750:items-end
+					custom-750:bg-login
+					custom-400:bg-[30%_38%] custom-750:bg-center"
+				>
+					{/* Capa sobre imagen Mobile */}
+					<div
+						className="absolute inset-0 bg-gradient-to-b from-[#4b9742] to-[#0b7115] opacity-55 z-0
+						custom-750:hidden"
+					></div>
+					<h1
+						className="z-10 px-[4rem] mb-[0.8rem] text-black font-normal font-sora text-[2.2rem] rounded-2xl bg-brandingLightYellow
+						custom-1000:px-[4.22rem] custom-2500:px-[6.5rem] custom-3500:px-[10rem]
+						custom-750:py-[0.7rem]
+						custom-750:font-niramit
+						custom-750:text-[2.8rem] custom-1000:text-[3.2rem] custom-2500:text-[5rem] custom-3500:text-[7rem]
+						custom-2500:rounded-3xl
+						custom-750:rounded-tr-none custom-750:rounded-br-none custom-2500:rounded-tr-none custom-2500:rounded-br-none
+						"
+					>
+						Registro
+					</h1>
+					<div
+						className="w-full flex justify-center
+						custom-750:absolute
+						custom-750:bottom-[5vh]"
+					>
 						<Link
 							to="/copyright"
-							className="absolute bottom-0 p-[4px_4px] m-[1rem] bg-[#93b447b5] text-[#1B7E25] text-center md:text-[15px] text-[1.2rem] rounded-md z-10 max-[767px]:text-black"
+							className="py-[0.3rem] px-[0.5rem] text-center text-[1.2rem] text-black bg-brandingLightGreen rounded-lg
+							custom-1400:px-[0.8rem]
+							custom-750:mx-[1.5rem] custom-1000:mx-[2rem] custom-1200:mx-[3rem]
+							custom-2500:text-[1.8rem] custom-3500:text-[2.5rem]"
 						>
-							Todos los derechos reservados para PLANT-IN <s className="max-[767px]:text-[#1B7E25]">&copy;</s>
-							<small>Marzo 2024</small>
+							Todos los derechos reservados para PLANT-IN{" "}
+							<s className="relative left-[-2px] top-[-3px] text-brandingDarkGreen">&copy;</s>
+							<small>&nbsp; Marzo 2024</small>
 						</Link>
 					</div>
-				</aside>
+				</div>
+			</header>
 
-				<div className="md:w-[70vw] max-[767px]:max-h-[70vh] md:overflow-x-hidden md:max-h-[100vh] max-[767px]:overflow-scroll ">
-					<div className="flex flex-col justify-center items-center gap-1 rounded-2xl text-2xl text-black font-sans md:mt-[2rem] mt-[2rem]">
-						<h1 className="max-[767px]:hidden">Bienvenido a</h1>
-						<button type="button" onClick={() => navigate("/")}>
-							<img src="images/logos/LogoVerde.png" alt="logo" className=" w-[120px] h-[150px] mb-5" />
-						</button>
-						<h2 className="max-[767px]:hidden">Por favor, completa el formulario</h2>
-					</div>
+			<div
+				className="w-full
+				custom-750:w-[70vw]"
+			>
+				<div
+					className="flex flex-col justify-center items-center mt-[3rem] rounded-2xl text-[2.5rem] text-black font-niramit
+					custom-750:mt-[2rem] custom-1400:mt-[2.5rem] custom-2500:mt-[5rem] custom-3500:mt-[7rem]
+					custom-1000:text-[3.2rem] custom-2500:text-[4rem] custom-3500:text-[5rem]"
+				>
+					<p className="max-[767px]:hidden mb-[1.6rem]">Bienvenido a</p>
+					<button type="button" onClick={() => navigate("/")}>
+						<img
+							src="images/logos/LogoVerde.png"
+							alt="logo"
+							className="w-[120px] aspect-[157/192]
+							custom-400:w-[140px] custom-420:w-[157px] custom-750:w-[134px] custom-1900:w-[145px] custom-2500:w-[190px] custom-3500:w-[220px]"
+						/>
+					</button>
+					<h2 className="max-[767px]:hidden mt-[1.6rem] text-center">Por favor, completa el formulario</h2>
+				</div>
 
-					<form
-						name="registerForm"
-						action=""
-						encType="multipart/form-data"
-						onSubmit={formik.handleSubmit}
-						className="md:w-[100%] w-[100vw] max-h-[100%] text-center justify-around items-center bg-[#EAE3C0] text-black md:p-[1rem_6rem_2rem] p-[1.5rem] font-sans"
-					>
-						<div className="flex flex-col pb-2 w-full">
-							<div className="grid grid-cols-1 md:grid-cols-2 md:gap-4 gap-4 text-base md:width-[100%] w-full">
-								<div className="relative">
-									<label htmlFor="userName">
-										<input
-											type="text"
-											id="userName"
-											placeholder="Nombre/s"
-											{...formik.getFieldProps("userName")}
-											className="bg-[#00000011] outline-none  border-b-[2px] rounded-md border-b-[#00000052] p-[8px_8px_4px] w-full placeholder-[#666]"
-										/>
-									</label>
+				<form
+					name="registerForm"
+					action=""
+					encType="multipart/form-data"
+					onSubmit={formik.handleSubmit}
+					className="md:w-[100%] w-[100vw] max-h-[100%] mx-auto px-[1.6rem] pt-[3rem] text-center text-black font-sans bg-[#EAE3C0]
+						custom-1000:w-[93%] custom-1200:w-[80%] custom-1400:w-[70.34%]
+						custom-2500:mt-[3rem] custom-3500:mt-[6rem]
+						custom-1400:pt-[1.6rem]"
+				>
+					<div className="flex flex-col pb-2 w-full">
+						<div className="grid grid-cols-1 md:grid-cols-2 md:gap-4 gap-4 text-base md:width-[100%] w-full">
+							<div className="relative">
+								<label htmlFor="userName">
+									<input
+										type="text"
+										id="userName"
+										placeholder="Nombre"
+										{...formik.getFieldProps("userName")}
+										className="w-full pt-[0.5rem] pb-[0.2rem] pl-[0.1rem] mb-[2.5rem] bg-brandingLightYellow border-b-[2px] border-b-grey700 text-[1.6rem] placeholder:text-[2rem] placeholder-grey600 outline-none
+											custom-750:p-[19px_16px_8px]
+											custom-500:text-[2rem] custom-1000:text-[2.2rem] custom-1900:text-[2.4rem] custom-2500:text-[3rem] custom-3500:text-[4rem]
+											custom-1900:placeholder:text-[2.3rem] custom-2500:placeholder:text-[3rem] custom-3500:placeholder:text-[4rem]
+											custom-750:rounded-md
+											custom-750:bg-[#00000011]"
+									/>
+								</label>
 
-									{formik.touched.userName && formik.errors.userName ? (
-										<p className="absolute text-xs text-red-600 ml-4">{formik.errors.userName}</p>
-									) : null}
-								</div>
+								{formik.touched.userName && formik.errors.userName ? (
+									<p className="absolute bottom-[0.5rem] ml-4 text-[1.2rem] text-red-600">{formik.errors.userName}</p>
+								) : null}
+							</div>
 
-								<div className="relative ">
-									<label htmlFor="userLastName">
-										<input
-											type="text"
-											id="userLastName"
-											placeholder="Apellido/s"
-											{...formik.getFieldProps("userLastName")}
-											className="bg-[#00000011] outline-none  border-b-[2px] rounded-md border-b-[#00000052] w-full placeholder-[#666] p-[8px_8px_4px]"
-										/>
-									</label>
+							<div className="relative ">
+								<label htmlFor="userLastName">
+									<input
+										type="text"
+										id="userLastName"
+										placeholder="Apellido/s"
+										{...formik.getFieldProps("userLastName")}
+										className="w-full pt-[0.5rem] pb-[0.2rem] pl-[0.1rem] mb-[2.5rem] bg-brandingLightYellow border-b-[2px] border-b-grey700 text-[1.6rem] placeholder:text-[2rem] placeholder-grey600 outline-none
+											custom-750:p-[19px_16px_8px]
+											custom-500:text-[2rem] custom-1000:text-[2.2rem] custom-1900:text-[2.4rem] custom-2500:text-[3rem] custom-3500:text-[4rem]
+											custom-1900:placeholder:text-[2.3rem] custom-2500:placeholder:text-[3rem] custom-3500:placeholder:text-[4rem]
+											custom-750:rounded-md
+											custom-750:bg-[#00000011]"
+									/>
+								</label>
 
-									{formik.touched.userLastName && formik.errors.userLastName ? (
-										<p className="absolute text-xs text-red-600 ml-4">{formik.errors.userLastName}</p>
-									) : null}
-								</div>
+								{formik.touched.userName && formik.errors.userName ? (
+									<p className="absolute bottom-[0.5rem] ml-4 text-[1.2rem] text-red-600">{formik.errors.userName}</p>
+								) : null}
+							</div>
 
-								<div className="relative  md:col-span-2">
-									<label htmlFor="userEmail">
-										<input
-											type="email"
-											id="userEmail"
-											placeholder="Correo Electrónico"
-											{...formik.getFieldProps("userEmail")}
-											className="bg-[#00000011] outline-none  border-b-[2px] rounded-md border-b-[#00000052] p-[8px_8px_4px] w-full placeholder-[#666]"
-										/>
-									</label>
+							<div className="relative  md:col-span-2">
+								<label htmlFor="userEmail">
+									<input
+										type="email"
+										id="userEmail"
+										placeholder="Correo Electrónico"
+										{...formik.getFieldProps("userEmail")}
+										className="w-full pt-[0.5rem] pb-[0.2rem] pl-[0.1rem] mb-[2.5rem] bg-brandingLightYellow border-b-[2px] border-b-grey700 text-[1.6rem] placeholder:text-[2rem] placeholder-grey600 outline-none
+											custom-750:p-[19px_16px_8px]
+											custom-500:text-[2rem] custom-1000:text-[2.2rem] custom-1900:text-[2.4rem] custom-2500:text-[3rem] custom-3500:text-[4rem]
+											custom-1900:placeholder:text-[2.3rem] custom-2500:placeholder:text-[3rem] custom-3500:placeholder:text-[4rem]
+											custom-750:rounded-md
+											custom-750:bg-[#00000011]"
+									/>
+								</label>
 
-									{formik.touched.userEmail && formik.errors.userEmail ? (
-										<p className="absolute text-xs text-red-600 ml-4">{formik.errors.userEmail}</p>
-									) : null}
-								</div>
+								{formik.touched.userName && formik.errors.userName ? (
+									<p className="absolute bottom-[0.5rem] ml-4 text-[1.2rem] text-red-600">{formik.errors.userName}</p>
+								) : null}
+							</div>
 
-								{/* <div className="relative ">
+							{/* <div className="relative ">
 										<label htmlFor="userAddressStreet">
 											<input type="text" id="userAddressStreet" name="userAddressStreet" placeholder="Dirección" { ...formik.getFieldProps("userAddressStreet") }
 												className="bg-[#00000011] outline-none  border-b-[2px] rounded-sm border-b-[#00000038] p-[0_12px] w-[300px]" />
@@ -203,107 +269,147 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 										</ErrorMessage>
 									</div> */}
 
-								<div className="relative ">
-									<label htmlFor="userAddressCity">
-										<input
-											type="text"
-											id="userAddressCity"
-											placeholder="Ciudad"
-											{...formik.getFieldProps("userAddressCity")}
-											className="bg-[#00000011] outline-none  border-b-[2px] rounded-md border-b-[#00000052] p-[8px_8px_4px] w-full placeholder-[#666]"
-										/>
-									</label>
+							<div className="relative ">
+								<label htmlFor="userAddressCity">
+									<input
+										type="text"
+										id="userAddressCity"
+										placeholder="Ciudad"
+										{...formik.getFieldProps("userAddressCity")}
+										className="w-full pt-[0.5rem] pb-[0.2rem] pl-[0.1rem] mb-[2.5rem] bg-brandingLightYellow border-b-[2px] border-b-grey700 text-[1.6rem] placeholder:text-[2rem] placeholder-grey600 outline-none
+											custom-750:p-[19px_16px_8px]
+											custom-500:text-[2rem] custom-1000:text-[2.2rem] custom-1900:text-[2.4rem] custom-2500:text-[3rem] custom-3500:text-[4rem]
+											custom-1900:placeholder:text-[2.3rem] custom-2500:placeholder:text-[3rem] custom-3500:placeholder:text-[4rem]
+											custom-750:rounded-md
+											custom-750:bg-[#00000011]"
+									/>
+								</label>
 
-									{formik.touched.userAddressCity && formik.errors.userAddressCity ? (
-										<p className="absolute text-xs text-red-600 ml-4">{formik.errors.userAddressCity}</p>
-									) : null}
-								</div>
-
-								<div className="relative ">
-									<label htmlFor="userAddressProvince">
-										<input
-											type="text"
-											id="userAddressProvince"
-											placeholder="Provincia"
-											{...formik.getFieldProps("userAddressProvince")}
-											className="bg-[#00000011] outline-none  border-b-[2px] rounded-md border-b-[#00000052] p-[8px_8px_4px] w-full placeholder-[#666]"
-										/>
-									</label>
-
-									{formik.touched.userAddressProvince && formik.errors.userAddressProvince ? (
-										<p className="absolute text-xs text-red-600 ml-4">{formik.errors.userAddressProvince}</p>
-									) : null}
-								</div>
-
-								<div className="relative ">
-									<label htmlFor="userPassword">
-										<input
-											type="password"
-											id="userPassword"
-											placeholder="Contraseña"
-											{...formik.getFieldProps("userPassword")}
-											className="bg-[#00000011] outline-none  border-b-[2px] rounded-md border-b-[#00000052] p-[8px_8px_4px] w-full placeholder-[#666]"
-										/>
-									</label>
-
-									{formik.touched.userPassword && formik.errors.userPassword ? (
-										<p className="absolute text-xs text-red-600 ml-4">{formik.errors.userPassword}</p>
-									) : null}
-								</div>
-
-								<div className="relative ">
-									<label htmlFor="userPasswordConfirm">
-										<input
-											type="password"
-											id="userPasswordConfirm"
-											placeholder="Confirmar contraseña"
-											{...formik.getFieldProps("userPasswordConfirm")}
-											className="bg-[#00000011] outline-none  border-b-[2px] rounded-md border-b-[#00000052] p-[8px_8px_4px] w-full placeholder-[#666]"
-										/>
-									</label>
-
-									{formik.touched.userPasswordConfirm && formik.errors.userPasswordConfirm ? (
-										<p className="absolute text-xs text-red-600 ml-4">{formik.errors.userPasswordConfirm}</p>
-									) : null}
-								</div>
+								{formik.touched.userName && formik.errors.userName ? (
+									<p className="absolute bottom-[0.5rem] ml-4 text-[1.2rem] text-red-600">{formik.errors.userName}</p>
+								) : null}
 							</div>
 
-							{formik.isValid && formik.dirty ? (
-								<button
-									type="submit"
-									className="w-[100%] text-base py-2.5 m-[3rem_auto] shadow-md rounded-lg font-sans text-brandingYellow cursor-pointer font-bold bg-brandingDarkGreen hover:bg-opacity-80 transition-all"
-								>
-									Regístrate
-								</button>
-							) : (
-								<button
-									type="submit"
-									disabled
-									className="w-[94%] text-base py-2.5 m-[2rem_auto] shadow-md rounded-lg font-sans text-black cursor-pointer font-bold bg-brandingYellow hover:bg-opacity-80 transition-all"
-								>
-									Regístrate
-								</button>
-							)}
+							<div className="relative ">
+								<label htmlFor="userAddressProvince">
+									<input
+										type="text"
+										id="userAddressProvince"
+										placeholder="Provincia"
+										{...formik.getFieldProps("userAddressProvince")}
+										className="w-full pt-[0.5rem] pb-[0.2rem] pl-[0.1rem] mb-[2.5rem] bg-brandingLightYellow border-b-[2px] border-b-grey700 text-[1.6rem] placeholder:text-[2rem] placeholder-grey600 outline-none
+											custom-750:p-[19px_16px_8px]
+											custom-500:text-[2rem] custom-1000:text-[2.2rem] custom-1900:text-[2.4rem] custom-2500:text-[3rem] custom-3500:text-[4rem]
+											custom-1900:placeholder:text-[2.3rem] custom-2500:placeholder:text-[3rem] custom-3500:placeholder:text-[4rem]
+											custom-750:rounded-md
+											custom-750:bg-[#00000011]"
+									/>
+								</label>
 
-							<p className="text-[1.2rem]">
-								Si ya estás registrado, por favor{" "}
-								<span onClick={handleLoginClick} className="text-brandingLightGreen mt-2" role="button">
-									INICIA SESIÓN
-								</span>
+								{formik.touched.userName && formik.errors.userName ? (
+									<p className="absolute bottom-[0.5rem] ml-4 text-[1.2rem] text-red-600">{formik.errors.userName}</p>
+								) : null}
+							</div>
+
+							<div className="relative ">
+								<label htmlFor="userPassword">
+									<input
+										type="password"
+										id="userPassword"
+										placeholder="Contraseña"
+										{...formik.getFieldProps("userPassword")}
+										className="w-full pt-[0.5rem] pb-[0.2rem] pl-[0.1rem] mb-[2.5rem] bg-brandingLightYellow border-b-[2px] border-b-grey700 text-[1.6rem] placeholder:text-[2rem] placeholder-grey600 outline-none
+											custom-750:p-[19px_16px_8px]
+											custom-500:text-[2rem] custom-1000:text-[2.2rem] custom-1900:text-[2.4rem] custom-2500:text-[3rem] custom-3500:text-[4rem]
+											custom-1900:placeholder:text-[2.3rem] custom-2500:placeholder:text-[3rem] custom-3500:placeholder:text-[4rem]
+											custom-750:rounded-md
+											custom-750:bg-[#00000011]"
+									/>
+								</label>
+
+								{formik.touched.userName && formik.errors.userName ? (
+									<p className="absolute bottom-[0.5rem] ml-4 text-[1.2rem] text-red-600">{formik.errors.userName}</p>
+								) : null}
+							</div>
+
+							<div className="relative ">
+								<label htmlFor="userPasswordConfirm">
+									<input
+										type="password"
+										id="userPasswordConfirm"
+										placeholder="Confirma contraseña"
+										{...formik.getFieldProps("userPasswordConfirm")}
+										className="w-full pt-[0.5rem] pb-[0.2rem] pl-[0.1rem] mb-[2.5rem] bg-brandingLightYellow border-b-[2px] border-b-grey700 text-[1.6rem] placeholder:text-[2rem] placeholder-grey600 outline-none
+											custom-750:p-[19px_16px_8px]
+											custom-500:text-[2rem] custom-1000:text-[2.2rem] custom-1900:text-[2.4rem] custom-2500:text-[3rem] custom-3500:text-[4rem]
+											custom-1900:placeholder:text-[2.3rem] custom-2500:placeholder:text-[3rem] custom-3500:placeholder:text-[4rem]
+											custom-750:rounded-md
+											custom-750:bg-[#00000011]"
+									/>
+								</label>
+
+								{formik.touched.userName && formik.errors.userName ? (
+									<p className="absolute bottom-[0.5rem] ml-4 text-[1.2rem] text-red-600">{formik.errors.userName}</p>
+								) : null}
+							</div>
+						</div>
+
+						{formik.isValid && formik.dirty ? (
+							<button
+								type="submit"
+								className="w-[96%] text-[1.5rem] py-2.5 m-[3rem_auto] shadow-md rounded-lg font-sans text-brandingYellow cursor-pointer font-bold bg-brandingDarkGreen hover:bg-opacity-80 transition-all
+									custom-500:w-[80%] custom-900:w-[60%] custom-1200:w-[48.45%]
+									custom-900:py-[0.7rem] custom-2500:py-[1rem] custom-3500:py-[1.5rem]
+									custom-2500:mt-[4rem] custom-3500:mt-[6rem]
+									custom-2500:rounded-2xl
+									custom-500:text-[1.7rem] custom-750:text-[2rem] custom-2500:text-[3rem] custom-3500:text-[4rem]"
+							>
+								Regístrate
+							</button>
+						) : (
+							<button
+								type="submit"
+								disabled
+								className="w-[96%] text-[1.5rem] py-[0.58rem] m-[2rem_auto] shadow-md rounded-lg font-sans text-black cursor-pointer font-bold bg-brandingYellow hover:bg-opacity-80 transition-all
+									custom-500:w-[80%] custom-900:w-[60%] custom-1200:w-[48.45%]
+									custom-900:py-[0.7rem] custom-2500:py-[1rem] custom-3500:py-[1.5rem]
+									custom-2500:mt-[4rem] custom-3500:mt-[6rem]
+									custom-2500:rounded-2xl
+									custom-500:text-[1.7rem] custom-750:text-[2rem] custom-2500:text-[3rem] custom-3500:text-[4rem]"
+							>
+								Regístrate
+							</button>
+						)}
+
+						<div className="flex flex-wrap justify-center items-baseline w-full">
+							<p
+								className="text-[1.4rem] drop-shadow-smallText
+								custom-500:text-[1.6rem] custom-2500:text-[2rem] custom-3500:text-[2.5rem]"
+							>
+								Si ya estás registrado, por favor
+							</p>
+							<p
+								onClick={handleLoginClick}
+								className="ml-[0.5rem] text-[2rem] text-brandingLightGreen font-loginFont hover:drop-shadow-smallText
+									custom-2500:ml-[1rem]
+									custom-500:text-[2.2rem] custom-2500:text-[2.5rem] custom-3500:text-[3.3rem]"
+								role="button"
+							>
+								Inicia Sesión
 							</p>
 						</div>
-					</form>
-				</div>
-
-				{registerState === "loading" && <Loading />}
-				{registerState === "logged" && <RegisterOk />}
-				{registerState === "registerErrorEmailExists" && (
-					<RegisterKo errorText="El email introducido ya existe. Por favor, introduce otro." />
-				)}
-				{(registerState === "registerErrorServerError" || registerState === "networkError") && (
-					<NetworkError failedAction="registrarte" buttonText="Volver a intentar" handleClose={closeErrorMessages} />
-				)}
+					</div>
+				</form>
 			</div>
-		</>
+
+			{registerState === "loading" && <Loading />}
+			{registerState === "logged" && <RegisterOk />}
+			{registerState === "registerErrorEmailExists" && (
+				<RegisterKo errorText="El email introducido ya existe. Por favor, introduce otro." />
+			)}
+			{(registerState === "registerErrorServerError" || registerState === "networkError") && (
+				<NetworkError failedAction="registrarte" buttonText="Volver a intentar" handleClose={closeErrorMessages} />
+			)}
+		</div>
 	);
 }

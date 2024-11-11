@@ -72,7 +72,8 @@ export default {
 				custom: "0 3px 3px rgba(0, 0, 0, 0.55)",
 				bigText: "0 2px 2px rgba(0, 0, 0, 0.45)",
 				smallText: "0 2px 1px rgba(0, 0, 0, 0.35)",
-				customWhite: "2px 1px 1px rgba(255, 255, 255, 1)"
+				customWhite: "2px 1px 1px rgba(255, 255, 255, 1)",
+				noneCustom: "0px 0px 0px rgba(255, 255, 255, 0)"
 			},
 			boxShadow: {
 				"below-light": "2px 2px 5px rgba(0, 0, 0, 0.2)",

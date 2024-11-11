@@ -34,12 +34,12 @@ export default function Login({ handleSubmit, handleRegisterClick, loginState, c
 		// TAILWINDCSS => MOBILE FIRST
 		<div
 			className={classNames(
-				"w-[100%] font-sans items-center text-[#eaefd4f2] overflow-x-hidden",
-				"max-[767px]:flex max-[767px]:flex-col-reverse max-[767px]:overflow-hidden",
+				"w-[100%] font-sans items-center text-[#eaefd4f2]",
+				"max-[767px]:flex max-[767px]:flex-col-reverse",
 				"md:flex md:h-[100vh]  md:justify-center"
 			)}
 		>
-			<aside
+			<header
 				className="w-full h-[30vh] 
 			md:w-[35vw] md:h-[100vh]"
 			>
@@ -72,7 +72,7 @@ export default function Login({ handleSubmit, handleRegisterClick, loginState, c
 						<small>Marzo 2024</small>
 					</Link>
 				</div>
-			</aside>
+			</header>
 			{/*absolute bottom-0 p-[4px_4px] m-[1rem_1.7rem] bg-[#94B447] text-[#1B7E25] text-center text-[15px] rounded-md* *NO ME ACUERDO SI SERVÍA*/}
 			<div
 				className="w-full h-[70vh] 
