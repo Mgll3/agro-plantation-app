@@ -32,9 +32,12 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 	const { userRole, setUserRole } = useUserRoleContext();
 	const [loginState, setLoginState] = useState<LoginStateType>("init");
 	const [registerState, setRegisterState] = useState<RegisterStateType>("init");
+	// const [selectedPage, setSelectedPage] = useState<"login" | "register">(focus);
 
 	const axiosController = useRef<AbortController>();
 	const mainContainerElement = useRef(null);
+	const loginContainerElement = useRef<HTMLDivElement>(null);
+	const registerContainerElement = useRef<HTMLDivElement>(null);
 
 	let changeFormTimeout: number;
 	let loggedTimeout: number;
@@ -107,6 +110,14 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 
 	// Activa la animación de transición entre "Register" y "Login"
 	function changeForm() {
+		if (focus === "login") {
+			(registerContainerElement.current! as HTMLDivElement).classList.remove("h-[100vh]");
+			(registerContainerElement.current! as HTMLDivElement).classList.add("h-[100%]");
+		} else {
+			(loginContainerElement.current! as HTMLDivElement).classList.remove("h-[100vh]");
+			(loginContainerElement.current! as HTMLDivElement).classList.add("h-[100%]");
+		}
+
 		(mainContainerElement.current! as HTMLDivElement).classList.remove("duration-0");
 		(mainContainerElement.current! as HTMLDivElement).classList.add("duration-1000");
 
@@ -197,6 +208,8 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 								handleRegisterClick={changeForm}
 								loginState={loginState}
 								closeErrorMessages={closeErrorMessage}
+								focus={focus}
+								loginContainerElement={loginContainerElement}
 							/>
 						</div>
 
@@ -207,6 +220,7 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 								registerState={registerState}
 								closeErrorMessages={closeErrorMessage}
 								focus={focus}
+								registerContainerElement={registerContainerElement}
 							/>
 						</div>
 					</>
@@ -223,6 +237,7 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 								registerState={registerState}
 								closeErrorMessages={closeErrorMessage}
 								focus={focus}
+								registerContainerElement={registerContainerElement}
 							/>
 						</div>
 
@@ -232,6 +247,8 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 								handleRegisterClick={changeForm}
 								loginState={loginState}
 								closeErrorMessages={closeErrorMessage}
+								focus={focus}
+								loginContainerElement={loginContainerElement}
 							/>
 						</div>
 					</>

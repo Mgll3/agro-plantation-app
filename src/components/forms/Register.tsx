@@ -7,6 +7,7 @@ import RegisterOk from "./RegisterOk";
 import Loading from "../modals/Loading";
 import NetworkError from "../modals/NetworkError";
 import RegisterKo from "./RegisterKo";
+import { forwardRef } from "react";
 
 type RegisterProps = {
 	handleSubmit: (formValues: RegisterFormValuesType) => void;
@@ -14,14 +15,16 @@ type RegisterProps = {
 	registerState: RegisterStateType;
 	closeErrorMessages: () => void;
 	focus: "login" | "register";
+	registerContainerElement: React.RefObject<HTMLDivElement>;
 };
 
-export default function Register({
+const Register = forwardRef(function Register({
 	handleSubmit,
 	handleLoginClick,
 	registerState,
 	closeErrorMessages,
-	focus
+	focus,
+	registerContainerElement
 }: RegisterProps) {
 	const lowerCaseRegex = /[a-z]/g;
 	const upperCaseRegex = /[A-Z]/g;
@@ -114,7 +117,8 @@ export default function Register({
 
 	return (
 		<div
-			className={`relative flex flex-col-reverse justify-between ${focus === "login" ? "h-[100vh]" : "h-[100%]"} text-[#eaefd4f2] font-loginFont bg-[#EAE3C0]
+			ref={registerContainerElement}
+			className={`relative flex flex-col-reverse justify-between ${focus === "login" ? "h-[100vh] overflow-hidden" : "h-[100%]"} text-[#eaefd4f2] font-loginFont bg-[#EAE3C0]
 			custom-750:flex-row
 			custom-750:w-[100vw]`}
 		>
@@ -162,7 +166,7 @@ export default function Register({
 						>
 							Todos los derechos reservados para PLANT-IN{" "}
 							<s className="relative left-[-2px] top-[-3px] text-brandingDarkGreen">&copy;</s>
-							<small>&nbsp; Marzo 2024</small>
+							<small>&nbsp; Noviembre 2024</small>
 						</Link>
 					</div>
 				</div>
@@ -218,7 +222,12 @@ export default function Register({
 								</label>
 
 								{formik.touched.userName && formik.errors.userName ? (
-									<p className="absolute bottom-[0.5rem] ml-4 text-[1.2rem] text-red-600">{formik.errors.userName}</p>
+									<p
+										className="absolute bottom-[-0.2rem] ml-4 text-[1.3rem] text-red-600
+										custom-1000:text-[1.6rem] custom-2500:text-[1.9rem]"
+									>
+										{formik.errors.userName}
+									</p>
 								) : null}
 							</div>
 
@@ -239,7 +248,12 @@ export default function Register({
 								</label>
 
 								{formik.touched.userName && formik.errors.userName ? (
-									<p className="absolute bottom-[0.5rem] ml-4 text-[1.2rem] text-red-600">{formik.errors.userName}</p>
+									<p
+										className="absolute bottom-[-0.2rem] ml-4 text-[1.3rem] text-red-600
+										custom-1000:text-[1.6rem] custom-2500:text-[1.9rem]"
+									>
+										{formik.errors.userName}
+									</p>
 								) : null}
 							</div>
 
@@ -260,7 +274,12 @@ export default function Register({
 								</label>
 
 								{formik.touched.userName && formik.errors.userName ? (
-									<p className="absolute bottom-[0.5rem] ml-4 text-[1.2rem] text-red-600">{formik.errors.userName}</p>
+									<p
+										className="absolute bottom-[-0.2rem] ml-4 text-[1.3rem] text-red-600
+										custom-1000:text-[1.6rem] custom-2500:text-[1.9rem]"
+									>
+										{formik.errors.userName}
+									</p>
 								) : null}
 							</div>
 
@@ -291,7 +310,12 @@ export default function Register({
 								</label>
 
 								{formik.touched.userName && formik.errors.userName ? (
-									<p className="absolute bottom-[0.5rem] ml-4 text-[1.2rem] text-red-600">{formik.errors.userName}</p>
+									<p
+										className="absolute bottom-[-0.2rem] ml-4 text-[1.3rem] text-red-600
+										custom-1000:text-[1.6rem] custom-2500:text-[1.9rem]"
+									>
+										{formik.errors.userName}
+									</p>
 								) : null}
 							</div>
 
@@ -312,7 +336,12 @@ export default function Register({
 								</label>
 
 								{formik.touched.userName && formik.errors.userName ? (
-									<p className="absolute bottom-[0.5rem] ml-4 text-[1.2rem] text-red-600">{formik.errors.userName}</p>
+									<p
+										className="absolute bottom-[-0.2rem] ml-4 text-[1.3rem] text-red-600
+										custom-1000:text-[1.6rem] custom-2500:text-[1.9rem]"
+									>
+										{formik.errors.userName}
+									</p>
 								) : null}
 							</div>
 
@@ -333,7 +362,12 @@ export default function Register({
 								</label>
 
 								{formik.touched.userName && formik.errors.userName ? (
-									<p className="absolute bottom-[0.5rem] ml-4 text-[1.2rem] text-red-600">{formik.errors.userName}</p>
+									<p
+										className="absolute bottom-[-0.2rem] ml-4 text-[1.3rem] text-red-600
+										custom-1000:text-[1.6rem] custom-2500:text-[1.9rem]"
+									>
+										{formik.errors.userName}
+									</p>
 								) : null}
 							</div>
 
@@ -354,7 +388,12 @@ export default function Register({
 								</label>
 
 								{formik.touched.userName && formik.errors.userName ? (
-									<p className="absolute bottom-[0.5rem] ml-4 text-[1.2rem] text-red-600">{formik.errors.userName}</p>
+									<p
+										className="absolute bottom-[-0.2rem] ml-4 text-[1.3rem] text-red-600
+										custom-1000:text-[1.6rem] custom-2500:text-[1.9rem]"
+									>
+										{formik.errors.userName}
+									</p>
 								) : null}
 							</div>
 						</div>
@@ -417,4 +456,6 @@ export default function Register({
 			)}
 		</div>
 	);
-}
+});
+
+export default Register;

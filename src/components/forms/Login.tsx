@@ -6,15 +6,25 @@ import * as Yup from "yup";
 import { LoginFormValuesType } from "./formsTypes.ts";
 import Loading from "../modals/Loading.tsx";
 import NetworkError from "../modals/NetworkError.tsx";
+import { forwardRef } from "react";
 
 type LoginProps = {
 	handleSubmit: (formValues: LoginFormValuesType) => void;
 	handleRegisterClick: () => void;
 	loginState: LoginStateType;
 	closeErrorMessages: () => void;
+	focus: "login" | "register";
+	loginContainerElement: React.RefObject<HTMLDivElement>;
 };
 
-export default function Login({ handleSubmit, handleRegisterClick, loginState, closeErrorMessages }: LoginProps) {
+const Login = forwardRef(function Login({
+	handleSubmit,
+	handleRegisterClick,
+	loginState,
+	closeErrorMessages,
+	focus,
+	loginContainerElement
+}: LoginProps) {
 	const initialValues = {
 		email: "",
 		password: ""
@@ -31,12 +41,13 @@ export default function Login({ handleSubmit, handleRegisterClick, loginState, c
 
 	return (
 		<div
-			className="relative flex flex-col-reverse min-h-screen bg-[#EAE3C0]
+			ref={loginContainerElement}
+			className={`relative flex flex-col-reverse ${focus === "register" ? "h-[100vh] overflow-hidden" : "h-[100%]"} bg-[#EAE3C0]
 			custom-750:flex-row
-			custom-750:w-[100vw]"
+			custom-750:w-[100vw]`}
 		>
 			<header
-				className="relative w-[100vw] h-[30vh] min-h-[200px]
+				className="relative w-[100vw] h-[28.5vh] min-h-[200px] mt-[1.5vh]
 				custom-750:w-[30vw]
 				custom-750:h-[100vh]
 				custom-750:mt-[0rem]"
@@ -63,7 +74,7 @@ export default function Login({ handleSubmit, handleRegisterClick, loginState, c
 						custom-750:rounded-tr-none custom-750:rounded-br-none custom-2500:rounded-tr-none custom-2500:rounded-br-none
 						"
 					>
-						Registro
+						Ingreso
 					</h1>
 					<div
 						className="w-full flex justify-center
@@ -79,14 +90,14 @@ export default function Login({ handleSubmit, handleRegisterClick, loginState, c
 						>
 							Todos los derechos reservados para PLANT-IN{" "}
 							<s className="relative left-[-2px] top-[-3px] text-brandingDarkGreen">&copy;</s>
-							<small>&nbsp; Marzo 2024</small>
+							<small>&nbsp; Noviembre 2024</small>
 						</Link>
 					</div>
 				</div>
 			</header>
 
 			<div
-				className="flex flex-col w-full h-[70vh]
+				className="flex flex-col w-full min-h-[70vh]
 				custom-750:w-[70vw]
 				custom-750:h-[100vh]"
 			>
@@ -109,12 +120,11 @@ export default function Login({ handleSubmit, handleRegisterClick, loginState, c
 						name="loginForm"
 						id="loginForm"
 						encType="multipart/form-data"
-						className="flex flex-col items-center w-[100%] mt-[5.6rem] font-sans text-center text-black border-solid bg-[#EAE3C0] 
-							custom-750:w-[65vw]"
+						className="flex flex-col items-center w-[100%] mt-[5.6rem] font-sans text-center text-black border-solid bg-[#EAE3C0]"
 					>
 						<div
 							className="flex flex-col justify-center items-center w-[90%]
-							custom-750:w-[80%]"
+							custom-750:w-[70%] custom-1000:w-[60%] custom-1200:w-[42%] custom-1400:w-[32.55%]"
 						>
 							<div className="relative w-full">
 								<Field
@@ -128,7 +138,14 @@ export default function Login({ handleSubmit, handleRegisterClick, loginState, c
 								></Field>
 
 								<ErrorMessage name="email">
-									{(errorMsg) => <p className="absolute bottom-[0.5rem] ml-4 text-[1.2rem] text-red-600">{errorMsg}</p>}
+									{(errorMsg) => (
+										<p
+											className="absolute bottom-[-0.2rem] ml-4 text-[1.3rem] text-red-600
+										custom-1000:text-[1.6rem] custom-2500:text-[1.9rem]"
+										>
+											{errorMsg}
+										</p>
+									)}
 								</ErrorMessage>
 							</div>
 
@@ -144,7 +161,14 @@ export default function Login({ handleSubmit, handleRegisterClick, loginState, c
 								></Field>
 
 								<ErrorMessage name="password">
-									{(errorMsg) => <p className="absolute bottom-[0.5rem] ml-4 text-[1.2rem] text-red-600">{errorMsg}</p>}
+									{(errorMsg) => (
+										<p
+											className="absolute bottom-[-0.2rem] ml-4 text-[1.3rem] text-red-600
+										custom-1000:text-[1.6rem] custom-2500:text-[1.9rem]"
+										>
+											{errorMsg}
+										</p>
+									)}
 								</ErrorMessage>
 							</div>
 						</div>
@@ -168,8 +192,8 @@ export default function Login({ handleSubmit, handleRegisterClick, loginState, c
 							<Button
 								buttonColor="yellow"
 								buttonFontSize="text-[1.5rem] custom-500:text-[1.7rem] custom-750:text-[2rem] custom-2500:text-[3rem] custom-3500:text-[4rem]"
-								buttonWidth="w-[90%] custom-500:w-[80%] custom-900:w-[60%] custom-1200:w-[48.45%]"
-								buttonPaddingY="py-[0.58rem] py-[0.7rem] custom-2500:py-[1rem] custom-3500:py-[1.5rem]"
+								buttonWidth="w-[90%] custom-500:w-[80%] custom-700:w-[70%] custom-1000:w-[60%] custom-1200:w-[42%] custom-1400:w-[32.55%]"
+								buttonPaddingY="py-[0.58rem] custom-900:py-[0.9rem] custom-2500:py-[1rem] custom-3500:py-[1.5rem]"
 								buttonFuncionality={{ submitText: "Iniciar Sesión" }}
 							/>
 
@@ -196,4 +220,6 @@ export default function Login({ handleSubmit, handleRegisterClick, loginState, c
 			</div>
 		</div>
 	);
-}
+});
+
+export default Login;
