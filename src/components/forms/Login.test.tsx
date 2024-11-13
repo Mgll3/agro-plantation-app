@@ -12,6 +12,8 @@ const loginStateInit = "init";
 const loginStateLoading = "loading";
 const loginStateLoginError = "loginError";
 const loginStateNetError = "networkError";
+const focus = "login";
+const loginContainerElement = { current: document.createElement("div") };
 
 user.setup();
 
@@ -25,6 +27,8 @@ describe("Component Rendering", () => {
 				handleRegisterClick={handleRegisterClickMock}
 				closeErrorMessages={closeErrorMessagesMock}
 				loginState={loginStateInit}
+				focus={focus}
+				loginContainerElement={loginContainerElement}
 			/>,
 			{ wrapper: BrowserRouter }
 		);
@@ -49,6 +53,8 @@ describe("Component Rendering", () => {
 				handleRegisterClick={handleRegisterClickMock}
 				closeErrorMessages={closeErrorMessagesMock}
 				loginState={loginStateLoading}
+				focus={focus}
+				loginContainerElement={loginContainerElement}
 			/>,
 			{ wrapper: BrowserRouter }
 		);
@@ -67,6 +73,8 @@ describe("Component Rendering", () => {
 				handleRegisterClick={handleRegisterClickMock}
 				closeErrorMessages={closeErrorMessagesMock}
 				loginState={loginStateLoginError}
+				focus={focus}
+				loginContainerElement={loginContainerElement}
 			/>,
 			{ wrapper: BrowserRouter }
 		);
@@ -82,6 +90,8 @@ describe("Component Rendering", () => {
 				handleRegisterClick={handleRegisterClickMock}
 				closeErrorMessages={closeErrorMessagesMock}
 				loginState={loginStateNetError}
+				focus={focus}
+				loginContainerElement={loginContainerElement}
 			/>,
 			{ wrapper: BrowserRouter }
 		);
@@ -100,6 +110,8 @@ describe("Component Rendering", () => {
 				handleRegisterClick={handleRegisterClickMock}
 				closeErrorMessages={closeErrorMessagesMock}
 				loginState={loginStateInit}
+				focus={focus}
+				loginContainerElement={loginContainerElement}
 			/>,
 			{ wrapper: BrowserRouter }
 		);
@@ -130,6 +142,8 @@ describe("Field validations", () => {
 				handleRegisterClick={handleRegisterClickMock}
 				closeErrorMessages={closeErrorMessagesMock}
 				loginState={loginStateInit}
+				focus={focus}
+				loginContainerElement={loginContainerElement}
 			/>,
 			{ wrapper: BrowserRouter }
 		);
@@ -262,6 +276,8 @@ describe("Submit form", () => {
 				handleRegisterClick={handleRegisterClickMock}
 				closeErrorMessages={closeErrorMessagesMock}
 				loginState={loginStateInit}
+				focus={focus}
+				loginContainerElement={loginContainerElement}
 			/>,
 			{ wrapper: BrowserRouter }
 		);
