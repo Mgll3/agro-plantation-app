@@ -6,7 +6,6 @@ import * as Yup from "yup";
 import { LoginFormValuesType } from "./formsTypes.ts";
 import Loading from "../modals/Loading.tsx";
 import NetworkError from "../modals/NetworkError.tsx";
-import classNames from "classnames";
 
 type LoginProps = {
 	handleSubmit: (formValues: LoginFormValuesType) => void;
@@ -31,100 +30,121 @@ export default function Login({ handleSubmit, handleRegisterClick, loginState, c
 	});
 
 	return (
-		// TAILWINDCSS => MOBILE FIRST
 		<div
-			className={classNames(
-				"w-[100%] font-sans items-center text-[#eaefd4f2]",
-				"max-[767px]:flex max-[767px]:flex-col-reverse",
-				"md:flex md:h-[100vh]  md:justify-center"
-			)}
+			className="relative flex flex-col-reverse min-h-screen bg-[#EAE3C0]
+			custom-750:flex-row
+			custom-750:w-[100vw]"
 		>
 			<header
-				className="w-full h-[30vh] 
-			md:w-[35vw] md:h-[100vh]"
+				className="relative w-[100vw] h-[30vh] min-h-[200px]
+				custom-750:w-[30vw]
+				custom-750:h-[100vh]
+				custom-750:mt-[0rem]"
 			>
-				{/*First line, Mobile First */}
 				<div
-					className={classNames(
-						"w-[100%] bg-loginMobile bg-cover bg-no-repeat",
-						"max-[767px]:relative max-[767px]:bg-center max-[767px]:justify-end max-[767px]:items-center max-[767px]:flex max-[767px]:flex-col max-[767px]:h-full max-[767px]:gap-2",
-						"md:bg-login md:h-[100vh] md:bg-center md:flex md:justify-end md:items-center "
-					)}
+					className="flex flex-col justify-end items-center w-[100%] h-[100%] bg-loginMobile bg-[30%_48%] bg-cover bg-no-repeat font-sans
+					custom-750:justify-center
+					custom-750:items-end
+					custom-750:bg-login
+					custom-400:bg-[30%_38%] custom-750:bg-center"
 				>
 					{/* Capa sobre imagen Mobile */}
-					<div className="max-[767px]:absolute max-[767px]:inset-0 max-[767px]:bg-gradient-to-b max-[767px]:from-[#4b9742] max-[767px]:to-[#0b7115] max-[767px]:opacity-55 max-[767px]:z-0"></div>
-
+					<div
+						className="absolute inset-0 bg-gradient-to-b from-[#4b9742] to-[#0b7115] opacity-55 z-0
+						custom-750:hidden"
+					></div>
 					<h1
-						className="bg-[#EAE3C0] text-black font-semibold rounded-2xl font-sans 
-					max-[767px]:p-[.1rem_4rem] max-[767px]:z-20 
-					md:text-2xl  md:p-[1rem_5rem]  md:translate-x-[14px] md:translate-y-[-20px] "
+						className="z-10 px-[4rem] mb-[0.8rem] text-black font-normal font-sora text-[2.2rem] rounded-2xl bg-brandingLightYellow
+						custom-1000:px-[4.22rem] custom-2500:px-[6.5rem] custom-3500:px-[10rem]
+						custom-750:py-[0.7rem]
+						custom-750:font-niramit
+						custom-750:text-[2.8rem] custom-1000:text-[3.2rem] custom-2500:text-[5rem] custom-3500:text-[7rem]
+						custom-2500:rounded-3xl
+						custom-750:rounded-tr-none custom-750:rounded-br-none custom-2500:rounded-tr-none custom-2500:rounded-br-none
+						"
 					>
-						Ingreso
+						Registro
 					</h1>
-
-					<Link
-						to="/copyright"
-						className="bg-[#93b447b5] text-[#1B7E25] text-center text-[15px] rounded-md
-						md:absolute md:bottom-0 md:p-[4px_4px] md:m-[1rem]  md:max-w-[32vw] 
-						max-[767px]:z-20 max-[767px]:w-[80%] mb-4 max-[767px]:text-[1.15rem] max-[767px]:text-black"
+					<div
+						className="w-full flex justify-center
+						custom-750:absolute
+						custom-750:bottom-[5vh]"
 					>
-						Todos los derechos reservados para PLANT-IN <s className="max-[767px]:text-[#1B7E25]">&copy;</s>
-						<small>Marzo 2024</small>
-					</Link>
+						<Link
+							to="/copyright"
+							className="py-[0.3rem] px-[0.5rem] text-center text-[1.2rem] text-black bg-brandingLightGreen rounded-lg
+							custom-1400:px-[0.8rem]
+							custom-750:mx-[1.5rem] custom-1000:mx-[2rem] custom-1200:mx-[3rem]
+							custom-2500:text-[1.8rem] custom-3500:text-[2.5rem]"
+						>
+							Todos los derechos reservados para PLANT-IN{" "}
+							<s className="relative left-[-2px] top-[-3px] text-brandingDarkGreen">&copy;</s>
+							<small>&nbsp; Marzo 2024</small>
+						</Link>
+					</div>
 				</div>
 			</header>
-			{/*absolute bottom-0 p-[4px_4px] m-[1rem_1.7rem] bg-[#94B447] text-[#1B7E25] text-center text-[15px] rounded-md* *NO ME ACUERDO SI SERVÍA*/}
+
 			<div
-				className="w-full h-[70vh] 
-				md:w-[max-content] md:h-[100vh]  "
+				className="flex flex-col w-full h-[70vh]
+				custom-750:w-[70vw]
+				custom-750:h-[100vh]"
 			>
+				<div className="mx-auto pt-[4.8rem]">
+					<abbr title="Ir a la página principal">
+						<Link to="/">
+							<img
+								src="images/logos/LogoVerde.png"
+								alt="logo"
+								data-testid="Login_to_Home_Link"
+								className="w-[120px] aspect-[157/192]
+									custom-400:w-[140px] custom-420:w-[157px] custom-750:w-[134px] custom-1900:w-[145px] custom-2500:w-[190px] custom-3500:w-[220px]"
+							/>
+						</Link>
+					</abbr>
+				</div>
+
 				<Formik initialValues={initialValues} validationSchema={registerSchema} onSubmit={handleSubmit}>
 					<Form
 						name="loginForm"
 						id="loginForm"
 						encType="multipart/form-data"
-						className="border-solid text-center flex flex-col  justify-around items-center bg-[#EAE3C0] p-4 
-						h-full max-[767px]:gap-4 md:w-[65vw] md:h-[100vh]"
+						className="flex flex-col items-center w-[100%] mt-[5.6rem] font-sans text-center text-black border-solid bg-[#EAE3C0] 
+							custom-750:w-[65vw]"
 					>
-						<div className="flex justify-center items-center gap-4 rounded-2xl text-2xl">
-							<abbr title="Ir a la página principal">
-								<Link to="/">
-									<img
-										src="images/logos/LogoVerde.png"
-										alt="logo"
-										data-testid="Login_to_Home_Link"
-										className=" bg-[transparent] w-[120px] h-[160px]"
-									/>
-								</Link>
-							</abbr>
-						</div>
-
-						<div className="flex flex-col justify-center items-center p-[1rem_0]">
-							<div className="relative">
+						<div
+							className="flex flex-col justify-center items-center w-[90%]
+							custom-750:w-[80%]"
+						>
+							<div className="relative w-full">
 								<Field
 									type="email"
 									id="loginEmail"
 									name="email"
 									placeholder="Correo Electrónico"
-									className="bg-[transparent] outline-none  border-b-[1px] border-b-[#00000038] mb-[0rem] p-[0_12px] w-[300px] text-black"
+									className="w-full pl-[0.1rem] mb-[2.5rem] bg-brandingLightYellow border-b-[2px] border-b-grey700 text-[1.6rem] placeholder:text-[2rem] placeholder-grey600 outline-none
+										custom-500:text-[2rem] custom-1000:text-[2.2rem] custom-1900:text-[2.4rem] custom-2500:text-[3rem] custom-3500:text-[4rem]
+										custom-1900:placeholder:text-[2.3rem] custom-2500:placeholder:text-[3rem] custom-3500:placeholder:text-[4rem]"
 								></Field>
 
 								<ErrorMessage name="email">
-									{(errorMsg) => <p className="absolute text-xs text-red-700 mt-2">{errorMsg}</p>}
+									{(errorMsg) => <p className="absolute bottom-[0.5rem] ml-4 text-[1.2rem] text-red-600">{errorMsg}</p>}
 								</ErrorMessage>
 							</div>
 
-							<div className="relative">
+							<div className="relative w-full">
 								<Field
 									type="password"
 									id="loginPassword"
 									name="password"
 									placeholder="Contraseña"
-									className="bg-[transparent] outline-none  border-b-[1px] border-b-[#00000038] mt-[5rem] p-[0_12px] w-[300px] text-black"
+									className="w-full pt-[2.4rem] pl-[0.1rem] mb-[2.5rem] bg-brandingLightYellow border-b-[2px] border-b-grey700 text-[1.6rem] placeholder:text-[2rem] placeholder-grey600 outline-none
+										custom-500:text-[2rem] custom-1000:text-[2.2rem] custom-1900:text-[2.4rem] custom-2500:text-[3rem] custom-3500:text-[4rem]
+										custom-1900:placeholder:text-[2.3rem] custom-2500:placeholder:text-[3rem] custom-3500:placeholder:text-[4rem]"
 								></Field>
 
 								<ErrorMessage name="password">
-									{(errorMsg) => <p className="absolute text-xs text-red-700 mt-2">{errorMsg}</p>}
+									{(errorMsg) => <p className="absolute bottom-[0.5rem] ml-4 text-[1.2rem] text-red-600">{errorMsg}</p>}
 								</ErrorMessage>
 							</div>
 						</div>
@@ -141,20 +161,36 @@ export default function Login({ handleSubmit, handleRegisterClick, loginState, c
 
 						{loginState === "loading" && <Loading />}
 
-						<Button
-							buttonColor="green"
-							buttonFontSize="text-base"
-							buttonWidth="w-[300px]"
-							buttonPaddingY="py-2.5"
-							buttonFuncionality={{ submitText: "Iniciar Sesión" }}
-						/>
+						<div
+							className="w-full mt-[4rem]
+							custom-390:mt-[8rem]"
+						>
+							<Button
+								buttonColor="yellow"
+								buttonFontSize="text-[1.5rem] custom-500:text-[1.7rem] custom-750:text-[2rem] custom-2500:text-[3rem] custom-3500:text-[4rem]"
+								buttonWidth="w-[90%] custom-500:w-[80%] custom-900:w-[60%] custom-1200:w-[48.45%]"
+								buttonPaddingY="py-[0.58rem] py-[0.7rem] custom-2500:py-[1rem] custom-3500:py-[1.5rem]"
+								buttonFuncionality={{ submitText: "Iniciar Sesión" }}
+							/>
 
-						<p className="text-black font-sans">
-							Si no tienes una cuenta, por favor{" "}
-							<span onClick={handleRegisterClick} className="text-brandingLightGreen cursor-pointer" role="link">
-								REGÍSTRATE
-							</span>
-						</p>
+							<div className="flex flex-wrap justify-center items-baseline w-full mt-[1rem]">
+								<p
+									className="text-[1.4rem] text-black font-sans drop-shadow-smallText
+								custom-500:text-[1.6rem] custom-2500:text-[2rem] custom-3500:text-[2.5rem]"
+								>
+									Si no tienes una cuenta, por favor
+								</p>
+								<p
+									onClick={handleRegisterClick}
+									className="ml-[0.5rem] text-[2rem] text-brandingLightGreen font-loginFont hover:drop-shadow-smallText
+									custom-2500:ml-[1rem]
+									custom-500:text-[2.2rem] custom-2500:text-[2.5rem] custom-3500:text-[3.3rem]"
+									role="button"
+								>
+									Regístrate
+								</p>
+							</div>
+						</div>
 					</Form>
 				</Formik>
 			</div>

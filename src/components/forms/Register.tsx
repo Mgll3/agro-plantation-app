@@ -2,7 +2,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { RegisterFormValuesType } from "./formsTypes";
 import { RegisterStateType } from "../../pages/common/LoginRegisterPage";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import RegisterOk from "./RegisterOk";
 import Loading from "../modals/Loading";
 import NetworkError from "../modals/NetworkError";
@@ -13,9 +13,16 @@ type RegisterProps = {
 	handleLoginClick: () => void;
 	registerState: RegisterStateType;
 	closeErrorMessages: () => void;
+	focus: "login" | "register";
 };
 
-export default function Register({ handleSubmit, handleLoginClick, registerState, closeErrorMessages }: RegisterProps) {
+export default function Register({
+	handleSubmit,
+	handleLoginClick,
+	registerState,
+	closeErrorMessages,
+	focus
+}: RegisterProps) {
 	const lowerCaseRegex = /[a-z]/g;
 	const upperCaseRegex = /[A-Z]/g;
 	const noSpaceAtStartRegex = /^\S/g;
@@ -25,8 +32,6 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 	const noNumberRegex = /^\D*$/g;
 	const specialCharacterRegex = /[!@#$%^&_*-]/g;
 	const noSpecialCharacterRegex = /^[a-zA-ZáéíóúñÑ\s0-9]*$/g;
-
-	const navigate = useNavigate();
 
 	const initialValues = {
 		userName: "",
@@ -109,9 +114,9 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 
 	return (
 		<div
-			className="relative flex flex-col-reverse justify-between h-[100%] text-[#eaefd4f2] font-loginFont bg-[#EAE3C0]
+			className={`relative flex flex-col-reverse justify-between ${focus === "login" ? "h-[100vh]" : "h-[100%]"} text-[#eaefd4f2] font-loginFont bg-[#EAE3C0]
 			custom-750:flex-row
-			custom-750:w-[100vw]"
+			custom-750:w-[100vw]`}
 		>
 			<header
 				className="relative w-[100vw] h-[25vh] mt-[-0.5rem]
@@ -173,14 +178,14 @@ export default function Register({ handleSubmit, handleLoginClick, registerState
 					custom-1000:text-[3.2rem] custom-2500:text-[4rem] custom-3500:text-[5rem]"
 				>
 					<p className="max-[767px]:hidden mb-[1.6rem]">Bienvenido a</p>
-					<button type="button" onClick={() => navigate("/")}>
+					<Link to="/">
 						<img
 							src="images/logos/LogoVerde.png"
 							alt="logo"
 							className="w-[120px] aspect-[157/192]
 							custom-400:w-[140px] custom-420:w-[157px] custom-750:w-[134px] custom-1900:w-[145px] custom-2500:w-[190px] custom-3500:w-[220px]"
 						/>
-					</button>
+					</Link>
 					<h2 className="max-[767px]:hidden mt-[1.6rem] text-center">Por favor, completa el formulario</h2>
 				</div>
 

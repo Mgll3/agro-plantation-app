@@ -184,14 +184,14 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 
 	return (
 		<>
-			<main ref={mainContainerElement} className="flex absolute transition-all left-0 duration-1000 overflow-y-hidden">
+			<main ref={mainContainerElement} className="flex absolute transition-all left-0 duration-1000 bg-[#EAE3C0]">
 				{focus === "login" ? (
 					<>
 						<Helmet>
 							<title>Plant-In Login</title>
 						</Helmet>
 
-						<div className="w-screen h-screen">
+						<div className="w-screen">
 							<Login
 								handleSubmit={submitLoginForm}
 								handleRegisterClick={changeForm}
@@ -200,12 +200,13 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 							/>
 						</div>
 
-						<div className="w-screen ">
+						<div className="w-screen">
 							<Register
 								handleSubmit={submitRegisterForm}
 								handleLoginClick={changeForm}
 								registerState={registerState}
 								closeErrorMessages={closeErrorMessage}
+								focus={focus}
 							/>
 						</div>
 					</>
@@ -221,6 +222,7 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 								handleLoginClick={changeForm}
 								registerState={registerState}
 								closeErrorMessages={closeErrorMessage}
+								focus={focus}
 							/>
 						</div>
 
