@@ -170,6 +170,12 @@ export default function Home() {
 							No se han podido cargar las publicaciones más votadas.
 						</p>
 						<p
+							className="mt-2 text-[1.4rem] font-semibold
+							custom-1400:text-[1.6rem] custom-1900:text-[2rem] custom-2500:text-[3.2rem]"
+						>
+							Tenga en cuenta que el Servidor de Pruebas puede tardar un par de minutos en iniciarse.
+						</p>
+						<p
 							className="mt-2 text-[1.4rem]
 							custom-1400:text-[1.6rem] custom-1900:text-[2rem] custom-2500:text-[3.2rem]"
 						>
