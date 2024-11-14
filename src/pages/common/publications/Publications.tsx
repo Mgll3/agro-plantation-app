@@ -32,6 +32,7 @@ function Publications() {
 	const [publicationsFiltered, setPublicationsFiltered] = useState<FormattedPublicationsInfoType[] | null>(null);
 	const [loadingState, changeLoadingState] = useLoadingState();
 	const [filter, setFilter] = useState<FilterType>(initFilter);
+	//Este estado se usa para lanzar una nueva petición http al servidor cuando el usuario acepta un mensaje de error del servidor (nuevo intento).
 	const [reloadPublicationsTrigger, setReloadPublicationsTrigger] = useState<boolean>(true);
 
 	//Used to render the correct filter component based on window width
@@ -61,6 +62,19 @@ function Publications() {
 		navigate(route, { state: newFilter });
 	}
 
+	//Esta función filtra las publicaciones obtenidas. Devolviendo sólo las aprobadas por un admin.
+	function removePublicationsByAuth(publications: PublicationInfoType[]) {
+		const approvedPublications: PublicationInfoType[] = [];
+
+		publications.map((element) => {
+			if (element.authorizationStatus.state === "ACCEPTED") {
+				approvedPublications.push(element);
+			}
+		});
+
+		return approvedPublications;
+	}
+
 	//Estas funciones organizan la información recuperada del servidor y la adaptan al formato que entiende el componente "Viewer", el formato ()
 
 	type FormattedBlockType = {
@@ -69,11 +83,13 @@ function Publications() {
 	};
 
 	function formatByRandomPublications(publications: PublicationInfoType[]) {
+		const filteredPublications = removePublicationsByAuth(publications);
+
 		const result: FormattedPublicationsInfoType[] = [];
 
 		const formattedBlock: FormattedBlockType = {
 			title: "Aleatorio",
-			content: publications
+			content: filteredPublications
 		};
 
 		result.push(formattedBlock);
@@ -82,6 +98,8 @@ function Publications() {
 	}
 
 	function formatByUserPublications(publications: PublicationInfoType[]) {
+		const filteredPublications = removePublicationsByAuth(publications);
+
 		type UserType = {
 			id: number;
 			name: string;
@@ -90,11 +108,8 @@ function Publications() {
 		const users: UserType[] = [];
 
 		// Guadamos en el array "users" todos los usuarios diferentes que aparecen en las publicaciones recuperadas.
-		publications.map((publication) => {
-			if (
-				!users.find((element) => element.id === publication.author.id) &&
-				(userRole === "ADMIN" || publication.authorizationStatus.state === "ACCEPTED")
-			) {
+		filteredPublications.map((publication) => {
+			if (!users.find((element) => element.id === publication.author.id)) {
 				const newUser: UserType = {
 					id: publication.author.id,
 					name: `${publication.author.lastname}, ${publication.author.name} `
@@ -111,8 +126,8 @@ function Publications() {
 				content: []
 			};
 
-			publications.map((publication) => {
-				if (publication.author.id === user.id && publication.authorizationStatus.state === "ACCEPTED") {
+			filteredPublications.map((publication) => {
+				if (publication.author.id === user.id) {
 					formattedBlock.content.push(publication);
 				}
 			});
@@ -124,11 +139,13 @@ function Publications() {
 	}
 
 	function formatByScorePublications(publications: PublicationInfoType[]) {
+		const filteredPublications = removePublicationsByAuth(publications);
+
 		const result: FormattedPublicationsInfoType[] = [];
 
 		const formattedBlock: FormattedBlockType = {
 			title: "Destacados",
-			content: publications
+			content: filteredPublications
 		};
 
 		result.push(formattedBlock);
@@ -137,6 +154,8 @@ function Publications() {
 	}
 
 	function formatByDatePublications(publications: PublicationInfoType[]) {
+		const filteredPublications = removePublicationsByAuth(publications);
+
 		const result: FormattedPublicationsInfoType[] = [];
 		const dates: string[] = [];
 		const dateOptions = {
@@ -147,7 +166,7 @@ function Publications() {
 		const formatter = new Intl.DateTimeFormat("es-ES", dateOptions);
 
 		// Guadamos en el array "dates" todas las fechas diferentes que aparecen en las publicaciones recuperadas.
-		publications.map((publication) => {
+		filteredPublications.map((publication) => {
 			if (
 				!dates.find((date) => {
 					const dateToFormat = new Date(date);
@@ -173,7 +192,7 @@ function Publications() {
 				content: []
 			};
 
-			publications.map((publication) => {
+			filteredPublications.map((publication) => {
 				const publicationDateToFormat = new Date(publication.publicationDate);
 				const formattedPublicationDate = formatter.format(publicationDateToFormat);
 

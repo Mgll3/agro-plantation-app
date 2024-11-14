@@ -45,9 +45,12 @@ function Viewer({ itemsList, filter }: ViewerPropsType) {
 					);
 				})}
 
-			{itemsList === null && (
-				<h2 className="w-[100%] mt-[140px] mb-[22px] text-center text-sans text-lightGrayText font-semibold text-[24px]">
-					No hay publicaciones disponibles
+			{itemsList?.length === 0 && (
+				<h2
+					className="w-[100%] mt-[140px] mb-[22px] px-[5rem] text-center text-sans text-lightGrayText font-semibold text-[1.6rem]
+					custom-500:text-[1.8rem] custom-900:text-[2.1rem] custom-1400:text-[2.4rem]"
+				>
+					No hay publicaciones disponibles para este filtro
 				</h2>
 			)}
 		</div>
