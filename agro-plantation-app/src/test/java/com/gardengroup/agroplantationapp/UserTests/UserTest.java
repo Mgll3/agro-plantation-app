@@ -1,7 +1,10 @@
 package com.gardengroup.agroplantationapp.UserTests;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,17 +26,56 @@ import com.gardengroup.agroplantationapp.model.entity.User;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@TestInstance(Lifecycle.PER_CLASS) // Para que se ejecute el BeforeAll
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD) // limpiar bd despues de pruebas
 class UserTest {
-
-    private User user = new User();
-    private String accessToken = null;
 
     @Autowired
     private MockMvc mockMvc; // Simular peticiones HTTP
 
     @Autowired
     private ObjectMapper objectMapper; // Convertir objetos a JSON
+
+    private User producerUser = new User();
+    private String accessToken = null;
+
+    @BeforeAll
+    void registerAndLoginUser() throws Exception {
+        // Inicializar usuario
+        RegisterDTO registerDto = new RegisterDTO("mgl@gmail.com", "1", "Miguel",
+                "Alvarez", "Calle 123");
+
+        // Guardar usuario por medio del endpoint
+        ResultActions userResponse = mockMvc.perform(post("/auth/registro")
+                .with(SecurityMockMvcRequestPostProcessors.csrf()) // TOKEN CSRF de seguridad
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(registerDto)));
+
+        // Extraer usuario guardado
+        MvcResult result = userResponse.andExpect(status().isCreated()).andReturn();
+        String responseBody1 = result.getResponse().getContentAsString();
+        JsonNode jsonNode1 = objectMapper.readTree(responseBody1);
+        producerUser.setAddress(jsonNode1.get("address").asText());
+        producerUser.setName(jsonNode1.get("name").asText());
+        producerUser.setEmail(registerDto.getEmail());
+        producerUser.setLastname(jsonNode1.get("lastname").asText());
+        producerUser.setId(jsonNode1.get("id").asLong());
+
+        // Inicializar loggeo
+        LoginDTO loginDto = new LoginDTO("mgl@gmail.com", "1");
+
+        // Loggear usuario desde el endpoint
+        ResultActions loginResponse = mockMvc.perform(post("/auth/login")
+                .with(SecurityMockMvcRequestPostProcessors.csrf()) // TOKEN CSRF de seguridad
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(loginDto)));
+
+        // Extraer el Token de JWT
+        MvcResult resultLog = loginResponse.andExpect(status().isOk()).andReturn();
+        String responseBody2 = resultLog.getResponse().getContentAsString();
+        JsonNode jsonNode2 = objectMapper.readTree(responseBody2);
+        accessToken = jsonNode2.get("accessToken").asText();
+    }
 
     @DisplayName("Registrar un usuario en el sistema")
     @Test
@@ -61,7 +103,7 @@ class UserTest {
     @Test
     void shouldCanLoginAnUser() throws Exception {
         // Inicializar usuario
-        RegisterDTO registerDto = new RegisterDTO("mgl@gmail.com", "1", "Miguel",
+        RegisterDTO registerDto = new RegisterDTO("mgl3@gmail.com", "1", "Miguel",
                 "Alvarez", "Calle 123");
 
         // Guardar usuario por medio del endpoint
@@ -70,13 +112,8 @@ class UserTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(registerDto)));
 
-        // Recibir el usuario guardado y copiarlo a un objeto User general
-        // user =
-        // objectMapper.readValue(response.andReturn().getResponse().getContentAsString(),
-        // User.class);
-
         // Inicializar loggeo
-        LoginDTO loginDto = new LoginDTO("mgl@gmail.com", "1");
+        LoginDTO loginDto = new LoginDTO(registerDto.getEmail(), registerDto.getPassword());
 
         // Loggear usuario desde el endpoint
         ResultActions response = mockMvc.perform(post("/auth/login")
@@ -87,15 +124,15 @@ class UserTest {
         // Verificar loggeo correcto con token de acceso y datos del usuario
         response.andExpect(status().isOk())
                 .andExpect(jsonPath("$.accessToken", Matchers.notNullValue()))
-                .andExpect(jsonPath("$.name", Matchers.is(registerDto.getName())))
-                .andExpect(jsonPath("$.lastname", Matchers.is(registerDto.getLastname())));
+                .andExpect(jsonPath("$.name", Matchers.is(producerUser.getName())))
+                .andExpect(jsonPath("$.lastname", Matchers.is(producerUser.getLastname())));
     }
 
     @DisplayName("Obtener sesión de usuario")
     @Test
     void shouldCanGetUserSession() throws Exception {
         // Inicializar usuario
-        RegisterDTO registerDto = new RegisterDTO("mgl@gmail.com", "1", "Miguel",
+        RegisterDTO registerDto = new RegisterDTO("mgl2@gmail.com", "1", "Miguel",
                 "Alvarez", "Calle 123");
 
         // Guardar usuario por medio del endpoint
@@ -105,7 +142,7 @@ class UserTest {
                 .content(objectMapper.writeValueAsString(registerDto)));
 
         // Inicializar loggeo
-        LoginDTO loginDto = new LoginDTO("mgl@gmail.com", "1");
+        LoginDTO loginDto = new LoginDTO("mgl2@gmail.com", "1");
 
         // Loggear usuario desde el endpoint
         ResultActions loginResponse = mockMvc.perform(post("/auth/login")
@@ -132,35 +169,8 @@ class UserTest {
     }
 
     @DisplayName("Borrar cuenta de usuario")
-    @Test // TODO: utilizar los datos de un usuario ya creado y no irlos colocando cada
-          // vez
+    @Test
     void shouldCanDeleteUser() throws Exception {
-        // Inicializar usuario
-        RegisterDTO registerDto = new RegisterDTO("mgl@gmail.com", "1", "Miguel",
-                "Alvarez", "Calle 123");
-
-        // Guardar usuario por medio del endpoint
-        ResultActions response = mockMvc.perform(post("/auth/registro")
-                .with(SecurityMockMvcRequestPostProcessors.csrf()) // TOKEN CSRF de seguridad
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(registerDto)));
-
-        response.andExpect(status().isCreated());
-
-        // Inicializar loggeo
-        LoginDTO loginDto = new LoginDTO("mgl@gmail.com", "1");
-
-        // Loggear usuario desde el endpoint
-        ResultActions loginResponse = mockMvc.perform(post("/auth/login")
-                .with(SecurityMockMvcRequestPostProcessors.csrf()) // TOKEN CSRF de seguridad
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(loginDto)));
-
-        // Extraer el Token de JWT
-        MvcResult result = loginResponse.andExpect(status().isOk()).andReturn();
-        String responseBody = result.getResponse().getContentAsString();
-        JsonNode jsonNode = objectMapper.readTree(responseBody);
-        String accessToken = jsonNode.get("accessToken").asText();
 
         ResultActions deleteResponse = mockMvc.perform(delete("/v1/user/deleteUser")
                 .with(SecurityMockMvcRequestPostProcessors.csrf()) // TOKEN CSRF de seguridad

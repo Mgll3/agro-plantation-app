@@ -4,8 +4,10 @@ import com.gardengroup.agroplantationapp.model.dto.publication.*;
 import com.gardengroup.agroplantationapp.model.entity.*;
 import com.gardengroup.agroplantationapp.model.repository.PublicationRepository;
 import com.gardengroup.agroplantationapp.model.repository.VoteRepository;
+import com.gardengroup.agroplantationapp.service.implementation.VoteService.VoteAndPublicationDTO;
 import com.gardengroup.agroplantationapp.service.interfaces.IPublicationService;
 import com.gardengroup.agroplantationapp.service.interfaces.IUserService;
+import com.gardengroup.agroplantationapp.service.interfaces.IVoteService;
 import com.gardengroup.agroplantationapp.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -26,7 +28,7 @@ public class PublicationService implements IPublicationService {
     @Autowired
     private IUserService userService;
     @Autowired
-    VoteRepository voteRepository;
+    private IVoteService voteService;
 
     @Transactional
     public Publication savePublication(PublicationSaveDTO publicationDTO, String email) {
@@ -129,9 +131,10 @@ public class PublicationService implements IPublicationService {
                 .orElseThrow(() -> new DataAccessException(Constants.P_NOT_FOUND) {
                 });
 
-        Optional<Vote> voto = voteRepository.findByUserAndPublication(user.getId(), publicationId);
+        // Devolver si el usuario ya ha votado en esta publicación
+        Boolean voto = voteService.findByUserAndPublication(user.getId(), publicationId);
         PublicationDTO publicationDTO = new PublicationDTO(publication);
-        publicationDTO.setUserVote(voto.isPresent());
+        publicationDTO.setUserVote(voto);
 
         return publicationDTO;
 
@@ -246,43 +249,15 @@ public class PublicationService implements IPublicationService {
         Publication publication = publicationRepository.findById(publicationId)
                 .orElseThrow(() -> new IllegalArgumentException(Constants.P_NOT_FOUND));
 
-        // Verificar si el usuario ya ha votado en esta publicación
-        Vote existingVote = voteRepository.findByUserEmailAndPublicationId(userEmail, publicationId);
+        User user = userService.findByEmail(userEmail);
 
-        if (existingVote != null) {
-            // El usuario ya ha votado, cambiar el estado del voto
-            existingVote.setState(!existingVote.isState()); // Cambiar el estado del voto
-
-            // Actualizar el puntaje de la publicación en función del cambio de estado del
-            // voto
-            int scoreChange = existingVote.isState() ? 1 : -1; // Sumar 1 al puntaje si se vota positivamente, restar 1
-                                                               // si se quita el voto positivo
-            int newScore = publication.getScore() + scoreChange; // Calcular el nuevo puntaje
-            publication.setScore(newScore);
-
-            // Guardar el voto actualizado en la base de datos
-            voteRepository.save(existingVote);
-        } else {
-            // El usuario no ha votado antes, se crea un nuevo voto
-            User user = userService.findByEmail(userEmail);
-
-            Vote newVote = new Vote();
-            newVote.setUser(user);
-            newVote.setPublication(publication);
-            newVote.setState(true); // Indica que el usuario votó positivamente
-
-            // Actualizar el puntaje de la publicación sumando 1 al puntaje actual
-            int newScore = publication.getScore() + 1; // Sumar 1 al puntaje
-            publication.setScore(newScore);
-
-            // Guardar el nuevo voto en la base de datos
-            voteRepository.save(newVote);
-        }
+        VoteAndPublicationDTO voteDTO = voteService.votePublication(user, publication);
 
         // Guardar la publicación con el puntaje actualizado
-        publicationRepository.save(publication);
+        publicationRepository.save(voteDTO.getPublication());
 
-        return existingVote;
+        return voteDTO.getVote();
+
     }
 
     @Transactional
