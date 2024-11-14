@@ -30,7 +30,7 @@ public class PublicationService implements IPublicationService {
     @Autowired
     private CloudinaryService cloudinaryService;
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
     @Autowired
     StateRequestRepository stateRequestRepository;
     @Autowired
@@ -42,9 +42,7 @@ public class PublicationService implements IPublicationService {
 
         Publication publication = new Publication(publicationDTO);
 
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new DataAccessException(Constants.U_NOT_FOUND) {
-                });
+        User user = userService.findByEmail(email);
 
         publication.setAuthor(user);
 
@@ -98,30 +96,26 @@ public class PublicationService implements IPublicationService {
     @Transactional
     public Publication updateVisibility(Long publicationId, String email) {
 
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new DataAccessException(Constants.U_NOT_FOUND) {
+        User user = userService.findByEmail(email);
+
+        Publication publication = publicationRepository.findById(publicationId)
+                .orElseThrow(() -> new DataAccessException(Constants.P_NOT_FOUND) {
                 });
 
-        Optional<Publication> optionalPublication = publicationRepository.findById(publicationId);
-
-        if (optionalPublication.isPresent()) {
-            Publication publication = optionalPublication.get();
-
-            // Verificar si el usuario es el autor de la publicación
-            if (user.equals(publication.getAuthor())) {
-                // Verificar si la publicación está autorizada
-                if (publication.getAuthorizationStatus().getState().equals("ACCEPTED")) {
-                    publication.setVisibility(true);
-                    return publicationRepository.save(publication);
-                } else {
-                    return null;
-                }
-            } else {
-                return null;
+        // Verificar si el usuario es el autor de la publicación
+        if (user.equals(publication.getAuthor())) {
+            // Verificar si la publicación está autorizada
+            if (publication.getAuthorizationStatus().getState().equals("ACCEPTED")) {
+                publication.setVisibility(true);
+                return publicationRepository.save(publication);
             }
-        } else {
+
             return null;
+
         }
+
+        return null;
+
     }
 
     public List<Publication> getTopPublications() {
@@ -139,9 +133,7 @@ public class PublicationService implements IPublicationService {
     @Transactional
     public PublicationDTO getPublication(Long publicationId, String email) {
 
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new DataAccessException(Constants.U_NOT_FOUND) {
-                });
+        User user = userService.findByEmail(email);
 
         Publication publication = publicationRepository.findById(publicationId)
                 .orElseThrow(() -> new DataAccessException(Constants.P_NOT_FOUND) {
@@ -217,65 +209,54 @@ public class PublicationService implements IPublicationService {
 
     @Transactional
     public void approvePublication(Long publicationId) {
-        // 1. Buscar la publicación por su ID en el repositorio
-        Optional<Publication> optionalPublication = publicationRepository.findById(publicationId);
 
-        // 2. Verificar si la publicación existe
-        if (optionalPublication.isPresent()) {
-            // 3. Obtener la publicación desde Optional si está presente
-            Publication publication = optionalPublication.get();
+        Publication publication = publicationRepository.findById(publicationId)
+                .orElseThrow(() -> new DataAccessException(Constants.P_NOT_FOUND) {
+                });
 
-            // 4. Verificar si la publicación está en estado "PENDING"
-            if ("PENDING".equals(publication.getAuthorizationStatus().getState())) {
+        // Verificar si la publicación está en estado "PENDING"
+        if ("PENDING".equals(publication.getAuthorizationStatus().getState())) {
 
-                // 5. Buscar el estado "ACCEPTED" en la tabla StateRequest
-                StateRequest acceptedState = stateRequestRepository.findByState("ACCEPTED")
-                        .orElseThrow(() -> new RuntimeException("Estado 'ACCEPTED' no encontrado"));
+            // Buscar el estado "ACCEPTED" en la tabla StateRequest
+            StateRequest acceptedState = stateRequestRepository.findByState("ACCEPTED")
+                    .orElseThrow(() -> new RuntimeException("Estado 'ACCEPTED' no encontrado"));
 
-                // 6. Asignar el estado "ACCEPTED" a la publicación
-                publication.setAuthorizationStatus(acceptedState);
+            // Asignar el estado "ACCEPTED" a la publicación
+            publication.setAuthorizationStatus(acceptedState);
 
-                // 7. Actualizar el campo visibility a true
-                publication.setVisibility(true);
+            // Actualizar el campo visibility a true
+            publication.setVisibility(true);
 
-                // 8. Guardar los cambios en la base de datos utilizando el repositorio
-                publicationRepository.save(publication);
+            // Guardar los cambios en la base de datos utilizando el repositorio
+            publicationRepository.save(publication);
 
-            } else {
-                // 9. Lanzar una excepción si la publicación no está en estado "PENDING"
-                throw new IllegalStateException(
-                        "La publicación con ID " + publicationId + " no está en estado PENDIENTE");
-            }
         } else {
-            // 10. Lanzar una excepción si no se encuentra la publicación con el ID
-            // proporcionado
-            throw new IllegalArgumentException(Constants.P_NOT_FOUND);
+            // Lanzar una excepción si la publicación no está en estado "PENDING"
+            throw new IllegalStateException(
+                    "La publicación con ID " + publicationId + " no está en estado PENDIENTE");
         }
     }
 
     @Transactional
     public void rejectPublication(Long publicationId) {
-        Optional<Publication> optionalPublication = publicationRepository.findById(publicationId);
 
-        if (optionalPublication.isPresent()) {
-            Publication publication = optionalPublication.get();
+        Publication publication = publicationRepository.findById(publicationId)
+                .orElseThrow(() -> new DataAccessException(Constants.P_NOT_FOUND) {
+                });
 
-            if ("PENDING".equals(publication.getAuthorizationStatus().getState())) {
-                // Buscar el estado "DECLINED" en la tabla StateRequest
-                StateRequest declinedState = stateRequestRepository.findByState("DECLINED")
-                        .orElseThrow(() -> new RuntimeException("Estado 'DECLINED' no encontrado"));
+        if ("PENDING".equals(publication.getAuthorizationStatus().getState())) {
+            // Buscar el estado "DECLINED" en la tabla StateRequest
+            StateRequest declinedState = stateRequestRepository.findByState("DECLINED")
+                    .orElseThrow(() -> new RuntimeException("Estado 'DECLINED' no encontrado"));
 
-                // Asignar el estado "DECLINED" a la publicación
-                publication.setAuthorizationStatus(declinedState);
+            // Asignar el estado "DECLINED" a la publicación
+            publication.setAuthorizationStatus(declinedState);
 
-                // Guardar la publicación actualizada en la base de datos
-                publicationRepository.save(publication);
-            } else {
-                throw new IllegalStateException(
-                        "La publicación con ID " + publicationId + " no está en estado PENDIENTE");
-            }
+            // Guardar la publicación actualizada en la base de datos
+            publicationRepository.save(publication);
         } else {
-            throw new IllegalArgumentException("Publicación con ID " + publicationId + " no encontrada.");
+            throw new IllegalStateException(
+                    "La publicación con ID " + publicationId + " no está en estado PENDIENTE");
         }
     }
 
@@ -303,9 +284,7 @@ public class PublicationService implements IPublicationService {
             voteRepository.save(existingVote);
         } else {
             // El usuario no ha votado antes, se crea un nuevo voto
-            User user = userRepository.findByEmail(userEmail)
-                    .orElseThrow(() -> new DataAccessException(Constants.U_NOT_FOUND) {
-                    });
+            User user = userService.findByEmail(userEmail);
 
             Vote newVote = new Vote();
             newVote.setUser(user);
@@ -336,29 +315,10 @@ public class PublicationService implements IPublicationService {
         int pagTop = 46;
 
         // Buscar si hay 3 paginaciones más adelante de la actual (1 Paginacion = 15)
-        if (pag == 1) {
-            pag = 0;
-        } else {
-            pag = (pag - 1) * 15;
-        }
-
+        pag = (pag == 1) ? 0 : ((pag - 1) * 15);
         List<Publication> publications = publicationRepository.publicationsBylike(pag, pagTop);
-        // Calcular número posible de paginaciones que hay en base de datos
-        Double paginationDouble = (double) publications.size() / 15;
-        int pagination = (int) (Math.ceil(paginationDouble) - 1);
 
-        if (!publications.isEmpty()) {
-            if (publications.size() > 15) {
-                // Enviar solo 15 publicaciones que necesita el front
-                publications = publications.subList(0, 15);
-            }
-
-            return new PublicationFilterDTO(publications, pagination);
-
-        } else {
-            throw new DataAccessException(Constants.PS_NOT_FOUND) {
-            };
-        }
+        return returnPublicationsWithPagination(publications);
     }
 
     @Transactional
@@ -371,29 +331,10 @@ public class PublicationService implements IPublicationService {
         int pagTop = 46;
 
         // Buscar si hay 3 paginaciones más adelante de la actual (1 Paginacion = 15)
-        if (pag == 1) {
-            pag = 0;
-        } else {
-            pag = (pag - 1) * 15;
-        }
-
+        pag = (pag == 1) ? 0 : ((pag - 1) * 15);
         List<Publication> publications = publicationRepository.publicationsByUser(pag, pagTop);
-        // Calcular número posible de paginaciones que hay en base de datos
-        Double paginationDouble = (double) publications.size() / 15;
-        int pagination = (int) (Math.ceil(paginationDouble) - 1);
 
-        if (!publications.isEmpty()) {
-            if (publications.size() > 15) {
-                // Enviar solo 15 publicaciones que necesita el front
-                publications = publications.subList(0, 15);
-            }
-
-            return new PublicationFilterDTO(publications, pagination);
-
-        } else {
-            throw new DataAccessException(Constants.PS_NOT_FOUND) {
-            };
-        }
+        return returnPublicationsWithPagination(publications);
     }
 
     @Transactional
@@ -406,29 +347,10 @@ public class PublicationService implements IPublicationService {
         int pagTop = 46;
 
         // Buscar si hay 3 paginaciones más adelante de la actual (1 Paginacion = 15)
-        if (pag == 1) {
-            pag = 0;
-        } else {
-            pag = (pag - 1) * 15;
-        }
-
+        pag = (pag == 1) ? 0 : ((pag - 1) * 15);
         List<Publication> publications = publicationRepository.publicationsByDate(pag, pagTop);
-        // Calcular número posible de paginaciones que hay en base de datos
-        Double paginationDouble = (double) publications.size() / 15;
-        int pagination = (int) (Math.ceil(paginationDouble) - 1);
 
-        if (!publications.isEmpty()) {
-            if (publications.size() > 15) {
-                // Enviar solo 15 publicaciones que necesita el front
-                publications = publications.subList(0, 15);
-            }
-
-            return new PublicationFilterDTO(publications, pagination);
-
-        } else {
-            throw new DataAccessException(Constants.PS_NOT_FOUND) {
-            };
-        }
+        return returnPublicationsWithPagination(publications);
     }
 
     @Transactional
@@ -441,29 +363,10 @@ public class PublicationService implements IPublicationService {
         int pagTop = 46;
 
         // Buscar si hay 3 paginaciones más adelante de la actual (1 Paginacion = 15)
-        if (pag == 1) {
-            pag = 0;
-        } else {
-            pag = (pag - 1) * 15;
-        }
-
+        pag = (pag == 1) ? 0 : ((pag - 1) * 15);
         List<Publication> publications = publicationRepository.publicationsByAleatory(pag, pagTop);
-        // Calcular número posible de paginaciones que hay en base de datos
-        Double paginationDouble = (double) publications.size() / 15;
-        int pagination = (int) (Math.ceil(paginationDouble) - 1);
 
-        if (!publications.isEmpty()) {
-            if (publications.size() > 15) {
-                // Enviar solo 15 publicaciones que necesita el front
-                publications = publications.subList(0, 15);
-            }
-
-            return new PublicationFilterDTO(publications, pagination);
-
-        } else {
-            throw new DataAccessException(Constants.PS_NOT_FOUND) {
-            };
-        }
+        return returnPublicationsWithPagination(publications);
     }
 
     @Transactional
@@ -476,19 +379,15 @@ public class PublicationService implements IPublicationService {
         int pagTop = 46;
 
         // Buscar si hay 3 paginaciones más adelante de la actual (1 Paginacion = 15)
-        if (pag == 1) {
-            pag = 0;
-
-        } else {
-            pag = (pag - 1) * 15;
-        }
+        pag = (pag == 1) ? 0 : ((pag - 1) * 15);
 
         final List<Publication> publications = publicationRepository.publicationsByPending(pag, pagTop);
-        // Calcular número posible de paginaciones que hay en base de datos
-        Double paginationDouble = (double) publicationRepository.countPublicationsByPending() / 15;
-        int pagination = (int) (Math.ceil(paginationDouble) - 1);
 
         if (!publications.isEmpty()) {
+            // Calcular número posible de paginaciones que hay en base de datos
+            Double paginationDouble = (double) publicationRepository.countPublicationsByPending() / 15;
+            int pagination = (int) (Math.ceil(paginationDouble) - 1);
+
             return new PublicationFilterDTO(publications, pagination);
 
         } else {
@@ -508,13 +407,42 @@ public class PublicationService implements IPublicationService {
         int pagTop = 46;
 
         // Buscar si hay 3 paginaciones más adelante de la actual (1 Paginacion = 15)
-        if (pag == 1) {
-            pag = 0;
-        } else {
-            pag = (pag - 1) * 15;
-        }
-
+        pag = (pag == 1) ? 0 : ((pag - 1) * 15);
         List<Publication> publications = publicationRepository.publicationsByQuantity(pag, pagTop);
+
+        return returnPublicationsWithPagination(publications);
+    }
+
+    // Temporal
+    @Transactional
+    public void changeToPending(Long publicationId) {
+        Publication publication = publicationRepository.findById(publicationId)
+                .orElseThrow(() -> new DataAccessException(Constants.P_NOT_FOUND) {
+                });
+        publication.setAuthorizationStatus(new StateRequest(1L));
+
+        publicationRepository.save(publication);
+
+    }
+
+    @Transactional
+    public void requestApproval(Long publicationId, String email) {
+
+        Publication publication = publicationRepository.findById(publicationId)
+                .orElseThrow(() -> new DataAccessException(Constants.P_NOT_FOUND) {
+                });
+
+        // Actualizar el estado de autorización de la publicación a (1L) "PENDING" para
+        // ser aprobada por el administrador
+        publication.setAuthorizationStatus(new StateRequest(1L));
+        publicationRepository.save(publication);
+
+    }
+
+    // Funciones reutilizables:
+
+    private PublicationFilterDTO returnPublicationsWithPagination(List<Publication> publications) {
+
         // Calcular número posible de paginaciones que hay en base de datos
         Double paginationDouble = (double) publications.size() / 15;
         int pagination = (int) (Math.ceil(paginationDouble) - 1);
@@ -532,37 +460,4 @@ public class PublicationService implements IPublicationService {
             };
         }
     }
-
-    // Temporal
-    @Transactional
-    public void changeToPending(Long publicationId) {
-        Publication publication = publicationRepository.findById(publicationId)
-                .orElseThrow(() -> new DataAccessException(Constants.P_NOT_FOUND) {
-                });
-        publication.setAuthorizationStatus(new StateRequest(1L));
-
-        publicationRepository.save(publication);
-
-    }
-
-    @Transactional
-    public void requestApproval(Long publicationId, String email) {
-        // 1. Buscar la publicación por su ID en el repositorio
-        Optional<Publication> optionalPublication = publicationRepository.findById(publicationId);
-        // 2. Verificar si la publicación existe
-        if (optionalPublication.isPresent()) {
-            // 3. Obtener la publicación desde Optional si está presente
-            Publication publication = optionalPublication.get();
-            // 4. Actualizar el estado de autorización de la publicación a "PENDING"
-            publication.getAuthorizationStatus().setState("PENDING");
-
-            // 5. Guardar los cambios en la base de datos utilizando el repositorio
-            publicationRepository.save(publication);
-        } else {
-
-            throw new DataAccessException("Publication not found with ID: " + publicationId) {
-            };
-        }
-    }
-
 }
