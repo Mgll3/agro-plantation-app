@@ -42,6 +42,7 @@ const Login = forwardRef(function Login({
 	return (
 		<div
 			ref={loginContainerElement}
+			// Cuando el foco está en "Register" limitamos la altura de Login para que no afecte a su altura total (genera un hueco en blanco por debajo de Register)
 			className={`relative flex flex-col-reverse ${focus === "register" ? "h-[100vh] overflow-hidden" : "h-[100%]"} bg-[#EAE3C0]
 			custom-750:flex-row
 			custom-750:w-[100vw]`}
