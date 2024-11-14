@@ -8,11 +8,17 @@ import com.gardengroup.agroplantationapp.model.entity.User;
 import jakarta.servlet.http.HttpServletRequest;
 
 public interface IUserService {
-    
+
     public User createUser(RegisterDTO dtoRegistrer);
+
     public User findByname(String name);
+
+    public User findByEmail(String email);
+
     public Boolean existsEmail(String email);
+
     public AthAnswerDTO authenticate(LoginDTO loginDTO);
+
     public AthAnswerDTO getUserSession(HttpServletRequest request);
-    
+
 }

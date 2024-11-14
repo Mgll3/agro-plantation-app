@@ -6,6 +6,8 @@ import com.gardengroup.agroplantationapp.model.dto.user.RegisterDTO;
 import com.gardengroup.agroplantationapp.model.entity.User;
 import com.gardengroup.agroplantationapp.model.entity.UserType;
 import com.gardengroup.agroplantationapp.model.repository.UserRepository;
+import com.gardengroup.agroplantationapp.utils.Constants;
+
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -18,7 +20,6 @@ public class UserService implements IUserService {
     private UserRepository userRepository;
     @Autowired
     private SecurityService securityService;
-    
 
     @Transactional
     public User createUser(RegisterDTO dtoRegistrer) {
@@ -37,7 +38,6 @@ public class UserService implements IUserService {
 
     }
 
-
     public User findByname(String name) {
 
         return userRepository.searchName(name);
@@ -47,26 +47,33 @@ public class UserService implements IUserService {
         return userRepository.existsByUseremail(email);
     }
 
-    
-
     @Transactional
     public AthAnswerDTO authenticate(LoginDTO loginDTO) {
         String token = securityService.authenticate(loginDTO);
-        User user = userRepository.findByEmail(loginDTO.getEmail()).orElseThrow(() -> new DataAccessException("User not found") {
-        });
+        User user = userRepository.findByEmail(loginDTO.getEmail())
+                .orElseThrow(() -> new DataAccessException("User not found") {
+                });
         return new AthAnswerDTO(token, user.getName(), user.getLastname(), user.getUserType().getType());
     }
 
     @Transactional
     public AthAnswerDTO getUserSession(HttpServletRequest request) {
         String email = securityService.getEmail(request);
-        
+
         User user = userRepository.findByEmail(email)
-            .orElseThrow(() -> new DataAccessException("User not found") {
-        });
-        
+                .orElseThrow(() -> new DataAccessException("User not found") {
+                });
+
         return new AthAnswerDTO(user.getName(), user.getLastname(), user.getUserType().getType());
-        
+
+    }
+
+    public User findByEmail(String email) {
+
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new DataAccessException(Constants.U_NOT_FOUND) {
+                });
+
     }
 
 }

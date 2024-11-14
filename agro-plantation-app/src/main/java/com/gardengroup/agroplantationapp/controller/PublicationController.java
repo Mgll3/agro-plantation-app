@@ -178,10 +178,10 @@ public class PublicationController {
             @ApiResponse(responseCode = "304", description = "Error al actualizar la publicación, No se modificó ningún campo")
     })
     @PutMapping()
-    public ResponseEntity<Void> updatePublication(@RequestBody PublicationUpdDTO publicationUpdDTO) {
+    public ResponseEntity<Publication> updatePublication(@RequestBody PublicationUpdDTO publicationUpdDTO) {
         try {
-            publicationService.updatePublication(publicationUpdDTO);
-            return ResponseEntity.status(HttpStatus.OK).build();
+            Publication publicationUpdated = publicationService.updatePublication(publicationUpdDTO);
+            return new ResponseEntity<>(publicationUpdated, HttpStatus.OK);
         } catch (Exception e) {
             log.error(e.getMessage());
             if (e.getMessage().equals(Constants.P_NOT_FOUND)) {

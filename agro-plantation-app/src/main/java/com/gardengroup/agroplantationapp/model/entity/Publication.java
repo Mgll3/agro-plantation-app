@@ -45,13 +45,13 @@ public class Publication {
     // publicación
     public void updateInfo(Publication publication) {
 
-        if (this.title.equals(publication.title) && publication.title != null) {
+        if (!this.title.equals(publication.title) && (publication.title != null)) {
             this.setTitle(publication.title);
         }
-        if (this.plantation.equals(publication.plantation) && publication.plantation != null) {
+        if (!this.plantation.equals(publication.plantation) && (publication.plantation != null)) {
             this.setPlantation(publication.plantation);
         }
-        if (this.visibility.equals(publication.visibility) && publication.visibility != null) {
+        if (!this.visibility.equals(publication.visibility) && (publication.visibility != null)) {
             this.setVisibility(publication.visibility);
         }
 

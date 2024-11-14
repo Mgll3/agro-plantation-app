@@ -1,23 +1,15 @@
 package com.gardengroup.agroplantationapp.service;
 
-import com.gardengroup.agroplantationapp.model.dto.publication.PublicationDTO;
-import com.gardengroup.agroplantationapp.model.dto.publication.PublicationFilterDTO;
-import com.gardengroup.agroplantationapp.model.dto.publication.PublicationSaveDTO;
-import com.gardengroup.agroplantationapp.model.dto.publication.PublicationUpdDTO;
+import com.gardengroup.agroplantationapp.model.dto.publication.*;
 import com.gardengroup.agroplantationapp.model.entity.*;
 import com.gardengroup.agroplantationapp.model.repository.PublicationRepository;
-import com.gardengroup.agroplantationapp.model.repository.StateRequestRepository;
-import com.gardengroup.agroplantationapp.model.repository.UserRepository;
 import com.gardengroup.agroplantationapp.model.repository.VoteRepository;
 import com.gardengroup.agroplantationapp.utils.Constants;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import jakarta.transaction.Transactional;
-
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -30,20 +22,16 @@ public class PublicationService implements IPublicationService {
     @Autowired
     private CloudinaryService cloudinaryService;
     @Autowired
-    private UserService userService;
-    @Autowired
-    StateRequestRepository stateRequestRepository;
+    private IUserService userService;
     @Autowired
     VoteRepository voteRepository;
 
-    // crea la publicacion y ya pone su estado de la autorizacion en pendiente
     @Transactional
     public Publication savePublication(PublicationSaveDTO publicationDTO, String email) {
 
         Publication publication = new Publication(publicationDTO);
 
         User user = userService.findByEmail(email);
-
         publication.setAuthor(user);
 
         // Asignaciones de parametros default
@@ -138,15 +126,11 @@ public class PublicationService implements IPublicationService {
         Publication publication = publicationRepository.findById(publicationId)
                 .orElseThrow(() -> new DataAccessException(Constants.P_NOT_FOUND) {
                 });
+
         Optional<Vote> voto = voteRepository.findByUserAndPublication(user.getId(), publicationId);
-
         PublicationDTO publicationDTO = new PublicationDTO(publication);
+        publicationDTO.setUserVote(voto.isPresent());
 
-        if (voto.isPresent()) {
-            publicationDTO.setUserVote(true);
-        } else {
-            publicationDTO.setUserVote(false);
-        }
         return publicationDTO;
 
     }
@@ -166,7 +150,7 @@ public class PublicationService implements IPublicationService {
     }
 
     @Transactional
-    public void updatePublication(PublicationUpdDTO publicationUpdDTO) {
+    public Publication updatePublication(PublicationUpdDTO publicationUpdDTO) {
 
         Publication publication = new Publication(publicationUpdDTO);
 
@@ -176,7 +160,7 @@ public class PublicationService implements IPublicationService {
         } else {
             Publication publicationSaved = publicationRepository.findById(publication.getId()).get();
             publicationSaved.updateInfo(publication);
-            publicationRepository.save(publicationSaved);
+            return publicationRepository.save(publicationSaved);
         }
 
     }
@@ -202,7 +186,6 @@ public class PublicationService implements IPublicationService {
 
     }
 
-    @Transactional
     public List<Publication> pendingPublications() {
         return publicationRepository.findAllPendingPublications();
     }
@@ -217,21 +200,14 @@ public class PublicationService implements IPublicationService {
         // Verificar si la publicación está en estado "PENDING"
         if ("PENDING".equals(publication.getAuthorizationStatus().getState())) {
 
-            // Buscar el estado "ACCEPTED" en la tabla StateRequest
-            StateRequest acceptedState = stateRequestRepository.findByState("ACCEPTED")
-                    .orElseThrow(() -> new RuntimeException("Estado 'ACCEPTED' no encontrado"));
-
-            // Asignar el estado "ACCEPTED" a la publicación
-            publication.setAuthorizationStatus(acceptedState);
-
-            // Actualizar el campo visibility a true
+            // Asignar el estado (2) "ACCEPTED" a la publicación
+            publication.setAuthorizationStatus(new StateRequest(2L));
+            // Hacer la publicación publica
             publication.setVisibility(true);
 
-            // Guardar los cambios en la base de datos utilizando el repositorio
             publicationRepository.save(publication);
 
         } else {
-            // Lanzar una excepción si la publicación no está en estado "PENDING"
             throw new IllegalStateException(
                     "La publicación con ID " + publicationId + " no está en estado PENDIENTE");
         }
@@ -245,15 +221,10 @@ public class PublicationService implements IPublicationService {
                 });
 
         if ("PENDING".equals(publication.getAuthorizationStatus().getState())) {
-            // Buscar el estado "DECLINED" en la tabla StateRequest
-            StateRequest declinedState = stateRequestRepository.findByState("DECLINED")
-                    .orElseThrow(() -> new RuntimeException("Estado 'DECLINED' no encontrado"));
-
-            // Asignar el estado "DECLINED" a la publicación
-            publication.setAuthorizationStatus(declinedState);
-
-            // Guardar la publicación actualizada en la base de datos
+            // Asignar el estado (3) "DECLINED" a la publicación
+            publication.setAuthorizationStatus(new StateRequest(3L));
             publicationRepository.save(publication);
+
         } else {
             throw new IllegalStateException(
                     "La publicación con ID " + publicationId + " no está en estado PENDIENTE");

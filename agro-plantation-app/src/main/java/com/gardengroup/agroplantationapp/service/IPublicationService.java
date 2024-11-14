@@ -25,7 +25,7 @@ public interface IPublicationService {
 
     public List<Publication> publicationsByEmail(String email);
 
-    public void updatePublication(PublicationUpdDTO publicationUpdDTO);
+    public Publication updatePublication(PublicationUpdDTO publicationUpdDTO);
 
     public void deletePublication(Long id);
 
