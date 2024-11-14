@@ -29,6 +29,7 @@ function UserProducerPublicationDetails() {
 	const [loadingState, changeLoadingState] = useLoadingState();
 	const [sliderVisibility, setSliderVisibility] = useState(false);
 	const [publicationData, setPublicationData] = useState<PublicationInfoType | null>(null);
+	const [reloadPublicationDataTrigger, setReloadPublicationDataTrigger] = useState<boolean>(true);
 
 	const buttonFontSize =
 		"text-[1.3rem] custom-700:text-[1.6rem] custom-900:text-[1.978rem] custom-1900:text-[2.5rem] custom-2500:text-[3rem]";
@@ -124,6 +125,7 @@ function UserProducerPublicationDetails() {
 
 	function closeErrorModal() {
 		changeLoadingState("loading");
+		setReloadPublicationDataTrigger(!reloadPublicationDataTrigger);
 	}
 
 	function navToLogin() {
@@ -195,7 +197,7 @@ function UserProducerPublicationDetails() {
 			axiosController.current?.abort();
 			axiosController2.current?.abort();
 		};
-	}, []);
+	}, [reloadPublicationDataTrigger]);
 
 	return (
 		<div className="flex flex-col min-h-[100vh]">
@@ -268,6 +270,10 @@ function UserProducerPublicationDetails() {
 
 				{loadingState === "errorServer" && (
 					<NetworkError failedAction="cargar la publicación." buttonText="Reintentar" handleClose={closeErrorModal} />
+				)}
+
+				{loadingState === "errorServer2" && (
+					<NetworkError failedAction="registrar su voto." buttonText="Reintentar" handleClose={closeErrorModal} />
 				)}
 
 				{loadingState === "errorCredentials" && (
