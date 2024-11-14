@@ -30,6 +30,7 @@ function AdminPublicationDetails() {
 	const [loadingState, changeLoadingState] = useLoadingState();
 	const [sliderVisibility, setSliderVisibility] = useState(false);
 	const [publicationData, setPublicationData] = useState<PublicationInfoType | null>(null);
+	const [reloadPublicationDataTrigger, setReloadPublicationDataTrigger] = useState<boolean>(true);
 
 	const buttonFontSize =
 		"text-[1rem] custom-500:text-[1.3rem] custom-700:text-[1.6rem] custom-900:text-[1.978rem] custom-1900:text-[2.5rem] custom-2500:text-[3rem]";
@@ -140,7 +141,7 @@ function AdminPublicationDetails() {
 						redirectToPreviousPageWithModal("approved");
 					})
 					.catch(() => {
-						changeLoadingState("errorServer", "modalLoading");
+						changeLoadingState("errorServer2", "modalLoading");
 					});
 			} else {
 				rejectPublication(storedToken, publicationData?.id, axiosController2.current)
@@ -148,7 +149,7 @@ function AdminPublicationDetails() {
 						redirectToPreviousPageWithModal("rejected");
 					})
 					.catch(() => {
-						changeLoadingState("errorServer", "modalLoading");
+						changeLoadingState("errorServer2", "modalLoading");
 					});
 			}
 		} else {
@@ -168,7 +169,7 @@ function AdminPublicationDetails() {
 					redirectToPreviousPageWithModal("pending");
 				})
 				.catch(() => {
-					changeLoadingState("errorServer", "modalLoading");
+					changeLoadingState("errorServer2", "modalLoading");
 				});
 		} else {
 			changeLoadingState("errorCredentials");
@@ -197,6 +198,7 @@ function AdminPublicationDetails() {
 
 	function closeErrorModal() {
 		changeLoadingState("loading");
+		setReloadPublicationDataTrigger(!reloadPublicationDataTrigger);
 	}
 
 	function navToLogin() {
@@ -243,7 +245,7 @@ function AdminPublicationDetails() {
 			axiosController.current?.abort();
 			axiosController2.current?.abort();
 		};
-	}, []);
+	}, [reloadPublicationDataTrigger]);
 
 	return (
 		<div className="flex flex-col min-h-[100vh]">
@@ -343,6 +345,10 @@ function AdminPublicationDetails() {
 
 				{loadingState === "errorServer" && (
 					<NetworkError failedAction="cargar la publicación." buttonText="Reintentar" handleClose={closeErrorModal} />
+				)}
+
+				{loadingState === "errorServer2" && (
+					<NetworkError failedAction="cambiar el estado." buttonText="Reintentar" handleClose={closeErrorModal} />
 				)}
 
 				{loadingState === "errorCredentials" && (
