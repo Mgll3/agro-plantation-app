@@ -7,8 +7,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
@@ -23,19 +21,13 @@ import com.gardengroup.agroplantationapp.model.dto.user.LoginDTO;
 import com.gardengroup.agroplantationapp.model.dto.user.RegisterDTO;
 import com.gardengroup.agroplantationapp.model.entity.User;
 
-//Ejecutar el script importTest.sql antes de ejecutar las pruebas
-@SqlGroup({
-        @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_CLASS, scripts = "classpath:importTest.sql")
-
-})
-
 @SpringBootTest
 @AutoConfigureMockMvc
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD) // limpiar bd despues de pruebas
-// @ActiveProfiles("test")
 class UserTest {
 
-    private User user;
+    private User user = new User();
+    private String accessToken = null;
 
     @Autowired
     private MockMvc mockMvc; // Simular peticiones HTTP
@@ -137,6 +129,45 @@ class UserTest {
                 .andExpect(jsonPath("$.name", Matchers.is(registerDto.getName())))
                 .andExpect(jsonPath("$.lastname", Matchers.is(registerDto.getLastname())))
                 .andExpect(jsonPath("$.userType", Matchers.notNullValue()));
+    }
+
+    @DisplayName("Borrar cuenta de usuario")
+    @Test // TODO: utilizar los datos de un usuario ya creado y no irlos colocando cada
+          // vez
+    void shouldCanDeleteUser() throws Exception {
+        // Inicializar usuario
+        RegisterDTO registerDto = new RegisterDTO("mgl@gmail.com", "1", "Miguel",
+                "Alvarez", "Calle 123");
+
+        // Guardar usuario por medio del endpoint
+        ResultActions response = mockMvc.perform(post("/auth/registro")
+                .with(SecurityMockMvcRequestPostProcessors.csrf()) // TOKEN CSRF de seguridad
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(registerDto)));
+
+        response.andExpect(status().isCreated());
+
+        // Inicializar loggeo
+        LoginDTO loginDto = new LoginDTO("mgl@gmail.com", "1");
+
+        // Loggear usuario desde el endpoint
+        ResultActions loginResponse = mockMvc.perform(post("/auth/login")
+                .with(SecurityMockMvcRequestPostProcessors.csrf()) // TOKEN CSRF de seguridad
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(loginDto)));
+
+        // Extraer el Token de JWT
+        MvcResult result = loginResponse.andExpect(status().isOk()).andReturn();
+        String responseBody = result.getResponse().getContentAsString();
+        JsonNode jsonNode = objectMapper.readTree(responseBody);
+        String accessToken = jsonNode.get("accessToken").asText();
+
+        ResultActions deleteResponse = mockMvc.perform(delete("/v1/user/deleteUser")
+                .with(SecurityMockMvcRequestPostProcessors.csrf()) // TOKEN CSRF de seguridad
+                .contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", "Bearer " + accessToken)); // Se Agrega el token JWT
+
+        deleteResponse.andExpect(status().isNoContent());
     }
 
 }

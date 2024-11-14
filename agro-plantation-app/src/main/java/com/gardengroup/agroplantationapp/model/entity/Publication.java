@@ -1,6 +1,5 @@
 package com.gardengroup.agroplantationapp.model.entity;
 
-import com.gardengroup.agroplantationapp.model.dto.publication.PublicationDTO;
 import com.gardengroup.agroplantationapp.model.dto.publication.PublicationSaveDTO;
 import com.gardengroup.agroplantationapp.model.dto.publication.PublicationUpdDTO;
 

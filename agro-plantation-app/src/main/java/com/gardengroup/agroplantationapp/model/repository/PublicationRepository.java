@@ -3,12 +3,14 @@ package com.gardengroup.agroplantationapp.model.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.gardengroup.agroplantationapp.model.entity.Publication;
+
+import jakarta.transaction.Transactional;
 
 @Repository
 public interface PublicationRepository extends JpaRepository<Publication, Long> {
@@ -44,4 +46,8 @@ public interface PublicationRepository extends JpaRepository<Publication, Long> 
     @Query(value = "SELECT * FROM publication ORDER BY COUNT(*) OVER (PARTITION BY author_id) DESC, author_id LIMIT :pagination, :pagTop", nativeQuery = true)
     List<Publication> publicationsByQuantity(@Param("pagination") int pagination, @Param("pagTop") int pagTop);
 
+    @Modifying
+    @Transactional
+    @Query(value = "DELETE FROM publication WHERE author_id = :id", nativeQuery = true)
+    void deleteAllByAuthorId(@Param("id") Long id);
 }

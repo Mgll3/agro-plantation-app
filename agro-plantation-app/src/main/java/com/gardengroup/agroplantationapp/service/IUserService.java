@@ -21,4 +21,6 @@ public interface IUserService {
 
     public AthAnswerDTO getUserSession(HttpServletRequest request);
 
+    public void deleteUser(String email);
+
 }

@@ -13,7 +13,6 @@ import org.springframework.boot.testcontainers.service.connection.ServiceConnect
 import org.springframework.http.MediaType;
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
@@ -21,10 +20,8 @@ import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.gardengroup.agroplantationapp.AgroPlantationAppApplication;
 import com.gardengroup.agroplantationapp.model.dto.publication.PublicationSaveDTO;
 import com.gardengroup.agroplantationapp.model.dto.user.LoginDTO;
 import com.gardengroup.agroplantationapp.model.dto.user.RegisterDTO;
@@ -36,7 +33,7 @@ import com.gardengroup.agroplantationapp.model.entity.User;
 @Testcontainers
 @TestInstance(Lifecycle.PER_CLASS) // Para que se ejecute el BeforeAll
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS) // limpiar bd despues de pruebas
-public class pruebaTests {
+public class PruebaTests {
 
     @Container
     @ServiceConnection

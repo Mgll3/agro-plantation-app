@@ -186,6 +186,13 @@ public class PublicationService implements IPublicationService {
 
     }
 
+    @Transactional
+    public void deleteAllByUser(Long userId) {
+
+        publicationRepository.deleteAllByAuthorId(userId);
+
+    }
+
     public List<Publication> pendingPublications() {
         return publicationRepository.findAllPendingPublications();
     }
@@ -202,7 +209,7 @@ public class PublicationService implements IPublicationService {
 
             // Asignar el estado (2) "ACCEPTED" a la publicación
             publication.setAuthorizationStatus(new StateRequest(2L));
-            // Hacer la publicación publica
+            // Hacer la publicación publica y visible por cualquiera
             publication.setVisibility(true);
 
             publicationRepository.save(publication);

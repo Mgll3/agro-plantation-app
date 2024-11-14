@@ -5,6 +5,7 @@ import com.gardengroup.agroplantationapp.model.dto.user.LoginDTO;
 import com.gardengroup.agroplantationapp.model.dto.user.RegisterDTO;
 import com.gardengroup.agroplantationapp.model.entity.User;
 import com.gardengroup.agroplantationapp.model.entity.UserType;
+import com.gardengroup.agroplantationapp.model.repository.PublicationRepository;
 import com.gardengroup.agroplantationapp.model.repository.UserRepository;
 import com.gardengroup.agroplantationapp.utils.Constants;
 
@@ -16,8 +17,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserService implements IUserService {
+
     @Autowired
     private UserRepository userRepository;
+    // Se inyecta el repositorio ya que al inyectar el service se hace una inyeccion
+    // circular
+    @Autowired
+    private PublicationRepository publicationRepository;
     @Autowired
     private SecurityService securityService;
 
@@ -73,6 +79,19 @@ public class UserService implements IUserService {
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new DataAccessException(Constants.U_NOT_FOUND) {
                 });
+
+    }
+
+    @Transactional
+    public void deleteUser(String email) throws DataAccessException {
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new DataAccessException(Constants.U_NOT_FOUND) {
+                });
+
+        publicationRepository.deleteAllByAuthorId(user.getId());
+
+        userRepository.delete(user);
 
     }
 

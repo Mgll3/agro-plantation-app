@@ -29,6 +29,8 @@ public interface IPublicationService {
 
     public void deletePublication(Long id);
 
+    public void deleteAllByUser(Long userId);
+
     public List<Publication> pendingPublications();
 
     public void approvePublication(Long publicationId);
