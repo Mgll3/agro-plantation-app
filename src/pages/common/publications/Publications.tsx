@@ -32,6 +32,7 @@ function Publications() {
 	const [publicationsFiltered, setPublicationsFiltered] = useState<FormattedPublicationsInfoType[] | null>(null);
 	const [loadingState, changeLoadingState] = useLoadingState();
 	const [filter, setFilter] = useState<FilterType>(initFilter);
+	const [reloadPublicationsTrigger, setReloadPublicationsTrigger] = useState<boolean>(true);
 
 	//Used to render the correct filter component based on window width
 	const deviceUsedInitValue: DeviceUsedType = window.innerWidth <= 900 ? "mobile" : "pc";
@@ -47,7 +48,7 @@ function Publications() {
 	const axiosController = useRef<AbortController>();
 
 	function closeErrorModal() {
-		changeLoadingState("loading");
+		setReloadPublicationsTrigger(!reloadPublicationsTrigger);
 	}
 
 	//Al componente PublicationFilters se le pasa esta función y no "setFilter" directamente para que además de cambiar de filtro nos mande a la página 1 de dicho filtro (la página 4 de un filtro puede no existir en otro y dar error). Las otras formas de hacer esto que he probado afectaban a la información del "state" de los <Link> que redirigen a esta página, haciendo que cuando pulsáramos "Volver" desde AdminPublicationDetails no se recordara la página del filtro en la que estábamos y nos mandase de nuevo a la 1º. Esto sólo afecta a los cambios manuales de filtro y nada más.
@@ -90,7 +91,10 @@ function Publications() {
 
 		// Guadamos en el array "users" todos los usuarios diferentes que aparecen en las publicaciones recuperadas.
 		publications.map((publication) => {
-			if (!users.find((element) => element.id === publication.author.id)) {
+			if (
+				!users.find((element) => element.id === publication.author.id) &&
+				(userRole === "ADMIN" || publication.authorizationStatus.state === "ACCEPTED")
+			) {
 				const newUser: UserType = {
 					id: publication.author.id,
 					name: `${publication.author.lastname}, ${publication.author.name} `
@@ -108,7 +112,7 @@ function Publications() {
 			};
 
 			publications.map((publication) => {
-				if (publication.author.id === user.id) {
+				if (publication.author.id === user.id && publication.authorizationStatus.state === "ACCEPTED") {
 					formattedBlock.content.push(publication);
 				}
 			});
@@ -257,7 +261,7 @@ function Publications() {
 		return () => {
 			axiosController.current?.abort();
 		};
-	}, [filter, id]);
+	}, [filter, id, reloadPublicationsTrigger]);
 
 	useEffect(() => {
 		function changeDeviceType() {
