@@ -22,8 +22,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.gardengroup.agroplantationapp.service.IPublicationService;
-import com.gardengroup.agroplantationapp.service.SecurityService;
+import com.gardengroup.agroplantationapp.service.interfaces.IPublicationService;
+import com.gardengroup.agroplantationapp.service.implementation.SecurityService;
 import com.gardengroup.agroplantationapp.utils.Constants;
 
 import io.swagger.v3.oas.annotations.Operation;

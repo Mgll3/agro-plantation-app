@@ -4,7 +4,8 @@ import com.gardengroup.agroplantationapp.model.dto.user.AthAnswerDTO;
 import com.gardengroup.agroplantationapp.model.dto.user.LoginDTO;
 import com.gardengroup.agroplantationapp.model.dto.user.RegisterDTO;
 import com.gardengroup.agroplantationapp.model.entity.User;
-import com.gardengroup.agroplantationapp.service.IUserService;
+import com.gardengroup.agroplantationapp.service.interfaces.IUserService;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;

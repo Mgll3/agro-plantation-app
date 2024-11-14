@@ -1,8 +1,8 @@
 package com.gardengroup.agroplantationapp.controller;
 
 import com.gardengroup.agroplantationapp.model.dto.user.AthAnswerDTO;
-import com.gardengroup.agroplantationapp.service.IUserService;
-import com.gardengroup.agroplantationapp.service.SecurityService;
+import com.gardengroup.agroplantationapp.service.interfaces.IUserService;
+import com.gardengroup.agroplantationapp.service.implementation.SecurityService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
