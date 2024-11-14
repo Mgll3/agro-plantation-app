@@ -1,7 +1,9 @@
 HELP.md
 target/*
 !target/*.jar
+!/target/site/jacoco/jacoco.xml
 logs/
+!/build/reports/jacoco/test/jacocoTestReport.xml
 
 ### STS ###
 .apt_generated
