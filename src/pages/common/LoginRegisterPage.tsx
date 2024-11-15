@@ -108,8 +108,18 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 			});
 	};
 
+	//Hace scroll hacia la parte superior de la pantalla. Utilizado por "changeForm()" antes de cambiar al otro formulario, para evitar problemas de maquetación si un formulario es más alto que otro.
+	function scrollToTop() {
+		window.scrollTo({
+			top: 0,
+			behavior: "smooth"
+		});
+	}
+
 	// Activa la animación de transición entre "Register" y "Login"
 	function changeForm() {
+		scrollToTop();
+
 		// Este bloque if hace que antes de cambiar al otro formulario este adopte su altura normal (por defecto, cuando el focus está en un formulario, el otro es limitado a una altura de 100vh para que no afecte a la altura del que estamos viendo, produciendo un hueco en blanco por debajo del contenido. Con este if reestablecemos su altura normal antes de pasar a él).
 		if (focus === "login") {
 			(registerContainerElement.current! as HTMLDivElement).classList.remove("h-[100vh]");

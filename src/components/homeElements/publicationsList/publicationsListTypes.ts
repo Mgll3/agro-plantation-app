@@ -20,6 +20,13 @@ type PlantationType = {
 	details: string;
 };
 
+type AuthorizationStateType = "ACCEPTED" | "DECLINED" | "PENDING";
+
+type AuthorizationStatusType = {
+	id: number;
+	state: AuthorizationStateType;
+};
+
 export type PublicationType = {
 	id: number;
 	title: string;
@@ -29,4 +36,5 @@ export type PublicationType = {
 	comments: PublicationCommentType;
 	score: number;
 	plantation: PlantationType;
+	authorizationStatus: AuthorizationStatusType;
 };

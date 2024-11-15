@@ -98,7 +98,14 @@ export default function Home() {
 
 		getBestPublications(axiosController.current)
 			.then((bestPublicationsList: PublicationType[]) => {
-				bestPublicationsArray.current = bestPublicationsList;
+				//filtramos la respuesta para eliminar las publicaciones que no están autorizadas por un admin.
+				const approvedPublications: PublicationType[] = [];
+				bestPublicationsList.map((element) => {
+					if (element.authorizationStatus.state === "ACCEPTED") {
+						approvedPublications.push(element);
+					}
+				});
+				bestPublicationsArray.current = approvedPublications;
 				setPublicationsState("loaded");
 			})
 			.catch(() => {
