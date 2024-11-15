@@ -127,7 +127,7 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 			.matches(noSpaceAtStartRegex, "No puede comenzar con un espacio")
 			.matches(noSpaceEndingRegex, "No puede terminar con un espacio")
 			.matches(noSpecialCharacterRegex, "No se admiten caracteres especiales")
-			.max(15, "Máximo 15 caracteres"),
+			.max(25, "Máximo 25 caracteres"),
 
 		irrigationType: Yup.string()
 			.required("Debes completar este campo")
