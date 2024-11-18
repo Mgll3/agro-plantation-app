@@ -19,6 +19,45 @@ function UserProfile({ handleLogoutClick }: UserProfileProps) {
 	const userProfile = useRef(null);
 	const userFirstName = user.name.split(" ")[0] + " " + user.name.split(" ")[1][0] + ".";
 
+	//Este bloque determina a dónde dirige cada link del combo y cuál es el texto a mostrar, según el rol del usuario.
+	let option1Link: string;
+	let option2Link: string;
+	let option3Link: string;
+
+	let option1Text: string;
+	let option2Text: string;
+	let option3Text: string;
+
+	if (userRole === "USER") {
+		option1Link = "/user/registerProducer";
+		option2Link = "";
+		option3Link = "";
+		option1Text = "Quiero ser Productor";
+		option2Text = "Opción Provisional";
+		option3Text = "Opción Provisional";
+	} else if (userRole === "PRODUCER" || userRole === "PRODUCER_VIP") {
+		option1Link = "/producer/publications/createPublication";
+		option2Link = "";
+		option3Link = "";
+		option1Text = "Crear Publicación";
+		option2Text = "Opción Provisional";
+		option3Text = "Opción Provisional";
+	} else if (userRole === "ADMIN") {
+		option1Link = "";
+		option2Link = "";
+		option3Link = "";
+		option1Text = "Opción Provisional";
+		option2Text = "Opción Provisional";
+		option3Text = "Opción Provisional";
+	} else {
+		option1Link = "";
+		option2Link = "";
+		option3Link = "";
+		option1Text = "Opción Provisional";
+		option2Text = "Opción Provisional";
+		option3Text = "Opción Provisional";
+	}
+
 	function showHideProfileOptions() {
 		if ((userProfile.current! as HTMLDivElement).classList.contains("opacity-0")) {
 			(userProfile.current! as HTMLDivElement).classList.remove("hidden");
@@ -109,14 +148,14 @@ function UserProfile({ handleLogoutClick }: UserProfileProps) {
 					<div className="border-b border-brandingLightBlue mx-2 mb-3"></div>
 
 					<div className="flex flex-col gap-y-0 text-[1.8rem] custom-2000:text-[2.5rem]">
-						<Link to="" className="px-4 py-2 hover:font-bold hover:bg-brandingYellow duration-200">
-							Opción 1
+						<Link to={option1Link} className="px-4 py-2 hover:font-bold hover:bg-brandingYellow duration-200">
+							{option1Text}
 						</Link>
-						<Link to="" className="px-4 py-2 hover:font-bold hover:bg-brandingYellow duration-200">
-							Opción 2
+						<Link to={option2Link} className="px-4 py-2 hover:font-bold hover:bg-brandingYellow duration-200">
+							{option2Text}
 						</Link>
-						<Link to="" className="px-4 py-2 mb-2 hover:font-bold hover:bg-brandingYellow duration-200">
-							Opción 3
+						<Link to={option3Link} className="px-4 py-2 mb-2 hover:font-bold hover:bg-brandingYellow duration-200">
+							{option3Text}
 						</Link>
 					</div>
 
