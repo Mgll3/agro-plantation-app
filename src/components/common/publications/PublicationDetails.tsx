@@ -158,10 +158,19 @@ export default function PublicationDetails({
 									plantationName={publicationInfo.title}
 								/>
 							) : (
-								<p>No se ha podido obtener la dirección</p>
+								<div className="flex justify-center items-center w-full h-full">
+									<p
+										className="text-[1.7rem] text-brandingDarkGreen font-lato font-semibold drop-shadow-smallText
+										custom-950:text-[2rem]"
+									>
+										No se ha podido obtener la dirección
+									</p>
+								</div>
 							)
 						) : (
-							<LoadingSmall />
+							<div className="flex justify-center items-center w-full h-full">
+								<LoadingSmall />
+							</div>
 						)}
 					</div>
 				</div>

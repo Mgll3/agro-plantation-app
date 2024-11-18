@@ -23,6 +23,7 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 		lat: -34.61315,
 		lon: -58.37723
 	});
+	const isGeomapInfoLoaded = useRef<boolean>(false);
 	const [textAreaCharacters, setTextAreaCharacters] = useState(0);
 	const textAreaElement = useRef<HTMLTextAreaElement>(null);
 	const textAreaCharactersLeft = 3000 - textAreaCharacters;
@@ -227,9 +228,11 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 			changeGeoMapTimeout.current = window.setTimeout(() => {
 				getAddressCoordinates(axiosController.current!, formik.values.address)
 					.then((coordinates) => {
+						isGeomapInfoLoaded.current = true;
 						setAddressCoordinates(coordinates);
 					})
 					.catch(() => {
+						isGeomapInfoLoaded.current = true;
 						setAddressCoordinates(undefined);
 					});
 			}, 2000);
@@ -798,6 +801,7 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 							addressString={formik.values.address}
 							plantationName={formik.values.title}
 							addressCoordinates={addressCoordinates}
+							isGeomapInfoLoaded={isGeomapInfoLoaded.current}
 						/>
 					</div>
 				</div>
