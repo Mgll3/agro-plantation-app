@@ -152,6 +152,7 @@ function AdminUsers() {
 		<div className="flex flex-col min-h-[100vh]">
 			<Helmet>
 				<title>Plant-In Solicitudes de Usuarios</title>
+				<meta name="robots" content="noindex, nofollow"></meta>
 			</Helmet>
 
 			<div className="w-full">

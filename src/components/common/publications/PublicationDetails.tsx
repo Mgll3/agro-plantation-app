@@ -11,7 +11,7 @@ type PublicationDetailsProps = {
 	areMapCoordinatesLoaded: boolean;
 	publicationInfo: PublicationInfoType;
 	addressCoordinates: AddressCoordinatesType;
-	isVoteChangedFlag: null | string;
+	isVoteChangedFlag?: null | string;
 	handleImageOnClick: (pictureId: string) => void;
 	handleVotePublication: () => void;
 };

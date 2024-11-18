@@ -4,7 +4,7 @@ import { ButtonColorType } from "../../button/buttonTypes";
 type VotePublicationProps = {
 	isVoted: boolean;
 	//Esta variable se utiliza para cambiar el aspecto del botón de voto sin necesidad de hacer una nueva consulta al servidor para saber el valor de "userVote"
-	isVoteChangedFlag: null | string;
+	isVoteChangedFlag?: null | string;
 	handleVotePublication: () => void;
 };
 

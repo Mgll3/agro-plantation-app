@@ -282,6 +282,7 @@ function AdminPublications() {
 		<div className="flex flex-col min-h-[100vh]">
 			<Helmet>
 				<title>Plant-In Publicaciones de Usuarios</title>
+				<meta name="robots" content="noindex, nofollow"></meta>
 			</Helmet>
 
 			<div className="w-full">

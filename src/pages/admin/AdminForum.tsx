@@ -6,6 +6,7 @@ function AdminForum() {
 		<>
 			<Helmet>
 				<title>Plant-In Forum</title>
+				<meta name="robots" content="noindex, nofollow"></meta>
 			</Helmet>
 
 			<div className="w-full">

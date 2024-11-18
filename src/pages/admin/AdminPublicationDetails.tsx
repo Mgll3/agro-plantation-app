@@ -251,6 +251,7 @@ function AdminPublicationDetails() {
 		<div className="flex flex-col min-h-[100vh]">
 			<Helmet>
 				<title>{`Plant-In Publicación "${publicationData?.title}"`}</title>
+				<meta name="robots" content="noindex, nofollow"></meta>
 			</Helmet>
 
 			<div className="w-full">
