@@ -40,6 +40,9 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 	const registerContainerElement = useRef<HTMLDivElement>(null);
 
 	let changeFormTimeout: number;
+	let changeFormTimeout2: number;
+	let changeFormTimeout3: number;
+	let changeFormTimeout4: number;
 	let loggedTimeout: number;
 
 	const url = useLocation();
@@ -120,33 +123,60 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 	function changeForm() {
 		scrollToTop();
 
-		// Este bloque if hace que antes de cambiar al otro formulario este adopte su altura normal (por defecto, cuando el focus está en un formulario, el otro es limitado a una altura de 100vh para que no afecte a la altura del que estamos viendo, produciendo un hueco en blanco por debajo del contenido. Con este if reestablecemos su altura normal antes de pasar a él).
-		if (focus === "login") {
-			(registerContainerElement.current! as HTMLDivElement).classList.remove("h-[100vh]");
-			(registerContainerElement.current! as HTMLDivElement).classList.add("h-[100%]");
-		} else {
-			(loginContainerElement.current! as HTMLDivElement).classList.remove("h-[100vh]");
-			(loginContainerElement.current! as HTMLDivElement).classList.add("h-[100%]");
-		}
-
-		(mainContainerElement.current! as HTMLDivElement).classList.remove("duration-0");
-		(mainContainerElement.current! as HTMLDivElement).classList.add("duration-1000");
-
-		if ((mainContainerElement.current! as HTMLDivElement).classList.contains("-left-full")) {
-			(mainContainerElement.current! as HTMLDivElement).classList.remove("-left-full");
-			(mainContainerElement.current! as HTMLDivElement).classList.add("left-0");
-		} else {
-			(mainContainerElement.current! as HTMLDivElement).classList.add("-left-full");
-			(mainContainerElement.current! as HTMLDivElement).classList.remove("left-0");
-		}
-
+		//Este bloque cambia de el formulario actual al nuevo, mediante una animación de slide. El formulario al que cambiamos es invisible inicialmente.
 		changeFormTimeout = window.setTimeout(() => {
+			(mainContainerElement.current! as HTMLDivElement).classList.remove("duration-0");
+			(mainContainerElement.current! as HTMLDivElement).classList.add("duration-1000");
+
+			if ((mainContainerElement.current! as HTMLDivElement).classList.contains("-left-full")) {
+				(mainContainerElement.current! as HTMLDivElement).classList.remove("-left-full");
+				(mainContainerElement.current! as HTMLDivElement).classList.add("left-0");
+			} else {
+				(mainContainerElement.current! as HTMLDivElement).classList.add("-left-full");
+				(mainContainerElement.current! as HTMLDivElement).classList.remove("left-0");
+			}
+		}, 300);
+
+		changeFormTimeout2 = window.setTimeout(() => {
+			// Este bloque if hace que, antes de hacer visible el nuevo formulario, este adopte su altura normal y aquél del que venimos adopte una altura de 100vh para no afectar a la altura del nuevo formulario (por defecto, cuando el focus está en un formulario, el otro es limitado a una altura de 100vh para que no afecte a la altura del que estamos viendo, produciendo un hueco en blanco por debajo del contenido. Con este if reestablecemos su altura normal antes de pasar a él).
+			if (focus === "login") {
+				(loginContainerElement.current! as HTMLDivElement).classList.remove("h-[100%]");
+				(loginContainerElement.current! as HTMLDivElement).classList.add("h-[100vh]");
+
+				(registerContainerElement.current! as HTMLDivElement).classList.remove("h-[100vh]");
+				(registerContainerElement.current! as HTMLDivElement).classList.add("h-[100%]");
+			} else {
+				(registerContainerElement.current! as HTMLDivElement).classList.remove("h-[100%]");
+				(registerContainerElement.current! as HTMLDivElement).classList.add("h-[100vh]");
+
+				(loginContainerElement.current! as HTMLDivElement).classList.remove("h-[100vh]");
+				(loginContainerElement.current! as HTMLDivElement).classList.add("h-[100%]");
+			}
+
+			//Este bloque hace visible el nuevo formulario cuando su altura ya es correcta
+			changeFormTimeout4 = window.setTimeout(() => {
+				if (focus === "login") {
+					(registerContainerElement.current! as HTMLDivElement).classList.remove("duration-0");
+					(registerContainerElement.current! as HTMLDivElement).classList.add("duration-1000");
+					(registerContainerElement.current! as HTMLDivElement).classList.remove("opacity-0");
+					(registerContainerElement.current! as HTMLDivElement).classList.add("opacity-100");
+				} else {
+					(loginContainerElement.current! as HTMLDivElement).classList.remove("duration-0");
+					(loginContainerElement.current! as HTMLDivElement).classList.add("duration-1000");
+					(loginContainerElement.current! as HTMLDivElement).classList.remove("opacity-0");
+					(loginContainerElement.current! as HTMLDivElement).classList.add("opacity-100");
+				}
+			}, 20);
+		}, 1301);
+
+		//Este bloque nos remite a la nueva url sin que el usuario vea ningún cambio.
+		changeFormTimeout3 = window.setTimeout(() => {
 			if (url.pathname === "/login") {
 				navigate("/register");
 			} else {
 				navigate("/login");
 			}
-		}, 1001);
+		}, 2321);
 	}
 
 	useLayoutEffect(() => {
@@ -201,6 +231,9 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 		return () => {
 			if (axiosController.current) axiosController.current.abort();
 			clearTimeout(changeFormTimeout);
+			clearTimeout(changeFormTimeout2);
+			clearTimeout(changeFormTimeout3);
+			clearTimeout(changeFormTimeout4);
 		};
 	}, []);
 
