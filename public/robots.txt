@@ -3,3 +3,4 @@ Disallow: /admin/
 Disallow: /admin/*
 Disallow: /user/registerProducer
 Disallow: /producer/publications/createPublication
+Disallow: /management
