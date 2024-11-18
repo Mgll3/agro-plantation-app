@@ -70,6 +70,7 @@ function RegisterProducer() {
 		<div className="flex flex-col min-h-[100vh]">
 			<Helmet>
 				<title>Plant-In Registro de Productor</title>
+				<meta name="robots" content="noindex, nofollow"></meta>
 			</Helmet>
 
 			<div className="w-full">

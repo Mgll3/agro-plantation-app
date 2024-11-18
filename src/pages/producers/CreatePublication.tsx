@@ -126,6 +126,7 @@ function CreatePublication() {
 		<>
 			<Helmet>
 				<title>Plant-In Crear Publicación</title>
+				<meta name="robots" content="noindex, nofollow"></meta>
 			</Helmet>
 
 			<div className="w-full">

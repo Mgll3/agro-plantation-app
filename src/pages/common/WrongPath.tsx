@@ -22,6 +22,7 @@ function WrongPath() {
 		<div className="flex flex-col min-h-[100vh]">
 			<Helmet>
 				<title>Plant-In URL Incorrecta</title>
+				<meta name="robots" content="noindex, nofollow"></meta>
 			</Helmet>
 			<div className="w-full">
 				<Header />

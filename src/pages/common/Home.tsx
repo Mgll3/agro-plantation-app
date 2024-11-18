@@ -131,6 +131,11 @@ export default function Home() {
 		<>
 			<Helmet>
 				<title>Plant-In Home</title>
+				<meta
+					name="description"
+					content="Descubre publicaciones de huertas ecológicas familiares, comunitarias y comerciales. Únete a Plant-in, vota por tus plantaciones favoritas y solicita ser parte de nuestra comunidad de productores."
+				></meta>
+				<meta name="robots" content="index, follow"></meta>
 			</Helmet>
 
 			<div className="w-full">

@@ -211,6 +211,11 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 					<>
 						<Helmet>
 							<title>Plant-In Login</title>
+							<meta
+								name="description"
+								content="Accede a Plant-in para explorar huertas ecológicas, votar tus plantaciones favoritas y convertirte en productor. Regístrate o inicia sesión para unirte a nuestra comunidad verde."
+							></meta>
+							<meta name="robots" content="index, follow"></meta>
 						</Helmet>
 
 						<div className="w-screen">

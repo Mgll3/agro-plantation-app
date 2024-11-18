@@ -6,6 +6,7 @@ function ProducerForum() {
 		<>
 			<Helmet>
 				<title>Plant-In Foro</title>
+				<meta name="robots" content="noindex, nofollow"></meta>
 			</Helmet>
 			<div className="w-full">
 				<Header />

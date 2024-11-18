@@ -300,6 +300,16 @@ function Publications() {
 		<div className="flex flex-col min-h-[100vh]">
 			<Helmet>
 				<title>Plant-In Publicaciones de Usuarios</title>
+				<meta
+					name="description"
+					content="Explora todas las publicaciones de nuestra comunidad. Descubre las plantaciones ecológicas de otros usuarios en Plant-in."
+				></meta>
+				{/* Se indica a "robots" que sólo indexen la página 1 de la paginación, no el resto */}
+				{id === "1" ? (
+					<meta name="robots" content="index, follow"></meta>
+				) : (
+					<meta name="robots" content="noindex, nofollow"></meta>
+				)}
 			</Helmet>
 
 			<div className="w-full">

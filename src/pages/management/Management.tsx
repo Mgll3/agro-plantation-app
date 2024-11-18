@@ -573,6 +573,7 @@ export default function Management() {
 		<div className="w-full pb-20 bg-brandingLightYellow">
 			<Helmet>
 				<title>Plant-In Herramientas Para Demo</title>
+				<meta name="robots" content="noindex, nofollow"></meta>
 			</Helmet>
 
 			<div className="w-full">

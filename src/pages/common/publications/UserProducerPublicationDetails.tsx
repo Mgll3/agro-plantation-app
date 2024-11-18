@@ -210,6 +210,11 @@ function UserProducerPublicationDetails() {
 		<div className="flex flex-col min-h-[100vh]">
 			<Helmet>
 				<title>{`Plant-In Publicación "${publicationData?.title}"`}</title>
+				<meta
+					name="description"
+					content={`Descubre lo que ${publicationData?.author.name} ${publicationData?.author.lastname} tiene que contarnos sobre su plantación ecológica ${publicationData?.title}`}
+				></meta>
+				<meta name="robots" content="index, follow"></meta>
 			</Helmet>
 
 			<div className="w-full">
