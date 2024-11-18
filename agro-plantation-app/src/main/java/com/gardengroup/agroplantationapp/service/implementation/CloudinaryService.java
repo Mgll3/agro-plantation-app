@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.Map;
 
 @Service
+@SuppressWarnings("all")
 public class CloudinaryService {
     Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
             "cloud_name", "dvckhdihm",

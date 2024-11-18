@@ -3,7 +3,6 @@ package com.gardengroup.agroplantationapp.service.implementation;
 import com.gardengroup.agroplantationapp.model.dto.publication.*;
 import com.gardengroup.agroplantationapp.model.entity.*;
 import com.gardengroup.agroplantationapp.model.repository.PublicationRepository;
-import com.gardengroup.agroplantationapp.model.repository.VoteRepository;
 import com.gardengroup.agroplantationapp.service.implementation.VoteService.VoteAndPublicationDTO;
 import com.gardengroup.agroplantationapp.service.interfaces.IPublicationService;
 import com.gardengroup.agroplantationapp.service.interfaces.IUserService;
@@ -194,6 +193,18 @@ public class PublicationService implements IPublicationService {
     @Transactional
     public void deleteAllByUser(Long userId) {
 
+        List<Publication> publications = publicationRepository.findByAuthorId(userId);
+        for (Publication publication : publications) {
+            if (publication.getMainImage() != null) {
+                cloudinaryService.delete(publication.getMainImage().getId());
+            }
+            if (publication.getImages() != null) {
+
+                for (Image image : publication.getImages()) {
+                    cloudinaryService.delete(image.getId());
+                }
+            }
+        }
         publicationRepository.deleteAllByAuthorId(userId);
 
     }

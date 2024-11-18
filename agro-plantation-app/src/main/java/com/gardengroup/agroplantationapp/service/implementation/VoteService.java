@@ -47,19 +47,15 @@ public class VoteService implements IVoteService {
         Vote existingVote = voteRepository.findByUserEmailAndPublicationId(user.getEmail(), publication.getId());
 
         if (existingVote != null) {
-            // El usuario ya ha votado, cambiar el estado del voto
-            existingVote.setState(!existingVote.isState()); // Cambiar el estado del voto
+            // El usuario ya ha votado antes, eliminar voto
+            voteRepository.delete(existingVote);
 
             // Actualizar el puntaje de la publicación en función del cambio de estado del
             // voto
-            int scoreChange = existingVote.isState() ? 1 : -1; // Sumar 1 al puntaje si se vota positivamente, restar 1
-                                                               // si se quita el voto positivo
-            int newScore = publication.getScore() + scoreChange; // Calcular el nuevo puntaje
+            int newScore = publication.getScore() - 1; // Calcular el nuevo puntaje
             publication.setScore(newScore);
 
-            // Guardar el voto actualizado en la base de datos
-            Vote savedVote = voteRepository.save(existingVote);
-            return new VoteAndPublicationDTO(savedVote, publication);
+            return new VoteAndPublicationDTO(existingVote, publication);
         } else {
             // El usuario no ha votado antes, se crea un nuevo voto
             Vote newVote = saveVote(user, publication);
