@@ -30,6 +30,8 @@ function UserProducerPublicationDetails() {
 	const [sliderVisibility, setSliderVisibility] = useState(false);
 	const [publicationData, setPublicationData] = useState<PublicationInfoType | null>(null);
 	const [reloadPublicationDataTrigger, setReloadPublicationDataTrigger] = useState<boolean>(true);
+	//Esta variable se utiliza para cambiar el aspecto del botón de voto sin necesidad de hacer una nueva consulta al servidor para saber el valor de "userVote"
+	const isVoteChangedFlag = useRef<null | string>(null);
 
 	const buttonFontSize =
 		"text-[1.3rem] custom-700:text-[1.6rem] custom-900:text-[1.978rem] custom-1900:text-[2.5rem] custom-2500:text-[3rem]";
@@ -141,7 +143,12 @@ function UserProducerPublicationDetails() {
 			alternatePublicationVote(storedToken, publicationData.id, axiosController2.current)
 				.then(() => {
 					loadingTimeout.current = window.setTimeout(() => {
-						changeLoadingState("loaded", "loaded");
+						changeLoadingState("loaded2", "loaded2");
+						if (isVoteChangedFlag.current === null) {
+							isVoteChangedFlag.current = publicationData.userVote === true ? "like" : "dislike";
+						} else {
+							isVoteChangedFlag.current = isVoteChangedFlag.current === "like" ? "dislike" : "like";
+						}
 					}, 1500);
 				})
 				.catch();
@@ -239,6 +246,7 @@ function UserProducerPublicationDetails() {
 									addressCoordinates={addressCoordinates.current}
 									handleImageOnClick={showSlider}
 									handleVotePublication={votePublication}
+									isVoteChangedFlag={isVoteChangedFlag.current}
 								/>
 							</div>
 

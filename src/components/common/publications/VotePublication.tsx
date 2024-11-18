@@ -1,15 +1,28 @@
 import Button from "../../button/Button";
+import { ButtonColorType } from "../../button/buttonTypes";
 
 type VotePublicationProps = {
 	isVoted: boolean;
+	//Esta variable se utiliza para cambiar el aspecto del botón de voto sin necesidad de hacer una nueva consulta al servidor para saber el valor de "userVote"
+	isVoteChangedFlag: null | string;
 	handleVotePublication: () => void;
 };
 
-function VotePublication({ isVoted, handleVotePublication }: VotePublicationProps) {
+function VotePublication({ isVoted, isVoteChangedFlag, handleVotePublication }: VotePublicationProps) {
 	const voteButtonFuncionality = {
 		actionText: isVoted ? "NO ME GUSTA!" : "ME GUSTA!",
 		handleClick: handleVotePublication
 	};
+
+	let buttonColor: ButtonColorType;
+
+	if (!isVoteChangedFlag) {
+		buttonColor = isVoted ? "red" : "green";
+	} else {
+		buttonColor = isVoteChangedFlag === "like" ? "green" : "red";
+		voteButtonFuncionality.actionText = isVoteChangedFlag === "like" ? "ME GUSTA!" : "NO ME GUSTA!";
+	}
+
 	return (
 		<div
 			className="flex flex-col items-center w-[88.5%] mr-[0rem] mt-[3.2rem] p-[1.466rem_1.123rem_2.6rem] rounded-xl font-sans
@@ -53,7 +66,7 @@ function VotePublication({ isVoted, handleVotePublication }: VotePublicationProp
 			</div>
 
 			<Button
-				buttonColor={isVoted ? "red" : "green"}
+				buttonColor={buttonColor}
 				buttonFontSize="text-[1.45rem] custom-1900:text-[1.8rem] custom-2500:text-[2.5rem] custom-3500:text-[3rem]"
 				buttonWidth="w-[100%]"
 				buttonPaddingY="py-[1.18rem] custom-1900:py-[1.5rem] custom-3500:py-[2rem]"

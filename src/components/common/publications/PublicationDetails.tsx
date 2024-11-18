@@ -11,6 +11,7 @@ type PublicationDetailsProps = {
 	areMapCoordinatesLoaded: boolean;
 	publicationInfo: PublicationInfoType;
 	addressCoordinates: AddressCoordinatesType;
+	isVoteChangedFlag: null | string;
 	handleImageOnClick: (pictureId: string) => void;
 	handleVotePublication: () => void;
 };
@@ -19,6 +20,7 @@ export default function PublicationDetails({
 	areMapCoordinatesLoaded,
 	publicationInfo,
 	addressCoordinates,
+	isVoteChangedFlag,
 	handleImageOnClick,
 	handleVotePublication
 }: PublicationDetailsProps) {
@@ -178,7 +180,11 @@ export default function PublicationDetails({
 				{userRole === "ADMIN" ? (
 					<ContactProducer publicationInfo={publicationInfo} />
 				) : (
-					<VotePublication isVoted={publicationInfo.userVote} handleVotePublication={handleVotePublication} />
+					<VotePublication
+						isVoted={publicationInfo.userVote}
+						handleVotePublication={handleVotePublication}
+						isVoteChangedFlag={isVoteChangedFlag}
+					/>
 				)}
 			</div>
 		</div>

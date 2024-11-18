@@ -3,7 +3,7 @@ import { axiosConfig } from "../lib/axios/axios.config";
 
 export async function alternatePublicationVote(token: string, id: number, axiosControler: AbortController) {
 	try {
-		await axiosConfig.post(
+		const response = await axiosConfig.post(
 			`/v1/publication/toggleVote/${id}`,
 			{},
 			{
@@ -14,6 +14,10 @@ export async function alternatePublicationVote(token: string, id: number, axiosC
 				}
 			}
 		);
+
+		const publicationData = response.data;
+
+		return publicationData;
 	} catch (error) {
 		if (axios.isAxiosError(error)) {
 			throw new Error(error.message);
