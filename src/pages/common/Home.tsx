@@ -144,7 +144,7 @@ export default function Home() {
 
 			<main className={`${styles.main} flex flex-col items-center w-full`}>
 				{userRole === "visitor" && (
-					<div className="px-[7px] custom-420:px-[17px] custom-800:px-[40px] custom-1200:px-[80px] custom-1400:px-[159px] custom-1600:px-[12vw]">
+					<div className="px-[7px] custom-420:px-[17px] custom-800:px-[40px] custom-1200:px-[80px] custom-1400:px-[159px] custom-1600:px-[14vw]">
 						<VisitorBanner />
 					</div>
 				)}
@@ -257,7 +257,7 @@ export default function Home() {
 
 				<div
 					className={`px-[1.434rem] mt-[3.2rem] ${userRole !== "visitor" && "pt-[0.8rem] pb-[1.6rem] bg-terciary300"}
-					custom-900:px-[4rem] custom-1000:px-[8rem] custom-1200:px-[10rem] custom-1400:px-[13.156rem] custom-1900:px-[15vw]
+					custom-900:px-[4rem] custom-1000:px-[8rem] custom-1200:px-[10rem] custom-1400:px-[13.156rem] custom-1600:px-[15vw]
 					custom-1400:mt-[8.8rem]
 					${userRole !== "visitor" && "custom-600:pt-[1.4rem] custom-600:pb-[2.6rem] custom-1200:pt-[2rem] custom-1200:pb-[4rem] custom-1400:pt-[2.4rem] custom-1400:pb-[4.4rem]"}`}
 				>
