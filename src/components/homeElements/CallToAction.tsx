@@ -38,7 +38,7 @@ function CallToAction() {
 				buttonFontSize={buttonFontSize}
 				buttonWidth={buttonWidth}
 				buttonPaddingY={buttonPaddingY}
-				buttonFuncionality={{ linkText: "Registrate", linkUrl: "/register" }}
+				buttonFuncionality={{ linkText: "Regístrate", linkUrl: "/register" }}
 			></Button>
 		</div>
 	);
