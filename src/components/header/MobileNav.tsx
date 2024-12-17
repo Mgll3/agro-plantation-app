@@ -51,22 +51,25 @@ function MobileNav({
 
 	return (
 		<div
+			id="mobileNavMainContainer"
 			ref={mainDivElement}
 			onClick={toggleMobileMenuVisibility}
 			className={`z-[900] fixed top-0 left-0 w-screen h-screen transition-all duration-700 ${mobileNavStyles === "mounting" ? "bg-transparent" : "bg-screenDarkening"} `}
 		>
 			<div
+				id="mobileNavSecondaryContainer"
 				ref={contentDivElement}
 				className={`z-50 absolute top-0 ${mobileNavStyles === "mounting" ? "left-[-20.6rem]" : "left-0"} flex flex-col items-start w-[21rem] p-[1.6rem_0.8rem] rounded-tr-3xl rounded-br-3xl bg-terciary150 duration-700`}
 			>
-				<div className="flex justify-center w-full">
+				<div id="mobileNavLogoContainer" className="flex justify-center w-full">
 					<img src="/images/logos/LogoVerde.png" alt="" className="w-[6.624rem]" />
 				</div>
 
-				<hr className="w-[100%] my-[1.6rem] border-brandingDarkGreen" />
+				<hr id="mobileNavHrTag1" className="w-[100%] my-[1.6rem] border-brandingDarkGreen" />
 
 				{userRole === "ADMIN" && (
 					<Link
+						id="mobileNavAdminHomeLink"
 						to="/admin/home"
 						className="flex justify-start items-center w-full mb-[1.6rem] px-[0.4rem] py-[0.8rem] text-brandingDarkGreen hover:text-yellow500 hover:bg-brandingDarkGreen cursor-pointer"
 					>
@@ -84,6 +87,7 @@ function MobileNav({
 
 				{userRole === "ADMIN" ? (
 					<Link
+						id="mobileNavAdminUsersLink"
 						to="/admin/users"
 						className="flex justify-start items-center w-full mb-[1.6rem] px-[0.4rem] py-[0.8rem] text-brandingDarkGreen hover:text-yellow500 hover:bg-brandingDarkGreen cursor-pointer"
 					>
@@ -96,6 +100,7 @@ function MobileNav({
 					</Link>
 				) : (
 					<Link
+						id="mobileNavHomeLink"
 						to="/"
 						className="flex justify-start items-center w-full mb-[1.6rem] px-[0.4rem] py-[0.8rem] text-brandingDarkGreen hover:text-yellow500 hover:bg-brandingDarkGreen cursor-pointer"
 					>
@@ -113,6 +118,7 @@ function MobileNav({
 
 				{userRole === "visitor" ? (
 					<div
+						id="mobileNavVisitorPublicationsLink"
 						onClick={handleOpenMustLoginWarning}
 						className="flex justify-start items-center w-full mb-[1.6rem] px-[0.4rem] py-[0.8rem] text-brandingDarkGreen hover:text-yellow500 hover:bg-brandingDarkGreen cursor-pointer"
 					>
@@ -128,6 +134,7 @@ function MobileNav({
 					</div>
 				) : (
 					<Link
+						id="mobileNavPublicationsLink"
 						to={publicationsRoute}
 						className="flex justify-start items-center w-full mb-[1.6rem] px-[0.4rem] py-[0.8rem] text-brandingDarkGreen hover:text-yellow500 hover:bg-brandingDarkGreen cursor-pointer"
 					>
@@ -145,6 +152,7 @@ function MobileNav({
 
 				{userRole === "visitor" ? (
 					<div
+						id="mobileNavVisitorForumLink"
 						onClick={handleOpenMustLoginWarning}
 						className="flex justify-start items-center w-full mb-[1.6rem] px-[0.4rem] py-[0.8rem] text-brandingDarkGreen hover:text-yellow500 hover:bg-brandingDarkGreen cursor-pointer"
 					>
@@ -160,6 +168,7 @@ function MobileNav({
 					</div>
 				) : (
 					<Link
+						id="mobileNavForumLink"
 						to={forumRoute}
 						className="flex justify-start items-center w-full mb-[1.6rem] px-[0.4rem] py-[0.8rem] text-brandingDarkGreen hover:text-yellow500 hover:bg-brandingDarkGreen cursor-pointer"
 					>
@@ -175,9 +184,10 @@ function MobileNav({
 					</Link>
 				)}
 
-				<hr className="w-[100%] my-[1.6rem] border-brandingDarkGreen" />
+				<hr id="mobileNavHrTag2" className="w-[100%] my-[1.6rem] border-brandingDarkGreen" />
 
 				<Link
+					id="mobileNavLoginLink"
 					to="/login"
 					className="flex justify-start items-center w-full mb-[1.6rem] px-[0.4rem] py-[0.8rem] text-brandingDarkGreen hover:text-yellow500 hover:bg-brandingDarkGreen cursor-pointer"
 				>
@@ -192,6 +202,7 @@ function MobileNav({
 				</Link>
 
 				<Link
+					id="mobileNavRegisterLink"
 					to="/register"
 					className="flex justify-start items-center w-full mb-[1.6rem] px-[0.4rem] py-[0.8rem] text-brandingDarkGreen hover:text-yellow500 hover:bg-brandingDarkGreen cursor-pointer"
 				>
@@ -205,9 +216,10 @@ function MobileNav({
 					<p className="ml-[0.8rem] text-[2rem]">Regístrate</p>
 				</Link>
 
-				<hr className="w-[100%] my-[1.6rem] border-brandingDarkGreen" />
+				<hr id="mobileNavHrTag3" className="w-[100%] my-[1.6rem] border-brandingDarkGreen" />
 
 				<div
+					id="mobileNavLogoutButton"
 					onClick={handleLogoutClickMobile}
 					className="flex justify-start items-center w-full mb-[1.6rem] px-[0.4rem] py-[0.8rem] text-brandingDarkGreen hover:text-yellow500 hover:bg-brandingDarkGreen cursor-pointer"
 				>

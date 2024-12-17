@@ -29,13 +29,15 @@ function MainNav({ handleOpenMustLoginWarning }: MainNavProps) {
 	//ROUTES FOR DIFFERENT USER ROLES ***END
 
 	return (
-		<nav aria-label="Navegación principal" className="flex justify-center w-[100%]">
+		<nav aria-label="Navegación principal" className="flex justify-center w-[100%]" id="mainNavMainContainer">
 			<ul
+				id="mainNavOptionsContainer"
 				className="flex gap-x-[1rem]
 				custom-2500:gap-x-[2rem] custom-3500:gap-x-[3rem]"
 			>
-				<li className="">
+				<li className="" id="mainNavHomeLinkContainer">
 					<Button
+						id="mainNavHomeLink"
 						buttonColor={location.pathname === "/" ? buttonColor2 : buttonColor}
 						buttonFontSize={buttonFontSize}
 						buttonWidth={buttonWidth}
@@ -44,9 +46,10 @@ function MainNav({ handleOpenMustLoginWarning }: MainNavProps) {
 					></Button>
 				</li>
 
-				<li className="">
+				<li className="" id="mainNavPublicationsLinkContainer">
 					{userRole === "visitor" ? (
 						<Button
+							id="mainNavPublicationsLinkNotLogged"
 							buttonColor={location.pathname === "/publications" ? buttonColor2 : buttonColor}
 							buttonFontSize={buttonFontSize}
 							buttonWidth={buttonWidth}
@@ -55,6 +58,7 @@ function MainNav({ handleOpenMustLoginWarning }: MainNavProps) {
 						></Button>
 					) : (
 						<Button
+							id="mainNavPublicationsLinkLogged"
 							buttonColor={location.pathname === "/publications" ? buttonColor2 : buttonColor}
 							buttonFontSize={buttonFontSize}
 							buttonWidth={buttonWidth}
@@ -64,9 +68,10 @@ function MainNav({ handleOpenMustLoginWarning }: MainNavProps) {
 					)}
 				</li>
 
-				<li className="">
+				<li className="" id="mainNavForumLinkContainer">
 					{userRole === "visitor" ? (
 						<Button
+							id="mainNavForumLinkNotLogged"
 							buttonColor={location.pathname === "/forum" ? buttonColor2 : buttonColor}
 							buttonFontSize={buttonFontSize}
 							buttonWidth={buttonWidth}
@@ -75,6 +80,7 @@ function MainNav({ handleOpenMustLoginWarning }: MainNavProps) {
 						></Button>
 					) : (
 						<Button
+							id="mainNavForumLinkLogged"
 							buttonColor={location.pathname === "/forum" ? buttonColor2 : buttonColor}
 							buttonFontSize={buttonFontSize}
 							buttonWidth={buttonWidth}

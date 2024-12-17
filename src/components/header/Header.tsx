@@ -106,13 +106,16 @@ function Header() {
 		<>
 			<header className="w-full">
 				<div
+					id="headerMainContainer"
 					className={`relative flex justify-center items-center w-[100vw] h-[98px] custom-1000:h-[180px] custom-2000:h-[270px] custom-3000:h-[320px] ${headerBg} bg-cover bg-center bg-no-repeat`}
 				>
 					<div
+						id="headerSecondaryContainer"
 						className="absolute bottom-[0px] right-[90px] w-[40px] pl-[1rem]
 						custom-800:left-0"
 					>
 						<Link
+							id="headerManagementLink"
 							to="/management"
 							className="flex items-center text-[3.5rem] drop-shadow-customWhite
 							custom-800:text-[4.5rem]
@@ -130,6 +133,7 @@ function Header() {
 
 					{/* MOBILE MENU ***START */}
 					<div
+						id="headerMobileMenuIconContainer"
 						onClick={toggleMobileMenuVisibility}
 						className="absolute top-[0px] left-[16px] text-[4.2rem] text-yellow500 custom-800:hidden cursor-pointer"
 					>
@@ -148,31 +152,45 @@ function Header() {
 
 					{userRole === "ADMIN" ? (
 						<img
+							id="headerAdminLogo"
 							src="/images/logos/Logo_original_Plant-In.png"
 							alt=""
 							className="w-[66px] custom-1000:w-[118px] custom-2000:w-[170px] custom-3000:w-[200px]"
 						/>
 					) : (
 						<img
+							id="headerNormalLogo"
 							src="/images/logos/Logo_fondo_verde.png"
 							alt=""
 							className="w-[66px] custom-1000:w-[118px] custom-2000:w-[170px] custom-3000:w-[200px]"
 						/>
 					)}
 
-					<div className="hidden absolute right-[30px] top-[10px] custom-1000:right-[43px] custom-1000:top-[28px] custom-800:block">
+					<div
+						id="headerSecondaryNavContainer1"
+						className="hidden absolute right-[30px] top-[10px] custom-1000:right-[43px] custom-1000:top-[28px] custom-800:block"
+					>
 						{userRole === "visitor" ? <SecondaryNav /> : <UserProfile handleLogoutClick={handleLogoutClick} />}
 					</div>
-					<div className="absolute right-[16px] top-[8px] custom-600:right-[30px] custom-800:top-[10px] custom-1000:right-[43px] custom-1000:top-[28px] custom-800:hidden">
+					<div
+						id="headerSecondaryNavContainer2"
+						className="absolute right-[16px] top-[8px] custom-600:right-[30px] custom-800:top-[10px] custom-1000:right-[43px] custom-1000:top-[28px] custom-800:hidden"
+					>
 						{userRole !== "visitor" && <UserProfile handleLogoutClick={handleLogoutClick} />}
 					</div>
 				</div>
 
-				<div className="hidden justify-center bg-brandingLightGreen py-[10px] custom-1000:py-[18px] custom-800:flex">
+				<div
+					id="headerMainNavContainer"
+					className="hidden justify-center bg-brandingLightGreen py-[10px] custom-1000:py-[18px] custom-800:flex"
+				>
 					{userRole === "ADMIN" ? <AdminNav /> : <MainNav handleOpenMustLoginWarning={handleOpenMustLoginWarning} />}
 				</div>
 
-				<div className="flex justify-center bg-brandingLightGreen py-[0.2rem] custom-800:hidden">
+				<div
+					id="headerActualRouteH1Container"
+					className="flex justify-center bg-brandingLightGreen py-[0.2rem] custom-800:hidden"
+				>
 					<h1 className="text-[2.4rem] text-brandingDarkGreen font-semibold">{actualSection}</h1>
 				</div>
 

@@ -11,8 +11,9 @@ function SecondaryNav() {
 	return (
 		<nav aria-label="Login y registro" className="">
 			<ul className="flex gap-x-4 custom-2000:gap-x-8">
-				<li className="">
+				<li className="" id="secondaryNavLoginLinkContainer">
 					<Button
+						id="secondaryNavLoginLink"
 						buttonColor={buttonColor}
 						buttonFontSize={buttonFontSize}
 						buttonWidth={buttonWidth}
@@ -21,8 +22,9 @@ function SecondaryNav() {
 					></Button>
 				</li>
 
-				<li className="">
+				<li className="" id="secondaryNavRegisterLinkContainer">
 					<Button
+						id="secondaryNavRegisterLink"
 						buttonColor={buttonColor}
 						buttonFontSize={buttonFontSize}
 						buttonWidth={buttonWidth}

@@ -13,13 +13,15 @@ function AdminNav() {
 	const regex = /^\/admin\/publications/;
 
 	return (
-		<nav aria-label="Navegación principal" className="">
+		<nav aria-label="Navegación principal" className="" id="adminNavMainContainer">
 			<ul
+				id="adminNavOptionsContainer"
 				className="flex gap-x-[1rem]
 				custom-2500:gap-x-[2rem] custom-3500:gap-x-[3rem]"
 			>
-				<li className="">
+				<li className="" id="adminNavHomeLinkContainer">
 					<Button
+						id="adminNavHomeLink"
 						buttonColor={location.pathname === "/admin/home" ? buttonColor2 : buttonColor}
 						buttonFontSize={buttonFontSize}
 						buttonWidth={buttonWidth}
@@ -27,8 +29,9 @@ function AdminNav() {
 						buttonFuncionality={{ linkText: "Home", linkUrl: "/admin/home" }}
 					></Button>
 				</li>
-				<li className="">
+				<li className="" id="adminNavPublicationsLinkContainer">
 					<Button
+						id="adminNavPublicationsLink"
 						buttonColor={regex.test(location.pathname) ? buttonColor2 : buttonColor}
 						buttonFontSize={buttonFontSize}
 						buttonWidth={buttonWidth}
@@ -37,8 +40,9 @@ function AdminNav() {
 					></Button>
 				</li>
 
-				<li className="">
+				<li className="" id="adminNavUsersLinkContainer">
 					<Button
+						id="adminNavUsersLink"
 						buttonColor={location.pathname === "/admin/users" ? buttonColor2 : buttonColor}
 						buttonFontSize={buttonFontSize}
 						buttonWidth={buttonWidth}
@@ -47,8 +51,9 @@ function AdminNav() {
 					></Button>
 				</li>
 
-				<li className="">
+				<li className="" id="adminNavForumLinkContainer">
 					<Button
+						id="adminNavForumLink"
 						buttonColor={location.pathname === "/admin/forum" ? buttonColor2 : buttonColor}
 						buttonFontSize={buttonFontSize}
 						buttonWidth={buttonWidth}

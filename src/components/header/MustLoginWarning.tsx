@@ -16,17 +16,26 @@ function MustLoginWarning({ handleCloseMustLoginWarning }: MustLoginWarningProps
 
 	return (
 		<div
+			id="mustLoginModalMainContainer"
 			className="z-[950] fixed top-0 flex justify-center items-center bg-screenDarkening w-screen h-screen"
 			onClick={handleCloseMustLoginWarning}
 		>
-			<div className="flex flex-col items-center w-[709px] p-[60px_32px] rounded-2xl bg-white text-center transition-all">
+			<div
+				id="mustLoginModalSecondaryContainer"
+				className="flex flex-col items-center w-[709px] p-[60px_32px] rounded-2xl bg-white text-center transition-all"
+			>
 				<img src="images/logos/LogoVerde.png" alt="" className="w-[133px]" />
 				<h2 className="my-[30px] text-[49px]">¡Hola!</h2>
-				<p className="text-[24px]">Los enlaces son exclusivos para usuarios registrados.</p>
-				<p className="mt-[3px] text-[24px]">¡Regístrate y accede al contenido especial!</p>
+				<p id="mustLoginModalParagraph1" className="text-[24px]">
+					Los enlaces son exclusivos para usuarios registrados.
+				</p>
+				<p id="mustLoginModalParagraph2" className="mt-[3px] text-[24px]">
+					¡Regístrate y accede al contenido especial!
+				</p>
 
-				<div>
+				<div id="mustLoginModalButtonContainer">
 					<Button
+						id="mustLoginModalRegisterLink"
 						buttonColor={buttonColor}
 						buttonFontSize={buttonFontSize}
 						buttonWidth={buttonWidth}
@@ -35,7 +44,7 @@ function MustLoginWarning({ handleCloseMustLoginWarning }: MustLoginWarningProps
 						otherStyles={otherStyles}
 					></Button>
 				</div>
-				<p className="mt-[16px] text-[19.78px] font-light">
+				<p id="mustLoginModalParagraph3" className="mt-[16px] text-[19.78px] font-light">
 					Si ya estás registrado, por favor{" "}
 					<span className="text-brandingDarkGreen font-semibold" role="button" onClick={() => navigate("/login")}>
 						inicia sesión
