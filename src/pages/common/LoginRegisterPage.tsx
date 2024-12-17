@@ -239,7 +239,11 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 
 	return (
 		<>
-			<main ref={mainContainerElement} className="flex absolute transition-all left-0 duration-1000 bg-[#EAE3C0]">
+			<main
+				ref={mainContainerElement}
+				id="mainContainer"
+				className="flex absolute transition-all left-0 duration-1000 bg-[#EAE3C0]"
+			>
 				{focus === "login" ? (
 					<>
 						<Helmet>
@@ -251,7 +255,7 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 							<meta name="robots" content="index, follow"></meta>
 						</Helmet>
 
-						<div className="w-screen">
+						<div className="w-screen" id="loginPositioner">
 							<Login
 								handleSubmit={submitLoginForm}
 								handleRegisterClick={changeForm}
@@ -262,7 +266,7 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 							/>
 						</div>
 
-						<div className="w-screen">
+						<div className="w-screen" id="registerPositioner">
 							<Register
 								handleSubmit={submitRegisterForm}
 								handleLoginClick={changeForm}
@@ -279,7 +283,7 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 							<title>Plant-In Registro</title>
 						</Helmet>
 
-						<div className="w-screen">
+						<div className="w-screen" id="registerPositioner">
 							<Register
 								handleSubmit={submitRegisterForm}
 								handleLoginClick={changeForm}
@@ -290,7 +294,7 @@ function LoginRegisterPage({ focus }: LoginRegisterPageProps) {
 							/>
 						</div>
 
-						<div className="w-screen">
+						<div className="w-screen" id="loginPositioner">
 							<Login
 								handleSubmit={submitLoginForm}
 								handleRegisterClick={changeForm}

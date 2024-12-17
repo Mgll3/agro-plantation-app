@@ -73,11 +73,12 @@ function RegisterProducerForm({ handleSubmit }: RegisterProducerFormProps) {
 	});
 
 	return (
-		<div className="">
-			<form name="registerForm" onSubmit={formik.handleSubmit} className="">
+		<div className="" id="rpFormMainContainer">
+			<form name="registerForm" onSubmit={formik.handleSubmit} className="" id="registerProducerFormTag">
 				{/* INPUTS */}
 
 				<div
+					id="rpFormInputsContainer"
 					className="flex flex-wrap justify-between mb-[3.4rem]
 					custom-1400:flex-wrap
 					custom-1400:justify-start
@@ -85,6 +86,7 @@ function RegisterProducerForm({ handleSubmit }: RegisterProducerFormProps) {
 					custom-1000:mb-[5rem] custom-1400:mb-[6.4rem] custom-1900:mb-[8rem] custom-3500:mb-[12rem]"
 				>
 					<div
+						id="rpFormGardenNameInputContainer"
 						className="relative w-[100%] p-[0.42rem] mb-[4.8rem] border border-black border-solid rounded-md
 						custom-1000:p-[0.7rem] custom-1400:p-[0.8rem]
 						custom-1000:mb-[0rem]
@@ -122,6 +124,7 @@ function RegisterProducerForm({ handleSubmit }: RegisterProducerFormProps) {
 					</div>
 
 					<div
+						id="rpFormGardenAddressInputContainer"
 						className="relative w-[100%] p-[0.42rem] border border-black border-solid rounded-md
 						custom-1000:p-[0.7rem] custom-1400:p-[0.8rem]
 						custom-600:w-[95%] custom-1000:w-[44%] custom-2500:w-[40%]"
@@ -161,6 +164,7 @@ function RegisterProducerForm({ handleSubmit }: RegisterProducerFormProps) {
 				{/* RADIOS */}
 
 				<p
+					id="rpFormRadiosTag"
 					className="hidden mb-[1rem] text-[1.6rem]
 					custom-600:block
 					custom-1000:mb-[1.4rem] custom-1400:mb-[1.6rem]
@@ -170,12 +174,13 @@ function RegisterProducerForm({ handleSubmit }: RegisterProducerFormProps) {
 				</p>
 
 				<div
+					id="rpFormRadiosContainer"
 					className="flex flex-wrap items-center gap-x-[1.8rem] pl-[0rem] text-[1.1rem]
 					custom-420:gap-x-[3.4rem] custom-1400:gap-x-[4rem] custom-1900:gap-x-[5rem] custom-3500:gap-x-[7rem]
 					custom-500:pl-[1rem] custom-1400:pl-[1.4rem]
 					custom-390:text-[1.4rem] custom-400:text-[1.6rem] custom-1000:text-[1.7rem] custom-1400:text-[1.978rem] custom-1900:text-[2.5rem] custom-2500:text-[2.8rem] custom-3500:text-[3rem]"
 				>
-					<div className="flex">
+					<div className="flex" id="rpFormFamiliarRadioContainer">
 						<input
 							type="radio"
 							name="gardenSize"
@@ -195,7 +200,7 @@ function RegisterProducerForm({ handleSubmit }: RegisterProducerFormProps) {
 						</label>
 					</div>
 
-					<div className="flex">
+					<div className="flex" id="rpFormCommunityRadioContainer">
 						<input
 							type="radio"
 							name="gardenSize"
@@ -215,7 +220,7 @@ function RegisterProducerForm({ handleSubmit }: RegisterProducerFormProps) {
 						</label>
 					</div>
 
-					<div className="flex">
+					<div className="flex" id="rpFormComercialRadioContainer">
 						<input
 							type="radio"
 							name="gardenSize"
@@ -246,10 +251,12 @@ function RegisterProducerForm({ handleSubmit }: RegisterProducerFormProps) {
 				</div>
 
 				<div
+					id="rpFormRadiosDescriptionContainer"
 					className="mt-[2.8rem] text-[1.4rem]
 					custom-600:text-[1.5rem] custom-1400:text-[1.6rem] custom-1900:text-[1.9rem] custom-2500:text-[2.2rem] custom-3500:text-[2.6rem]"
 				>
 					<p
+						id="rpFormRadioFamiliarDescription"
 						className="w-[100%] text-darkGrayText
 					custom-1400:w-[79.5%]"
 					>
@@ -258,6 +265,7 @@ function RegisterProducerForm({ handleSubmit }: RegisterProducerFormProps) {
 					</p>
 
 					<p
+						id="rpFormRadioCommunityDescription"
 						className="w-[100%] mt-[1.2rem] text-darkGrayText
 						custom-1400:mt-[1.6rem] custom-1900:mt-[1.4rem]
 						custom-1400:w-[79.5%]"
@@ -268,6 +276,7 @@ function RegisterProducerForm({ handleSubmit }: RegisterProducerFormProps) {
 					</p>
 
 					<p
+						id="rpFormRadioComercialDescription"
 						className="w-[100%] mt-[1.2rem] text-darkGrayText
 						custom-1400:mt-[1.6rem] custom-1900:mt-[1.4rem]
 						custom-1400:w-[79.5%]"
@@ -281,6 +290,7 @@ function RegisterProducerForm({ handleSubmit }: RegisterProducerFormProps) {
 				{/* TEXTAREA */}
 
 				<p
+					id="rpFormTextAreaTitle"
 					className="mt-[4rem] text-[1.6rem]
 					custom-1000:mt-[3.5rem] custom-1400:mt-[6.4rem] custom-3500:mt-[9rem]
 					custom-1000:text-[1.8rem] custom-1400:text-[1.978rem] custom-1900:text-[2.5rem] custom-2500:text-[3rem] custom-3500:text-[4rem]"
@@ -290,6 +300,7 @@ function RegisterProducerForm({ handleSubmit }: RegisterProducerFormProps) {
 				</p>
 
 				<div
+					id="rpFormTextAreaContainer"
 					className="relative w-[100%] mt-[0.8rem] p-2 border border-black border-solid rounded-2xl
 					custom-1000:mt-[1.3rem] custom-1400:mt-[1.6rem] custom-2500:mt-[2.8rem] custom-3500:mt-[3.8rem]
 					custom-1400:w-[79%]
@@ -329,6 +340,7 @@ function RegisterProducerForm({ handleSubmit }: RegisterProducerFormProps) {
 				</div>
 
 				<p
+					id="rpFormTextAreaCharCounter"
 					className="mb-[1.6rem] mt-[0.6rem] text-darkGrayText text-[1.4rem]
 					custom-1900:mb-[2.6rem]
 					custom-1000:mt-[1rem] custom-1400:mt-[1.6rem]
@@ -340,6 +352,7 @@ function RegisterProducerForm({ handleSubmit }: RegisterProducerFormProps) {
 				{/* CHECKBOX */}
 
 				<div
+					id="rpFormTermsAndConditionsContainer"
 					className="flex items-start
 					custom-1400:items-center"
 				>
@@ -362,11 +375,11 @@ function RegisterProducerForm({ handleSubmit }: RegisterProducerFormProps) {
 						custom-600:text-[1.5rem] custom-1000:text-[1.6rem] custom-1400:text-[1.8rem] custom-1900:text-[2rem] custom-2500:text-[2.3rem] custom-3500:text-[2.8rem]"
 					>
 						Acepto los
-						<Link to="/termsAndConditions" target="_blank" className="text-blueLink">
+						<Link to="/termsAndConditions" target="_blank" className="text-blueLink" id="rpFormTermsLink">
 							&nbsp;Términos y condiciones&nbsp;
 						</Link>
 						y autorizo el uso de mis datos de acuerdo a la
-						<Link to="/privacy" target="_blank" className="text-blueLink">
+						<Link to="/privacy" target="_blank" className="text-blueLink" id="rpFormPrivacyLink">
 							&nbsp;Declaración de privacidad.
 						</Link>
 					</label>
@@ -382,6 +395,7 @@ function RegisterProducerForm({ handleSubmit }: RegisterProducerFormProps) {
 				) : null}
 
 				<div
+					id="rpFormDubmitButtonContainer"
 					className="flex justify-center w-full mt-[3.2rem]
 					custom-1400:mt-[6.4rem] custom-2500:mt-[9rem] custom-3500:mt-[12rem]"
 				>

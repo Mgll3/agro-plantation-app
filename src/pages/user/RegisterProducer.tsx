@@ -73,7 +73,7 @@ function RegisterProducer() {
 				<meta name="robots" content="noindex, nofollow"></meta>
 			</Helmet>
 
-			<div className="w-full">
+			<div className="w-full" id="headerPositioner">
 				<Header />
 			</div>
 
@@ -83,6 +83,8 @@ function RegisterProducer() {
 					custom-900:py-[6rem] custom-1400:py-[8.8rem] custom-2500:py-[14rem] custom-3500:py-[18rem]"
 			>
 				<button
+					id="registerProducerBackToHomeButton"
+					role="link"
 					type="button"
 					onClick={() => navigate("/")}
 					className="flex items-center py-[0.7rem] px-[1rem] mb-[3rem] text-[1.3rem] font-semibold border-2 border-brandingYellow rounded-md
@@ -110,6 +112,7 @@ function RegisterProducer() {
 				</h1>
 
 				<p
+					id="registerProducerFormMainParagraph"
 					className="w-[100%] mb-[3.5rem] text-[1.2rem] tracking-[0.04rem]
 					custom-1400:w-[80%]
 					custom-1400:mb-[6.4rem] custom-2500:mb-[8.5rem] custom-3500:mb-[10rem]
@@ -123,7 +126,7 @@ function RegisterProducer() {
 				<RegisterProducerForm handleSubmit={submitForm} />
 			</main>
 
-			<div className="mt-auto">
+			<div className="mt-auto" id="footerPositioner">
 				<Footer />
 			</div>
 

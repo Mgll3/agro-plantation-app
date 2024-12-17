@@ -117,6 +117,7 @@ const Register = forwardRef(function Register({
 
 	return (
 		<div
+			id="registerMainContainer"
 			ref={registerContainerElement}
 			// Cuando el foco está en "Login" limitamos la altura de Register para que no afecte a su altura total (genera un hueco en blanco por debajo de Login)
 			className={`relative flex flex-col-reverse justify-between ${focus === "login" ? "h-[100vh] overflow-hidden" : "h-[100%]"} ${focus === "login" ? "opacity-0" : ""} text-[#eaefd4f2] font-loginFont bg-[#EAE3C0]
@@ -124,12 +125,14 @@ const Register = forwardRef(function Register({
 			custom-750:w-[100vw]`}
 		>
 			<header
+				id="registerHeader"
 				className="relative w-[100vw] h-[25vh] mt-[-0.5rem]
 				custom-750:w-[30vw]
 				custom-390:h-[20vh] custom-420:h-[14.81vh] custom-500:h-[25vh] custom-750:h-full
 				custom-750:mt-[0rem]"
 			>
 				<div
+					id="registerHeaderBg"
 					className="flex flex-col justify-end items-center w-[100%] h-[100%] bg-loginMobile bg-[30%_48%] bg-cover bg-no-repeat font-sans
 					custom-750:justify-center
 					custom-750:items-end
@@ -138,10 +141,12 @@ const Register = forwardRef(function Register({
 				>
 					{/* Capa sobre imagen Mobile */}
 					<div
+						id="registerHeaderColorFilter"
 						className="absolute inset-0 bg-gradient-to-b from-[#4b9742] to-[#0b7115] opacity-55 z-0
 						custom-750:hidden"
 					></div>
 					<h1
+						id="registerHeaderH1Tag"
 						className="z-10 px-[4rem] mb-[0.8rem] text-black font-normal font-sora text-[2.2rem] rounded-2xl bg-brandingLightYellow
 						custom-1000:px-[4.22rem] custom-2500:px-[6.5rem] custom-3500:px-[10rem]
 						custom-750:py-[0.7rem]
@@ -154,11 +159,13 @@ const Register = forwardRef(function Register({
 						Registro
 					</h1>
 					<div
+						id="registerHeaderLegalTextContainer"
 						className="w-full flex justify-center
 						custom-750:absolute
 						custom-750:bottom-[5vh]"
 					>
 						<Link
+							id="registerHeaderLegalTextLink"
 							to="/copyright"
 							className="py-[0.3rem] px-[0.5rem] text-center text-[1.2rem] text-black bg-brandingLightGreen rounded-lg
 							custom-1400:px-[0.8rem]
@@ -174,15 +181,19 @@ const Register = forwardRef(function Register({
 			</header>
 
 			<div
+				id="registerFormMainContainer"
 				className="w-full
 				custom-750:w-[70vw]"
 			>
 				<div
+					id="registerFormLogoContainer"
 					className="flex flex-col justify-center items-center mt-[3rem] rounded-2xl text-[2.5rem] text-black font-niramit
 					custom-750:mt-[2rem] custom-1400:mt-[2.5rem] custom-2500:mt-[5rem] custom-3500:mt-[7rem]
 					custom-1000:text-[3.2rem] custom-2500:text-[4rem] custom-3500:text-[5rem]"
 				>
-					<p className="max-[767px]:hidden mb-[1.6rem]">Bienvenido a</p>
+					<p className="max-[767px]:hidden mb-[1.6rem]" id="registerFormLogoParagraph">
+						Bienvenido a
+					</p>
 					<Link to="/">
 						<img
 							src="images/logos/LogoVerde.png"
@@ -191,10 +202,13 @@ const Register = forwardRef(function Register({
 							custom-400:w-[140px] custom-420:w-[157px] custom-750:w-[134px] custom-1900:w-[145px] custom-2500:w-[190px] custom-3500:w-[220px]"
 						/>
 					</Link>
-					<h2 className="max-[767px]:hidden mt-[1.6rem] text-center">Por favor, completa el formulario</h2>
+					<h2 className="max-[767px]:hidden mt-[1.6rem] text-center" id="registerFormLogoH2Tag">
+						Por favor, completa el formulario
+					</h2>
 				</div>
 
 				<form
+					id="registerForm"
 					name="registerForm"
 					action=""
 					encType="multipart/form-data"
@@ -204,9 +218,12 @@ const Register = forwardRef(function Register({
 						custom-2500:mt-[3rem] custom-3500:mt-[6rem]
 						custom-1400:pt-[1.6rem]"
 				>
-					<div className="flex flex-col pb-2 w-full">
-						<div className="grid grid-cols-1 md:grid-cols-2 md:gap-4 gap-4 text-base md:width-[100%] w-full">
-							<div className="relative">
+					<div className="flex flex-col pb-2 w-full" id="registerFormFieldsAndButtonContainer">
+						<div
+							className="grid grid-cols-1 md:grid-cols-2 md:gap-4 gap-4 text-base md:width-[100%] w-full"
+							id="registerFormFieldsContainer"
+						>
+							<div className="relative" id="registerFormNameField">
 								<label htmlFor="userName">
 									<input
 										type="text"
@@ -224,6 +241,7 @@ const Register = forwardRef(function Register({
 
 								{formik.touched.userName && formik.errors.userName ? (
 									<p
+										id="registerFormNameFieldErrorText"
 										className="absolute bottom-[-0.2rem] ml-4 text-[1.3rem] text-red-600
 										custom-1000:text-[1.6rem] custom-2500:text-[1.9rem]"
 									>
@@ -232,7 +250,7 @@ const Register = forwardRef(function Register({
 								) : null}
 							</div>
 
-							<div className="relative ">
+							<div className="relative" id="registerFormLastNameField">
 								<label htmlFor="userLastName">
 									<input
 										type="text"
@@ -250,6 +268,7 @@ const Register = forwardRef(function Register({
 
 								{formik.touched.userName && formik.errors.userName ? (
 									<p
+										id="registerFormLastNameFieldErrorText"
 										className="absolute bottom-[-0.2rem] ml-4 text-[1.3rem] text-red-600
 										custom-1000:text-[1.6rem] custom-2500:text-[1.9rem]"
 									>
@@ -258,7 +277,7 @@ const Register = forwardRef(function Register({
 								) : null}
 							</div>
 
-							<div className="relative  md:col-span-2">
+							<div className="relative md:col-span-2" id="registerFormEmailField">
 								<label htmlFor="userEmail">
 									<input
 										type="email"
@@ -276,6 +295,7 @@ const Register = forwardRef(function Register({
 
 								{formik.touched.userName && formik.errors.userName ? (
 									<p
+										id="registerFormEmailFieldErrorText"
 										className="absolute bottom-[-0.2rem] ml-4 text-[1.3rem] text-red-600
 										custom-1000:text-[1.6rem] custom-2500:text-[1.9rem]"
 									>
@@ -294,7 +314,7 @@ const Register = forwardRef(function Register({
 										</ErrorMessage>
 									</div> */}
 
-							<div className="relative ">
+							<div className="relative" id="registerFormCityField">
 								<label htmlFor="userAddressCity">
 									<input
 										type="text"
@@ -312,6 +332,7 @@ const Register = forwardRef(function Register({
 
 								{formik.touched.userName && formik.errors.userName ? (
 									<p
+										id="registerFormCityFieldErrorText"
 										className="absolute bottom-[-0.2rem] ml-4 text-[1.3rem] text-red-600
 										custom-1000:text-[1.6rem] custom-2500:text-[1.9rem]"
 									>
@@ -320,7 +341,7 @@ const Register = forwardRef(function Register({
 								) : null}
 							</div>
 
-							<div className="relative ">
+							<div className="relative" id="registerFormProvinceField">
 								<label htmlFor="userAddressProvince">
 									<input
 										type="text"
@@ -338,6 +359,7 @@ const Register = forwardRef(function Register({
 
 								{formik.touched.userName && formik.errors.userName ? (
 									<p
+										id="registerFormProvinceFieldErrorText"
 										className="absolute bottom-[-0.2rem] ml-4 text-[1.3rem] text-red-600
 										custom-1000:text-[1.6rem] custom-2500:text-[1.9rem]"
 									>
@@ -346,7 +368,7 @@ const Register = forwardRef(function Register({
 								) : null}
 							</div>
 
-							<div className="relative ">
+							<div className="relative" id="registerFormPasswordField">
 								<label htmlFor="userPassword">
 									<input
 										type="password"
@@ -364,6 +386,7 @@ const Register = forwardRef(function Register({
 
 								{formik.touched.userName && formik.errors.userName ? (
 									<p
+										id="registerFormPasswordFieldErrorText"
 										className="absolute bottom-[-0.2rem] ml-4 text-[1.3rem] text-red-600
 										custom-1000:text-[1.6rem] custom-2500:text-[1.9rem]"
 									>
@@ -372,7 +395,7 @@ const Register = forwardRef(function Register({
 								) : null}
 							</div>
 
-							<div className="relative ">
+							<div className="relative" id="registerFormPasswordConfirmField">
 								<label htmlFor="userPasswordConfirm">
 									<input
 										type="password"
@@ -390,6 +413,7 @@ const Register = forwardRef(function Register({
 
 								{formik.touched.userName && formik.errors.userName ? (
 									<p
+										id="registerFormPasswordConfirmFieldErrorText"
 										className="absolute bottom-[-0.2rem] ml-4 text-[1.3rem] text-red-600
 										custom-1000:text-[1.6rem] custom-2500:text-[1.9rem]"
 									>
@@ -401,6 +425,7 @@ const Register = forwardRef(function Register({
 
 						{formik.isValid && formik.dirty ? (
 							<button
+								id="registerFormSubmitButton"
 								type="submit"
 								className="w-[96%] text-[1.5rem] py-2.5 m-[3rem_auto] shadow-md rounded-lg font-sans text-brandingYellow cursor-pointer font-bold bg-brandingDarkGreen hover:bg-opacity-80 transition-all
 									custom-500:w-[80%] custom-900:w-[60%] custom-1200:w-[48.45%]
@@ -413,6 +438,7 @@ const Register = forwardRef(function Register({
 							</button>
 						) : (
 							<button
+								id="registerFormSubmitButtonDisabled"
 								type="submit"
 								disabled
 								className="w-[96%] text-[1.5rem] py-[0.58rem] m-[2rem_auto] shadow-md rounded-lg font-sans text-black cursor-pointer font-bold bg-brandingYellow hover:bg-opacity-80 transition-all
@@ -426,19 +452,22 @@ const Register = forwardRef(function Register({
 							</button>
 						)}
 
-						<div className="flex flex-wrap justify-center items-baseline w-full">
+						<div id="registerFormLoginTextContainer" className="flex flex-wrap justify-center items-baseline w-full">
 							<p
+								id="registerFormLoginTextParagraph1"
 								className="text-[1.4rem] drop-shadow-smallText
 								custom-500:text-[1.6rem] custom-2500:text-[2rem] custom-3500:text-[2.5rem]"
 							>
 								Si ya estás registrado, por favor
 							</p>
 							<p
+								aria-description="Ir a Login"
+								id="registerFormLoginTextParagraph2"
 								onClick={handleLoginClick}
 								className="ml-[0.5rem] text-[2rem] text-brandingLightGreen font-loginFont hover:drop-shadow-smallText
 									custom-2500:ml-[1rem]
 									custom-500:text-[2.2rem] custom-2500:text-[2.5rem] custom-3500:text-[3.3rem]"
-								role="button"
+								role="link"
 							>
 								Inicia Sesión
 							</p>

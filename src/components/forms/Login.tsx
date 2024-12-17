@@ -41,6 +41,7 @@ const Login = forwardRef(function Login({
 
 	return (
 		<div
+			id="loginMainContainer"
 			ref={loginContainerElement}
 			// Cuando el foco está en "Register" limitamos la altura de Login para que no afecte a su altura total (genera un hueco en blanco por debajo de Register)
 			className={`relative flex flex-col-reverse ${focus === "register" ? "h-[100vh] overflow-hidden" : "h-[100%]"} ${focus === "register" ? "opacity-0" : ""} bg-[#EAE3C0]
@@ -48,12 +49,14 @@ const Login = forwardRef(function Login({
 			custom-750:w-[100vw]`}
 		>
 			<header
+				id="loginHeader"
 				className="relative w-[100vw] h-[28.5vh] min-h-[200px] mt-[1.5vh]
 				custom-750:w-[30vw]
 				custom-750:h-[100vh]
 				custom-750:mt-[0rem]"
 			>
 				<div
+					id="loginHeaderBg"
 					className="flex flex-col justify-end items-center w-[100%] h-[100%] bg-loginMobile bg-[30%_48%] bg-cover bg-no-repeat font-sans
 					custom-750:justify-center
 					custom-750:items-end
@@ -62,10 +65,12 @@ const Login = forwardRef(function Login({
 				>
 					{/* Capa sobre imagen Mobile */}
 					<div
+						id="loginHeaderColorFilter"
 						className="absolute inset-0 bg-gradient-to-b from-[#4b9742] to-[#0b7115] opacity-55 z-0
 						custom-750:hidden"
 					></div>
 					<h1
+						id="loginHeaderH1Tag"
 						className="z-10 px-[4rem] mb-[0.8rem] text-black font-normal font-sora text-[2.2rem] rounded-2xl bg-brandingLightYellow
 						custom-1000:px-[4.22rem] custom-2500:px-[6.5rem] custom-3500:px-[10rem]
 						custom-750:py-[0.7rem]
@@ -78,11 +83,13 @@ const Login = forwardRef(function Login({
 						Ingreso
 					</h1>
 					<div
+						id="loginHeaderLegalTextContainer"
 						className="w-full flex justify-center
 						custom-750:absolute
 						custom-750:bottom-[5vh]"
 					>
 						<Link
+							id="loginHeaderLegalTextLink"
 							to="/copyright"
 							className="py-[0.3rem] px-[0.5rem] text-center text-[1.2rem] text-black bg-brandingLightGreen rounded-lg
 							custom-1400:px-[0.8rem]
@@ -98,11 +105,12 @@ const Login = forwardRef(function Login({
 			</header>
 
 			<div
+				id="loginFormMainContainer"
 				className="flex flex-col w-full min-h-[70vh]
 				custom-750:w-[70vw]
 				custom-750:h-[100vh]"
 			>
-				<div className="mx-auto pt-[4.8rem]">
+				<div className="mx-auto pt-[4.8rem]" id="loginFormLogoContainer">
 					<abbr title="Ir a la página principal">
 						<Link to="/">
 							<img
@@ -124,10 +132,11 @@ const Login = forwardRef(function Login({
 						className="flex flex-col items-center w-[100%] mt-[5.6rem] font-sans text-center text-black border-solid bg-[#EAE3C0]"
 					>
 						<div
+							id="loginFormFieldsContainer"
 							className="flex flex-col justify-center items-center w-[90%]
 							custom-750:w-[70%] custom-1000:w-[60%] custom-1200:w-[42%] custom-1400:w-[32.55%]"
 						>
-							<div className="relative w-full">
+							<div className="relative w-full" id="loginFormEmailField">
 								<Field
 									type="email"
 									id="loginEmail"
@@ -141,6 +150,7 @@ const Login = forwardRef(function Login({
 								<ErrorMessage name="email">
 									{(errorMsg) => (
 										<p
+											id="loginFormEmailFieldErrorText"
 											className="absolute bottom-[-0.2rem] ml-4 text-[1.3rem] text-red-600
 										custom-1000:text-[1.6rem] custom-2500:text-[1.9rem]"
 										>
@@ -150,7 +160,7 @@ const Login = forwardRef(function Login({
 								</ErrorMessage>
 							</div>
 
-							<div className="relative w-full">
+							<div className="relative w-full" id="loginFormPasswordField">
 								<Field
 									type="password"
 									id="loginPassword"
@@ -164,6 +174,7 @@ const Login = forwardRef(function Login({
 								<ErrorMessage name="password">
 									{(errorMsg) => (
 										<p
+											id="loginFormPasswordFieldErrorText"
 											className="absolute bottom-[-0.2rem] ml-4 text-[1.3rem] text-red-600
 										custom-1000:text-[1.6rem] custom-2500:text-[1.9rem]"
 										>
@@ -174,7 +185,11 @@ const Login = forwardRef(function Login({
 							</div>
 						</div>
 
-						{loginState === "loginError" && <p className=" text-red-500 p-2">Email / Clave Incorrectos</p>}
+						{loginState === "loginError" && (
+							<p className=" text-red-500 p-2" id="loginFormLoginErrorText">
+								Email / Clave Incorrectos
+							</p>
+						)}
 
 						{loginState === "networkError" && (
 							<NetworkError
@@ -187,6 +202,7 @@ const Login = forwardRef(function Login({
 						{loginState === "loading" && <Loading />}
 
 						<div
+							id="loginFormSubmitButtonContainer"
 							className="w-full mt-[4rem]
 							custom-390:mt-[8rem]"
 						>
@@ -198,14 +214,19 @@ const Login = forwardRef(function Login({
 								buttonFuncionality={{ submitText: "Iniciar Sesión" }}
 							/>
 
-							<div className="flex flex-wrap justify-center items-baseline w-full mt-[1rem]">
+							<div
+								className="flex flex-wrap justify-center items-baseline w-full mt-[1rem]"
+								id="loginFormRegisterTextContainer"
+							>
 								<p
+									id="loginFormRegisterTextParagraph1"
 									className="text-[1.4rem] text-black font-sans drop-shadow-smallText
 								custom-500:text-[1.6rem] custom-2500:text-[2rem] custom-3500:text-[2.5rem]"
 								>
 									Si no tienes una cuenta, por favor
 								</p>
 								<p
+									id="loginFormRegisterTextParagraph2"
 									onClick={handleRegisterClick}
 									className="ml-[0.5rem] text-[2rem] text-brandingLightGreen font-loginFont hover:drop-shadow-smallText
 									custom-2500:ml-[1rem]

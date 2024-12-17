@@ -23,8 +23,12 @@ function GenericModal({ mainText, secondaryText, buttonText, handleClick }: Gene
 	};
 
 	return (
-		<div className="z-[1000] fixed top-0 flex justify-center items-center w-screen  h-screen bg-screenDarkening">
+		<div
+			className="z-[1000] fixed top-0 flex justify-center items-center w-screen  h-screen bg-screenDarkening"
+			id="genericModalMainContainer"
+		>
 			<div
+				id="genericModalSecondaryContainer"
 				className="flex flex-col items-center w-[93%] px-[1.9rem] py-[4.1rem] bg-white rounded-2xl text-center font-light
 				custom-500:w-[470px] custom-900:w-[500px] custom-1400:w-[550px] custom-1900:w-[600px] custom-2500:w-[800px]
 				custom-1400:px-[3.2rem]
@@ -39,6 +43,7 @@ function GenericModal({ mainText, secondaryText, buttonText, handleClick }: Gene
 				</h2>
 
 				<p
+					id="genericModalParagraph"
 					className="mt-8 mb-20 text-[1.978rem]
 					custom-1900:text-[2.3rem] custom-2500:text-[3rem]"
 				>

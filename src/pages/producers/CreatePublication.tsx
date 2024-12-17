@@ -129,7 +129,7 @@ function CreatePublication() {
 				<meta name="robots" content="noindex, nofollow"></meta>
 			</Helmet>
 
-			<div className="w-full">
+			<div className="w-full" id="headerPositioner">
 				<Header />
 			</div>
 
@@ -139,6 +139,7 @@ function CreatePublication() {
 				custom-500:pb-[5rem] custom-700:pb-[8rem] custom-900:pb-[10rem] custom-1400:pb-[13.6rem] custom-2500:pb-[15rem] custom-3500:pb-[20rem]"
 			>
 				<div
+					id="createPublicationPresentationMainContainer"
 					className="w-full ml-[1.6rem]
 					custom-600:ml-[3rem] custom-700:ml-[5rem] custom-1200:ml-[7rem] custom-1400:ml-[8.8rem] custom-1900:ml-[12rem] custom-2500:ml-[22rem] custom-3500:ml-[35rem]"
 				>
@@ -178,6 +179,7 @@ function CreatePublication() {
 				</div>
 
 				<div
+					id="createPublicationFormPositioner"
 					className="flex w-full px-[0.6rem] mt-[3.2rem]
 					custom-1000:mt-[4rem] custom-1400:mt-[5rem] custom-1900:mt-[6rem]
 					custom-400:px-[1.6rem] custom-600:px-[3rem] custom-700:px-[5rem] custom-1200:px-[14rem] custom-1400:px-[18.8rem] custom-1900:px-[22rem] custom-2500:px-[35rem] custom-3500:px-[50rem]"

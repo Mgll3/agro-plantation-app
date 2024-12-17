@@ -1,14 +1,19 @@
 type RegisterKoProps = {
-	errorText: string
-}
+	errorText: string;
+};
 
-function RegisterKo( {errorText}: RegisterKoProps) {
-	
+function RegisterKo({ errorText }: RegisterKoProps) {
 	return (
-		<div className="absolute flex justify-center items-center w-screen bg-screenDarkening h-screen">
-			<div className="flex items-center flex-col bg-brandingLightYellow w-[30vw] h-[55vh] text-center">
-
-				<h3 className="text-black font-sans text-xl">REGISTRO INCORRECTO 
+		<div
+			className="absolute flex justify-center items-center w-screen bg-screenDarkening h-screen"
+			id="registerKoMainContainer"
+		>
+			<div
+				className="flex items-center flex-col bg-brandingLightYellow w-[30vw] h-[55vh] text-center"
+				id="registerKoSecondaryContainer"
+			>
+				<h3 className="text-black font-sans text-xl" id="registerKoH3Tag">
+					REGISTRO INCORRECTO
 					<span className="block text-md">{errorText}</span>
 				</h3>
 

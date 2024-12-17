@@ -250,22 +250,25 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 	}, []);
 
 	return (
-		<div className="flex flex-col w-full">
-			<form name="createPublicationForm" onSubmit={formik.handleSubmit} noValidate className="">
+		<div className="flex flex-col w-full" id="cpFormMainContainer">
+			<form name="createPublicationForm" onSubmit={formik.handleSubmit} noValidate className="" id="cpFormTag">
 				{/* FIRST SECTION */}
 				<div
+					id="cpFormUploadImgsSectionContainer"
 					className="w-full py-[0.8rem] pl-[1.87rem] pr-[1.4rem] border-grey300 border-[1px] border-solid rounded-lg shadow-below-light
 					custom-500:py-[1.2rem] custom-900:py-[1.5rem] custom-1400:py-[2rem] custom-1900:py-[3rem] custom-2500:py-[4rem]
 					custom-600:pl-[2.5rem] custom-900:pl-[3.5rem] custom-1200:pl-[4.2rem] custom-1400:pl-[5rem] custom-1900:pl-[7rem] custom-2500:pl-[9rem]
 					custom-600:pr-[2rem] custom-900:pr-[2.5rem] custom-1200:pr-[3rem] custom-1400:pr-[3.8rem] custom-1900:pr-[6rem]"
 				>
 					<h2
+						id="cpFormUploadImgsSectionH2Tag"
 						className="text-[1.85rem] font-semibold drop-shadow-bigText
 						custom-500:text-[2.5rem] custom-900:text-[3.5rem] custom-1200:text-[4rem] custom-1400:text-[4.9rem] custom-1900:text-[6rem] custom-2500:text-[7rem]"
 					>
 						Agregar imágenes
 					</h2>
 					<p
+						id="cpFormUploadImgsSectionParagraph1"
 						className="mt-[0.6rem] text-[0.9rem] font-normal drop-shadow-smallText
 						custom-500:text-[1.4rem] custom-900:text-[2rem] custom-1200:text-[2.2rem] custom-1400:text-[2.4rem] custom-1900:text-[3rem] custom-2500:text-[4rem]
 						custom-900:mt-[1rem] custom-1400:mt-[1.6rem]"
@@ -273,6 +276,7 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 						Imágenes
 					</p>
 					<p
+						id="cpFormUploadImgsSectionParagraph2"
 						className="text-[0.6rem] mt-[0.6rem] drop-shadow-smallText
 						custom-500:text-[1.1rem] custom-900:text-[1.4rem] custom-1400:text-[1.6rem] custom-1900:text-[2rem] custom-2500:text-[2.4rem]
 						custom-900:mt-[1rem] custom-1400:mt-[1.6rem] custom-1900:mt-[1rem]"
@@ -295,6 +299,7 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 							<ImageOutlinedIcon color="inherit" fontSize="inherit" />
 						</div>
 						<p
+							id="cpFormUploadImgsSectionParagraph3"
 							className="mt-[1.2rem] text-[0.9rem] font-semibold
 							custom-900:mt-[1.8rem] custom-1400:mt-[2.2rem] custom-1900:mt-[1.5rem]
 							custom-500:text-[1.5rem] custom-900:text-[2rem] custom-1400:text-[2.4rem] custom-1900:text-[3rem] custom-2500:text-[4rem]"
@@ -321,8 +326,11 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 									onDragLeave={handleMainImgDragLeave}
 									onDrop={handleMainImgDrop}
 								>
-									<p className="p-0">Cargar imagen principal</p>
+									<p className="p-0" id="cpFormUploadImgsSectionParagraph4">
+										Cargar imagen principal
+									</p>
 									<p
+										id="cpFormUploadImgsSectionParagraph5"
 										className="mt-[0rem]
 										custom-390:mt-[2px] custom-600:mt-[0px] custom-900:mt-[-2px] custom-1400:mt-[-5px] custom-1900:mt-[-2px]"
 									>
@@ -342,6 +350,7 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 
 								{formik.touched.mainImg && formik.errors.mainImg ? (
 									<p
+										id="cpFormUploadImgsSectionErrorText1"
 										className="absolute bottom-[-0.8rem] right-[0px] w-full text-center text-[0.5rem] text-red-600
 										custom-390:bottom-[-1.2rem] custom-500:bottom-[-1.6rem] custom-700:bottom-[-2rem] custom-1400:bottom-[-2.3rem] custom-1900:bottom-[-3rem] custom-2500:bottom-[-4rem]
 										custom-390:text-[0.7rem] custom-500:text-[1rem] custom-700:text-[1.2rem] custom-900:text-[1.4rem] custom-1900:text-[1.7rem] custom-2500:text-[2.3rem]"
@@ -366,8 +375,11 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 									onDragLeave={handleSecondaryImgsDragLeave}
 									onDrop={handleSecondaryImgsDrop}
 								>
-									<p className="p-0">Cargar imágenes secundarias</p>
+									<p className="p-0" id="cpFormUploadImgsSectionParagraph6">
+										Cargar imágenes secundarias
+									</p>
 									<p
+										id="cpFormUploadImgsSectionParagraph7"
 										className="mt-[0rem]
 										custom-390:mt-[2px] custom-600:mt-[0px] custom-900:mt-[-2px] custom-1400:mt-[-5px] custom-1900:mt-[-2px]"
 									>
@@ -387,6 +399,7 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 
 								{formik.touched.images && formik.errors.images ? (
 									<p
+										id="cpFormUploadImgsSectionErrorText2"
 										className="absolute bottom-[-0.8rem] right-[0px] w-full text-center text-[0.5rem] text-red-600
 										custom-390:bottom-[-1.2rem] custom-500:bottom-[-1.6rem] custom-700:bottom-[-2rem] custom-1400:bottom-[-2.3rem] custom-1900:bottom-[-3rem] custom-2500:bottom-[-4rem]
 										custom-390:text-[0.7rem] custom-500:text-[1rem] custom-700:text-[1.2rem] custom-900:text-[1.4rem] custom-1900:text-[1.7rem] custom-2500:text-[2.3rem]"
@@ -404,7 +417,7 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 							custom-600:mt-[2rem] custom-900:mt-[2.5rem] custom-1200:mt-[3rem] custom-1400:mt-[3.2rem] custom-1900:mt-[4rem]
 							custom-500:text-[0.9rem] custom-700:text-[1.1rem] custom-1000:text-[1.4rem] custom-1900:text-[2rem] custom-2500:text-[2.6rem]"
 						>
-							<p>
+							<p id="cpFormUploadImgsSectionParagraph8">
 								. Puedes ingresar hasta 10 imágenes.&nbsp;&nbsp; Tamaño máximo de archivo: 10 MB.&nbsp;&nbsp; Archivos
 								de imagen compatibles: JPEG o PNG
 							</p>
@@ -415,6 +428,7 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 				{/* SECOND SECTION */}
 
 				<div
+					id="cpFormDescriptionSectionContainer"
 					className="w-full mt-[1.6rem] pt-[0.9rem] pb-[0.5rem] px-[1.9rem] border-grey300 border-[1px] border-solid rounded-lg shadow-below-light
 					custom-500:mt-[2.5rem] custom-900:mt-[3.5rem] custom-1400:mt-[4rem] custom-1900:mt-[6rem] custom-2500:mt-[8rem]
 					custom-500:pt-[1.5rem] custom-1400:pt-[2.4rem] custom-1900:pt-[3rem] custom-2500:pt-[4rem]
@@ -422,12 +436,14 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 					custom-600:px-[3rem] custom-900:px-[4rem] custom-1400:px-[5rem] custom-1900:px-[7rem] custom-2500:px-[9rem]"
 				>
 					<h2
+						id="cpFormDescriptionSectionH2Tag"
 						className="text-[1.835rem] font-semibold drop-shadow-bigText
 						custom-500:text-[2.2rem] custom-900:text-[3rem] custom-1200:text-[4rem] custom-1400:text-[4.9rem] custom-1900:text-[6rem]"
 					>
 						Descripción general de la publicación
 					</h2>
 					<p
+						id="cpFormDescriptionSectionParagraph1"
 						className="mt-[0.6rem] text-[0.9rem] font-normal drop-shadow-smallText
 						custom-900:mt-[1rem] custom-1400:mt-[1.6rem]
 						custom-500:text-[1.3rem] custom-900:text-[1.7rem] custom-1200:text-[2rem] custom-1400:text-[2.4rem] custom-1900:text-[3rem] custom-2500:text-[4rem]"
@@ -435,6 +451,7 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 						Nombre de la publicación
 					</p>
 					<p
+						id="cpFormDescriptionSectionParagraph2"
 						className="text-[0.6rem] drop-shadow-smallText
 						custom-1900:mt-[1rem]
 						custom-500:text-[1rem] custom-900:text-[1.2rem] custom-1200:text-[1.4rem] custom-1400:text-[1.6rem] custom-1900:text-[2rem] custom-2500:text-[2.4rem]"
@@ -445,6 +462,7 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 					{/* TITLE INPUT */}
 
 					<div
+						id="cpFormDescriptionSectionTitleContainer"
 						className="relative w-[46%] mt-[2rem] border border-black border-solid rounded-md shadow-below-light
 						custom-900:mt-[3rem] custom-1400:mt-[4.5rem] custom-2500:mt-[5.5rem]"
 					>
@@ -471,6 +489,7 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 
 						{formik.touched.title && formik.errors.title ? (
 							<p
+								id="cpFormDescriptionSectionErrorText1"
 								className="absolute bottom-[0.6rem] right-[-80%] ml-4 text-[0.5rem] text-red-600
 								custom-1400:bottom-[1.3rem] custom-2500:bottom-[2rem]
 								custom-390:right-[-80%] custom-1000:right-[-60%] custom-1900:right-[-50%]
@@ -484,6 +503,7 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 					{/* DETAILS TEXTAREA */}
 
 					<div
+						id="cpFormDescriptionSectionDetailsContainer"
 						className="relative w-[90%] mt-[1rem] border border-black border-solid rounded-md shadow-below-light
 						custom-500:mt-[1.6rem] custom-900:mt-[2rem] custom-1400:mt-[2.4rem] custom-2500:mt-[4rem]"
 					>
@@ -512,6 +532,7 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 
 						{formik.touched.details && formik.errors.details ? (
 							<p
+								id="cpFormDescriptionSectionErrorText2"
 								className="absolute bottom-[-1.5rem] left-[35%] ml-4 text-[0.5rem] text-red-600
 								custom-400:bottom-[-1.6rem] custom-500:bottom-[-1.8rem] custom-700:bottom-[-2.2rem] custom-1400:bottom-[-2.8rem] custom-2500:bottom-[-4rem]
 								custom-1400:left-[40%]
@@ -522,6 +543,7 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 						) : null}
 					</div>
 					<p
+						id="cpFormDescriptionSectionCharCounter"
 						className="mt-[0.4rem] text-darkGrayText text-[0.7rem]
 						custom-1400:mt-[1rem]
 						custom-500:text-[1rem] custom-700:text-[1.3rem] custom-1000:text-[1.5rem] custom-1400:text-[1.8rem] custom-1900:text-[2rem] custom-2500:text-[2.5rem]
@@ -534,6 +556,7 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 				{/* THIRD SECTION */}
 
 				<div
+					id="cpFormDetailsSectionContainer"
 					className="w-full mt-[1.6rem] pt-[0.9rem] pb-[2.5rem] px-[1.9rem] border-grey300 border-[1px] border-solid rounded-lg shadow-below-light
 					custom-500:mt-[2.5rem] custom-900:mt-[3.5rem] custom-1400:mt-[4rem] custom-1900:mt-[6rem] custom-2500:mt-[8rem]
 					custom-500:pt-[1.2rem] custom-900:pt-[2rem] custom-1400:pt-[2.4rem] custom-1900:pt-[3rem] custom-2500:pt-[4rem]
@@ -541,12 +564,14 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 					custom-6:pb-[3rem] custom-900:pb-[4rem] custom-1400:pb-[5rem]"
 				>
 					<h2
+						id="cpFormDetailsSectionH2Tag"
 						className="text-[1.31rem] font-semibold drop-shadow-bigText
 						custom-500:text-[2.2rem] custom-900:text-[2.6rem] custom-1200:text-[3rem] custom-1400:text-[3.5rem] custom-1900:text-[4rem] custom-2500:text-[5rem]"
 					>
 						Detalles de la publicación
 					</h2>
 					<p
+						id="cpFormDetailsSectionParagraph1"
 						className="mt-[0.5rem] text-[0.6rem] drop-shadow-smallText
 						custom-900:mt-[0.9rem] custom-1400:mt-[1.2rem]
 						custom-500:text-[1rem] custom-900:text-[1.2rem] custom-1200:text-[1.4rem] custom-1400:text-[1.6rem] custom-1900:text-[2rem] custom-2500:text-[2.4rem]"
@@ -557,6 +582,7 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 					{/* AREA INPUT */}
 
 					<div
+						id="cpFormDetailsSectionAreaFieldContainer"
 						className="relative w-[58%] mt-[1.4rem] border border-black border-solid rounded-md shadow-below-light
 						custom-1400:w-[46%]
 						custom-500:mt-[2rem] custom-700:mt-[2.5rem] custom-1000:mt-[3rem] custom-1400:mt-[3.5rem] custom-2500:mt-[4rem]"
@@ -584,6 +610,7 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 
 						{formik.touched.area && formik.errors.area ? (
 							<p
+								id="cpFormDetailsSectionErrorText1"
 								className="absolute bottom-[0.6rem] right-[-60%] ml-4 text-[0.5rem] text-red-600
 								custom-1400:bottom-[1.3rem] custom-2500:bottom-[2rem]
 								custom-390:right-[-60%] custom-1900:right-[-50%]
@@ -597,6 +624,7 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 					{/* HARVEST TYPE INPUT */}
 
 					<div
+						id="cpFormDetailsSectionHarvestFieldContainer"
 						className="relative w-[58%] mt-[1.2rem] border border-black border-solid rounded-md shadow-below-light
 						custom-1400:w-[46%]
 						custom-500:mt-[2rem] custom-700:mt-[2.5rem] custom-1000:mt-[3rem] custom-1400:mt-[3.2rem] custom-2500:mt-[4rem]"
@@ -624,6 +652,7 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 
 						{formik.touched.harvestType && formik.errors.harvestType ? (
 							<p
+								id="cpFormDetailsSectionErrorText2"
 								className="absolute bottom-[0.6rem] right-[-60%] ml-4 text-[0.5rem] text-red-600
 								custom-2500:bottom-[2rem]
 								custom-390:right-[-60%] custom-1900:right-[-50%]
@@ -637,6 +666,7 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 					{/* IRRIGATION INPUT */}
 
 					<div
+						id="cpFormDetailsSectionIrrigationFieldContainer"
 						className="relative w-[58%] mt-[1.2rem] border border-black border-solid rounded-md shadow-below-light
 						custom-1400:w-[46%]
 						custom-500:mt-[2rem] custom-700:mt-[2.5rem] custom-1000:mt-[3rem] custom-1400:mt-[3.2rem] custom-2500:mt-[4rem]"
@@ -671,6 +701,7 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 
 						{formik.touched.irrigationType && formik.errors.irrigationType ? (
 							<p
+								id="cpFormDetailsSectionErrorText3"
 								className="absolute bottom-[0.6rem] right-[-60%] ml-4 text-[0.5rem] text-red-600
 								custom-2500:bottom-[2rem]
 								custom-390:right-[-60%] custom-1900:right-[-50%]
@@ -684,6 +715,7 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 					{/* PRODUCTION INPUT */}
 
 					<div
+						id="cpFormDetailsSectionProductionFieldContainer"
 						className="relative w-[58%] mt-[1.2rem] border border-black border-solid rounded-md shadow-below-light
 						custom-1400:w-[46%]
 						custom-500:mt-[2rem] custom-700:mt-[2.5rem] custom-1000:mt-[3rem] custom-1400:mt-[3.2rem] custom-2500:mt-[4rem]"
@@ -716,6 +748,7 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 
 						{formik.touched.productionType && formik.errors.productionType ? (
 							<p
+								id="cpFormDetailsSectionErrorText4"
 								className="absolute bottom-[0.6rem] right-[-60%] ml-4 text-[0.5rem] text-red-600
 								custom-2500:bottom-[2rem]
 								custom-390:right-[-60%] custom-1900:right-[-50%]
@@ -730,6 +763,7 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 				{/* FOURTH SECTION */}
 
 				<div
+					id="cpFormMapSectionContainer"
 					className="w-full mt-[1.6rem] pt-[0.9rem] pb-[0.5rem] px-[1.7rem] border-grey300 border-[1px] border-solid rounded-lg shadow-below-light
 					custom-500:mt-[2.5rem] custom-900:mt-[3.5rem] custom-1400:mt-[4rem] custom-1900:mt-[6rem] custom-2500:mt-[8rem]
 					custom-500:pt-[1.2rem] custom-700:pt-[1.7rem] custom-900:pt-[2rem] custom-1400:pt-[2.4rem] custom-1900:pt-[3rem] custom-2500:pt-[4rem]
@@ -737,12 +771,14 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 					custom-500:px-[2rem] custom-700:px-[2.7rem] custom-900:px-[3.5rem] custom-1400:px-[4.5rem] custom-1900:px-[7rem] custom-2500:px-[9rem]"
 				>
 					<h2
+						id="cpFormMapSectionH2Tag"
 						className="text-[1.2rem] font-bold drop-shadow-bigText
 						custom-500:text-[2rem] custom-900:text-[2.4rem] custom-1200:text-[3rem] custom-1400:text-[3.2rem] custom-1900:text-[3.7rem] custom-2500:text-[4.5rem]"
 					>
 						Detalles de la publicación
 					</h2>
 					<p
+						id="cpFormMapSectionParagraph1"
 						className="mt-[0.5rem] text-[0.6rem] drop-shadow-smallText
 						custom-900:mt-[0.9rem] custom-1400:mt-[1.2rem]
 						custom-500:text-[1rem] custom-900:text-[1.2rem] custom-1200:text-[1.4rem] custom-1400:text-[1.6rem] custom-1900:text-[2rem] custom-2500:text-[2.4rem]"
@@ -753,6 +789,7 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 					{/* ADDRESS INPUT */}
 
 					<div
+						id="cpFormMapSectionAddressInputContainer"
 						className="relative w-[46%] mt-[2.4rem] border border-black border-solid rounded-md shadow-below-light
 						custom-500:mt-[3rem] custom-900:mt-[4rem] custom-1200:mt-[5rem] custom-1400:mt-[6.3rem]"
 					>
@@ -779,6 +816,7 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 
 						{formik.touched.address && formik.errors.address ? (
 							<p
+								id="cpFormMapSectionErrorText"
 								className="absolute bottom-[0.6rem] right-[-80%] ml-4 text-[0.5rem] text-red-600
 								custom-2500:bottom-[2rem]
 								custom-390:right-[-75%] custom-1900:right-[-50%]
@@ -792,6 +830,7 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 					{/* LOCATION MAP */}
 
 					<div
+						id="cpFormMapSectionGeoMapContainer"
 						className="z-0 w-[97%] h-[10rem] mt-[1.2rem]
 						custom-500:h-[14rem] custom-900:h-[26.5rem] custom-1900:h-[38rem] custom-2500:h-[50rem]
 						custom-500:mt-[2rem] custom-900:mt-[3.2rem] custom-2500:mt-[4rem]
@@ -807,6 +846,7 @@ function CreatePublicationForm({ handleSubmit }: CreatePublicationFormProps) {
 				</div>
 
 				<div
+					id="cpFormMapSectionButtonsContainer"
 					className="flex justify-between mx-auto w-[70%] mt-[3.2rem]
 					custom-900:mt-[6.4rem] custom-1900:mt-[8rem] custom-2500:mt-[10rem]"
 				>
