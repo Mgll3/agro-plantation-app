@@ -15,6 +15,7 @@ type ButtonLinkType = {
 export type ButtonColorType = "yellow" | "green" | "grey" | "red";
 
 export type ButtonProps = {
+	id?: string;
 	buttonColor: ButtonColorType;
 	buttonFontSize: string;
 	buttonWidth: string;
