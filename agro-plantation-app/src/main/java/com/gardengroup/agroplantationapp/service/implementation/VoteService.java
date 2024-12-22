@@ -32,8 +32,8 @@ public class VoteService implements IVoteService {
 
     @Data
     public class VoteAndPublicationDTO {
-        public Vote vote;
-        public Publication publication;
+        private Vote vote;
+        private Publication publication;
 
         public VoteAndPublicationDTO(Vote vote, Publication publication) {
             this.vote = vote;

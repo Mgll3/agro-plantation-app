@@ -38,23 +38,17 @@ public class AuthController {
     })
     @PostMapping("/registro")
     public ResponseEntity<?> register(@RequestBody RegisterDTO registerDto) {
-
-        try {
-            // Verifica si el correo electrónico ya existe
-            if (userService.existsEmail(registerDto.getEmail())) {
-                // Si el correo electrónico ya existe, devuelve un mensaje indicando que el
-                // usuario ya existe
-                return new ResponseEntity<>("Este correo electrónico ya está registrado.", HttpStatus.CONFLICT);
-            }
-
-            // Llama al método en el servicio para crear el usuario a partir del DTO
-            User user = userService.createUser(registerDto);
-
-            return new ResponseEntity<>(user, HttpStatus.CREATED);
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(e.getMessage());
+        // Verifica si el correo electrónico ya existe
+        if (userService.existsEmail(registerDto.getEmail())) {
+            // Si el correo electrónico ya existe, devuelve un mensaje indicando que el
+            // usuario ya existe
+            return new ResponseEntity<>("Este correo electrónico ya está registrado.", HttpStatus.CONFLICT);
         }
+
+        // Llama al método en el servicio para crear el usuario a partir del DTO
+        User user = userService.createUser(registerDto);
+
+        return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
     @Operation(summary = "Iniciar sesión", description = "Endpoint para autenticar y obtener un token de acceso", tags = {

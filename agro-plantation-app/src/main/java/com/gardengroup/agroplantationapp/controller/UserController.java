@@ -41,17 +41,8 @@ public class UserController {
     })
     @GetMapping("/userSession")
     public ResponseEntity<AthAnswerDTO> userSession(HttpServletRequest request) {
-        try {
-            AthAnswerDTO answer = userService.getUserSession(request);
-            return ResponseEntity.ok(answer);
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            if (e.getMessage().equals("User not found")) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-            }
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-
+        AthAnswerDTO answer = userService.getUserSession(request);
+        return ResponseEntity.ok(answer);
     }
 
     @Operation(summary = "Borrar cuenta de usuario", description = "Endpoint para que un usuario borre su propia cuenta, necesita token", tags = {
@@ -63,17 +54,10 @@ public class UserController {
     @DeleteMapping("/deleteUser")
     @Transactional
     public ResponseEntity<Void> deleteUser(HttpServletRequest request) {
-        try {
-            String email = securityService.getEmail(request);
-            userService.deleteUser(email);
-            return ResponseEntity.noContent().build();
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            if (e.getMessage().equals("User not found")) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-            }
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
+        String email = securityService.getEmail(request);
+        userService.deleteUser(email);
+
+        return ResponseEntity.noContent().build();
     }
 
 }

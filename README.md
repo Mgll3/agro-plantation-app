@@ -3,13 +3,13 @@
 </div>
 <img src="https://media.discordapp.net/attachments/1194038261849542747/1248043035623817299/Header.jpg?ex=66623a27&is=6660e8a7&hm=31cf6f5be96ef730dfa21d9f364f06a27d8aca17d95d6ddca67d0da356ace9fa&=&format=webp">
 
-<h2> URL API:https://agro-plantation-app.onrender.com</h2>
-<h2> Documentación API:https://agro-plantation-app.onrender.com/swagger-ui/index.html#/</h2>
+<h2> URL API:http://ec2-18-116-118-187.us-east-2.compute.amazonaws.com:8080</h2>
+<h2> Documentación API:http://ec2-18-116-118-187.us-east-2.compute.amazonaws.com:8080/swagger-ui/index.html#/</h2>
 <h2> URL Front:https://plant-in.netlify.app</h2>
 
 <h2> Requerimientos tecnicos Backend </h2>
 
-La Api Rest Full utiliza Spring Boot, Java y MYSQL, Seguridad con JWT y Spring Security, maneja imagenes por medio de la Api Cloudinary, Testing automatizado con JUnit y Mockito, analisis de codigo estatico con Sonar Cloud, documentación con swagger, manejo de Logs, docker, 
+La Api Rest Full utiliza Spring Boot, Java y MYSQL, Seguridad con JWT y Spring Security, maneja imagenes por medio de la Api Cloudinary, Testing automatizado con JUnit y Mockito, analisis de codigo estatico con Sonar Cloud, documentación con swagger, manejo de Logs, docker. 
 Uso del patron DTO, patrones SOLID y Clean Code.
 
 SonarCloud: https://sonarcloud.io/summary/new_code?id=Mgll3_agro-plantation-app&branch=Dev-Back
@@ -73,7 +73,6 @@ La aplicación busca incentivar las prácticas agroecológicas para maximizar la
                 <li><strong>Portafolio:</strong> <a href="https://portfolio-sofia-ruiz.vercel.app/">Portafolio Desarrollador Backend Sofia Ruiz</a></li>
             </ul>
         </li>
-        <!-- Añadir más integrantes del Equipo Backend aquí -->
     </ul>
 
 <h2>👨🏻‍💻Equipo Frontend✨</h2>
@@ -94,7 +93,6 @@ La aplicación busca incentivar las prácticas agroecológicas para maximizar la
                 <li><strong>Github:</strong> <a href="https://github.com/ArturoFLR">https://github.com/ArturoFLR</a></li>
             </ul>
         </li>
-        <!-- Añadir más integrantes del Equipo Frontend aquí -->
     </ul>
 
 <h2>🎭Equipo UX/UI🤩</h2>
@@ -116,7 +114,6 @@ La aplicación busca incentivar las prácticas agroecológicas para maximizar la
                 <li><strong>Github:</strong> <a href="https://github.com/Mavigal197">https://github.com/Mavigal197</a></li>
             </ul>
         </li>
-        <!-- Añadir más integrantes del Equipo UX/UI aquí -->
     </ul>
 
 <h2>📋Equipo QA🐞</h2>
@@ -130,7 +127,6 @@ La aplicación busca incentivar las prácticas agroecológicas para maximizar la
                 <li><strong>Portafolio:</strong> <a href="https://leandrobouza.notion.site/Hola-Soy-Leandro-Bouza-Jr-Quality-Assurance-edf5e41907804f21a2060361501ec11f">Portafolio QA Leandro Bouza</a></li>
             </ul>
         </li>
-        <!-- Añadir más integrantes del Equipo QA aquí -->
     </ul>
 
 <h2>👨🏻‍💻Resultados Backend👩🏻‍💻</h2>

@@ -42,13 +42,8 @@ public class ProducerRequestController {
     })
     @GetMapping("/pending")
     public ResponseEntity<List<ProducerRequest>> getProducerRequests() {
-        try {
-            List<ProducerRequest> producerRequests = producerRequestService.getPendingProducerRequests();
-            return ResponseEntity.ok(producerRequests);
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
+        List<ProducerRequest> producerRequests = producerRequestService.getPendingProducerRequests();
+        return ResponseEntity.ok(producerRequests);
     }
 
     @Operation(summary = "Aprueba una solicitud de productor", description = "Este endpoint permite aprobar una solicitud de productor pendiente, Admin", tags = {
@@ -60,13 +55,8 @@ public class ProducerRequestController {
     // @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/approve/{producerRequestId}")
     public ResponseEntity<Void> approveProducerRequest(@PathVariable Long producerRequestId) {
-        try {
-            producerRequestService.approve(producerRequestId);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
-        }
+        producerRequestService.approve(producerRequestId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @Operation(summary = "Rechaza una solicitud de productor", description = "Este endpoint permite rechazar una solicitud de productor", tags = {
@@ -77,13 +67,8 @@ public class ProducerRequestController {
     })
     @PostMapping("/reject/{producerRequestId}")
     public ResponseEntity<Void> rejectProducerRequest(@PathVariable Long producerRequestId) {
-        try {
-            producerRequestService.reject(producerRequestId);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
-        }
+        producerRequestService.reject(producerRequestId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @Operation(summary = "Solicitar ser productor", description = "Endpoint para solicitar ser productor", tags = {
@@ -96,15 +81,10 @@ public class ProducerRequestController {
     @PostMapping("/send")
     public ResponseEntity<ProducerRequest> requestToBecomeProducer(HttpServletRequest request,
             @RequestBody ProducerRequestSaveDTO producerRequest) {
-        try {
-            String email = securityService.getEmail(request);
-            ProducerRequest requestSaved = producerRequestService.sendProducerRequest(email, producerRequest);
-            return new ResponseEntity<>(requestSaved, HttpStatus.CREATED);
+        String email = securityService.getEmail(request);
+        ProducerRequest requestSaved = producerRequestService.sendProducerRequest(email, producerRequest);
 
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
-        }
+        return new ResponseEntity<>(requestSaved, HttpStatus.CREATED);
     }
 
 }

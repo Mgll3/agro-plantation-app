@@ -1,5 +1,6 @@
 package com.gardengroup.agroplantationapp.service.implementation;
 
+import com.gardengroup.agroplantationapp.exception.UnauthorizedActionException;
 import com.gardengroup.agroplantationapp.model.dto.publication.*;
 import com.gardengroup.agroplantationapp.model.entity.*;
 import com.gardengroup.agroplantationapp.model.repository.PublicationRepository;
@@ -93,19 +94,16 @@ public class PublicationService implements IPublicationService {
                 .orElseThrow(() -> new DataAccessException(Constants.P_NOT_FOUND) {
                 });
 
-        // Verificar si el usuario es el autor de la publicación
-        if (user.equals(publication.getAuthor())) {
-            // Verificar si la publicación está autorizada
-            if (publication.getAuthorizationStatus().getState().equals("ACCEPTED")) {
-                publication.setVisibility(true);
-                return publicationRepository.save(publication);
-            }
-
-            return null;
-
+        if (!publication.getAuthorizationStatus().getState().equals("ACCEPTED")) {
+            throw new UnauthorizedActionException("Publication Not Authorized.");
         }
 
-        return null;
+        if (!user.equals(publication.getAuthor())) {
+            throw new UnauthorizedActionException("User not authorized to change visibility.");
+        }
+
+        publication.setVisibility(true);
+        return publicationRepository.save(publication);
 
     }
 
@@ -231,8 +229,8 @@ public class PublicationService implements IPublicationService {
             publicationRepository.save(publication);
 
         } else {
-            throw new IllegalStateException(
-                    "La publicación con ID " + publicationId + " no está en estado PENDIENTE");
+            throw new UnauthorizedActionException(
+                    "The Publication is Not PENDING");
         }
     }
 
@@ -249,8 +247,8 @@ public class PublicationService implements IPublicationService {
             publicationRepository.save(publication);
 
         } else {
-            throw new IllegalStateException(
-                    "La publicación con ID " + publicationId + " no está en estado PENDIENTE");
+            throw new UnauthorizedActionException(
+                    "The Publication is Not PENDING");
         }
     }
 
@@ -258,7 +256,8 @@ public class PublicationService implements IPublicationService {
     public Vote toggleVote(Long publicationId, String userEmail) {
 
         Publication publication = publicationRepository.findById(publicationId)
-                .orElseThrow(() -> new IllegalArgumentException(Constants.P_NOT_FOUND));
+                .orElseThrow(() -> new DataAccessException(Constants.P_NOT_FOUND) {
+                });
 
         User user = userService.findByEmail(userEmail);
 
