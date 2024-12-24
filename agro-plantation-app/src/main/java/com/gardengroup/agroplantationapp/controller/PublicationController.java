@@ -13,19 +13,13 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import com.gardengroup.agroplantationapp.service.interfaces.IPublicationService;
 import com.gardengroup.agroplantationapp.service.implementation.SecurityService;
-import com.gardengroup.agroplantationapp.utils.Constants;
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -98,7 +92,8 @@ public class PublicationController {
             @ApiResponse(responseCode = "501", description = "Error al procesar la solicitud", content = @Content(schema = @Schema(implementation = String.class)))
     })
     @PutMapping("/updateVisibility/{publicationId}")
-    public ResponseEntity<Publication> updateVisibility(@PathVariable Long publicationId, HttpServletRequest request) {
+    public ResponseEntity<Publication> updateVisibility(@PathVariable Long publicationId,
+            HttpServletRequest request) {
         String email = securityService.getEmail(request);
         Publication updatedPublication = publicationService.updateVisibility(publicationId, email);
 
@@ -144,7 +139,6 @@ public class PublicationController {
     })
     @PutMapping()
     public ResponseEntity<Publication> updatePublication(@RequestBody PublicationUpdDTO publicationUpdDTO) {
-
         Publication publicationUpdated = publicationService.updatePublication(publicationUpdDTO);
         return new ResponseEntity<>(publicationUpdated, HttpStatus.OK);
     }

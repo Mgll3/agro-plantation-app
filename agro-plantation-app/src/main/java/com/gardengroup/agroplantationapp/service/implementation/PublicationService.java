@@ -256,7 +256,7 @@ public class PublicationService implements IPublicationService {
     public Vote toggleVote(Long publicationId, String userEmail) {
 
         Publication publication = publicationRepository.findById(publicationId)
-                .orElseThrow(() -> new DataAccessException(Constants.P_NOT_FOUND) {
+                .orElseThrow(() -> new DataAccessException("Holi soy un error") {
                 });
 
         User user = userService.findByEmail(userEmail);
