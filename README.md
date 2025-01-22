@@ -3,8 +3,8 @@
 </div>
 <img src="https://media.discordapp.net/attachments/1194038261849542747/1248043035623817299/Header.jpg?ex=66623a27&is=6660e8a7&hm=31cf6f5be96ef730dfa21d9f364f06a27d8aca17d95d6ddca67d0da356ace9fa&=&format=webp">
 
-<h2> URL API:http://ec2-18-116-118-187.us-east-2.compute.amazonaws.com:8080</h2>
-<h2> Documentación API:http://ec2-18-116-118-187.us-east-2.compute.amazonaws.com:8080/swagger-ui/index.html#/</h2>
+<h2> URL API:http://ec2-3-133-160-246.us-east-2.compute.amazonaws.com:8080</h2>
+<h2> Documentación API:http://ec2-3-133-160-246.us-east-2.compute.amazonaws.com:8080/swagger-ui/index.html</h2>
 <h2> URL Front:https://plant-in.netlify.app</h2>
 
 <h2> Requerimientos tecnicos Backend </h2>

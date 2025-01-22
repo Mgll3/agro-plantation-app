@@ -7,7 +7,6 @@ import java.util.Map;
 import com.gardengroup.agroplantationapp.model.dto.publication.*;
 import com.gardengroup.agroplantationapp.model.entity.Publication;
 import com.gardengroup.agroplantationapp.model.entity.Vote;
-
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletRequest;
