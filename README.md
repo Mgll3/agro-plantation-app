@@ -1,59 +1,16 @@
 <div align="center">
-<h1 align="center"> 🌾Proyecto PLANT - IN: Agro Plantation APP🌾</h1>
+<h1 align="center"> 🌾Foro PLANT - IN: Agro Plantation APP🌾</h1>
 </div>
 <img src="https://media.discordapp.net/attachments/1194038261849542747/1248043035623817299/Header.jpg?ex=66623a27&is=6660e8a7&hm=31cf6f5be96ef730dfa21d9f364f06a27d8aca17d95d6ddca67d0da356ace9fa&=&format=webp">
 
-<h2><u><strong>🌱¿Qué es Plant-IN?🌱</strong></u></h2>
+<h2><u><strong>🌱Arquitectura Aplicada🌱</strong></u></h2>
 
-Esta aplicación web está diseñada para promocionar las huertas agroecológicas dentro del territorio nacional Argentino. Los productores pueden publicar información sobre sus plantaciones de vegetales y frutas, previa autorización de un administrador. Los usuarios interesados pueden conocer la ubicación, procedencia y prácticas de cada huerta para consumir de manera más consciente. Además, la plataforma incluye un foro de consejos sobre plantación y técnicas agroecológicas, accesible públicamente para la visualización pero restringido a usuarios registrados para la publicación y comentarios. También permite a los productores llevar un registro privado de sus cosechas y ofrece publicaciones de prácticas agrícolas disponibles para todos los visitantes, registrados o no.
+Este Microservicio se basa principalmente en los principios de Clean Architecture, DDD, CQRS y manejo de eventos. Por lo que bajo un dominio acotado(Foro) se guardan los datos en la BD PostgreSQl y a su vez se genera un evento para que posterior y asincronamente sea consumido y que tambien sean guardados los datos en la BD No SQL. Para así tener optimas operaciones de guardado y consulta.
 
-<h3><strong><u>Les presentamos el contexto del problema por el cual nace PLANT-IN</u></strong></h3>
+<h2><u><strong> 🛠️ Tecnologias y  🛠️</strong></u></h2>
 
-El modelo productivo del agronegocio tradicional se basa en la agricultura intensiva, que conduce al agotamiento del suelo y la utilización de agrotóxicos. Estos métodos no solo son perjudiciales para el medio ambiente sino también para la salud de los seres humanos y animales que consumen los productos cultivados bajo estas prácticas.
+Se esta haciendo uso de Java 21, Springboot 3.4.1, PostgreSQL, JPA, MongoDB, Pruebas con Junit 5.
 
-<h3><strong>Nuestra Solución</strong></h3>
-
-La aplicación busca incentivar las prácticas agroecológicas para maximizar la producción sostenible, promoviendo la agrobiodiversidad y la resiliencia ecológica y social. Esta herramienta conecta a los consumidores con productores comprometidos con la agroecología, ofreciendo acceso a alimentos conscientes y sostenibles. Proporciona medios para la difusión, generación de conocimiento práctico y conexión entre productores y consumidores.
-
-<h2><strong>👩‍🌾¿A que público va dirigido nuestra APP?👨‍🌾</strong></h2>
-
-<ol>
-        <li>Productores interesados en prácticas agroecológicas.</li>
-        <li>Productores de huertas agroecológicas ya establecidos.</li>
-        <li>Consumidores que desean comprar directamente de huertas agroecológicas o verificar la procedencia de los productos que compran.</li>
-        <li>Público en general que busca informarse sobre técnicas agroecológicas.</li>
-</ol>
-
-<h2><strong>📋Casos de Uso</strong></h2>
-
-<ol>
-        <li>
-            <strong>Administradores:</strong> Pueden hacer publicaciones generales en la página principal y en el apartado de noticias, así como gestionar permisos de publicación.
-        </li>
-        <li>
-            <strong>Productores:</strong> Pueden cargar y actualizar información sobre sus cosechas, incluyendo detalles sobre las prácticas utilizadas y condiciones ambientales. También pueden consultar información sobre otras cosechas.
-        </li>
-        <li>
-            <strong>Público en general:</strong> Tiene acceso a la información general sobre los cultivos, pero no a los detalles privados de los productores.
-        </li>
-        <li>
-            <strong>Usuarios registrados:</strong> Pueden participar en el foro, haciendo publicaciones y comentarios sobre técnicas y experiencias agroecológicas.
-        </li>
-    </ol>
-
-
-<h2><strong>🛠️Requerimientos Técnicos</strong></h2>
-    <ol>
-        <li>Registro y login con Spring Security.</li>
-        <li>Dos roles distintos para los usuarios (por ejemplo, admin y productor).</li>
-        <li>Inclusión de tablas HTML en alguna vista.</li>
-        <li>Carga y actualización de imágenes.</li>
-        <li>Creación de una query de búsqueda personalizada.</li>
-        <li>Implementación de un CRUD.</li>
-        <li>Al menos un formulario.</li>
-        <li>Tres vistas distintas.</li>
-        <li>Diagrama UML de entidades.</li>
-    </ol>
 
 <h2><u><strong>💪Integrantes del Equipo</strong></u></h2>
 
@@ -135,9 +92,3 @@ La aplicación busca incentivar las prácticas agroecológicas para maximizar la
         </li>
         <!-- Añadir más integrantes del Equipo QA aquí -->
     </ul>
-
-<h2><strong>💻Herramientas, Frameworks y Lenguajes usados🛠️:</strong></h2>
-
-<img src="https://img.shields.io/badge/MySQL-005C84?style=for-the-badge&logo=mysql&logoColor=white"/> <img src="https://img.shields.io/badge/Node%20js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white"/> <img src="https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E"/> <img src="https://img.shields.io/badge/Spring_Security-6DB33F?style=for-the-badge&logo=Spring-Security&logoColor=white"/> <img src="https://img.shields.io/badge/Spring_Boot-F2F4F9?style=for-the-badge&logo=spring-boot"/> <img src="https://img.shields.io/badge/Sass-CC6699?style=for-the-badge&logo=sass&logoColor=white"/> <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white"/> <img src="https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62E"/> <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB"/> <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white"/> <img src="	https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=JSON%20web%20tokens&logoColor=white"/><img src="https://img.shields.io/badge/Docker-2CA5E0?style=for-the-badge&logo=docker&logoColor=white"/> <img src="https://img.shields.io/badge/Azure_DevOps-0078D7?style=for-the-badge&logo=azure-devops&logoColor=white"/> <img src="https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=Postman&logoColor=white"/> <img src="https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=Swagger&logoColor=white"/> <img src="https://img.shields.io/badge/Cypress-17202C?style=for-the-badge&logo=cypress&logoColor=white"/> <img src="https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white"/>
-
-

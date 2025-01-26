@@ -1,6 +1,7 @@
 package com.garden_group.forum.application.handler;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import com.garden_group.forum.application.command.CreateThreadCommand;
 import com.garden_group.forum.application.mapper.ThreadMapper;
@@ -14,19 +15,17 @@ import lombok.RequiredArgsConstructor;
 public class CreateThreadCommandHandler {
 
     @Autowired
-    private ThreadCommandRepository threadRepository;
-    // @Autowired
-    // private ThreadMapper threadMapper;
+    private final ThreadCommandRepository threadRepository;
+    @Autowired
+    private final ThreadMapper threadMapper;
+    @Autowired
+    private final ApplicationEventPublisher eventPublisher;
 
     public Long handle(CreateThreadCommand command) {
-        Thread thread = new Thread();
-        thread.updateTitle(command.getTitle());
-        thread.updateContent(command.getContent());
-        thread.setVisibility(command.isVisible());
-
+        Thread thread = threadMapper.toEntity(command);
         threadRepository.save(thread);
 
+        eventPublisher.publishEvent(threadMapper.toThreadCreatedEvent(thread));
         return thread.getId();
-
     }
 }

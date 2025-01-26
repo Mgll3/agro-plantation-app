@@ -27,11 +27,13 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(DataAccessException.class)
     public ResponseEntity<ErrorResponse> handleDataAccessException(DataAccessException e) {
+        log.error(e.getMessage(), e);
         return handleException(e, "DATA_ACCESS_ERROR", HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(UnauthorizedActionException.class)
     public ResponseEntity<ErrorResponse> handleUnauthorizedAction(UnauthorizedActionException e) {
+        log.error(e.getMessage(), e);
         return handleException(e, "UNAUTHORIZED_ACTION", HttpStatus.FORBIDDEN);
     }
 
@@ -49,11 +51,13 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<ErrorResponse> handleIllegalArgumentException(IllegalArgumentException e) {
+        log.error(e.getMessage(), e);
         return handleException(e, "INVALID_ARGUMENT", HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(JwtMissingException.class)
     public ResponseEntity<ErrorResponse> handleJwtMissingException(JwtMissingException e) {
+        log.error(e.getMessage(), e);
         return handleException(e, "JWT_MISSING", HttpStatus.UNAUTHORIZED);
     }
 
@@ -67,6 +71,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGeneralException(Exception e) {
+        log.error(e.getMessage(), e);
         return handleException(e, "INTERNAL_SERVER_ERROR", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 

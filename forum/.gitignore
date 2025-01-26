@@ -4,8 +4,8 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+forum/src/main/resources/application-deploy.properties
 forum/src/main/resources/.env
-.vscode/settings.json
 
 ### STS ###
 .apt_generated

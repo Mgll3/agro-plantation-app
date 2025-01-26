@@ -19,11 +19,11 @@ public class Thread {
     private String title;
     private String content;
     private String authorId;
-    private LocalDateTime createdAt;
+    private Boolean isVisible;
+    private LocalDateTime createdAt = LocalDateTime.now();
     private LocalDateTime updatedAt;
-    private boolean isVisible;
 
-    public void setVisibility(boolean isVisible) {
+    public void setVisibility(Boolean isVisible) {
         this.isVisible = isVisible;
         this.updatedAt = LocalDateTime.now();
     }
@@ -36,5 +36,9 @@ public class Thread {
     public void updateTitle(String newTitle) {
         this.title = newTitle;
         this.updatedAt = LocalDateTime.now();
+    }
+
+    public void setAuthorId(String authorId) {
+        this.authorId = authorId;
     }
 }
