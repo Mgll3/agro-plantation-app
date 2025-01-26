@@ -59,16 +59,17 @@ public class PublicationService implements IPublicationService {
                 });
 
         // Revisar si hay imagen principal y luego guardarla
-        if (!mainFile.getOriginalFilename().isEmpty()) {
-            Map result = cloudinaryService.upload(mainFile, folder);
-
-            Image mainImage = new Image(result.get("public_id").toString(),
-                    result.get("secure_url").toString());
-            publication.setMainImage(mainImage);
-        } else {
+        if (mainFile.getOriginalFilename().isEmpty()) {
             throw new DataAccessException("Main image not found") {
             };
         }
+
+        Map result = cloudinaryService.upload(mainFile, folder);
+
+        Image mainImage = new Image(result.get("public_id").toString(),
+                result.get("secure_url").toString());
+        publication.setMainImage(mainImage);
+
         List<Image> images = new ArrayList<>();
         // Chequeo si hay imagenes secundarias y luego guardarlas
         if (!files.get(0).getOriginalFilename().isEmpty()) {
@@ -144,10 +145,10 @@ public class PublicationService implements IPublicationService {
 
         if (!publications.isEmpty()) {
             return publications;
-        } else {
-            throw new DataAccessException(Constants.PS_NOT_FOUND) {
-            };
         }
+
+        throw new DataAccessException(Constants.PS_NOT_FOUND) {
+        };
 
     }
 
@@ -159,11 +160,11 @@ public class PublicationService implements IPublicationService {
         if (!publicationRepository.existsById(publication.getId())) {
             throw new DataAccessException(Constants.P_NOT_FOUND) {
             };
-        } else {
-            Publication publicationSaved = publicationRepository.findById(publication.getId()).get();
-            publicationSaved.updateInfo(publication);
-            return publicationRepository.save(publicationSaved);
         }
+
+        Publication publicationSaved = publicationRepository.findById(publication.getId()).get();
+        publicationSaved.updateInfo(publication);
+        return publicationRepository.save(publicationSaved);
 
     }
 
@@ -219,19 +220,17 @@ public class PublicationService implements IPublicationService {
                 });
 
         // Verificar si la publicación está en estado "PENDING"
-        if ("PENDING".equals(publication.getAuthorizationStatus().getState())) {
-
-            // Asignar el estado (2) "ACCEPTED" a la publicación
-            publication.setAuthorizationStatus(new StateRequest(2L));
-            // Hacer la publicación publica y visible por cualquiera
-            publication.setVisibility(true);
-
-            publicationRepository.save(publication);
-
-        } else {
+        if (!"PENDING".equals(publication.getAuthorizationStatus().getState())) {
             throw new UnauthorizedActionException(
                     "The Publication is Not PENDING");
         }
+
+        // Asignar el estado (2) "ACCEPTED" a la publicación
+        publication.setAuthorizationStatus(new StateRequest(2L));
+        // Hacer la publicación publica y visible por cualquiera
+        publication.setVisibility(true);
+
+        publicationRepository.save(publication);
     }
 
     @Transactional
@@ -241,15 +240,14 @@ public class PublicationService implements IPublicationService {
                 .orElseThrow(() -> new DataAccessException(Constants.P_NOT_FOUND) {
                 });
 
-        if ("PENDING".equals(publication.getAuthorizationStatus().getState())) {
-            // Asignar el estado (3) "DECLINED" a la publicación
-            publication.setAuthorizationStatus(new StateRequest(3L));
-            publicationRepository.save(publication);
-
-        } else {
+        if (!"PENDING".equals(publication.getAuthorizationStatus().getState())) {
             throw new UnauthorizedActionException(
                     "The Publication is Not PENDING");
         }
+
+        // Asignar el estado (3) "DECLINED" a la publicación
+        publication.setAuthorizationStatus(new StateRequest(3L));
+        publicationRepository.save(publication);
     }
 
     @Transactional
@@ -280,7 +278,7 @@ public class PublicationService implements IPublicationService {
         int pagTop = 46;
 
         // Buscar si hay 3 paginaciones más adelante de la actual (1 Paginacion = 15)
-        pag = (pag == 1) ? 0 : ((pag - 1) * 15);
+        pag = (pag == 1) ? 0 : ((pag - 1) * Constants.PAGINATION_SIZE);
         List<Publication> publications = publicationRepository.publicationsBylike(pag, pagTop);
 
         return returnPublicationsWithPagination(publications);
@@ -296,7 +294,7 @@ public class PublicationService implements IPublicationService {
         int pagTop = 46;
 
         // Buscar si hay 3 paginaciones más adelante de la actual (1 Paginacion = 15)
-        pag = (pag == 1) ? 0 : ((pag - 1) * 15);
+        pag = (pag == 1) ? 0 : ((pag - 1) * Constants.PAGINATION_SIZE);
         List<Publication> publications = publicationRepository.publicationsByUser(pag, pagTop);
 
         return returnPublicationsWithPagination(publications);
@@ -312,7 +310,7 @@ public class PublicationService implements IPublicationService {
         int pagTop = 46;
 
         // Buscar si hay 3 paginaciones más adelante de la actual (1 Paginacion = 15)
-        pag = (pag == 1) ? 0 : ((pag - 1) * 15);
+        pag = (pag == 1) ? 0 : ((pag - 1) * Constants.PAGINATION_SIZE);
         List<Publication> publications = publicationRepository.publicationsByDate(pag, pagTop);
 
         return returnPublicationsWithPagination(publications);
@@ -328,7 +326,7 @@ public class PublicationService implements IPublicationService {
         int pagTop = 46;
 
         // Buscar si hay 3 paginaciones más adelante de la actual (1 Paginacion = 15)
-        pag = (pag == 1) ? 0 : ((pag - 1) * 15);
+        pag = (pag == 1) ? 0 : ((pag - 1) * Constants.PAGINATION_SIZE);
         List<Publication> publications = publicationRepository.publicationsByAleatory(pag, pagTop);
 
         return returnPublicationsWithPagination(publications);
@@ -344,21 +342,21 @@ public class PublicationService implements IPublicationService {
         int pagTop = 46;
 
         // Buscar si hay 3 paginaciones más adelante de la actual (1 Paginacion = 15)
-        pag = (pag == 1) ? 0 : ((pag - 1) * 15);
+        pag = (pag == 1) ? 0 : ((pag - 1) * Constants.PAGINATION_SIZE);
 
         final List<Publication> publications = publicationRepository.publicationsByPending(pag, pagTop);
 
-        if (!publications.isEmpty()) {
-            // Calcular número posible de paginaciones que hay en base de datos
-            Double paginationDouble = (double) publicationRepository.countPublicationsByPending() / 15;
-            int pagination = (int) (Math.ceil(paginationDouble) - 1);
-
-            return new PublicationFilterDTO(publications, pagination);
-
-        } else {
+        if (publications.isEmpty()) {
             throw new DataAccessException(Constants.PS_NOT_FOUND) {
             };
         }
+
+        // Calcular número posible de paginaciones que hay en base de datos
+        Double paginationDouble = (double) publicationRepository.countPublicationsByPending()
+                / Constants.PAGINATION_SIZE;
+        int pagination = (int) (Math.ceil(paginationDouble) - 1);
+
+        return new PublicationFilterDTO(publications, pagination);
 
     }
 
@@ -372,7 +370,7 @@ public class PublicationService implements IPublicationService {
         int pagTop = 46;
 
         // Buscar si hay 3 paginaciones más adelante de la actual (1 Paginacion = 15)
-        pag = (pag == 1) ? 0 : ((pag - 1) * 15);
+        pag = (pag == 1) ? 0 : ((pag - 1) * Constants.PAGINATION_SIZE);
         List<Publication> publications = publicationRepository.publicationsByQuantity(pag, pagTop);
 
         return returnPublicationsWithPagination(publications);
@@ -408,21 +406,20 @@ public class PublicationService implements IPublicationService {
 
     private PublicationFilterDTO returnPublicationsWithPagination(List<Publication> publications) {
 
-        if (!publications.isEmpty()) {
-            // Calcular número posible de paginaciones que hay en base de datos
-            Double paginationDouble = (double) publications.size() / 15;
-            int pagination = (int) (Math.ceil(paginationDouble) - 1);
-
-            if (publications.size() > 15) {
-                // Enviar solo 15 publicaciones que necesita el front
-                publications = publications.subList(0, 15);
-            }
-
-            return new PublicationFilterDTO(publications, pagination);
-
-        } else {
+        if (publications.isEmpty()) {
             throw new DataAccessException(Constants.PS_NOT_FOUND) {
             };
         }
+
+        // Calcular número posible de paginaciones que hay en base de datos
+        Double paginationDouble = (double) publications.size() / Constants.PAGINATION_SIZE;
+        int pagination = (int) (Math.ceil(paginationDouble) - 1);
+
+        if (publications.size() > Constants.PAGINATION_SIZE) {
+            // Enviar solo 15 publicaciones que necesita el front
+            publications = publications.subList(0, Constants.PAGINATION_SIZE);
+        }
+
+        return new PublicationFilterDTO(publications, pagination);
     }
 }

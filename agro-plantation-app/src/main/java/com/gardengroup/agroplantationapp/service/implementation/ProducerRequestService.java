@@ -38,23 +38,21 @@ public class ProducerRequestService implements IProducerRequestService {
                 .orElseThrow(() -> new RuntimeException("Solicitud del productor no encontrada"));
 
         // Verificar si la solicitud está en estado "PENDING"
-        if ("PENDING".equals(producerRequest.getStaterequest().getState())) {
-
-            // Actualizar el estado de la solicitud a "ACCEPTED"
-            producerRequest.setStaterequest(new StateRequest(2L));
-
-            User user = producerRequest.getUser();
-
-            // Cambiar el tipo de usuario a "productor" (3L)
-            user.setUserType(new UserType(3L));
-
-            // Guardar los cambios en la base de datos
-            producerRequestRepository.save(producerRequest);
-            userRepository.save(user);
-
-        } else {
+        if (!"PENDING".equals(producerRequest.getStaterequest().getState())) {
             throw new RuntimeException("La solicitud no está en estado 'PENDING'");
-        }
+        } 
+        
+        // Actualizar el estado de la solicitud a "ACCEPTED"
+        producerRequest.setStaterequest(new StateRequest(2L));
+
+        User user = producerRequest.getUser();
+
+        // Cambiar el tipo de usuario a "productor" (3L)
+        user.setUserType(new UserType(3L));
+
+        // Guardar los cambios en la base de datos
+        producerRequestRepository.save(producerRequest);
+        userRepository.save(user);
     }
 
     @Transactional
@@ -64,16 +62,15 @@ public class ProducerRequestService implements IProducerRequestService {
                 .orElseThrow(() -> new RuntimeException("Solicitud del productor no encontrada"));
 
         // Verificar si la solicitud está en estado "PENDING"
-        if ("PENDING".equals(producerRequest.getStaterequest().getState())) {
-            // Actualizar el estado de la solicitud a "DECLINED"
-            producerRequest.setStaterequest(new StateRequest(3L));
-
-            // Guardar los cambios en la base de datos
-            producerRequestRepository.save(producerRequest);
-
-        } else {
+        if (!"PENDING".equals(producerRequest.getStaterequest().getState())) {
             throw new IllegalStateException("La solicitud no está en estado 'PENDING'");
-        }
+        } 
+
+        // Actualizar el estado de la solicitud a "DECLINED"
+        producerRequest.setStaterequest(new StateRequest(3L));
+
+        // Guardar los cambios en la base de datos
+        producerRequestRepository.save(producerRequest);
     }
 
     @Transactional

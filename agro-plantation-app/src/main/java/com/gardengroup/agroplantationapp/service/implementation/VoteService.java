@@ -56,12 +56,12 @@ public class VoteService implements IVoteService {
             publication.setScore(newScore);
 
             return new VoteAndPublicationDTO(existingVote, publication);
-        } else {
-            // El usuario no ha votado antes, se crea un nuevo voto
-            Vote newVote = saveVote(user, publication);
+        } 
+        
+        // El usuario no ha votado antes, se crea un nuevo voto
+        Vote newVote = saveVote(user, publication);
 
-            return new VoteAndPublicationDTO(newVote, publication);
-        }
+        return new VoteAndPublicationDTO(newVote, publication);
     }
 
     public Vote saveVote(User user, Publication publication) {

@@ -64,11 +64,13 @@ public class AuthController {
             return new ResponseEntity<>(answer, HttpStatus.OK);
         } catch (Exception e) {
             log.error(e.getMessage());
+            
             if (e.getMessage().equals("User not found")) {
                 return new ResponseEntity<>(new AthAnswerDTO("User not found"), HttpStatus.UNAUTHORIZED);
-            } else {
-                return new ResponseEntity<>(new AthAnswerDTO("Error al autenticar"), HttpStatus.INTERNAL_SERVER_ERROR);
             }
+            
+            return new ResponseEntity<>(new AthAnswerDTO("Error al autenticar"), HttpStatus.INTERNAL_SERVER_ERROR);
+            
 
         }
     }
