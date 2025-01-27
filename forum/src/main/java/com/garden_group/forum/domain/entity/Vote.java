@@ -17,7 +17,7 @@ public class Vote {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    private ForumUser user;
 
     @ManyToOne
     @JoinColumn(name = "thread_id", nullable = false)

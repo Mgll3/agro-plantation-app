@@ -3,9 +3,11 @@ package com.garden_group.forum.domain.entity;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import lombok.*;
 
 @Entity
@@ -18,7 +20,8 @@ public class Thread {
     private Long id;
     private String title;
     private String content;
-    private String authorId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private ForumUser author;
     private Boolean isVisible;
     private LocalDateTime createdAt = LocalDateTime.now();
     private LocalDateTime updatedAt;
@@ -38,7 +41,7 @@ public class Thread {
         this.updatedAt = LocalDateTime.now();
     }
 
-    public void setAuthorId(String authorId) {
-        this.authorId = authorId;
+    public void setAuthor(ForumUser authorId) {
+        this.author = authorId;
     }
 }

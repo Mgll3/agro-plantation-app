@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 
 import com.garden_group.forum.application.command.CreateThreadCommand;
 import com.garden_group.forum.domain.entity.Thread;
+import com.garden_group.forum.domain.entity.ForumUser;
 import com.garden_group.forum.domain.event.thread.ThreadCreatedEvent;
 import com.garden_group.forum.infraestructure.repository.query.ThreadMongo;
 
@@ -15,7 +16,7 @@ public class ThreadMapper {
         thread.updateTitle(command.getTitle());
         thread.updateContent(command.getContent());
         thread.setVisibility(command.getIsVisible());
-        thread.setAuthorId(command.getAuthorId());
+        thread.setAuthor(new ForumUser(command.getAuthorId()));
 
         return thread;
     }
@@ -25,7 +26,7 @@ public class ThreadMapper {
         thread.setId(event.getId().toString());
         thread.setTitle(event.getTitle());
         thread.setContent(event.getContent());
-        thread.setAuthorId(event.getAuthorId());
+        thread.setAuthor(event.getAuthor().getId().toString());
         thread.setIsVisible(event.isVisible());
         thread.setCreatedAt(event.getCreatedAt());
         thread.setUpdatedAt(event.getUpdatedAt());
@@ -38,7 +39,7 @@ public class ThreadMapper {
                 thread.getId(),
                 thread.getTitle(),
                 thread.getContent(),
-                thread.getAuthorId(),
+                thread.getAuthor(),
                 thread.getCreatedAt(),
                 thread.getUpdatedAt(),
                 thread.getIsVisible());

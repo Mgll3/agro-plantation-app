@@ -92,3 +92,5 @@ Se esta haciendo uso de Java 21, Springboot 3.4.1, PostgreSQL, JPA, MongoDB, Pru
         </li>
         <!-- Añadir más integrantes del Equipo QA aquí -->
     </ul>
+    HU:
+    Que un usuario pueda votar 

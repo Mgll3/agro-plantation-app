@@ -17,6 +17,7 @@ import org.springframework.http.MediaType;
 import com.garden_group.forum.GardenForumServiceApplication;
 import com.garden_group.forum.TestApp;
 import com.garden_group.forum.application.command.CreateThreadCommand;
+import com.garden_group.forum.domain.entity.ForumUser;
 import com.garden_group.forum.presentation.controller.ThreadCommandController;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -42,7 +43,7 @@ public class ThreadTest {
     @DisplayName("Guardar un hilo en el sistema")
     @Test
     public void shouldSaveThreat() throws Exception {
-        CreateThreadCommand createCommand = new CreateThreadCommand("Title", "Content", "AuthorId", true);
+        CreateThreadCommand createCommand = new CreateThreadCommand("Title", "Content", 2L, true);
 
         ResultActions threadResponse = mockMvc.perform(post("/api/threads/create")
                 .contentType(MediaType.APPLICATION_JSON)

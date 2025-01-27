@@ -2,6 +2,7 @@ package com.garden_group.forum.domain.event.thread;
 
 import java.time.LocalDateTime;
 
+import com.garden_group.forum.domain.entity.ForumUser;
 import com.garden_group.forum.domain.event.Event;
 
 import lombok.AllArgsConstructor;
@@ -17,7 +18,7 @@ public class ThreadCreatedEvent extends Event {
     @Getter
     private final String content;
     @Getter
-    private final String authorId;
+    private final ForumUser author;
     @Getter
     private final LocalDateTime createdAt;
     @Getter
