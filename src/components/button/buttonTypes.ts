@@ -20,6 +20,7 @@ export type ButtonProps = {
 	buttonFontSize: string;
 	buttonWidth: string;
 	buttonPaddingY: string;
+	disabled?: boolean;
 	otherStyles?: string;
 	buttonFuncionality: ButtonActionType | ButtonLinkType | ButtonSubmitType;
 };

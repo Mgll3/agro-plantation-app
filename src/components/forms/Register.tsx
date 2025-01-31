@@ -84,7 +84,8 @@ const Register = forwardRef(function Register({
 			.matches(noSpaceEndingRegex, "No puede terminar con un espacio")
 			.matches(noSpecialCharacterRegex, "No se admiten caracteres especiales")
 			.matches(noNumberRegex, "No se admiten números")
-			.max(30, "Máximo 30 caracteres"),
+			.max(30, "Máximo 30 caracteres")
+			.min(2, "Al menos 2 caracteres"),
 
 		userAddressProvince: Yup.string()
 			.required("Debes completar este campo")
@@ -92,17 +93,18 @@ const Register = forwardRef(function Register({
 			.matches(noSpaceEndingRegex, "No puede terminar con un espacio")
 			.matches(noSpecialCharacterRegex, "No se admiten caracteres especiales")
 			.matches(noNumberRegex, "No se admiten números")
-			.max(30, "Máximo 30 caracteres"),
+			.max(30, "Máximo 30 caracteres")
+			.min(2, "Al menos 2 caracteres"),
 
 		userPassword: Yup.string()
 			.required("Debes completar este campo")
-			.max(15, "Máximo 15 caracteres")
 			.matches(noSpacesRegex, "No se admiten espacios")
 			.matches(lowerCaseRegex, "Debe tener al menos una letra minúscula")
 			.matches(upperCaseRegex, "Debe tener al menos una letra mayúscula")
 			.matches(numberRegex, "Debe tener al menos un número")
 			.matches(specialCharacterRegex, "Debe tener al menos una carácter especial")
-			.min(8, "Al menos 8 caracteres"),
+			.min(8, "Al menos 8 caracteres")
+			.max(15, "Máximo 15 caracteres"),
 
 		userPasswordConfirm: Yup.string()
 			.required("Debes confirmar tu contraseña")
@@ -266,13 +268,13 @@ const Register = forwardRef(function Register({
 									/>
 								</label>
 
-								{formik.touched.userName && formik.errors.userName ? (
+								{formik.touched.userLastName && formik.errors.userLastName ? (
 									<p
 										id="registerFormLastNameFieldErrorText"
 										className="absolute bottom-[-0.2rem] ml-4 text-[1.3rem] text-red-600
 										custom-1000:text-[1.6rem] custom-2500:text-[1.9rem]"
 									>
-										{formik.errors.userName}
+										{formik.errors.userLastName}
 									</p>
 								) : null}
 							</div>
@@ -293,13 +295,13 @@ const Register = forwardRef(function Register({
 									/>
 								</label>
 
-								{formik.touched.userName && formik.errors.userName ? (
+								{formik.touched.userEmail && formik.errors.userEmail ? (
 									<p
 										id="registerFormEmailFieldErrorText"
 										className="absolute bottom-[-0.2rem] ml-4 text-[1.3rem] text-red-600
 										custom-1000:text-[1.6rem] custom-2500:text-[1.9rem]"
 									>
-										{formik.errors.userName}
+										{formik.errors.userEmail}
 									</p>
 								) : null}
 							</div>
@@ -330,13 +332,13 @@ const Register = forwardRef(function Register({
 									/>
 								</label>
 
-								{formik.touched.userName && formik.errors.userName ? (
+								{formik.touched.userAddressCity && formik.errors.userAddressCity ? (
 									<p
 										id="registerFormCityFieldErrorText"
 										className="absolute bottom-[-0.2rem] ml-4 text-[1.3rem] text-red-600
 										custom-1000:text-[1.6rem] custom-2500:text-[1.9rem]"
 									>
-										{formik.errors.userName}
+										{formik.errors.userAddressCity}
 									</p>
 								) : null}
 							</div>
@@ -357,13 +359,13 @@ const Register = forwardRef(function Register({
 									/>
 								</label>
 
-								{formik.touched.userName && formik.errors.userName ? (
+								{formik.touched.userAddressProvince && formik.errors.userAddressProvince ? (
 									<p
 										id="registerFormProvinceFieldErrorText"
 										className="absolute bottom-[-0.2rem] ml-4 text-[1.3rem] text-red-600
 										custom-1000:text-[1.6rem] custom-2500:text-[1.9rem]"
 									>
-										{formik.errors.userName}
+										{formik.errors.userAddressProvince}
 									</p>
 								) : null}
 							</div>
@@ -384,13 +386,13 @@ const Register = forwardRef(function Register({
 									/>
 								</label>
 
-								{formik.touched.userName && formik.errors.userName ? (
+								{formik.touched.userPassword && formik.errors.userPassword ? (
 									<p
 										id="registerFormPasswordFieldErrorText"
 										className="absolute bottom-[-0.2rem] ml-4 text-[1.3rem] text-red-600
 										custom-1000:text-[1.6rem] custom-2500:text-[1.9rem]"
 									>
-										{formik.errors.userName}
+										{formik.errors.userPassword}
 									</p>
 								) : null}
 							</div>
@@ -411,13 +413,13 @@ const Register = forwardRef(function Register({
 									/>
 								</label>
 
-								{formik.touched.userName && formik.errors.userName ? (
+								{formik.touched.userPasswordConfirm && formik.errors.userPasswordConfirm ? (
 									<p
 										id="registerFormPasswordConfirmFieldErrorText"
 										className="absolute bottom-[-0.2rem] ml-4 text-[1.3rem] text-red-600
 										custom-1000:text-[1.6rem] custom-2500:text-[1.9rem]"
 									>
-										{formik.errors.userName}
+										{formik.errors.userPasswordConfirm}
 									</p>
 								) : null}
 							</div>
@@ -427,7 +429,7 @@ const Register = forwardRef(function Register({
 							<button
 								id="registerFormSubmitButton"
 								type="submit"
-								className="w-[96%] text-[1.5rem] py-2.5 m-[3rem_auto] shadow-md rounded-lg font-sans text-brandingYellow cursor-pointer font-bold bg-brandingDarkGreen hover:bg-opacity-80 transition-all
+								className="w-[96%] text-[1.5rem] py-[0.58rem] m-[2rem_auto] shadow-md rounded-lg font-sans text-brandingYellow cursor-pointer font-bold bg-brandingDarkGreen hover:bg-opacity-80 transition-all
 									custom-500:w-[80%] custom-900:w-[60%] custom-1200:w-[48.45%]
 									custom-900:py-[0.7rem] custom-2500:py-[1rem] custom-3500:py-[1.5rem]
 									custom-2500:mt-[4rem] custom-3500:mt-[6rem]
@@ -441,7 +443,7 @@ const Register = forwardRef(function Register({
 								id="registerFormSubmitButtonDisabled"
 								type="submit"
 								disabled
-								className="w-[96%] text-[1.5rem] py-[0.58rem] m-[2rem_auto] shadow-md rounded-lg font-sans text-black cursor-pointer font-bold bg-brandingYellow hover:bg-opacity-80 transition-all
+								className="w-[96%] text-[1.5rem] py-[0.58rem] m-[2rem_auto] shadow-md rounded-lg font-sans text-black font-bold bg-brandingYellow opacity-50 cursor-not-allowed transition-all
 									custom-500:w-[80%] custom-900:w-[60%] custom-1200:w-[48.45%]
 									custom-900:py-[0.7rem] custom-2500:py-[1rem] custom-3500:py-[1.5rem]
 									custom-2500:mt-[4rem] custom-3500:mt-[6rem]
@@ -464,7 +466,7 @@ const Register = forwardRef(function Register({
 								aria-description="Ir a Login"
 								id="registerFormLoginTextParagraph2"
 								onClick={handleLoginClick}
-								className="ml-[0.5rem] text-[2rem] text-brandingLightGreen font-loginFont hover:drop-shadow-smallText
+								className="ml-[0.5rem] text-[2rem] text-brandingLightGreen font-loginFont cursor-pointer hover:drop-shadow-smallText
 									custom-2500:ml-[1rem]
 									custom-500:text-[2.2rem] custom-2500:text-[2.5rem] custom-3500:text-[3.3rem]"
 								role="link"

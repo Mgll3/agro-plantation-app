@@ -25,6 +25,14 @@ const Login = forwardRef(function Login({
 	focus,
 	loginContainerElement
 }: LoginProps) {
+	const lowerCaseRegex = /[a-z]/g;
+	const upperCaseRegex = /[A-Z]/g;
+	const noSpaceAtStartRegex = /^\S/g;
+	const noSpaceEndingRegex = /\S$/g;
+	const noSpacesRegex = /^\S*$/g;
+	const numberRegex = /[0-9]/g;
+	const specialCharacterRegex = /[!@#$%^&_*-]/g;
+
 	const initialValues = {
 		email: "",
 		password: ""
@@ -33,10 +41,23 @@ const Login = forwardRef(function Login({
 	const registerSchema = Yup.object({
 		email: Yup.string()
 			.required("Debes completar este campo")
+			.matches(noSpacesRegex, "No se admiten espacios")
 			.email("El formato no coincide con un email")
-			.max(30, "Máximo 30 caracteres"),
+			.max(30, "Máximo 30 caracteres")
+			// Estas dos validaciones parecen no funcionar, pero lo que ocurre es que el navegador elimina automáticamente los espacios al principio y al final de un input de tipo "email", por lo que a YUP le llegan los valores ya sin los espacios. Dejo estas líneas de código por si cambia el comportamiento en otros navegadores.
+			.matches(noSpaceAtStartRegex, "No puede comenzar con un espacio")
+			.matches(noSpaceEndingRegex, "No puede terminar con un espacio"),
 
-		password: Yup.string().required("Debes completar este campo")
+		password: Yup.string()
+			.required("Debes completar este campo")
+			.matches(noSpaceAtStartRegex, "No puede comenzar con un espacio")
+			.matches(noSpacesRegex, "No se admiten espacios")
+			.matches(lowerCaseRegex, "Debe tener al menos una letra minúscula")
+			.matches(upperCaseRegex, "Debe tener al menos una letra mayúscula")
+			.matches(numberRegex, "Debe tener al menos un número")
+			.matches(specialCharacterRegex, "Debe tener al menos una carácter especial")
+			.min(8, "Al menos 8 caracteres")
+			.max(15, "Máximo 15 caracteres")
 	});
 
 	return (
@@ -125,119 +146,123 @@ const Login = forwardRef(function Login({
 				</div>
 
 				<Formik initialValues={initialValues} validationSchema={registerSchema} onSubmit={handleSubmit}>
-					<Form
-						name="loginForm"
-						id="loginForm"
-						encType="multipart/form-data"
-						className="flex flex-col items-center w-[100%] mt-[5.6rem] font-sans text-center text-black border-solid bg-[#EAE3C0]"
-					>
-						<div
-							id="loginFormFieldsContainer"
-							className="flex flex-col justify-center items-center w-[90%]
+					{({ isValid, dirty }) => (
+						<Form
+							name="loginForm"
+							id="loginForm"
+							encType="multipart/form-data"
+							className="flex flex-col items-center w-[100%] mt-[5.6rem] font-sans text-center text-black border-solid bg-[#EAE3C0]"
+						>
+							<div
+								id="loginFormFieldsContainer"
+								className="flex flex-col justify-center items-center w-[90%]
 							custom-750:w-[70%] custom-1000:w-[60%] custom-1200:w-[42%] custom-1400:w-[32.55%]"
-						>
-							<div className="relative w-full" id="loginFormEmailField">
-								<Field
-									type="email"
-									id="loginEmail"
-									name="email"
-									placeholder="Correo Electrónico"
-									className="w-full pl-[0.1rem] mb-[2.5rem] bg-brandingLightYellow border-b-[2px] border-b-grey700 text-[1.6rem] placeholder:text-[2rem] placeholder-grey600 outline-none
+							>
+								<div className="relative w-full" id="loginFormEmailField">
+									<Field
+										type="email"
+										id="loginEmail"
+										name="email"
+										placeholder="Correo Electrónico"
+										className="w-full pl-[0.1rem] mb-[2.5rem] bg-brandingLightYellow border-b-[2px] border-b-grey700 text-[1.6rem] placeholder:text-[2rem] placeholder-grey600 outline-none
 										custom-500:text-[2rem] custom-1000:text-[2.2rem] custom-1900:text-[2.4rem] custom-2500:text-[3rem] custom-3500:text-[4rem]
 										custom-1900:placeholder:text-[2.3rem] custom-2500:placeholder:text-[3rem] custom-3500:placeholder:text-[4rem]"
-								></Field>
+									></Field>
 
-								<ErrorMessage name="email">
-									{(errorMsg) => (
-										<p
-											id="loginFormEmailFieldErrorText"
-											className="absolute bottom-[-0.2rem] ml-4 text-[1.3rem] text-red-600
+									<ErrorMessage name="email">
+										{(errorMsg) => (
+											<p
+												id="loginFormEmailFieldErrorText"
+												className="absolute bottom-[-0.2rem] ml-4 text-[1.3rem] text-red-600
 										custom-1000:text-[1.6rem] custom-2500:text-[1.9rem]"
-										>
-											{errorMsg}
-										</p>
-									)}
-								</ErrorMessage>
-							</div>
+											>
+												{errorMsg}
+											</p>
+										)}
+									</ErrorMessage>
+								</div>
 
-							<div className="relative w-full" id="loginFormPasswordField">
-								<Field
-									type="password"
-									id="loginPassword"
-									name="password"
-									placeholder="Contraseña"
-									className="w-full pt-[2.4rem] pl-[0.1rem] mb-[2.5rem] bg-brandingLightYellow border-b-[2px] border-b-grey700 text-[1.6rem] placeholder:text-[2rem] placeholder-grey600 outline-none
+								<div className="relative w-full" id="loginFormPasswordField">
+									<Field
+										type="password"
+										id="loginPassword"
+										name="password"
+										placeholder="Contraseña"
+										className="w-full pt-[2.4rem] pl-[0.1rem] mb-[2.5rem] bg-brandingLightYellow border-b-[2px] border-b-grey700 text-[1.6rem] placeholder:text-[2rem] placeholder-grey600 outline-none
 										custom-500:text-[2rem] custom-1000:text-[2.2rem] custom-1900:text-[2.4rem] custom-2500:text-[3rem] custom-3500:text-[4rem]
 										custom-1900:placeholder:text-[2.3rem] custom-2500:placeholder:text-[3rem] custom-3500:placeholder:text-[4rem]"
-								></Field>
+									></Field>
 
-								<ErrorMessage name="password">
-									{(errorMsg) => (
-										<p
-											id="loginFormPasswordFieldErrorText"
-											className="absolute bottom-[-0.2rem] ml-4 text-[1.3rem] text-red-600
+									<ErrorMessage name="password">
+										{(errorMsg) => (
+											<p
+												id="loginFormPasswordFieldErrorText"
+												className="absolute bottom-[-0.2rem] ml-4 text-[1.3rem] text-red-600
 										custom-1000:text-[1.6rem] custom-2500:text-[1.9rem]"
-										>
-											{errorMsg}
-										</p>
-									)}
-								</ErrorMessage>
+											>
+												{errorMsg}
+											</p>
+										)}
+									</ErrorMessage>
+								</div>
 							</div>
-						</div>
 
-						{loginState === "loginError" && (
-							<p className=" text-red-500 p-2" id="loginFormLoginErrorText">
-								Email / Clave Incorrectos
-							</p>
-						)}
+							{loginState === "loginError" && (
+								<p className=" text-red-500 p-2" id="loginFormLoginErrorText">
+									Email / Clave Incorrectos
+								</p>
+							)}
 
-						{loginState === "networkError" && (
-							<NetworkError
-								failedAction="realizar el login"
-								buttonText="Volver a intentar"
-								handleClose={closeErrorMessages}
-							/>
-						)}
+							{loginState === "networkError" && (
+								<NetworkError
+									failedAction="realizar el login"
+									buttonText="Volver a intentar"
+									handleClose={closeErrorMessages}
+								/>
+							)}
 
-						{loginState === "loading" && <Loading />}
-
-						<div
-							id="loginFormSubmitButtonContainer"
-							className="w-full mt-[4rem]
-							custom-390:mt-[8rem]"
-						>
-							<Button
-								buttonColor="yellow"
-								buttonFontSize="text-[1.5rem] custom-500:text-[1.7rem] custom-750:text-[2rem] custom-2500:text-[3rem] custom-3500:text-[4rem]"
-								buttonWidth="w-[90%] custom-500:w-[80%] custom-700:w-[70%] custom-1000:w-[60%] custom-1200:w-[42%] custom-1400:w-[32.55%]"
-								buttonPaddingY="py-[0.58rem] custom-900:py-[0.9rem] custom-2500:py-[1rem] custom-3500:py-[1.5rem]"
-								buttonFuncionality={{ submitText: "Iniciar Sesión" }}
-							/>
+							{loginState === "loading" && <Loading />}
 
 							<div
-								className="flex flex-wrap justify-center items-baseline w-full mt-[1rem]"
-								id="loginFormRegisterTextContainer"
+								id="loginFormSubmitButtonContainer"
+								className="w-full mt-[4rem]
+							custom-390:mt-[8rem]"
 							>
-								<p
-									id="loginFormRegisterTextParagraph1"
-									className="text-[1.4rem] text-black font-sans drop-shadow-smallText
-								custom-500:text-[1.6rem] custom-2500:text-[2rem] custom-3500:text-[2.5rem]"
+								<Button
+									buttonColor={isValid && dirty ? "green" : "yellow"}
+									buttonFontSize="text-[1.5rem] custom-500:text-[1.7rem] custom-750:text-[2rem] custom-2500:text-[3rem] custom-3500:text-[4rem]"
+									buttonWidth="w-[90%] custom-500:w-[80%] custom-700:w-[70%] custom-1000:w-[60%] custom-1200:w-[42%] custom-1400:w-[32.55%]"
+									buttonPaddingY="py-[0.58rem] custom-900:py-[0.9rem] custom-2500:py-[1rem] custom-3500:py-[1.5rem]"
+									buttonFuncionality={{ submitText: "Iniciar Sesión" }}
+									otherStyles={isValid && dirty ? "" : "opacity-50 cursor-not-allowed"}
+									disabled={isValid && dirty ? false : true}
+								/>
+
+								<div
+									className="flex flex-wrap justify-center items-baseline w-full mt-[1rem]"
+									id="loginFormRegisterTextContainer"
 								>
-									Si no tienes una cuenta, por favor
-								</p>
-								<p
-									id="loginFormRegisterTextParagraph2"
-									onClick={handleRegisterClick}
-									className="ml-[0.5rem] text-[2rem] text-brandingLightGreen font-loginFont hover:drop-shadow-smallText
+									<p
+										id="loginFormRegisterTextParagraph1"
+										className="text-[1.4rem] text-black font-sans drop-shadow-smallText
+								custom-500:text-[1.6rem] custom-2500:text-[2rem] custom-3500:text-[2.5rem]"
+									>
+										Si no tienes una cuenta, por favor
+									</p>
+									<p
+										id="loginFormRegisterTextParagraph2"
+										onClick={handleRegisterClick}
+										className="ml-[0.5rem] text-[2rem] text-brandingLightGreen font-loginFont hover:drop-shadow-smallText
 									custom-2500:ml-[1rem]
 									custom-500:text-[2.2rem] custom-2500:text-[2.5rem] custom-3500:text-[3.3rem]"
-									role="button"
-								>
-									Regístrate
-								</p>
+										role="button"
+									>
+										Regístrate
+									</p>
+								</div>
 							</div>
-						</div>
-					</Form>
+						</Form>
+					)}
 				</Formik>
 			</div>
 		</div>
