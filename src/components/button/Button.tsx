@@ -8,7 +8,7 @@ function Button({
 	buttonWidth,
 	buttonPaddingY,
 	buttonFuncionality,
-	disabled,
+	disabled = false,
 	otherStyles
 }: ButtonProps) {
 	let bgColor: string = "";
