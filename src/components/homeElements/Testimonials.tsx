@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { testimonialsData } from "../../data/testimonialsData";
 import { useUserRoleContext } from "../../context/UserRoleContext";
 
@@ -67,10 +67,6 @@ function Testimonials() {
 		prevTestimonialElement.current!.classList.add("left-[0%]");
 
 		prevTestimonialTimeout.current = window.setTimeout(() => {
-			prevTestimonialElement.current!.classList.remove("duration-700");
-			prevTestimonialElement.current!.classList.remove("left-[0%]");
-			prevTestimonialElement.current!.classList.add("left-[-100%]");
-
 			if (currentIndex >= 2) {
 				setSelectedTestimonial(currentIndex - 2);
 			} else if (currentIndex === 1) {
@@ -87,10 +83,6 @@ function Testimonials() {
 		nextTestimonialElement.current!.classList.add("right-[0%]");
 
 		nextTestimonialTimeout.current = window.setTimeout(() => {
-			nextTestimonialElement.current!.classList.remove("duration-700");
-			nextTestimonialElement.current!.classList.remove("right-[0%]");
-			nextTestimonialElement.current!.classList.add("right-[-100%]");
-
 			if (testimonialsData.length - 1 - currentIndex >= 2) {
 				setSelectedTestimonial(currentIndex + 2);
 			} else if (testimonialsData.length - 1 - currentIndex === 1) {
@@ -150,6 +142,17 @@ function Testimonials() {
 	useEffect(() => {
 		selectedTestimonialRef.current = selectedTestimonial;
 	}, [selectedTestimonial]);
+
+	// Evita parpadeos cuando se cambia de testimonio, ya que garantiza que se han eliminado las clases de animación previas
+	useLayoutEffect(() => {
+		prevTestimonialElement.current!.classList.remove("duration-700");
+		prevTestimonialElement.current!.classList.remove("left-[0%]");
+		prevTestimonialElement.current!.classList.add("left-[-100%]");
+
+		nextTestimonialElement.current!.classList.remove("duration-700");
+		nextTestimonialElement.current!.classList.remove("right-[0%]");
+		nextTestimonialElement.current!.classList.add("right-[-100%]");
+	});
 
 	return (
 		<div className="relative w-full">
