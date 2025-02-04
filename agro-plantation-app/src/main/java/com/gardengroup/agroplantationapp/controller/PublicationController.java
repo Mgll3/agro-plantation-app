@@ -88,6 +88,31 @@ public class PublicationController {
         return new ResponseEntity<>(HttpStatus.OK);
 
     }
+    @Operation(summary = "Solicitar aprobación de una publicación", description = "Endpoint para que el autor de una publicación solicite su aprobación", tags = "Publication")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Solicitud de aprobación enviada con éxito."),
+            @ApiResponse(responseCode = "404", description = "Publicación no encontrada."),
+            @ApiResponse(responseCode = "501", description = "Error al procesar la solicitud.")
+    })
+    @PostMapping("/{publicationId}/requestApproval")
+    public ResponseEntity<String> requestApproval(@PathVariable Long publicationId, HttpServletRequest request) {
+        String email = securityService.getEmail(request);
+        publicationService.requestApproval(publicationId, email);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @Operation(summary = "Obtener publicaciones pendientes", description = "Endpoint para obtener las publicaciones pendientes", tags = "Publication")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Éxito al obtener las publicaciones pendientes", content = @Content(schema = @Schema(implementation = List.class))),
+            @ApiResponse(responseCode = "204", description = "No hay publicaciones pendientes para mostrar"),
+            @ApiResponse(responseCode = "501", description = "Error al procesar la solicitud", content = @Content(schema = @Schema(implementation = String.class)))
+    })
+    @GetMapping("/pendingPublications")
+    public ResponseEntity<List<Publication>> getPendingPublications() {
+        List<Publication> pendingPublications = publicationService.pendingPublications();
+        return ResponseEntity.ok(pendingPublications);
+    }
+
 
     @Operation(summary = "Actualizar visibilidad de una publicación", description = "Endpoint para actualizar la visibilidad de una publicación por su ID", tags = {
             "Publication" })
@@ -188,17 +213,6 @@ public class PublicationController {
         return ResponseEntity.status(HttpStatus.CREATED).body(vote);
     }
 
-    @Operation(summary = "Obtener publicaciones pendientes", description = "Endpoint para obtener las publicaciones pendientes", tags = "Publication")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Éxito al obtener las publicaciones pendientes", content = @Content(schema = @Schema(implementation = List.class))),
-            @ApiResponse(responseCode = "204", description = "No hay publicaciones pendientes para mostrar"),
-            @ApiResponse(responseCode = "501", description = "Error al procesar la solicitud", content = @Content(schema = @Schema(implementation = String.class)))
-    })
-    @GetMapping("/pendingPublications")
-    public ResponseEntity<List<Publication>> getPendingPublications() {
-        List<Publication> pendingPublications = publicationService.pendingPublications();
-        return ResponseEntity.ok(pendingPublications);
-    }
 
     @Operation(summary = "Aprobar publicación", description = "Endpoint para aprobar una solicitud de publicación", tags = "Publication")
     @ApiResponses(value = {
@@ -313,18 +327,6 @@ public class PublicationController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @Operation(summary = "Solicitar aprobación de una publicación", description = "Endpoint para que el autor de una publicación solicite su aprobación", tags = "Publication")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Solicitud de aprobación enviada con éxito."),
-            @ApiResponse(responseCode = "404", description = "Publicación no encontrada."),
-            @ApiResponse(responseCode = "501", description = "Error al procesar la solicitud.")
-    })
-    @PostMapping("/{publicationId}/requestApproval")
-    public ResponseEntity<String> requestApproval(@PathVariable Long publicationId, HttpServletRequest request) {
-        String email = securityService.getEmail(request);
-        publicationService.requestApproval(publicationId, email);
 
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
 
 }

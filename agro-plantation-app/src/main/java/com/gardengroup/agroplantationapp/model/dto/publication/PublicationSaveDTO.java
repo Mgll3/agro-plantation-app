@@ -8,6 +8,7 @@ import lombok.Data;
 public class PublicationSaveDTO {
 
     @NotBlank(message = "Title is mandatory")
+    @Size(max = 50, message = "El título no puede superar los 50 caracteres.")
     private String title;
 
     @NotNull(message = "Plantation is mandatory")

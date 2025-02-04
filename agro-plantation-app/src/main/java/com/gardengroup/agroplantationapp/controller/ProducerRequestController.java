@@ -62,7 +62,7 @@ public class ProducerRequestController {
     @Operation(summary = "Rechaza una solicitud de productor", description = "Este endpoint permite rechazar una solicitud de productor", tags = {
             "ProducerRequest" })
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Éxito al rechazar la solicitud del productor"),
+            @ApiResponse(responseCode = "200", description = "Éxito al  aprobar  solicitud del productor"),
             @ApiResponse(responseCode = "501", description = "Error al rechazar la solicitud del productor")
     })
     @PostMapping("/reject/{producerRequestId}")
