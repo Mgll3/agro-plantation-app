@@ -12,15 +12,24 @@ export type TestimonialsDataType = {
 function Testimonials() {
 	const [selectedTestimonial, setSelectedTestimonial] = useState<number>(2);
 	const { userRole } = useUserRoleContext();
+	const actualTestimonialElement = useRef<HTMLDivElement>(null);
 	const prevTestimonialElement = useRef<HTMLDivElement>(null);
 	const nextTestimonialElement = useRef<HTMLDivElement>(null);
 	const prevTestimonialTimeout = useRef<number>();
 	const nextTestimonialTimeout = useRef<number>();
+
+	// Es necesario utilizar una referencia para almacenar selectedTestimonial ya que el valor del estado no se actualiza en las funciones que gestionan el swipe (el valor permanece igual al que tenía cuando se renderizó el componente cuando generamos un evento).
+	const selectedTestimonialRef = useRef<number>(selectedTestimonial);
+
 	let selectedTestimonial2: number;
 	let prevTestimonialIndex1: number;
 	let prevTestimonialIndex2: number;
 	let nextTestimonialIndex1: number;
 	let nextTestimonialIndex2: number;
+
+	// Estas variables se almacenan el punto unicial y final (en el eje X) de un evento touch (swipe)
+	const touchStartX = useRef<number>(0); // Initial touch coordinate
+	const touchEndX = useRef<number>(0); // Final touch coordinate
 
 	if (selectedTestimonial < testimonialsData.length - 1) {
 		selectedTestimonial2 = selectedTestimonial + 1;
@@ -52,7 +61,7 @@ function Testimonials() {
 		prevTestimonialIndex1 = testimonialsData.length - 1;
 	}
 
-	function prevClick() {
+	function prevClick(currentIndex: number = selectedTestimonial) {
 		prevTestimonialElement.current!.classList.add("duration-700");
 		prevTestimonialElement.current!.classList.remove("left-[-100%]");
 		prevTestimonialElement.current!.classList.add("left-[0%]");
@@ -62,17 +71,17 @@ function Testimonials() {
 			prevTestimonialElement.current!.classList.remove("left-[0%]");
 			prevTestimonialElement.current!.classList.add("left-[-100%]");
 
-			if (selectedTestimonial >= 2) {
-				setSelectedTestimonial(selectedTestimonial - 2);
-			} else if (selectedTestimonial === 1) {
+			if (currentIndex >= 2) {
+				setSelectedTestimonial(currentIndex - 2);
+			} else if (currentIndex === 1) {
 				setSelectedTestimonial(testimonialsData.length - 1);
-			} else if (selectedTestimonial === 0) {
+			} else if (currentIndex === 0) {
 				setSelectedTestimonial(testimonialsData.length - 2);
 			}
 		}, 800);
 	}
 
-	function nextClick() {
+	function nextClick(currentIndex: number = selectedTestimonial) {
 		nextTestimonialElement.current!.classList.add("duration-700");
 		nextTestimonialElement.current!.classList.remove("right-[-100%]");
 		nextTestimonialElement.current!.classList.add("right-[0%]");
@@ -82,14 +91,37 @@ function Testimonials() {
 			nextTestimonialElement.current!.classList.remove("right-[0%]");
 			nextTestimonialElement.current!.classList.add("right-[-100%]");
 
-			if (testimonialsData.length - 1 - selectedTestimonial >= 2) {
-				setSelectedTestimonial(selectedTestimonial + 2);
-			} else if (testimonialsData.length - 1 - selectedTestimonial === 1) {
+			if (testimonialsData.length - 1 - currentIndex >= 2) {
+				setSelectedTestimonial(currentIndex + 2);
+			} else if (testimonialsData.length - 1 - currentIndex === 1) {
 				setSelectedTestimonial(0);
-			} else if (testimonialsData.length - 1 - selectedTestimonial === 0) {
+			} else if (testimonialsData.length - 1 - currentIndex === 0) {
 				setSelectedTestimonial(1);
 			}
 		}, 800);
+	}
+
+	// Estas funciones manejan el swipe.
+
+	function touchstart(e: TouchEvent) {
+		if (e.changedTouches.length > 0) {
+			touchStartX.current = e.changedTouches[0].clientX;
+		}
+	}
+
+	function touchend(e: TouchEvent) {
+		if (e.changedTouches.length > 0) {
+			touchEndX.current = e.changedTouches[0].clientX;
+			const SWIPE_THRESHOLD = 40;
+
+			if (touchStartX.current - touchEndX.current > SWIPE_THRESHOLD) {
+				nextClick(selectedTestimonialRef.current);
+			}
+
+			if (touchStartX.current - touchEndX.current < -SWIPE_THRESHOLD) {
+				prevClick(selectedTestimonialRef.current);
+			}
+		}
 	}
 
 	useEffect(() => {
@@ -98,6 +130,26 @@ function Testimonials() {
 			clearTimeout(nextTestimonialTimeout.current);
 		};
 	});
+
+	useEffect(() => {
+		// Esta parte añade el evento touchstart y touchend para gestionar el swipe.
+		if (actualTestimonialElement.current) {
+			actualTestimonialElement.current!.addEventListener("touchstart", touchstart);
+			actualTestimonialElement.current!.addEventListener("touchend", touchend);
+		}
+
+		return () => {
+			if (actualTestimonialElement.current) {
+				actualTestimonialElement.current.removeEventListener("touchstart", touchstart);
+				actualTestimonialElement.current.removeEventListener("touchend", touchend);
+			}
+		};
+	}, []);
+
+	// Actualizamos el valor de selectedTestimonialRef en cada re-renderizado.
+	useEffect(() => {
+		selectedTestimonialRef.current = selectedTestimonial;
+	}, [selectedTestimonial]);
 
 	return (
 		<div className="relative w-full">
@@ -113,10 +165,11 @@ function Testimonials() {
 
 			{/* BOTONES */}
 			<button
+				type="button"
 				className="absolute z-20 top-[50%] -left-[1.25rem] w-[1rem]
 					custom-900:-left-[2.5rem] custom-1000:-left-[4rem] custom-1200:-left-[6rem] custom-1400:-left-[7.6rem] custom-2500:-left-[10rem] custom-3500:-left-[14rem]
 					custom-600:w-[1.3rem] custom-700:w-[1.6rem] custom-900:w-[2rem] custom-1200:w-[2.6rem] custom-1900:w-[3.2rem] custom-2500:w-[4rem] custom-3500:w-[5.5rem]"
-				onClick={prevClick}
+				onClick={() => prevClick()}
 			>
 				<img
 					src="icons/arrow2.svg"
@@ -126,10 +179,11 @@ function Testimonials() {
 			</button>
 
 			<button
+				type="button"
 				className="absolute z-20 top-[50%] -right-[1.25rem] w-[1rem]
 					custom-900:-right-[2.5rem] custom-1000:-right-[4rem] custom-1200:-right-[6rem] custom-1400:-right-[7.6rem] custom-2500:-right-[10rem] custom-3500:-right-[14rem]
 					custom-600:w-[1.3rem] custom-700:w-[1.6rem] custom-900:w-[2rem] custom-1200:w-[2.6rem] custom-1900:w-[3.2rem] custom-2500:w-[4rem] custom-3500:w-[5.5rem]"
-				onClick={nextClick}
+				onClick={() => nextClick()}
 			>
 				<img src="icons/arrow2.svg" alt="Flecha a la derecha" className="w-full hover:scale-125 duration-300" />
 			</button>
@@ -226,6 +280,7 @@ function Testimonials() {
 					<div
 						className={`flex items-center justify-center gap-x-[0.8rem] w-[100%] h-full ${userRole !== "visitor" && "bg-terciary300"}
 							custom-400:gap-x-[1.6rem] custom-1000:gap-x-[3rem] custom-1200:gap-x-[4rem] custom-1900:gap-x-[6rem] custom-2500:gap-x-[8rem] custom-3500:gap-x-[10rem]`}
+						ref={actualTestimonialElement}
 					>
 						<div
 							className="overflow-hidden flex flex-col w-[48.1%] aspect-[191/400] text-[19.78px] border border-black border-solid bg-white rounded-2xl
