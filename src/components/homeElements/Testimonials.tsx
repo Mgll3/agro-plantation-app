@@ -143,7 +143,7 @@ function Testimonials() {
 		selectedTestimonialRef.current = selectedTestimonial;
 	}, [selectedTestimonial]);
 
-	// Evita parpadeos cuando se cambia de testimonio, ya que garantiza que se han eliminado las clases de animación previas
+	// Evita parpadeos cuando se cambia de testimonio, ya que garantiza que se han eliminado las clases de animación previas antes de renderizar el nuevo testimonio.
 	useLayoutEffect(() => {
 		prevTestimonialElement.current!.classList.remove("duration-700");
 		prevTestimonialElement.current!.classList.remove("left-[0%]");

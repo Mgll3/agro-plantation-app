@@ -23,26 +23,32 @@ function PictureSlider({ sliderInfo, handleImageOnClick }: PictureSliderProps) {
 	const mainImgElement = useRef<HTMLImageElement>(null);
 	const prevImgElement = useRef<HTMLImageElement>(null);
 	const nextImgElement = useRef<HTMLImageElement>(null);
+
+	// Estas variables se almacenan el punto unicial y final (en el eje X) de un evento touch (swipe)
+	const touchStartX = useRef<number>(0); // Initial touch coordinate
+	const touchEndX = useRef<number>(0); // Final touch coordinate
+
 	const prevImgElementTimeout = useRef<number>();
 	const nextImgElementTimeout = useRef<number>();
 
-	let prevImg: string = "";
-	let nextImg: string = "";
+	// Es necesario utilizar una referencia para almacenar prevImg y nextImg ya que su valor no se actualiza en las funciones que gestionan el swipe (el valor permanece igual al que tenía cuando se renderizó el componente cuando generamos un evento).
+	const prevImg = useRef<string>("");
+	const nextImg = useRef<string>("");
 
 	const mainImgIndex = sliderInfo.pictures.findIndex((element) => {
 		return element.url === mainImg;
 	});
 
 	if (mainImgIndex < sliderInfo.pictures.length - 1) {
-		nextImg = sliderInfo.pictures[mainImgIndex + 1].url;
+		nextImg.current = sliderInfo.pictures[mainImgIndex + 1].url;
 	} else {
-		nextImg = sliderInfo.pictures[0].url;
+		nextImg.current = sliderInfo.pictures[0].url;
 	}
 
 	if (mainImgIndex > 0) {
-		prevImg = sliderInfo.pictures[mainImgIndex - 1].url;
+		prevImg.current = sliderInfo.pictures[mainImgIndex - 1].url;
 	} else {
-		prevImg = sliderInfo.pictures[sliderInfo.pictures.length - 1].url;
+		prevImg.current = sliderInfo.pictures[sliderInfo.pictures.length - 1].url;
 	}
 
 	function changeToPrevImg() {
@@ -51,7 +57,7 @@ function PictureSlider({ sliderInfo, handleImageOnClick }: PictureSliderProps) {
 			mainImgElement.current!.classList.add("animate-sliderMainImgGoRight");
 
 			prevImgElementTimeout.current = window.setTimeout(() => {
-				setMainImg(prevImg);
+				setMainImg(prevImg.current);
 			}, 750);
 		}
 	}
@@ -62,8 +68,29 @@ function PictureSlider({ sliderInfo, handleImageOnClick }: PictureSliderProps) {
 			mainImgElement.current!.classList.add("animate-sliderMainImgGoLeft");
 
 			nextImgElementTimeout.current = window.setTimeout(() => {
-				setMainImg(nextImg);
+				setMainImg(nextImg.current);
 			}, 750);
+		}
+	}
+
+	function touchstart(e: TouchEvent) {
+		if (e.changedTouches.length > 0) {
+			touchStartX.current = e.changedTouches[0].clientX;
+		}
+	}
+
+	function touchend(e: TouchEvent) {
+		if (e.changedTouches.length > 0) {
+			touchEndX.current = e.changedTouches[0].clientX;
+			const SWIPE_THRESHOLD = 40;
+
+			if (touchStartX.current - touchEndX.current > SWIPE_THRESHOLD) {
+				changeToNextImg();
+			}
+
+			if (touchStartX.current - touchEndX.current < -SWIPE_THRESHOLD) {
+				changeToPrevImg();
+			}
 		}
 	}
 
@@ -73,6 +100,21 @@ function PictureSlider({ sliderInfo, handleImageOnClick }: PictureSliderProps) {
 			clearTimeout(nextImgElementTimeout.current);
 		};
 	});
+
+	useEffect(() => {
+		// Esta parte añade el evento touchstart y touchend para gestionar el swipe.
+		if (mainImgElement.current) {
+			mainImgElement.current!.addEventListener("touchstart", touchstart);
+			mainImgElement.current!.addEventListener("touchend", touchend);
+		}
+
+		return () => {
+			if (mainImgElement.current) {
+				mainImgElement.current.removeEventListener("touchstart", touchstart);
+				mainImgElement.current.removeEventListener("touchend", touchend);
+			}
+		};
+	}, []);
 
 	useLayoutEffect(() => {
 		prevImgElement.current!.classList.remove("animate-sliderPrevImgGoRight");
@@ -88,8 +130,8 @@ function PictureSlider({ sliderInfo, handleImageOnClick }: PictureSliderProps) {
 				custom-700:w-[80vw] custom-1000:w-[70vw] custom-1200:w-[57vw] custom-2500:w-[50vw]"
 			>
 				<img ref={mainImgElement} alt="" src={mainImg} className="absolute z-0 left-[0%] w-[100%] duration-700" />
-				<img ref={prevImgElement} alt="" src={prevImg} className="absolute z-10 left-[-100%] w-[100%]" />
-				<img ref={nextImgElement} alt="" src={nextImg} className="absolute z-10 right-[-100%] w-[100%]" />
+				<img ref={prevImgElement} alt="" src={prevImg.current} className="absolute z-10 left-[-100%] w-[100%]" />
+				<img ref={nextImgElement} alt="" src={nextImg.current} className="absolute z-10 right-[-100%] w-[100%]" />
 				<p
 					role="button"
 					onClick={handleImageOnClick}
