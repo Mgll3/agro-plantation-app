@@ -45,8 +45,9 @@ Este proyecto está desarrollado con Java 17 y Spring Boot 3.2.1. Usa Spring Web
     </ul>
 
 <h2>👨🏻‍💻Frontend✨</h2>
+
 <ul>
-    
+    <li>
         <strong>Nombre completo:</strong> Arturo López Rosa
         <ul>
             <li><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/arturo-lopez-rosa/">Arturo López Rosa</a></li>
@@ -56,6 +57,7 @@ Este proyecto está desarrollado con Java 17 y Spring Boot 3.2.1. Usa Spring Web
     </li>
     <!-- Añadir más integrantes del Equipo Frontend aquí -->
 </ul>
+
 
 <h2>🎭Equipo UX/UI🤩</h2>
     <ul>
