@@ -46,6 +46,14 @@ Este proyecto está desarrollado con Java 17 y Spring Boot 3.2.1. Usa Spring Web
 
 <h2>👨🏻‍💻Equipo Frontend✨</h2>
  <ul>
+     <li>
+            <strong>Nombre completo:</strong> Sergio Vazquez
+            <ul>
+                <li><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/sergio-vzqz">Sergio Vazquez</a></li>
+                <li><strong>Email:</strong> sergio.ivan.vzqz@gmail.com  </li>
+                <li><strong>Github:</strong> <a href="https://github.com/lElliotCode">https://github.com/lElliotCode</a></li>
+            </ul>
+        </li>
     
    
         <li>
