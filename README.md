@@ -7,9 +7,36 @@
 
 Este Microservicio se basa principalmente en los principios de Clean Architecture, DDD, CQRS y manejo de eventos. Por lo que bajo un dominio acotado(Foro) se guardan los datos en la BD PostgreSQl y a su vez se genera un evento para que posterior y asincronamente sea consumido y que tambien sean guardados los datos en la BD No SQL. Para así tener optimas operaciones de guardado y consulta.
 
-<h2><u><strong> 🛠️ Tecnologias y  🛠️</strong></u></h2>
-Este proyecto está desarrollado con Java 17 y Spring Boot 3.2.1. Usa Spring Web para la API REST, Spring Data JPA con MySQL para la persistencia, y Spring Security con JWT para la autenticación. Además, incorpora Cloudinary para manejo de imágenes, Swagger para documentación, Log4j2 para logs .el Frontend desarrollado con TypeScript, ReactJS y Tailwind CSS. Utiliza React Router DOM para la navegación,también se utiliza Yup junto con  Formik para formularios, y Axios para consumo de API y Leaflet + OpenStreetMap para la geolocalización y  mapas. El desarrollo sigue la metodología Scrum con Azure DevOps y cuenta con pruebas automatizadas en Jest.
-En cuanto al proceso de calidad (QA), se implementan pruebas automatizadas con Cypress y JavaScript, utilizando mockawesome para la generación de reportes. Las pruebas de API se realizan con Postman y Newman para obtener informes detallados de cada ejecución. La gestión y ejecución de pruebas manuales se lleva a cabo mediante QASE, una herramienta eficaz para el seguimiento de los casos de prueba.
+<h2><u><strong> 🛠️ Tecnologías 🛠️</strong></u></h2>
+
+Este proyecto está desarrollado con las siguientes tecnologías:
+
+### Backend:
+- **Java 17** y **Spring Boot 3.2.1**.
+- **Spring Web** para la API REST.
+- **Spring Data JPA** con **MySQL** para la persistencia de datos.
+- **Spring Security** con **JWT** para la autenticación y autorización.
+- **Cloudinary** para el manejo de imágenes.
+- **Swagger** para la documentación de la API.
+- **Log4j2** para la gestión de logs.
+
+### Frontend:
+- **TypeScript**, **ReactJS** y **Tailwind CSS**.
+- **React Router DOM** para la navegación.
+- **Yup** junto con **Formik** para la gestión de formularios.
+- **Axios** para el consumo de APIs.
+- **Leaflet** y **OpenStreetMap** para la geolocalización y visualización de mapas.
+
+### Metodología de Desarrollo:
+- El desarrollo sigue la metodología **Scrum** utilizando **Azure DevOps** para la gestión de tareas y colaboración entre los miembros del equipo.
+
+### Pruebas y Calidad (QA):
+- **Pruebas automatizadas** con **Cypress** y **JavaScript**, generando reportes con **mockawesome**.
+- **Pruebas de API** realizadas con **Postman** y **Newman** para obtener reportes detallados.
+- **Gestión y ejecución de pruebas manuales** mediante **QASE**, una herramienta eficaz para el seguimiento y control de los casos de prueba.
+- **Pruebas automatizadas** de frontend y backend utilizando **Jest** para garantizar la calidad del código y su funcionalidad.
+
+
 
 
 <h2><u><strong>💪Integrantes del Equipo</strong></u></h2>
