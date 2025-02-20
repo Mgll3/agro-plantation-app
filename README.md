@@ -55,7 +55,7 @@ Este proyecto está desarrollado con Java 17 y Spring Boot 3.2.1. Usa Spring Web
             <li><strong>Github:</strong> <a href="https://github.com/ArturoFLR">ArturoFLR</a></li>
         </ul>
     </li>
-    <!-- Añadir más integrantes del Equipo Frontend aquí -->
+
 </ul>
 
 
