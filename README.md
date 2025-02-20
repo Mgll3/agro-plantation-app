@@ -9,6 +9,7 @@ Este Microservicio se basa principalmente en los principios de Clean Architectur
 
 <h2><u><strong> 🛠️ Tecnologias y  🛠️</strong></u></h2>
 Este proyecto está desarrollado con Java 17 y Spring Boot 3.2.1. Usa Spring Web para la API REST, Spring Data JPA con MySQL para la persistencia, y Spring Security con JWT para la autenticación. Además, incorpora Cloudinary para manejo de imágenes, Swagger para documentación, Log4j2 para logs .el Frontend desarrollado con TypeScript, ReactJS y Tailwind CSS. Utiliza React Router DOM para la navegación,también se utiliza Yup junto con  Formik para formularios, y Axios para consumo de API y Leaflet + OpenStreetMap para la geolocalización y  mapas. El desarrollo sigue la metodología Scrum con Azure DevOps y cuenta con pruebas automatizadas en Jest.
+En cuanto al proceso de calidad (QA), se implementan pruebas automatizadas con Cypress y JavaScript, utilizando mockawesome para la generación de reportes. Las pruebas de API se realizan con Postman y Newman para obtener informes detallados de cada ejecución. La gestión y ejecución de pruebas manuales se lleva a cabo mediante QASE, una herramienta eficaz para el seguimiento de los casos de prueba.
 
 
 <h2><u><strong>💪Integrantes del Equipo</strong></u></h2>
