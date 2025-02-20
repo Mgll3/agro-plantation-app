@@ -8,8 +8,7 @@
 Este Microservicio se basa principalmente en los principios de Clean Architecture, DDD, CQRS y manejo de eventos. Por lo que bajo un dominio acotado(Foro) se guardan los datos en la BD PostgreSQl y a su vez se genera un evento para que posterior y asincronamente sea consumido y que tambien sean guardados los datos en la BD No SQL. Para así tener optimas operaciones de guardado y consulta.
 
 <h2><u><strong> 🛠️ Tecnologias y  🛠️</strong></u></h2>
-
-Se esta haciendo uso de Java 21, Springboot 3.4.1, PostgreSQL, JPA, MongoDB, Pruebas con Junit 5.
+Este proyecto está desarrollado con Java 17 y Spring Boot 3.2.1. Usa Spring Web para la API REST, Spring Data JPA con MySQL para la persistencia, y Spring Security con JWT para la autenticación. Además, incorpora Cloudinary para manejo de imágenes, Swagger para documentación, Log4j2 para logs .el Frontend desarrollado con TypeScript, ReactJS y Tailwind CSS. Utiliza React Router DOM para la navegación,también se utiliza Yup junto con  Formik para formularios, y Axios para consumo de API y Leaflet + OpenStreetMap para la geolocalización y  mapas. El desarrollo sigue la metodología Scrum con Azure DevOps y cuenta con pruebas automatizadas en Jest.
 
 
 <h2><u><strong>💪Integrantes del Equipo</strong></u></h2>
