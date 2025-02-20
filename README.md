@@ -70,7 +70,6 @@ Este proyecto está desarrollado con Java 17 y Spring Boot 3.2.1. Usa Spring Web
             </ul>
         </li>
    
-        <!-- Añadir más integrantes del Equipo UX/UI aquí -->
     </ul>
 
 <h2>📋Equipo QA🐞</h2>
