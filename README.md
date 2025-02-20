@@ -70,7 +70,7 @@ Este proyecto está desarrollado con Java 17 y Spring Boot 3.2.1. Usa Spring Web
             </ul>
         </li>
    
-    </ul>
+
 
 <h2>📋Equipo QA🐞</h2>
     <ul>
