@@ -43,16 +43,7 @@ Este proyecto está desarrollado con las siguientes tecnologías:
 
 <h2>👨🏻‍💻Equipo Backend👩🏻‍💻</h2>
  <ul>
-        <li>
-            <strong>Nombre completo:</strong> Sergio Vazquez
-            <ul>
-                <li><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/sergio-vzqz">Sergio Vazquez</a></li>
-                <li><strong>Email:</strong> sergio.ivan.vzqz@gmail.com  </li>
-                <li><strong>Github:</strong> <a href="https://github.com/lElliotCode">https://github.com/lElliotCode</a></li>
-            </ul>
-        </li>
-    <ul>
-        <li>
+
             <strong>Nombre completo:</strong> Miguel Angel Alvarez Montoya
             <ul>
                 <li><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/mgl-dev/">Miguel Montoya</a></li>
