@@ -72,7 +72,7 @@ Este proyecto está desarrollado con Java 17 y Spring Boot 3.2.1. Usa Spring Web
    
 
 
-<h2>📋Equipo QA🐞</h2>
+<h2>📋 QA🐞</h2>
     <ul>
         <li>
             <strong>Nombre completo:</strong> Bouza Jorge Leandro
