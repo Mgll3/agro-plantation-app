@@ -45,6 +45,8 @@ Este proyecto está desarrollado con Java 17 y Spring Boot 3.2.1. Usa Spring Web
     </ul>
 
 <h2>👨🏻‍💻Equipo Frontend✨</h2>
+ <ul>
+    
    
         <li>
             <strong>Nombre completo:</strong> Arturo López Rosa
