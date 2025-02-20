@@ -41,27 +41,28 @@ Este proyecto está desarrollado con las siguientes tecnologías:
 
 <h2><u><strong>💪Integrantes del Equipo</strong></u></h2>
 
-<h2>👨🏻‍💻Equipo Backend👩🏻‍💻</h2>
- <ul>
+<h2>👨🏻‍💻 Equipo Backend 👩🏻‍💻</h2>
+<ul>
+    <li>
+        <strong>Nombre completo:</strong> Miguel Angel Alvarez Montoya
+        <ul>
+            <li><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/mgl-dev/">Miguel Montoya</a></li>
+            <li><strong>Email:</strong> miguelynando3@gmail.com</li>
+            <li><strong>Github:</strong> <a href="https://github.com/Mgll3/RepositorioMgl">https://github.com/Mgll3/RepositorioMgl</a></li>
+        </ul>
+    </li>
+    <li>
+        <strong>Nombre completo:</strong> Alicia Sofia Ruiz
+        <ul>
+            <li><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/creacionesbrunila?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app">Alicia Sofia Ruiz</a></li>
+            <li><strong>Email:</strong> brunila110@gmail.com</li>
+            <li><strong>Github:</strong> <a href="https://github.com/creacionesbrunila">https://github.com/creacionesbrunila</a></li>
+            <li><strong>Portafolio:</strong> <a href="https://portfolio-sofia-ruiz.vercel.app/">Portafolio Desarrollador Backend Sofia Ruiz</a></li>
+        </ul>
+    </li>
+    <!-- Añadir más integrantes del Equipo Backend aquí -->
+</ul>
 
-            <strong>Nombre completo:</strong> Miguel Angel Alvarez Montoya
-            <ul>
-                <li><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/mgl-dev/">Miguel Montoya</a></li>
-                <li><strong>Email:</strong> miguelynando3@gmail.com</li>
-                <li><strong>Github:</strong> <a href="https://github.com/Mgll3/RepositorioMgl">https://github.com/Mgll3/RepositorioMgl</a></li>
-            </ul>
-        </li>
-      <li>
-            <strong>Nombre completo:</strong> Alicia Sofia Ruiz
-            <ul>
-                <li><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/creacionesbrunila?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app">Alicia Sofia Ruiz</a></li>
-                <li><strong>Email:</strong> brunila110@gmail.com</li>
-                <li><strong>Github:</strong> <a href="https://github.com/creacionesbrunila">https://github.com/creacionesbrunila</a></li>
-                <li><strong>Portafolio:</strong> <a href="https://portfolio-sofia-ruiz.vercel.app/">Portafolio Desarrollador Backend Sofia Ruiz</a></li>
-            </ul>
-        </li>
-        <!-- Añadir más integrantes del Equipo Backend aquí -->
-    </ul>
 
 <h2>👨🏻‍💻Frontend✨</h2>
 
