@@ -59,7 +59,7 @@ Este proyecto está desarrollado con Java 17 y Spring Boot 3.2.1. Usa Spring Web
 </ul>
 
 
-<h2>🎭Equipo UX/UI🤩</h2>
+<h2>🎭UX/UI🤩</h2>
     <ul>
         <li>
             <strong>Nombre completo:</strong> Gustavo Ariel Fernández
@@ -69,15 +69,7 @@ Este proyecto está desarrollado con Java 17 y Spring Boot 3.2.1. Usa Spring Web
                 <li><strong>Portafolio:</strong> <a href="https://www.behance.net/gallery/182943191/Portfolio-UXUI-Designer">Portafolio UX Gustavo Fernández</a></li>
             </ul>
         </li>
-      <li>
-            <strong>Nombre completo:</strong> Marcela Viviana Galarza
-            <ul>
-                <li><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/vivianagalarza/">Marcela Viviana Galarza</a></li>
-                <li><strong>Email:</strong> marcelavivianagalarza@gmail.com  </li>
-                <li><strong>Portafolio:</strong> <a href="https://www.figma.com/proto/xqheOepEb8dmZj7B7mhlzt/Portfolio-Viviana?node-id=22-479&t=MwzXut1xh7WJCSif-1&scaling=scale-down&page-id=0%3A1&starting-point-node-id=22%3A479">Portafolio UX Marcela Viviana Galarza</a></li>
-                <li><strong>Github:</strong> <a href="https://github.com/Mavigal197">https://github.com/Mavigal197</a></li>
-            </ul>
-        </li>
+   
         <!-- Añadir más integrantes del Equipo UX/UI aquí -->
     </ul>
 
