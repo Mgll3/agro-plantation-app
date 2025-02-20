@@ -85,3 +85,25 @@ Este proyecto está desarrollado con Java 17 y Spring Boot 3.2.1. Usa Spring Web
         </li>
         <!-- Añadir más integrantes del Equipo QA aquí -->
     </ul>
+    <h2>🤝 Colaboradores 🤝</h2>
+<ul>
+    <li>
+        <strong>Nombre completo:</strong> Marcela Viviana Galarza
+        <ul>
+            <li><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/vivianagalarza/">Marcela Viviana Galarza</a></li>
+            <li><strong>Email:</strong> marcelavivianagalarza@gmail.com</li>
+            <li><strong>Portafolio:</strong> <a href="https://www.figma.com/proto/xqheOepEb8dmZj7B7mhlzt/Portfolio-Viviana?node-id=22-479&t=MwzXut1xh7WJCSif-1&scaling=scale-down&page-id=0%3A1&starting-point-node-id=22%3A479">Portafolio UX Marcela Viviana Galarza</a></li>
+            <li><strong>Github:</strong> <a href="https://github.com/Mavigal197">Mavigal197</a></li>
+        </ul>
+    </li>
+    <li>
+        <strong>Nombre completo:</strong> Sergio Vazquez
+        <ul>
+            <li><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/sergio-vzqz">Sergio Vazquez</a></li>
+            <li><strong>Email:</strong> sergio.ivan.vzqz@gmail.com</li>
+            <li><strong>Github:</strong> <a href="https://github.com/lElliotCode">lElliotCode</a></li>
+        </ul>
+    </li>
+    <!-- Añadir más colaboradores aquí -->
+</ul>
+
