@@ -14,6 +14,8 @@ Durante el desarrollo, realizamos **dailies y reuniones de seguimiento**, las cu
 - Nuestra comunicación y toma de decisiones.  
 - La evolución del proyecto a lo largo del tiempo.  
 
+Puedes ver las grabaciones de nuestras reuniones en el siguiente [enlace de YouTube](https://www.youtube.com/channel/UCcl39YwQsEkGXnw6-jtsO3g).
+
 ### 🎓 Mentoría y Feedback Profesional  
 Para potenciar aún más la experiencia, organizamos reuniones con **seniors en cada área (Frontend, Backend, QA, UX/UI)**, quienes revisarán nuestro trabajo y nos brindarán:  
 
@@ -22,6 +24,7 @@ Para potenciar aún más la experiencia, organizamos reuniones con **seniors en 
 - **Recomendaciones para enfrentar desafíos técnicos en un entorno laboral.**  
 
 📹 Estas reuniones también serán **grabadas y compartidas**, con el objetivo de que tanto nosotros como otros desarrolladores puedan aprender de la experiencia y mejorar continuamente.  
+ 
 
 
 
