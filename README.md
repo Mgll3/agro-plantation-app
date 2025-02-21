@@ -2,10 +2,28 @@
 <h1 align="center"> 🌾PLANT - IN: Agro Plantation APP🌾</h1>
 </div>
 
+## 📹 Trabajo en Equipo y Feedback Profesional  
 
-<h2><u><strong>🌱Arquitectura Aplicada🌱</strong></u></h2>
+Para que este proyecto se asemeje lo más posible a una **experiencia real de trabajo**, implementamos no solo metodologías ágiles, sino también estrategias que reflejan el día a día en una empresa de tecnología.  
 
-Este Microservicio se basa principalmente en los principios de Clean Architecture, DDD, CQRS y manejo de eventos. Por lo que bajo un dominio acotado(Foro) se guardan los datos en la BD PostgreSQl y a su vez se genera un evento para que posterior y asincronamente sea consumido y que tambien sean guardados los datos en la BD No SQL. Para así tener optimas operaciones de guardado y consulta.
+### 🔹 Trabajo en equipo y reuniones grabadas  
+Durante el desarrollo, realizamos **dailies y reuniones de seguimiento**, las cuales fueron grabadas y subidas a YouTube. Esto permite a los reclutadores y a cualquier interesado ver:  
+
+- Cómo nos organizamos y aplicamos **metodologías ágiles**.  
+- Cómo resolvemos problemas en equipo.  
+- Nuestra comunicación y toma de decisiones.  
+- La evolución del proyecto a lo largo del tiempo.  
+
+### 🎓 Mentoría y Feedback Profesional  
+Para potenciar aún más la experiencia, organizamos reuniones con **seniors en cada área (Frontend, Backend, QA, UX/UI)**, quienes revisarán nuestro trabajo y nos brindarán:  
+
+- **Feedback sobre buenas prácticas y mejoras en el código.**  
+- **Consejos sobre trabajo en equipo y desarrollo profesional.**  
+- **Recomendaciones para enfrentar desafíos técnicos en un entorno laboral.**  
+
+📹 Estas reuniones también serán **grabadas y compartidas**, con el objetivo de que tanto nosotros como otros desarrolladores puedan aprender de la experiencia y mejorar continuamente.  
+
+
 
 <h2><u><strong> 🛠️ Tecnologías 🛠️</strong></u></h2>
 
