@@ -110,9 +110,6 @@ Este proyecto está desarrollado con las siguientes tecnologías:
                 <li><strong>Portafolio:</strong> <a href="https://www.behance.net/gallery/182943191/Portfolio-UXUI-Designer">Portafolio UX Gustavo Fernández</a></li>
             </ul>
         </li>
-   
-
-
 <h2>📋 QA🐞</h2>
     <ul>
         <li>
@@ -126,7 +123,7 @@ Este proyecto está desarrollado con las siguientes tecnologías:
         </li>
         <!-- Añadir más integrantes del Equipo QA aquí -->
     </ul>
-    <h2>🤝 Colaboradores 🤝</h2>
+<h2>🤝 Colaboradores 🤝</h2>
 <ul>
     <li>
         <strong>Nombre completo:</strong> Marcela Viviana Galarza
