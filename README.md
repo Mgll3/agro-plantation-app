@@ -100,29 +100,32 @@ Este proyecto está desarrollado con las siguientes tecnologías:
 </ul>
 
 
-<h2>🎭UX/UI🤩</h2>
-    <ul>
-        <li>
-            <strong>Nombre completo:</strong> Gustavo Ariel Fernández
-            <ul>
-                <li><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/gustavo-fernandez-9476b8297">Gustavo Ariel Fernández</a></li>
-                <li><strong>Email:</strong> g.ariel.fernandez73@gmail.com </li>
-                <li><strong>Portafolio:</strong> <a href="https://www.behance.net/gallery/182943191/Portfolio-UXUI-Designer">Portafolio UX Gustavo Fernández</a></li>
-            </ul>
-        </li>
-<h2>📋 QA🐞</h2>
-    <ul>
-        <li>
-            <strong>Nombre completo:</strong> Bouza Jorge Leandro
-            <ul>
-                <li><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/leandro-bouza/">Leandro Bouza</a></li>
-                <li><strong>Email:</strong> jorge.leandrobouza@gmail.com</li>
-                <li><strong>Github:</strong> <a href="https://github.com/JLeandroBouza">https://github.com/JLeandroBouza</a></li>
-                <li><strong>Portafolio:</strong> <a href="https://leandrobouza.notion.site/Hola-Soy-Leandro-Bouza-Jr-Quality-Assurance-edf5e41907804f21a2060361501ec11f">Portafolio QA Leandro Bouza</a></li>
-            </ul>
-        </li>
-        <!-- Añadir más integrantes del Equipo QA aquí -->
-    </ul>
+<h2>🎭 UX/UI 🤩</h2>
+<ul>
+    <li>
+        <strong>Nombre completo:</strong> Gustavo Ariel Fernández
+        <ul>
+            <li><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/gustavo-fernandez-9476b8297">Gustavo Ariel Fernández</a></li>
+            <li><strong>Email:</strong> g.ariel.fernandez73@gmail.com</li>
+            <li><strong>Portafolio:</strong> <a href="https://www.behance.net/gallery/182943191/Portfolio-UXUI-Designer">Portafolio UX Gustavo Fernández</a></li>
+        </ul>
+    </li>
+</ul>
+
+<h2>📋 QA 🐞</h2>
+<ul>
+    <li>
+        <strong>Nombre completo:</strong> Bouza Jorge Leandro
+        <ul>
+            <li><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/leandro-bouza/">Leandro Bouza</a></li>
+            <li><strong>Email:</strong> jorge.leandrobouza@gmail.com</li>
+            <li><strong>Github:</strong> <a href="https://github.com/JLeandroBouza">https://github.com/JLeandroBouza</a></li>
+            <li><strong>Portafolio:</strong> <a href="https://leandrobouza.notion.site/Hola-Soy-Leandro-Bouza-Jr-Quality-Assurance-edf5e41907804f21a2060361501ec11f">Portafolio QA Leandro Bouza</a></li>
+        </ul>
+    </li>
+    <!-- Añadir más integrantes del Equipo QA aquí -->
+</ul>
+
 <h2>🤝 Colaboradores 🤝</h2>
 <ul>
     <li>
