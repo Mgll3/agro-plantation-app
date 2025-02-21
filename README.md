@@ -1,6 +1,27 @@
 <div align="center">
 <h1 align="center"> 🌾PLANT - IN: Agro Plantation APP🌾</h1>
 </div>
+Descripción
+
+Esta plataforma está diseñada para facilitar la visibilidad y gestión de huertas agroecológicas, permitiendo que productores compartan información sobre sus cultivos y métodos de producción.
+
+Problema que resuelve
+
+Falta de visibilidad de huertas agroecológicas: Brinda un espacio donde los productores pueden registrar y mostrar sus huertas.
+
+Dificultad para encontrar huertas cercanas: Facilita la exploración de huertas activas.
+
+Acceso limitado a información sobre producción agroecológica: Permite que los usuarios descubran prácticas sustentables y adopten métodos responsables de cultivo.
+
+Funcionalidades
+
+Explorar huertas agroecológicas registradas en la plataforma.
+
+Registrarse como usuario para acceder a más información.
+
+Publicar una huerta propia solicitando el rol de productor.
+
+Gestionar la información de las huertas registradas.
 
 ## 📹 Trabajo en Equipo y Feedback Profesional  
 
