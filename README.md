@@ -73,7 +73,7 @@ Este proyecto está desarrollado con las siguientes tecnologías:
 - **Gestión y ejecución de pruebas manuales** mediante **QASE**, una herramienta eficaz para el seguimiento y control de los casos de prueba.
 - **Pruebas automatizadas** de frontend y backend utilizando **Jest** para garantizar la calidad del código y su funcionalidad.
 
-## 🔹 Diseño UX/UI  
+##  Diseño UX/UI  
 
 - **Diseño de logo "Plant-In" e identidad visual**: Se creó el logo y la identidad visual utilizando **Adobe Illustrator**, asegurando una representación coherente y atractiva de la marca.  
 - **Diseño de wireframes y prototipos**: Se diseñaron wireframes y prototipos interactivos de la página con **Figma**, enfocándose en la experiencia del usuario y la funcionalidad del diseño.  
