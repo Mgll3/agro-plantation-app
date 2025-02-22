@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 public class PublicationFilterDTO {
-//este lleva ?
+
     private List<Publication> publications;
     private int pagination;
 

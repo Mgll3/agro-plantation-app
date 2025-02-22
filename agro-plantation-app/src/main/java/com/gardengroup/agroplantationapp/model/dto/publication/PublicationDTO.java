@@ -35,7 +35,7 @@ public class PublicationDTO {
 
     private List<Image> images;
     // private List<Comment> comments; proximamente
-    //aca van validaciones ?
+
     private Integer score;
 
     private StateRequest authorizationStatus;
