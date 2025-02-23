@@ -45,7 +45,7 @@ public class ThreadTest {
     public void shouldSaveThreat() throws Exception {
         CreateThreadCommand createCommand = new CreateThreadCommand("Title", "Content", 2L, true);
 
-        ResultActions threadResponse = mockMvc.perform(post("/api/threads/create")
+        ResultActions threadResponse = mockMvc.perform(post("/api/v1/threads/create")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(createCommand)))
                 .andExpect(status().isCreated())

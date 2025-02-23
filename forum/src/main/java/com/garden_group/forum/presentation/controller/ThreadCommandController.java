@@ -15,7 +15,7 @@ import com.garden_group.forum.presentation.dto.CreateThreadResponse;
 import io.swagger.v3.oas.annotations.*;
 
 @RestController
-@RequestMapping("/api/threads")
+@RequestMapping("/api/v1/threads")
 public class ThreadCommandController {
 
     @Autowired
