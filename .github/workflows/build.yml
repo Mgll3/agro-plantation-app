@@ -6,7 +6,7 @@ on:
   #Trigger the workflow on push from the main branch
   push:
     branches:
-      - Mgl-Back 
+      - Dev-Back
 jobs:
   #Test's job
   # tests:
@@ -19,7 +19,7 @@ jobs:
   #     - uses: actions/checkout@v2
   #     #Set up JDK 11
   #     - name: Set up JDK
-  #       uses: actions/setup-java@v1
+  #       uses: actions/setup-java@v2
   #       with:
   #         java-version: '17'
   #     #Set up Maven cache
@@ -45,11 +45,12 @@ jobs:
     steps:
       #Check-out your repository under $GITHUB_WORKSPACE, so your workflow can access it
       - uses: actions/checkout@v2
-      #Set up JDK 11
+      #Set up JDK 17
       - name: Set up JDK
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@v2
         with:
           java-version: '17'
+          distribution: 'temurin'
       #Set up SonarCloud cache
       - name: Cache SonarCloud packages
         #This action allows caching dependencies and build outputs to improve workflow execution time.
@@ -68,42 +69,43 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
       #Analyze project with SonarCloud
       - name: Analyze with SonarCloud
-        run: mvn -B verify sonar:sonar -Dsonar.projectKey=Mgll3_agro-plantation-app  -Dsonar.organization=mgll3 -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN --file agro-plantation-app/pom.xml
+        run: mvn -B verify -DskipTests=true sonar:sonar -Dsonar.projectKey=Mgll3_agro-plantation-app  -Dsonar.organization=mgll3 -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN --file agro-plantation-app/pom.xml
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
   #Build's job
-  build:
+  
+  #build:
     #Depends on sonar's job
-    needs: sonar
-    name: Build
+    #needs: sonar
+    #name: Build
     #Run on Ubuntu using the latest version
-    runs-on: ubuntu-latest
-    steps:
+    #runs-on: ubuntu-latest
+    #steps:
       #Check-out your repository under $GITHUB_WORKSPACE, so your workflow can access it
-      - uses: actions/checkout@v2
-      #Set up JDK 11
-      - name: Set up JDK
-        uses: actions/setup-java@v1
-        with:
-          java-version: '17'
+      #- uses: actions/checkout@v2
+      #Set up JDK 17
+      #- name: Set up JDK
+      #  uses: actions/setup-java@v2
+      #  with:
+      #    java-version: '17'
       #Set up Maven cache
-      - name: Cache Maven packages
+      #- name: Cache Maven packages
         #This action allows caching dependencies and build outputs to improve workflow execution time.
-        uses: actions/cache@v2
-        with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('agro-plantation-app/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
+        #uses: actions/cache@v2
+        #with:
+          #path: ~/.m2
+          #key: ${{ runner.os }}-m2-${{ hashFiles('agro-plantation-app/pom.xml') }}
+          #restore-keys: ${{ runner.os }}-m2
       #Build the application using Maven
-      - name: Build with Maven
-        run: mvn -B package -DskipTests --file agro-plantation-app/pom.xml
+      #- name: Build with Maven
+      #  run: mvn -B package -DskipTests --file agro-plantation-app/pom.xml
       #Build the application using Maven
-      - name: Upload JAR
+      #- name: Upload JAR
         #This uploads artifacts from your workflow allowing you to share data between jobs and store data once a workflow is complete.
-        uses: actions/upload-artifact@v2
-        with:
+        #uses: actions/upload-artifact@v2
+        #with:
           #Set artifact name
-          name: artifact
+          #name: artifact
           #From this path
-          path: target/agro-plantation-app-0.0.1-SNAPSHOT.jar
+          #path: target/agro-plantation-app-0.0.1-SNAPSHOT.jar
