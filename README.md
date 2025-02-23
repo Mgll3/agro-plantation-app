@@ -52,6 +52,73 @@ La aplicación busca incentivar las prácticas agroecológicas para maximizar la
         </li>
     </ol>
 
+## 📹 Trabajo en Equipo y Feedback Profesional  
+
+Para que este proyecto se asemeje lo más posible a una **experiencia real de trabajo**, implementamos no solo metodologías ágiles, sino también estrategias que reflejan el día a día en una empresa de tecnología.  
+
+### 🔹 Trabajo en equipo y reuniones grabadas  
+Durante el desarrollo, realizamos **dailies y reuniones de seguimiento**, las cuales fueron grabadas y subidas a YouTube. Esto permite a los reclutadores y a cualquier interesado ver:  
+
+- Cómo nos organizamos y aplicamos **metodologías ágiles**.  
+- Cómo resolvemos problemas en equipo.  
+- Nuestra comunicación y toma de decisiones.  
+- La evolución del proyecto a lo largo del tiempo.  
+
+Puedes ver las grabaciones de nuestras reuniones en el siguiente [enlace de YouTube](https://www.youtube.com/channel/UCcl39YwQsEkGXnw6-jtsO3g).
+
+### 🎓 Mentoría y Feedback Profesional  
+Para potenciar aún más la experiencia, organizamos reuniones con **seniors en cada área (Frontend, Backend, QA, UX/UI)**, quienes revisarán nuestro trabajo y nos brindarán:  
+
+- **Feedback sobre buenas prácticas y mejoras en el código.**  
+- **Consejos sobre trabajo en equipo y desarrollo profesional.**  
+- **Recomendaciones para enfrentar desafíos técnicos en un entorno laboral.**  
+
+📹 Estas reuniones también serán **grabadas y compartidas**, con el objetivo de que tanto nosotros como otros desarrolladores puedan aprender de la experiencia y mejorar continuamente.  
+
+<h2><u><strong> 🛠️ Tecnologías 🛠️</strong></u></h2>
+
+Este proyecto está desarrollado con las siguientes tecnologías:
+
+### Backend:
+- **Java 17** y **Spring Boot 3.2.1**.
+- **Spring Web** para la API REST.
+- **Spring Data JPA** con **MySQL** para la persistencia de datos.
+- **Spring Security** con **JWT** para la autenticación y autorización.
+- **Cloudinary** para el manejo de imágenes.
+- **Swagger** para la documentación de la API.
+- **Log4j2** para la gestión de logs.
+
+### Frontend:
+- **TypeScript**, **ReactJS** y **Tailwind CSS**.
+- **React Router DOM** para la navegación.
+- **Yup** junto con **Formik** para la gestión de formularios.
+- **Axios** para el consumo de APIs.
+- **Leaflet** y **OpenStreetMap** para la geolocalización y visualización de mapas.
+
+### Metodología de Desarrollo:
+- El desarrollo sigue la metodología **Scrum** utilizando **Azure DevOps** para la gestión de tareas y colaboración entre los miembros del equipo.
+
+### Pruebas y Calidad (QA):
+- **Pruebas automatizadas** con **Cypress** y **JavaScript**, generando reportes con **mockawesome**.
+- **Pruebas de API** realizadas con **Postman** y **Newman** para obtener reportes detallados.
+- **Gestión y ejecución de pruebas manuales** mediante **QASE**, una herramienta eficaz para el seguimiento y control de los casos de prueba.
+- **Pruebas automatizadas** de frontend y backend utilizando **Jest** para garantizar la calidad del código y su funcionalidad.
+
+##  Diseño UX/UI  
+
+- **Diseño de logo "Plant-In" e identidad visual**: Se creó el logo y la identidad visual utilizando **Adobe Illustrator**, asegurando una representación coherente y atractiva de la marca.  
+- **Diseño de wireframes y prototipos**: Se diseñaron wireframes y prototipos interactivos de la página con **Figma**, enfocándose en la experiencia del usuario y la funcionalidad del diseño.  
+- **Plugins de Figma utilizados**:  
+  - **Pexels**: Para obtener imágenes de alta calidad y libres de derechos de autor.  
+  - **Unsplash**: Para la integración de imágenes impactantes y profesionales.  
+  - **Shadow Perfect**: Utilizado para agregar sombras sutiles y mejorar la percepción visual de los elementos.  
+  - **Avatar Generator**: Para la creación de avatares personalizados en los prototipos.  
+  - **Spectral**: Para aplicar una paleta de colores coherente y moderna.  
+  - **Iconify**: Para incorporar una amplia variedad de íconos vectoriales y personalizables.  
+
+Este enfoque permitió crear un diseño atractivo y funcional, asegurando una experiencia de usuario fluida y visualmente coherente con la identidad de la marca.
+
+
 <h2><u><strong>💪Integrantes del Equipo</strong></u></h2>
 
 <h2>👨🏻‍💻Equipo Backend👩🏻‍💻</h2>
