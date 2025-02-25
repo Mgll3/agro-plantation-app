@@ -141,47 +141,33 @@ Este enfoque permitió crear un diseño atractivo y funcional, asegurando una ex
             </ul>
         </li>
     </ul>
-
 <h2>👨🏻‍💻Equipo Frontend✨</h2>
-    <ul>
-        <li>
-            <strong>Nombre completo:</strong> Sergio Vazquez
-            <ul>
-                <li><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/sergio-vzqz">Sergio Vazquez</a></li>
-                <li><strong>Email:</strong> sergio.ivan.vzqz@gmail.com  </li>
-                <li><strong>Github:</strong> <a href="https://github.com/lElliotCode">https://github.com/lElliotCode</a></li>
-            </ul>
-        </li>
-        <li>
-            <strong>Nombre completo:</strong> Arturo López Rosa
-            <ul>
-                <li><strong>LinkedIn:</strong> <a href=" https://www.linkedin.com/in/arturo-lopez-rosa/">Arturo López Rosa</a></li>
-                <li><strong>Email:</strong>arturo.lopez.rosa@gmail.com </li>
-                <li><strong>Github:</strong> <a href="https://github.com/ArturoFLR">https://github.com/ArturoFLR</a></li>
-            </ul>
-        </li>
-    </ul>
+<ul>
+    <li>
+        <strong>Nombre completo:</strong> Arturo López Rosa
+        <ul>
+            <li><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/arturo-lopez-rosa/">Arturo López Rosa</a></li>
+            <li><strong>Email:</strong> nuevo.email@dominio.com </li>
+            <li><strong>Github:</strong> <a href="https://github.com/ArturoFLR">https://github.com/ArturoFLR</a></li>
+            <li><strong>Portafolio:</strong> <a href="https://alrportfolio.netlify.app/">Portafolio Desarrollador Frontend Arturo López Rosa</a></li>
+        </ul>
+    </li>
+</ul>
+
+
 
 <h2>🎭Equipo UX/UI🤩</h2>
-    <ul>
-        <li>
-            <strong>Nombre completo:</strong> Gustavo Ariel Fernández
-            <ul>
-                <li><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/gustavo-fernandez-9476b8297">Gustavo Ariel Fernández</a></li>
-                <li><strong>Email:</strong> g.ariel.fernandez73@gmail.com </li>
-                <li><strong>Portafolio:</strong> <a href="https://www.behance.net/gallery/182943191/Portfolio-UXUI-Designer">Portafolio UX Gustavo Fernández</a></li>
-            </ul>
-        </li>
-      <li>
-            <strong>Nombre completo:</strong> Marcela Viviana Galarza
-            <ul>
-                <li><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/vivianagalarza/">Marcela Viviana Galarza</a></li>
-                <li><strong>Email:</strong> marcelavivianagalarza@gmail.com  </li>
-                <li><strong>Portafolio:</strong> <a href="https://www.figma.com/proto/xqheOepEb8dmZj7B7mhlzt/Portfolio-Viviana?node-id=22-479&t=MwzXut1xh7WJCSif-1&scaling=scale-down&page-id=0%3A1&starting-point-node-id=22%3A479">Portafolio UX Marcela Viviana Galarza</a></li>
-                <li><strong>Github:</strong> <a href="https://github.com/Mavigal197">https://github.com/Mavigal197</a></li>
-            </ul>
-        </li>
-    </ul>
+<ul>
+    <li>
+        <strong>Nombre completo:</strong> Gustavo Ariel Fernández
+        <ul>
+            <li><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/gustavo-fernandez-9476b8297">Gustavo Ariel Fernández</a></li>
+            <li><strong>Email:</strong> g.ariel.fernandez73@gmail.com </li>
+            <li><strong>Portafolio:</strong> <a href="https://www.behance.net/gallery/182943191/Portfolio-UXUI-Designer">Portafolio UX Gustavo Fernández</a></li>
+        </ul>
+    </li>
+</ul>
+
 
 <h2>📋Equipo QA🐞</h2>
     <ul>
