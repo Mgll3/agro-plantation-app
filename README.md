@@ -181,6 +181,26 @@ Este enfoque permitió crear un diseño atractivo y funcional, asegurando una ex
             </ul>
         </li>
     </ul>
+    <h2>🤝Colaboradores🌟</h2>
+<ul>
+    <li>
+        <strong>Nombre completo:</strong> Marcela Viviana Galarza
+        <ul>
+            <li><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/vivianagalarza/">Marcela Viviana Galarza</a></li>
+            <li><strong>Email:</strong> marcelavivianagalarza@gmail.com</li>
+            <li><strong>Portafolio:</strong> <a href="https://www.figma.com/proto/xqheOepEb8dmZj7B7mhlzt/Portfolio-Viviana?node-id=22-479&t=MwzXut1xh7WJCSif-1&scaling=scale-down&page-id=0%3A1&starting-point-node-id=22%3A479">Portafolio Viviana Galarza</a></li>
+        </ul>
+    </li>
+    <li>
+        <strong>Nombre completo:</strong> Sergio Vazquez
+        <ul>
+            <li><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/sergio-vzqz">Sergio Vazquez</a></li>
+            <li><strong>Email:</strong> sergio.ivan.vzqz@gmail.com</li>
+            <li><strong>Github:</strong> <a href="https://github.com/lElliotCode">https://github.com/lElliotCode</a></li>
+        </ul>
+    </li>
+</ul>
+
 
 <h2>👨🏻‍💻Resultados Backend👩🏻‍💻</h2>
     <ul>
