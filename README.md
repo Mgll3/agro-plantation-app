@@ -156,7 +156,7 @@ Este enfoque permitió crear un diseño atractivo y funcional, asegurando una ex
             <strong>Nombre completo:</strong> Arturo López Rosa
             <ul>
                 <li><strong>LinkedIn:</strong> <a href=" https://www.linkedin.com/in/arturo-lopez-rosa/">Arturo López Rosa</a></li>
-                <li><strong>Email:</strong> jhonas29@gmail.com  </li>
+                <li><strong>Email:</strong>arturo.lopez.rosa@gmail.com </li>
                 <li><strong>Github:</strong> <a href="https://github.com/ArturoFLR">https://github.com/ArturoFLR</a></li>
             </ul>
         </li>
