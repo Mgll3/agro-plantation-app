@@ -10,9 +10,11 @@ import com.garden_group.forum.domain.repository.ThreadQueryRepository;
 import com.garden_group.forum.infraestructure.repository.query.ThreadMongo;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class ThreadEventListener {
 
     @Autowired
@@ -25,7 +27,9 @@ public class ThreadEventListener {
 
         ThreadMongo thread = threadMapper.toThreadMongo(event);
 
-        threadNoSqlRepository.save(thread);
+        threadNoSqlRepository.save(thread)
+                .doOnError(error -> log.error("Error en Guardado Secundario Mongo" + error.getMessage(), error))
+                .subscribe();
     }
 
 }

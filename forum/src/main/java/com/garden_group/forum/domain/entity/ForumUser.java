@@ -1,25 +1,24 @@
 package com.garden_group.forum.domain.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import java.util.UUID;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
+
 import lombok.Data;
 
-@Entity
+@Table("forum_user")
 @Data
 public class ForumUser {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private UUID id;
     private String username;
     private String address;
     private String password;
     private String role;
 
-    public ForumUser(Long id) {
+    public ForumUser(UUID id) {
         this.id = id;
     }
 }

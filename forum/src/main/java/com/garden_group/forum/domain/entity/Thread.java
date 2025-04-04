@@ -1,27 +1,23 @@
 package com.garden_group.forum.domain.entity;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
+
 import lombok.*;
 
-@Entity
+@Table("thread")
 @Getter
 @NoArgsConstructor
 public class Thread {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private UUID id;
     private String title;
     private String content;
-    @ManyToOne(fetch = FetchType.LAZY)
-    private ForumUser author;
+    private UUID authorId;
     private Boolean isVisible;
     private LocalDateTime createdAt = LocalDateTime.now();
     private LocalDateTime updatedAt;
@@ -41,7 +37,7 @@ public class Thread {
         this.updatedAt = LocalDateTime.now();
     }
 
-    public void setAuthor(ForumUser authorId) {
-        this.author = authorId;
+    public void setAuthorId(UUID authorId) {
+        this.authorId = authorId;
     }
 }

@@ -1,6 +1,6 @@
 package com.garden_group.forum.application.command;
 
-import com.garden_group.forum.domain.entity.ForumUser;
+import java.util.UUID;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -16,7 +16,7 @@ public class CreateThreadCommand {
     @NotBlank(message = "Content is mandatory")
     private final String content;
     @NotNull(message = "Author ID is mandatory")
-    private final Long authorId;
+    private final UUID authorId;
     @NotNull(message = "Visibility cannot be null")
     private final Boolean isVisible;
 }

@@ -1,0 +1,243 @@
+Reactividad
+
+
+Flux: varios datos en el tiempo observable asincrono
+
+Mono: un solo dato en el tiempo observable asincrono
+
+Flux<String> nombres = Flux.just("Juan", "Pedro", "Maria", "Jose", "Luis")  // crear y Agregar datos al flujo
+        .delayElements(Duration.ofSeconds(1))  // Retrasar la emision de cada elemento por 1 segundo
+        .map(nombre -> nombre.toUpperCase())  // Transformar el nombre a mayusculas
+        .filter(nombre -> nombre.startsWith("J")
+        .doOnNext(nombre -> {               // Ejecutar una accion al recibir cada elemento
+            System.out.println("Nombre procesado: " + nombre);  // Imprimir el nombre procesado
+        })
+        .doOnComplete(() -> System.out.println("Flujo completado"))  // Ejecutar una accion al completar el flujo
+        .doOnError(error -> System.out.println("Error: " + error.getMessage()));  // Ejecutar una accion al ocurrir un error
+        );  // Filtrar los nombres que empiezan con "J"
+
+nombres.subscribe();        // Suscribirse al flujo y recibir los nombres procesados
+
+Subscribe:
+    Imprimir los objetos de un observable:
+    nombres.subscribe(nombre -> System.out.println(nombre)); // Suscribirse al flujo y recibir los nombres procesados
+
+    Manejo de errores:
+
+    nombres.subscribe(error -> Log.error("Error: " + error.getMessage()),  // Manejar el error
+            () -> Log.info("Flujo completado"));  // Manejar la finalizacion del flujo
+
+
+Map: transformar cada elemento del flujo            //Crea un nuevo flujo no modifica el original
+    nombres.map(nombre -> nombre.toUpperCase())  // Transformar el nombre a mayusculas
+            .subscribe(nombre -> System.out.println(nombre));  // Suscribirse al flujo y recibir los nombres procesados
+
+    //Convertir a objeto
+    nombres.map(nombre -> new Persona(nombre, Null))  // Transformar el nombre a un objeto Persona(nombre, apellido)
+            .map(persona::getNombre)              // Obtener el nombre de la persona
+
+    // Convertir a objeto y modificar el objeto
+    nombres.map(nombre -> new Persona(nombre, Null))  // Transformar el nombre a un objeto Persona(nombre, apellido)
+            .map(persona  -> {
+                persona.setApellido("Gomez");  
+                String nombre = persona.getNombre();  
+                persona.setNombre(nombre.toUpperCase());            // Modificar el nombre de la persona a mayusculas
+                return persona;  // Retornar el objeto persona modificado
+            })
+    
+    //Convertir a objeto el nombre y apellido desde String
+    nombres.map(nombre -> new Persona(nombre.split(" ")[0], nombre.split(" ")[1]))  //Split reparte el nombre y apellido en un array 
+            .map(persona::getNombre)              
+            .subscribe(nombre -> System.out.println(nombre)); 
+
+    // Convertir flux objeto a Flux String
+    personas.map(persona -> persona.getNombre().toUpperCase().concat(" " + persona.getApellido().toUpperCase())) 
+
+    
+
+
+FlatMap:
+    Convierte cada elemento del flujo en un nuevo flujo, puede combinarlos en un solo flujo
+
+    nombres.flatMap(nombreCompleto -> Flux.just(nombreCompleto.split(" ")))  // Convertir el nombre en un flujo de palabras
+            .flatMap(nombres -> {  
+                if(nombres.length > 1) {  
+                    return Flux.just(nombres[0], nombres[1]);  // Retornar el nombre y apellido como un flujo
+                } else {  
+                    return Flux.just(nombres[0]);  // Retornar solo el nombre como un flujo
+                }
+            })
+
+
+
+Filter:
+    Se evaluan expresiones booleanas y se filtran los elementos que no cumplen la condicion
+
+    nombres.filter(persona -> persona.getNombre().startsWith("J"))  
+            .filter(persona -> persona.getNombre().length() > 3)  
+            .filter(persona -> persona.getApellido().toUpperCase().equals("GOMEZ"))  
+        
+List:
+
+    List<String> nombresList = Arrays.asList("Juan", "Pedro", "Maria", "Jose", "Luis");  // Crear una lista de nombres
+
+    Flux.fromIterable(nombresList)              // Convertir en Flux
+
+    // Flux<String> a Mono<List> emitir en un solo elemento la lista
+    Flux.fromIterable(nombresList)              
+            .collectList()                        // Convertir a mono con lista
+            .subscribe(System.out::println);  // Imprimir la lista
+
+
+FromCallable:
+    Crear un flujo a partir de una llamada a un metodo(BD, metodo services, cualquiera que retorne datos) 
+    pero que es una operación bloqueante
+    Es para que no se ejecute hasta el ultimo momento cuando se suscriban al flujo
+    
+    // Ejecutar operaciones bloqueantes en un flujo
+    Mono.fromCallable(() -> {  
+        Persona persona = new Persona("Juan", "Gomez");
+        persona.setNombre("Juan");
+        return persona;  
+    })
+
+    // Ejecutar una llamada a repositorio  que es bloqueante
+    Mono<Usuario> usuarioMono = Mono.fromCallable(() -> usuarioRepository.obtenerUsuarioPorId(1L));
+
+    //Tambien sirve para obtener datos de un archivo o lo que sea bloqueante ejecutando un metodo}
+
+
+ZipWith:
+    Combina dos flujos en uno solo, ya sea por en un String o en un objeto
+    
+    --Se detiene en el flujo más corto, para y deja de seguir procesando el flujo mas largo
+
+    // Combinar dos flujos manejando las tuplas
+    Mono<UsuarioComentario> usuarioComentarios = usuarioMono
+            .zipWith(comentariosMono)               //Al combinar sin llamar a nada queda todo guardado en tuplas en un solo flujo
+            .map(tuple -> new UsuarioComentario(tuple.getT1(), tuple.getT2()));
+
+    // Combinar dos flujos en uno solo a String         Llamo con uno hago .zipwith con el otro y ya manejo el resultado de la combinacion
+    Mono<String> nombreMono = Mono.just("Juan");  
+    Mono<String> apellidoMono = Mono.just("Gomez");  
+    Mono<String> nombreCompletoMono = nombreMono
+                // combina con  - 2 tuplas resultantes  -   resultado que se quiere
+            .zipWith(apellidoMono, (nombre, apellido) -> nombre + " " + apellido);  
+
+Rango:
+    Genera un flujo de numeros enteros en un rango especifico, se puede usar para crear datos de prueba o para iterar sobre un rango de numeros
+
+    // Genera numeros del 1 al 4 y los combina con otro flujo de numeros
+    Flux.just(1, 2, 3, 4)
+        .map(numero -> numero * 2)
+        .zipWith(Flux.range(1, 5), (uno, dos) -> String.format("Primer Flux: %d, Segundo Flux: %d", uno, dos))
+
+    //
+    Flux<Integer> numeros = Flux.range(1, 10)  
+            .delayElements(Duration.ofSeconds(1))  
+            .map(numero -> numero * 2)  // Multiplicar cada numero por 2
+            .doOnNext(numero -> System.out.println("Numero procesado: " + numero));  
+
+    
+Interval:
+    Imprimir cada cierto intervalo de tiempo
+
+    Flux<Integer> rango = Flux.range(1, 12);                    // Numeros del 1 al 12
+    Flux<Long> retraso = Flux.interval(Duration.ofSeconds(1)); // Genera valores Long cada segundo comenzando desde 0 a infinito
+
+    // Combina los flujos, imprimiendo un numero del flujo (rango) cada vez que se emite un valor del flujo (retraso)
+    rango.zipWith(retraso, (ra, re) -> ra)          
+            .subscribe(System.out::println);  
+
+    //Tambien se puede agregar tiempo de espera entre cada elemento asi:
+    Flux<Integer> rango = Flux.range(1, 12)
+            .delayElements(Duration.ofSeconds(1))                       // Retrasar la emision de cada elemento por 1 segundo
+            .doOnNext(numero -> System.out.println("Numero procesado: " + numero));
+
+Retry:
+    Operardor que reintenta la ejecucion de un flujo en caso de error, se puede usar para manejar errores temporales o para reintentar operaciones fallidas
+
+    // Reintentar la ejecucion de un flujo en caso de error
+    Flux<Integer> flujo = Flux.range(1, 5)
+        .map(n -> {
+            if (n == 3) throw new RuntimeException("Error en el número " + n);
+            return n;
+        })
+        .retry(2)  // Reintenta 2 veces si ocurre un error, osea 3 ejecuciones en total
+        .doOnError(err -> System.out.println("Error final: " + err.getMessage()));
+
+OnComplete:
+    Ejecutar una accion al completar el flujo, se puede usar para liberar recursos o para realizar una accion final al completar el flujo
+
+    // Ejecutar una accion al completar el flujo
+    Flux.range(1, 5)
+        .doOnComplete(() -> System.out.println("Flujo completado"))  // Ejecutar una accion al completar el flujo
+        .subscribe();
+
+Log:
+    Es un operador que permite registrar los eventos del flujo, se puede usar para depurar o para monitorear el flujo
+
+    Flux<Integer> flujo = Flux.range(1, 5)
+    .log(); // Agrega logs detallados
+
+    flujo.subscribe(System.out::println);
+
+    [INFO] | onSubscribe([Synchronous Fuseable] FluxRange.RangeSubscription)
+    [INFO] | request(unbounded)
+    [INFO] | onNext(1)
+    1
+    [INFO] | onNext(2)
+    2
+    [INFO] | onNext(3)
+    3
+    [INFO] | onNext(4)
+    4
+    [INFO] | onNext(5)
+    5
+    [INFO] | onComplete()
+
+BackPresure: 
+    Contrapresion: el emisor envia los datos en la cantidad que puedan recibirlos (receptor) ya sea mas o menos
+
+    Chunked: el emisor envia los datos en bloques de un tamaño especifico, el receptor recibe los datos en bloques y los procesa
+
+subscribe con extras
+    flujo.subscribe(new Subscriber<Integer>() {
+            private Subscription subscription;
+            private int count = 0;
+            private final int requestSize = 2; // Pedimos unicamente de a 2 elementos a la vez
+
+            @Override
+            public void onSubscribe(Subscription s) {
+                this.subscription = s;
+                System.out.println("Suscripción iniciada");
+                subscription.request(requestSize); // Pedimos los primeros 2 elementos
+            }
+
+            @Override
+            public void onNext(Integer item) {                  
+                System.out.println("Recibido: " + item);            // Cada elemento recibido hace algo
+                count++;
+
+                if (count % requestSize == 0) {
+                    System.out.println("Solicitando más datos...");
+                    subscription.request(requestSize); // Pedimos 2 más cuando consumimos los anteriores
+                }
+            }
+
+            @Override
+            public void onError(Throwable t) {
+                System.err.println("Error: " + t.getMessage());
+            }
+
+            @Override
+            public void onComplete() {
+                System.out.println("Flujo completado");
+            }
+        });
+    
+    
+
+
+
+

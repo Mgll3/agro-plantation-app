@@ -1,7 +1,7 @@
 package com.garden_group.forum.infraestructure.repository.query;
 
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 
-public interface ThreadQueryNoSqlRepository extends MongoRepository<ThreadMongo, String>{
-    
+public interface ThreadQueryNoSqlRepository extends ReactiveMongoRepository<ThreadMongo, String> {
+
 }
