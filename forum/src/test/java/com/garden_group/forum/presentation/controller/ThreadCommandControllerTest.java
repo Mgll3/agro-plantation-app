@@ -20,9 +20,10 @@ import org.springframework.test.web.reactive.server.WebTestClient.ResponseSpec;
 import com.garden_group.forum.presentation.dto.CreateThreadResponse;
 import com.garden_group.forum.application.command.CreateThreadCommand;
 import com.garden_group.forum.application.handler.CreateThreadCommandHandler;
-import com.garden_group.forum.domain.repository.ThreadCommandRepository;
-import com.garden_group.forum.infraestructure.repository.command.ThreadCommandR2dbcRepository;
-import com.garden_group.forum.infraestructure.repository.command.ThreadCommandRepositoryImpl;
+import com.garden_group.forum.domain.repository.thread.ThreadCommandRepository;
+import com.garden_group.forum.infraestructure.repository.command.thread.ThreadCommandR2dbcRepository;
+import com.garden_group.forum.infraestructure.repository.command.thread.ThreadCommandRepositoryImpl;
+
 import org.mockito.ArgumentCaptor;
 import reactor.core.publisher.Mono;
 
@@ -30,7 +31,6 @@ import reactor.core.publisher.Mono;
 @WebFluxTest(ThreadCommandController.class)
 class ThreadCommandControllerTest {
 
-        @Spy
         private ThreadCommandController threadCommandController;
 
         @MockBean
@@ -59,17 +59,17 @@ class ThreadCommandControllerTest {
                 when(createThreadCommandHandler.handle(any()))
                                 .thenReturn(Mono.just(UUID.randomUUID()));
 
-                final ResponseSpec spec = client.post()
+                final ResponseSpec clientResponse = client.post()
                                 .uri(createThreadUrl)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .body(Mono.just(createCommand), CreateThreadCommand.class)
                                 .exchange();
 
-                spec.expectStatus().isCreated()
+                clientResponse.expectStatus().isCreated()
                                 .expectBody(CreateThreadResponse.class)
                                 .consumeWith(response -> {
                                         CreateThreadResponse threadResponse = response.getResponseBody();
-                                        assertEquals(threadResponse.getMessage(), "Thread created successfully");
+                                        assertEquals("Thread created successfully", threadResponse.getMessage());
                                         assertNotNull(threadResponse.getThreadId(), "Thread ID should not be null");
                                 });
 

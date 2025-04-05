@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.garden_group.forum.application.command.CreateThreadCommand;
 import com.garden_group.forum.application.mapper.ThreadMapper;
 import com.garden_group.forum.domain.event.thread.ThreadCreatedEvent;
-import com.garden_group.forum.domain.repository.ThreadCommandRepository;
+import com.garden_group.forum.domain.repository.thread.ThreadCommandRepository;
 import com.garden_group.forum.domain.services.ThreadCreationService;
 
 import lombok.RequiredArgsConstructor;

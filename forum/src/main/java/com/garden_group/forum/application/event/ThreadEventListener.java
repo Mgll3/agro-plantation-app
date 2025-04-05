@@ -6,8 +6,8 @@ import org.springframework.stereotype.Component;
 
 import com.garden_group.forum.application.mapper.ThreadMapper;
 import com.garden_group.forum.domain.event.thread.ThreadCreatedEvent;
-import com.garden_group.forum.domain.repository.ThreadQueryRepository;
-import com.garden_group.forum.infraestructure.repository.query.ThreadMongo;
+import com.garden_group.forum.domain.repository.thread.ThreadQueryRepository;
+import com.garden_group.forum.infraestructure.repository.query.thread.ThreadMongo;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +28,7 @@ public class ThreadEventListener {
         ThreadMongo thread = threadMapper.toThreadMongo(event);
 
         threadNoSqlRepository.save(thread)
-                .doOnError(error -> log.error("Error en Guardado Secundario Mongo" + error.getMessage(), error))
+                .doOnError(error -> log.error("Error in Secondary Save Mongo" + error.getMessage(), error))
                 .subscribe();
     }
 

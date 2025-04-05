@@ -5,14 +5,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestBody;
 import jakarta.validation.Valid;
 import reactor.core.publisher.Mono;
 import com.garden_group.forum.application.command.CreateThreadCommand;
 import com.garden_group.forum.application.handler.CreateThreadCommandHandler;
-import com.garden_group.forum.presentation.dto.CreateThreadResponse;
+import com.garden_group.forum.presentation.response.CreateThreadResponse;
+import com.garden_group.forum.shared.utils.Constants;
 
 import io.swagger.v3.oas.annotations.*;
 
@@ -21,18 +22,18 @@ import io.swagger.v3.oas.annotations.*;
 public class ThreadCommandController {
 
     @Autowired
-    private CreateThreadCommandHandler createThreadCommandHandler;
+    private CreateThreadCommandHandler threadCommandHandler;
 
-    @Operation(summary = "Crear nuevo hilo", description = "End Point para Crear un nuevo hilo en el foro", tags = {
+    @Operation(summary = "Create new thread", description = "End Point to create a new thread in the forum", tags = {
             "Threads" })
     @PostMapping("/create")
     public Mono<ResponseEntity<CreateThreadResponse>> createThread(
             @Valid @RequestBody Mono<CreateThreadCommand> threadCommand) {
 
-        return createThreadCommandHandler.handle(threadCommand)
+        return threadCommandHandler.handle(threadCommand)
                 .map(threadId -> {
                     CreateThreadResponse threadResponse = new CreateThreadResponse(threadId,
-                            "Thread created successfully");
+                            Constants.T_CREATED);
 
                     return ResponseEntity.created(
                             URI.create("/api/v1/threads/" + threadResponse.getThreadId()))

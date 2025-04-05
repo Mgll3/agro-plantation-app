@@ -2,11 +2,20 @@ package com.garden_group.forum.domain.services;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.garden_group.forum.domain.entity.Thread;
+import com.garden_group.forum.domain.repository.user.UserCommandRepository;
+import com.garden_group.forum.shared.utils.Constants;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class ThreadCreationService {
+
+    @Autowired
+    private final UserCommandRepository userRepository;
 
     private static final String[] BAD_WORDS = {
             "fuck", "shit", "bitch", "asshole", "bastard", "damn", "crap",
@@ -17,6 +26,12 @@ public class ThreadCreationService {
     public Thread validateThreadCreation(Thread thread) {
 
         validateWords(thread.getContent());
+
+        userRepository.existsById(thread.getAuthorId()).subscribe(userExists -> {
+            if (!userExists) {
+                throw new IllegalArgumentException(Constants.U_NOT_FOUND);
+            }
+        });
 
         // Convert in Uppercase only the first letter of each word in the title
         thread.updateTitle(

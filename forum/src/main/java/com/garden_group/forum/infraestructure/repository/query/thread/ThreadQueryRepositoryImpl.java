@@ -1,10 +1,11 @@
-package com.garden_group.forum.infraestructure.repository.query;
+package com.garden_group.forum.infraestructure.repository.query.thread;
 
 import org.springframework.stereotype.Repository;
+
+import com.garden_group.forum.domain.repository.thread.ThreadQueryRepository;
+
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Mono;
-
-import com.garden_group.forum.domain.repository.ThreadQueryRepository;
 
 @Repository
 @RequiredArgsConstructor

@@ -21,8 +21,10 @@ CREATE TABLE IF NOT EXISTS thread (
 
 CREATE TABLE IF NOT EXISTS vote (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    user_id UUID NOT NULL REFERENCES forum_user(id),
-    thread_id UUID NOT NULL REFERENCES thread(id) ON DELETE CASCADE
+    author_id UUID NOT NULL REFERENCES forum_user(id),
+    thread_id UUID NOT NULL REFERENCES thread(id) ON DELETE CASCADE,
+    is_upvote BOOLEAN NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 INSERT INTO forum_user (id, username, address, password, role) 

@@ -1,4 +1,4 @@
-package com.garden_group.forum.infraestructure.repository.command;
+package com.garden_group.forum.infraestructure.repository.command.thread;
 
 import com.garden_group.forum.domain.entity.Thread;
 import java.util.UUID;

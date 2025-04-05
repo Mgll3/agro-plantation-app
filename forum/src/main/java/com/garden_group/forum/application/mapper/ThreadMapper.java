@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 import com.garden_group.forum.application.command.CreateThreadCommand;
 import com.garden_group.forum.domain.entity.Thread;
 import com.garden_group.forum.domain.event.thread.ThreadCreatedEvent;
-import com.garden_group.forum.infraestructure.repository.query.ThreadMongo;
+import com.garden_group.forum.infraestructure.repository.query.thread.ThreadMongo;
 
 @Component
 public class ThreadMapper {
@@ -19,6 +19,17 @@ public class ThreadMapper {
         return thread;
     }
 
+    public ThreadCreatedEvent toThreadCreatedEvent(Thread thread) {
+        return new ThreadCreatedEvent(
+                thread.getId(),
+                thread.getTitle(),
+                thread.getContent(),
+                thread.getAuthorId(),
+                thread.getCreatedAt(),
+                thread.getUpdatedAt(),
+                thread.getIsVisible());
+    }
+
     public ThreadMongo toThreadMongo(ThreadCreatedEvent event) {
         ThreadMongo thread = new ThreadMongo();
         thread.setId(event.getId());
@@ -30,16 +41,5 @@ public class ThreadMapper {
         thread.setUpdatedAt(event.getUpdatedAt());
 
         return thread;
-    }
-
-    public ThreadCreatedEvent toThreadCreatedEvent(Thread thread) {
-        return new ThreadCreatedEvent( // TODO: cambiar a builder
-                thread.getId(),
-                thread.getTitle(),
-                thread.getContent(),
-                thread.getAuthorId(),
-                thread.getCreatedAt(),
-                thread.getUpdatedAt(),
-                thread.getIsVisible());
     }
 }
