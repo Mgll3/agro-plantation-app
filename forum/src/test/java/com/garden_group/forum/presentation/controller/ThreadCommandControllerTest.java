@@ -30,55 +30,55 @@ import reactor.core.publisher.Mono;
 @WebFluxTest(ThreadCommandController.class)
 class ThreadCommandControllerTest {
 
-    @Spy
-    private ThreadCommandController threadCommandController;
+        @Spy
+        private ThreadCommandController threadCommandController;
 
-    @MockBean
-    private CreateThreadCommandHandler createThreadCommandHandler;
+        @MockBean
+        private CreateThreadCommandHandler createThreadCommandHandler;
 
-    @MockBean
-    private ThreadCommandRepository threadRepository;
+        @MockBean
+        private ThreadCommandRepository threadRepository;
 
-    @MockBean
-    private ThreadCommandR2dbcRepository threadCommandR2dbcRepository;
+        @MockBean
+        private ThreadCommandR2dbcRepository threadCommandR2dbcRepository;
 
-    @MockBean
-    private ThreadCommandRepositoryImpl threadCommandRepositoryImpl;
+        @MockBean
+        private ThreadCommandRepositoryImpl threadCommandRepositoryImpl;
 
-    @Autowired
-    private WebTestClient client;
+        @Autowired
+        private WebTestClient client;
 
-    @Test
-    void shouldCreateThread() {
+        @Test
+        void shouldCreateThread() {
 
-        URI createThreadUrl = URI.create("/api/v1/threads/create");
+                URI createThreadUrl = URI.create("/api/v1/threads/create");
 
-        CreateThreadCommand createCommand = new CreateThreadCommand("Test Thread", "This is a test thread.",
-                UUID.fromString("2e8e8b8e-8e8e-8e8e-8e8e-8e8e8e8e8e8e"), true);
+                CreateThreadCommand createCommand = new CreateThreadCommand("Test Thread", "This is a test thread.",
+                                UUID.fromString("2e8e8b8e-8e8e-8e8e-8e8e-8e8e8e8e8e8e"), true);
 
-        when(createThreadCommandHandler.handle(any()))
-                .thenReturn(Mono.just(UUID.randomUUID()));
+                when(createThreadCommandHandler.handle(any()))
+                                .thenReturn(Mono.just(UUID.randomUUID()));
 
-        final ResponseSpec spec = client.post()
-                .uri(createThreadUrl)
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(Mono.just(createCommand), CreateThreadCommand.class)
-                .exchange();
+                final ResponseSpec spec = client.post()
+                                .uri(createThreadUrl)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .body(Mono.just(createCommand), CreateThreadCommand.class)
+                                .exchange();
 
-        spec.expectStatus().isCreated()
-                .expectBody(CreateThreadResponse.class)
-                .consumeWith(response -> {
-                    CreateThreadResponse threadResponse = response.getResponseBody();
-                    assertEquals(threadResponse.getMessage(), "Thread created successfully");
-                    assertNotNull(threadResponse.getThreadId(), "Thread ID should not be null");
-                });
+                spec.expectStatus().isCreated()
+                                .expectBody(CreateThreadResponse.class)
+                                .consumeWith(response -> {
+                                        CreateThreadResponse threadResponse = response.getResponseBody();
+                                        assertEquals(threadResponse.getMessage(), "Thread created successfully");
+                                        assertNotNull(threadResponse.getThreadId(), "Thread ID should not be null");
+                                });
 
-        ArgumentCaptor<Mono<CreateThreadCommand>> captor = ArgumentCaptor.forClass(Mono.class);
+                ArgumentCaptor<Mono<CreateThreadCommand>> captor = ArgumentCaptor.forClass(Mono.class);
 
-        verify(createThreadCommandHandler, times(1)).handle(captor.capture());
+                verify(createThreadCommandHandler, times(1)).handle(captor.capture());
 
-        CreateThreadCommand capturedCommand = captor.getValue().block();
-        assertEquals(createCommand, capturedCommand);
+                CreateThreadCommand capturedCommand = captor.getValue().block();
+                assertEquals(createCommand, capturedCommand);
 
-    }
+        }
 }

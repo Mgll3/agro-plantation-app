@@ -11,6 +11,7 @@ Este Microservicio se basa principalmente en los principios de Clean Architectur
 
 Se esta haciendo uso de Java 21, Springboot 3.4.1, WebFlux, PostgreSQL,  MongoDB, Pruebas con Junit 5.
 
+Colección de Postman para testear Endpoints: https://planetary-escape-981331.postman.co/workspace/My-Workspace~6b3432f2-a5c4-4e7b-893d-5831407847d7/collection/30136915-3d0620e7-b363-4ab1-b367-beba164c16ea?action=share&creator=30136915&active-environment=30136915-35411d6e-68b0-4aa7-9e2e-62ce3df3e42b
 
 <h2><u><strong>💪Integrantes del Equipo</strong></u></h2>
 

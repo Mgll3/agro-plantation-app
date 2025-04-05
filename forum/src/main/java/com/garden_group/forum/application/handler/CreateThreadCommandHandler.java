@@ -9,6 +9,8 @@ import com.garden_group.forum.application.command.CreateThreadCommand;
 import com.garden_group.forum.application.mapper.ThreadMapper;
 import com.garden_group.forum.domain.event.thread.ThreadCreatedEvent;
 import com.garden_group.forum.domain.repository.ThreadCommandRepository;
+import com.garden_group.forum.domain.services.ThreadCreationService;
+
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Mono;
 
@@ -21,12 +23,15 @@ public class CreateThreadCommandHandler {
     @Autowired
     private final ThreadMapper threadMapper;
     @Autowired
+    private final ThreadCreationService threadCreationService;
+    @Autowired
     private final ApplicationEventPublisher eventPublisher;
 
     public Mono<UUID> handle(Mono<CreateThreadCommand> command) {
 
         return command
                 .map(threadMapper::toEntity)
+                .map(threadCreationService::validateThreadCreation)
                 .flatMap(threadRepository::save)
                 .flatMap(savedThread -> {
                     ThreadCreatedEvent event = threadMapper.toThreadCreatedEvent(savedThread);

@@ -1,0 +1,44 @@
+package com.garden_group.forum.domain.services;
+
+import java.util.Arrays;
+import java.util.stream.Collectors;
+import org.springframework.stereotype.Service;
+import com.garden_group.forum.domain.entity.Thread;
+
+@Service
+public class ThreadCreationService {
+
+    private static final String[] BAD_WORDS = {
+            "fuck", "shit", "bitch", "asshole", "bastard", "damn", "crap",
+            "dick", "pussy", "cunt", "motherfucker", "nigger", "slut", "whore",
+            "faggot", "cock", "tit", "twat", "bollocks", "prick", "arse", "wanker"
+    };
+
+    public Thread validateThreadCreation(Thread thread) {
+
+        validateWords(thread.getContent());
+
+        // Convert in Uppercase only the first letter of each word in the title
+        thread.updateTitle(
+                Arrays.stream(thread.getTitle().split(" "))
+                        .map(word -> word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase())
+                        .collect(Collectors.joining(" ")));
+
+        return thread;
+    }
+
+    // Check words with maximum length 20 characters and filter bad words
+    public void validateWords(String content) {
+
+        Arrays.stream(content.split(" "))
+                .forEach(word -> {
+                    if (word.length() > 20) {
+                        throw new IllegalArgumentException("Content contains a word that is too long: " + word);
+                    }
+                    if (Arrays.stream(BAD_WORDS).anyMatch(word::equalsIgnoreCase)) {
+                        throw new IllegalArgumentException("Content contains a bad word: " + word);
+                    }
+                });
+    }
+
+}

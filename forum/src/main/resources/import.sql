@@ -1,7 +1,8 @@
 -- Script to initialize the database with tables and sample data
+CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
 CREATE TABLE IF NOT EXISTS forum_user (
-    id UUID PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     username VARCHAR(255) NOT NULL,
     address VARCHAR(255),
     password VARCHAR(255) NOT NULL,
@@ -9,18 +10,18 @@ CREATE TABLE IF NOT EXISTS forum_user (
 );
 
 CREATE TABLE IF NOT EXISTS thread (
-    id UUID PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     title VARCHAR(255) NOT NULL,
     content TEXT NOT NULL,
-    author_id UUID NOT NULL REFERENCES forum_user(id) ON DELETE CASCADE,
+    author_id UUID NOT NULL REFERENCES forum_user(id),
     is_visible BOOLEAN NOT NULL DEFAULT TRUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS vote (
-    id UUID PRIMARY KEY,
-    user_id UUID NOT NULL REFERENCES forum_user(id) ON DELETE CASCADE,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID NOT NULL REFERENCES forum_user(id),
     thread_id UUID NOT NULL REFERENCES thread(id) ON DELETE CASCADE
 );
 
