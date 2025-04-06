@@ -2,7 +2,7 @@
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
 CREATE TABLE IF NOT EXISTS forum_user (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    id UUID PRIMARY KEY,
     username VARCHAR(255) NOT NULL,
     address VARCHAR(255),
     password VARCHAR(255) NOT NULL,

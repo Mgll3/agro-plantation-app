@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Repository;
 
+import com.garden_group.forum.domain.entity.ForumUser;
 import com.garden_group.forum.domain.repository.user.UserCommandRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,11 @@ import reactor.core.publisher.Mono;
 public class UserCommandRepositoryImpl implements UserCommandRepository {
 
     private final UserCommandR2dbcRepository r2dbcRepository;
+
+    @Override
+    public Mono<Void> save(ForumUser user) {
+        return r2dbcRepository.save(user).then();
+    }
 
     @Override
     public Mono<Boolean> existsById(UUID id) {

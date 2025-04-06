@@ -28,7 +28,7 @@ public class ThreadEventListener {
         ThreadMongo thread = threadMapper.toThreadMongo(event);
 
         threadNoSqlRepository.save(thread)
-                .doOnError(error -> log.error("Error in Secondary Save Mongo" + error.getMessage(), error))
+                .doOnError(error -> log.error("Error saving Thread in Secondary DB" + error.getMessage(), error))
                 .subscribe();
     }
 

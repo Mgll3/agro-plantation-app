@@ -5,10 +5,12 @@ import java.util.UUID;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Table("forum_user")
 @Data
+@AllArgsConstructor
 public class ForumUser {
 
     @Id

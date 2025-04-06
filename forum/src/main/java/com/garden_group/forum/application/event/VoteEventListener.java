@@ -29,14 +29,14 @@ public class VoteEventListener {
         VoteMongo vote = voteMapper.toVoteMongo(event);
 
         voteNoSqlRepository.save(vote)
-                .doOnError(error -> log.error("Error in Secondary Save Mongo" + error.getMessage(), error))
+                .doOnError(error -> log.error("Error saving Vote in Secondary DB" + error.getMessage(), error))
                 .subscribe();
     }
 
     @EventListener
     public void handleVoteDeletedEvent(VoteDeletedEvent event) {
         voteNoSqlRepository.deleteById(event.getVoteId().toString())
-                .doOnError(error -> log.error("Error in Secondary Delete Mongo" + error.getMessage(), error))
+                .doOnError(error -> log.error("Error deleting Vote in Secondary DB" + error.getMessage(), error))
                 .subscribe();
     }
 }
