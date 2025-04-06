@@ -31,7 +31,7 @@ public class CreateThreadCommandHandler {
 
         return command
                 .map(threadMapper::toEntity)
-                .map(threadCreationService::validateThreadCreation)
+                .flatMap(thread -> threadCreationService.validateThreadCreation(Mono.just(thread)))
                 .flatMap(threadRepository::save)
                 .flatMap(savedThread -> {
                     ThreadCreatedEvent event = threadMapper.toThreadCreatedEvent(savedThread);

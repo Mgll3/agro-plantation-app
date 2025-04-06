@@ -21,26 +21,26 @@ import io.swagger.v3.oas.annotations.*;
 @RequestMapping("/api/v1/threads")
 public class ThreadCommandController {
 
-        @Autowired
-        private CreateThreadCommandHandler threadCommandHandler;
+    @Autowired
+    private CreateThreadCommandHandler threadCommandHandler;
 
-        @Operation(summary = "Create new thread", description = "End Point to create a new thread in the forum", tags = {
-                        "Threads" })
-        @PostMapping("/create")
-        public Mono<ResponseEntity<CreateThreadResponse>> createThread(
-                        @Valid @RequestBody Mono<CreateThreadCommand> threadCommand) {
+    @Operation(summary = "Create new thread", description = "End Point to create a new thread in the forum", tags = {
+            "Threads" })
+    @PostMapping("/create")
+    public Mono<ResponseEntity<CreateThreadResponse>> createThread(
+            @Valid @RequestBody Mono<CreateThreadCommand> threadCommand) {
 
-                return threadCommandHandler.handle(threadCommand)
-                                .map(threadId -> {
-                                        CreateThreadResponse threadResponse = new CreateThreadResponse(threadId,
-                                                        Constants.T_CREATED);
+        return threadCommandHandler.handle(threadCommand)
+                .map(threadId -> {
+                    CreateThreadResponse threadResponse = new CreateThreadResponse(threadId,
+                            Constants.T_CREATED);
 
-                                        return ResponseEntity.created(
-                                                        URI.create("/api/v1/threads/" + threadResponse.getThreadId()))
-                                                        .contentType(MediaType.APPLICATION_JSON)
-                                                        .body(threadResponse);
+                    return ResponseEntity.created(
+                            URI.create("/api/v1/threads/" + threadResponse.getThreadId()))
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .body(threadResponse);
 
-                                });
-        }
+                });
+    }
 
 }

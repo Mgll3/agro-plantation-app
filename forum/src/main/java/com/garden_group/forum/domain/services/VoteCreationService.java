@@ -11,6 +11,7 @@ import com.garden_group.forum.domain.repository.vote.VoteCommandRepository;
 import com.garden_group.forum.shared.utils.Constants;
 
 import lombok.RequiredArgsConstructor;
+import reactor.core.publisher.Mono;
 
 @Service
 @RequiredArgsConstructor
@@ -25,28 +26,33 @@ public class VoteCreationService {
     @Autowired
     private final ApplicationEventPublisher eventPublisher;
 
-    public Vote validateVoteCreation(Vote vote) {
-        // Validate if User had already voted
-        voteRepository.findByAuthorIdAndThreadId(vote.getAuthorId(), vote.getThreadId())
-                .subscribe(existingVote -> {
-                    if (existingVote != null) {
-                        voteRepository.deleteById(existingVote.getId()).subscribe();
-                        VoteDeletedEvent event = new VoteDeletedEvent(existingVote.getId());
-                        eventPublisher.publishEvent(event);
-                    }
-                });
+    public Mono<Vote> validateVoteCreation(Mono<Vote> voteMono) {
 
-        userRepository.existsById(vote.getAuthorId()).subscribe(userExists -> {
-            if (!userExists) {
-                throw new IllegalArgumentException(Constants.U_NOT_FOUND);
-            }
-        });
-        threadRepository.existsById(vote.getThreadId()).subscribe(threadExists -> {
-            if (!threadExists) {
-                throw new IllegalArgumentException(Constants.T_NOT_FOUND);
-            }
-        });
+        return voteMono.flatMap(vote -> voteRepository.findByAuthorIdAndThreadId(vote.getAuthorId(), vote.getThreadId())
+                .flatMap(existingVote -> {
+                    // Validate if vote already exists
+                    return voteRepository.deleteById(existingVote.getId())
+                            .then(Mono.fromRunnable(() -> {
+                                VoteDeletedEvent event = new VoteDeletedEvent(existingVote.getId());
+                                eventPublisher.publishEvent(event);
+                            }))
+                            .thenReturn(vote);
+                })
+                .switchIfEmpty(Mono.just(vote))
+                .flatMap(validatedVote -> userRepository.existsById(validatedVote.getAuthorId())
+                        .flatMap(userExists -> {
+                            if (!userExists) {
+                                return Mono.error(new IllegalArgumentException(Constants.U_NOT_FOUND));
+                            }
+                            return Mono.just(validatedVote);
+                        }))
+                .flatMap(validatedVote -> threadRepository.existsById(validatedVote.getThreadId())
+                        .flatMap(threadExists -> {
+                            if (!threadExists) {
+                                return Mono.error(new IllegalArgumentException(Constants.T_NOT_FOUND));
+                            }
+                            return Mono.just(validatedVote);
+                        })));
 
-        return vote;
     }
 }

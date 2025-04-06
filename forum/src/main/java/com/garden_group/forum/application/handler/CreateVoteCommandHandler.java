@@ -12,6 +12,7 @@ import com.garden_group.forum.domain.repository.vote.VoteCommandRepository;
 import com.garden_group.forum.domain.services.VoteCreationService;
 
 import lombok.RequiredArgsConstructor;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -30,7 +31,19 @@ public class CreateVoteCommandHandler {
     public Mono<UUID> handle(Mono<CreateVoteCommand> command) {
         return command
                 .map(voteMapper::toEntity)
-                .map(voteCreationService::validateVoteCreation)
+                .flatMap(vote -> voteCreationService.validateVoteCreation(Mono.just(vote)))
+                .flatMap(voteRepository::save)
+                .flatMap(savedVote -> {
+                    VoteCreatedEvent event = voteMapper.toVoteCreatedEvent(savedVote);
+                    return Mono.fromRunnable(() -> eventPublisher.publishEvent(event))
+                            .thenReturn(savedVote.getId());
+                });
+    }
+
+    public Flux<UUID> handleBatch(Flux<CreateVoteCommand> commands) {
+        return commands
+                .map(voteMapper::toEntity)
+                .flatMap(vote -> voteCreationService.validateVoteCreation(Mono.just(vote)))
                 .flatMap(voteRepository::save)
                 .flatMap(savedVote -> {
                     VoteCreatedEvent event = voteMapper.toVoteCreatedEvent(savedVote);

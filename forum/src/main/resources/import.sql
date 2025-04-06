@@ -32,7 +32,10 @@ VALUES
     ('2e8e8b8e-8e8e-8e8e-8e8e-8e8e8e8e8e8e', 'john_doe', '123 Main St', 'password123', 'ADMIN')
 ON CONFLICT (id) DO NOTHING;
 
-
+INSERT INTO thread (id, title, content, author_id, is_visible) 
+VALUES 
+    ('5a1cfe92-5eb0-41f2-905a-f66b974d5e05', 'First Thread', 'This is the content of the first thread.', '2e8e8b8e-8e8e-8e8e-8e8e-8e8e8e8e8e8e', TRUE)
+ON CONFLICT (id) DO NOTHING;
 
 -- Query Mongo para traer los hilos con los detalles del autor
 -- db.threads.aggregate([

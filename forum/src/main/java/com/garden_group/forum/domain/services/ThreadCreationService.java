@@ -9,6 +9,7 @@ import com.garden_group.forum.domain.repository.user.UserCommandRepository;
 import com.garden_group.forum.shared.utils.Constants;
 
 import lombok.RequiredArgsConstructor;
+import reactor.core.publisher.Mono;
 
 @Service
 @RequiredArgsConstructor
@@ -23,23 +24,26 @@ public class ThreadCreationService {
             "faggot", "cock", "tit", "twat", "bollocks", "prick", "arse", "wanker"
     };
 
-    public Thread validateThreadCreation(Thread thread) {
+    public Mono<Thread> validateThreadCreation(Mono<Thread> threadMono) {
+        return threadMono.flatMap(thread -> {
+            validateWords(thread.getContent());
 
-        validateWords(thread.getContent());
+            return userRepository.existsById(thread.getAuthorId())
+                    .flatMap(userExists -> {
+                        if (!userExists) {
+                            return Mono.error(new IllegalArgumentException(Constants.U_NOT_FOUND));
+                        }
 
-        userRepository.existsById(thread.getAuthorId()).subscribe(userExists -> {
-            if (!userExists) {
-                throw new IllegalArgumentException(Constants.U_NOT_FOUND);
-            }
+                        // Convert in Uppercase only the first letter of each word in the title
+                        thread.updateTitle(
+                                Arrays.stream(thread.getTitle().split(" "))
+                                        .map(word -> word.substring(0, 1).toUpperCase()
+                                                + word.substring(1).toLowerCase())
+                                        .collect(Collectors.joining(" ")));
+
+                        return Mono.just(thread);
+                    });
         });
-
-        // Convert in Uppercase only the first letter of each word in the title
-        thread.updateTitle(
-                Arrays.stream(thread.getTitle().split(" "))
-                        .map(word -> word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase())
-                        .collect(Collectors.joining(" ")));
-
-        return thread;
     }
 
     // Check words with maximum length 20 characters and filter bad words
