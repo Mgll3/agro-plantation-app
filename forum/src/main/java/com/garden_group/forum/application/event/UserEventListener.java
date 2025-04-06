@@ -13,6 +13,7 @@ import com.garden_group.forum.infraestructure.repository.query.user.UserMongo;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import reactor.core.publisher.Mono;
 
 @Component
 @RequiredArgsConstructor
@@ -30,21 +31,23 @@ public class UserEventListener {
     public void handleUserCreatedEvent(UserCreatedEvent event) {
 
         userCommandRepository.existsById(event.getId())
-                .doOnNext(exists -> {
+                .flatMap(exists -> {
                     if (exists) {
                         log.warn("User with ID {} already exists in primary DB", event.getId());
+                        return Mono.error(new RuntimeException("User already exists in primary DB"));
                     }
+                    ForumUser userToSave = userMapper.toUser(event);
+                    return userCommandRepository.save(userToSave);
                 })
-                .subscribe();
-
-        ForumUser userToSave = userMapper.toUser(event);
-        userCommandRepository.save(userToSave)
-                .doOnError(error -> log.error("Error saving User in primary DB" + error.getMessage(), error))
-                .subscribe();
-
-        UserMongo userMongo = userMapper.toUserMongo(event);
-        userNoSqlRepository.save(userMongo)
-                .doOnError(error -> log.error("Error saving User in Secondary DB" + error.getMessage(), error))
+                .flatMap(savedUser -> {
+                    UserMongo userMongo = userMapper.toUserMongo(event);
+                    return userNoSqlRepository.save(userMongo);
+                })
+                .onErrorResume(error -> {
+                    log.error("Error processing UserCreatedEvent: {}", error.getMessage(), error);
+                    return Mono.empty();
+                })
+                .retry(1)
                 .subscribe();
     }
 

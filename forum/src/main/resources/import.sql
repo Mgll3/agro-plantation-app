@@ -2,9 +2,9 @@
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
 CREATE TABLE IF NOT EXISTS forum_user (
-    id UUID PRIMARY KEY,
+    id UUID PRIMARY KEY NOT NULL,
     username VARCHAR(255) NOT NULL,
-    address VARCHAR(255),
+    address VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
     role VARCHAR(50) NOT NULL
 );

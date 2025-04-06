@@ -17,6 +17,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.test.web.reactive.server.WebTestClient.ResponseSpec;
+
+import com.garden_group.forum.presentation.controller.command.ThreadCommandController;
 import com.garden_group.forum.presentation.dto.CreateThreadResponse;
 import com.garden_group.forum.application.command.CreateThreadCommand;
 import com.garden_group.forum.application.handler.CreateThreadCommandHandler;
