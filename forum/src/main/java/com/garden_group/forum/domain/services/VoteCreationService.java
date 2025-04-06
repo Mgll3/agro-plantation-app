@@ -11,9 +11,11 @@ import com.garden_group.forum.domain.repository.vote.VoteCommandRepository;
 import com.garden_group.forum.shared.utils.Constants;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class VoteCreationService {
 
@@ -52,7 +54,10 @@ public class VoteCreationService {
                                 return Mono.error(new IllegalArgumentException(Constants.T_NOT_FOUND));
                             }
                             return Mono.just(validatedVote);
-                        })));
-
+                        })))
+                .onErrorMap(error -> {
+                    log.error("Error validating vote creation: {}", error.getMessage(), error);
+                    return new IllegalArgumentException("Error validating vote creation: " + error.getMessage(), error);
+                });
     }
 }

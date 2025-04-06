@@ -1,6 +1,8 @@
 package com.garden_group.forum.presentation.controller.command;
 
 import java.net.URI;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import jakarta.validation.Valid;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import com.garden_group.forum.application.command.CreateThreadCommand;
 import com.garden_group.forum.application.handler.CreateThreadCommandHandler;
@@ -41,6 +44,21 @@ public class ThreadCommandController {
                             .body(threadResponse);
 
                 });
+    }
+
+    @Operation(summary = "Create multiple threads", description = "End Point to create multiple threads in the forum", tags = {
+            "Threads" })
+    @PostMapping("/bulk-create")
+    public Mono<ResponseEntity<List<CreateThreadResponse>>> createMultipleThreads(
+            @Valid @RequestBody Flux<CreateThreadCommand> threadCommands) {
+
+        return threadCommandHandler.handleBatch(threadCommands)
+                .map(threadId -> new CreateThreadResponse(threadId, Constants.T_CREATED))
+                .collectList()
+                .map(threadResponses -> ResponseEntity.created(URI.create("/api/v1/threads/bulk-create"))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(threadResponses));
+
     }
 
 }

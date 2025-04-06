@@ -10,7 +10,7 @@ import com.garden_group.forum.application.mapper.ThreadMapper;
 import com.garden_group.forum.domain.event.thread.ThreadCreatedEvent;
 import com.garden_group.forum.domain.repository.thread.ThreadCommandRepository;
 import com.garden_group.forum.domain.services.ThreadCreationService;
-
+import reactor.core.publisher.Flux;
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Mono;
 
@@ -30,6 +30,18 @@ public class CreateThreadCommandHandler {
     public Mono<UUID> handle(Mono<CreateThreadCommand> command) {
 
         return command
+                .map(threadMapper::toEntity)
+                .flatMap(thread -> threadCreationService.validateThreadCreation(Mono.just(thread)))
+                .flatMap(threadRepository::save)
+                .flatMap(savedThread -> {
+                    ThreadCreatedEvent event = threadMapper.toThreadCreatedEvent(savedThread);
+                    return Mono.fromRunnable(() -> eventPublisher.publishEvent(event))
+                            .thenReturn(savedThread.getId());
+                });
+    }
+
+    public Flux<UUID> handleBatch(Flux<CreateThreadCommand> commands) {
+        return commands
                 .map(threadMapper::toEntity)
                 .flatMap(thread -> threadCreationService.validateThreadCreation(Mono.just(thread)))
                 .flatMap(threadRepository::save)

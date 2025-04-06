@@ -1,6 +1,7 @@
 package com.garden_group.forum.presentation.controller.command;
 
 import java.net.URI;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -45,19 +46,14 @@ public class VoteCommandController {
     @Operation(summary = "Create multiple votes", description = "End Point to create multiple votes in the forum", tags = {
             "Votes" })
     @PostMapping("/bulk-create")
-    public Flux<ResponseEntity<CreateVoteResponse>> createMultipleVotes(
+    public Mono<ResponseEntity<List<CreateVoteResponse>>> createMultipleVotes(
             @Valid @RequestBody Flux<CreateVoteCommand> voteCommands) {
 
         return voteCommandHandler.handleBatch(voteCommands)
-                .map(voteId -> {
-                    CreateVoteResponse voteResponse = new CreateVoteResponse(voteId,
-                            Constants.V_CREATED);
-                    return ResponseEntity.created(
-                            URI.create("/api/v1/votes/" + voteResponse.getVoteId()))
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .body(voteResponse);
-                });
-
+                .map(voteId -> new CreateVoteResponse(voteId, Constants.V_CREATED))
+                .collectList()
+                .map(voteResponses -> ResponseEntity.created(URI.create("/api/v1/votes/bulk-create"))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(voteResponses));
     }
-
 }
