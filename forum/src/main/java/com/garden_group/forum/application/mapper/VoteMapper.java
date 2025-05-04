@@ -6,6 +6,7 @@ import com.garden_group.forum.application.command.CreateVoteCommand;
 import com.garden_group.forum.domain.entity.Vote;
 import com.garden_group.forum.domain.event.vote.VoteCreatedEvent;
 import com.garden_group.forum.infraestructure.repository.query.vote.VoteMongo;
+import com.garden_group.forum.presentation.response.VoteResponse;
 
 @Component
 public class VoteMapper {
@@ -36,4 +37,21 @@ public class VoteMapper {
 
         return vote;
     }
+
+    public VoteResponse toResponse(Vote vote) {
+        return new VoteResponse(
+                vote.getId(),
+                vote.getThreadId(),
+                vote.getAuthorId(),
+                vote.getIsUpvote());
+    }
+
+    public VoteResponse toVoteResponse(VoteMongo vote) {
+        return new VoteResponse(
+                vote.getId(),
+                vote.getThreadId(),
+                vote.getAuthorId(),
+                vote.getIsUpvote());
+    }
+
 }

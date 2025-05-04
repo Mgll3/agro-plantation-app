@@ -1,6 +1,7 @@
 package com.garden_group.forum.voteIntegrationTests;
 
 import java.net.URI;
+import java.util.List;
 import java.util.UUID;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,7 +32,7 @@ class VoteTest {
 
     URI baseVoteUrl = URI.create("/api/v1/votes");
 
-    CreateVoteCommand createVoteCommand = new CreateVoteCommand(
+    CreateVoteCommand createVoteCommand1 = new CreateVoteCommand(
             UUID.fromString("2e8e8b8e-8e8e-8e8e-8e8e-8e8e8e8e8e8e"),
             UUID.fromString("5a1cfe92-5eb0-41f2-905a-f66b974d5e05"),
             true);
@@ -75,7 +76,7 @@ class VoteTest {
                 false);
 
         Flux<CreateVoteCommand> createVoteCommands = Flux.just(
-                createVoteCommand, createVoteCommand2);
+                createVoteCommand1, createVoteCommand2);
 
         final ResponseSpec clientResponse = client.post()
                 .uri(createVoteUrl)
@@ -86,7 +87,7 @@ class VoteTest {
         clientResponse.expectStatus().isCreated()
                 .expectBodyList(CreateVoteResponse.class)
                 .consumeWith(response -> {
-                    var voteResponses = response.getResponseBody();
+                    List<CreateVoteResponse> voteResponses = response.getResponseBody();
                     assertNotNull(voteResponses, "Response body should not be null");
                     assertEquals(2, voteResponses.size(), "There should be 2 responses");
 
@@ -95,8 +96,6 @@ class VoteTest {
                         assertEquals(Constants.V_CREATED, voteResponse.getMessage());
                     });
                 });
-
-        Thread.sleep(10000); // Wait for the responses to be processed
 
     }
 }
