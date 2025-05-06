@@ -34,8 +34,8 @@ public class CreateVoteCommandHandler {
                 .flatMap(voteRepository::save)
                 .flatMap(savedVote -> {
                     VoteCreatedEvent event = voteMapper.toVoteCreatedEvent(savedVote);
-                    return Mono.fromRunnable(() -> eventPublisher.publishEvent(event))
-                            .thenReturn(savedVote.getId());
+                    eventPublisher.publishEvent(event);
+                    return Mono.just(savedVote.getId());
                 });
     }
 
@@ -46,8 +46,8 @@ public class CreateVoteCommandHandler {
                 .flatMap(voteRepository::save)
                 .flatMap(savedVote -> {
                     VoteCreatedEvent event = voteMapper.toVoteCreatedEvent(savedVote);
-                    return Mono.fromRunnable(() -> eventPublisher.publishEvent(event))
-                            .thenReturn(savedVote.getId());
+                    eventPublisher.publishEvent(event);
+                    return Mono.just(savedVote.getId());
                 });
     }
 }

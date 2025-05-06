@@ -2,6 +2,7 @@ package com.garden_group.forum.application.event;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import com.garden_group.forum.application.mapper.ThreadMapper;
@@ -22,6 +23,7 @@ public class ThreadEventListener {
     @Autowired
     private final ThreadMapper threadMapper;
 
+    @Async
     @EventListener
     public void handleThreadCreatedEvent(ThreadCreatedEvent event) {
 

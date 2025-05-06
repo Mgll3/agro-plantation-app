@@ -35,8 +35,8 @@ public class CreateThreadCommandHandler {
                 .flatMap(threadRepository::save)
                 .flatMap(savedThread -> {
                     ThreadCreatedEvent event = threadMapper.toThreadCreatedEvent(savedThread);
-                    return Mono.fromRunnable(() -> eventPublisher.publishEvent(event))
-                            .thenReturn(savedThread.getId());
+                    eventPublisher.publishEvent(event);
+                    return Mono.just(savedThread.getId());
                 });
     }
 
@@ -47,8 +47,8 @@ public class CreateThreadCommandHandler {
                 .flatMap(threadRepository::save)
                 .flatMap(savedThread -> {
                     ThreadCreatedEvent event = threadMapper.toThreadCreatedEvent(savedThread);
-                    return Mono.fromRunnable(() -> eventPublisher.publishEvent(event))
-                            .thenReturn(savedThread.getId());
+                    eventPublisher.publishEvent(event);
+                    return Mono.just(savedThread.getId());
                 });
     }
 }

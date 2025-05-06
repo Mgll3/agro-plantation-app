@@ -2,6 +2,7 @@ package com.garden_group.forum.application.event;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import com.garden_group.forum.application.mapper.VoteMapper;
@@ -23,6 +24,7 @@ public class VoteEventListener {
     @Autowired
     private final VoteMapper voteMapper;
 
+    @Async
     @EventListener
     public void handleVoteCreatedEvent(VoteCreatedEvent event) {
 
@@ -33,6 +35,7 @@ public class VoteEventListener {
                 .subscribe();
     }
 
+    @Async
     @EventListener
     public void handleVoteDeletedEvent(VoteDeletedEvent event) {
         voteNoSqlRepository.deleteById(event.getVoteId().toString())

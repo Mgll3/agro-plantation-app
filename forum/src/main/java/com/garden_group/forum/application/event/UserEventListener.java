@@ -2,6 +2,7 @@ package com.garden_group.forum.application.event;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import com.garden_group.forum.application.mapper.UserMapper;
@@ -27,6 +28,7 @@ public class UserEventListener {
     @Autowired
     private final UserMapper userMapper;
 
+    @Async
     @EventListener
     public void handleUserCreatedEvent(UserCreatedEvent event) {
 
