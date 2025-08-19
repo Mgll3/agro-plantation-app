@@ -136,7 +136,7 @@ Este enfoque permitió crear un diseño atractivo y funcional, asegurando una ex
             <ul>
                 <li><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/creacionesbrunila?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app">Alicia Sofia Ruiz</a></li>
                 <li><strong>Email:</strong> brunila110@gmail.com</li>
-                <li><strong>Github:</strong> <a href="https://github.com/sofia1988">https://github.com/creacionesbrunila</li>
+                <li><strong>Github:</strong> <a href="https://github.com/creacionesbrunila">creacionesbrunila</li>
                 <li><strong>Portafolio:</strong> <a href="https://portfolio-sofia-ruiz.vercel.app/">Portafolio Desarrollador Backend Sofia Ruiz</a></li>
             </ul>
         </li>
